@@ -1,0 +1,8 @@
+{
+  "name": "ehpr",
+  "private": true,
+  "description": "EHPR app packages",
+  "workspaces": [
+    "packages/*"
+  ]
+}

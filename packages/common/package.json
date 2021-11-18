@@ -1,0 +1,17 @@
+{
+  "name": "@ehpr/common",
+  "version": "1.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && tsc"
+  },
+  "dependencies": {
+    "@types/node": "^16.11.7",
+    "typescript": "^4.5.2"
+  },
+  "devDependencies": {
+    "ts-node": "^10.4.0"
+  }
+}
