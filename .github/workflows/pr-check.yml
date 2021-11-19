@@ -1,0 +1,27 @@
+name: Check Code Formatting and Lint
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    paths:
+      - "*.{js,jsx,ts,tsx}"
+      - "*.{md,mdx}"
+      - "*.{json,yml,yaml}"
+
+jobs:
+  check-format:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+        name: checkout
+      - uses: actions/cache@v2
+        name: Cache yarn
+        with:
+          path: .yarn/cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+      - name: Install dependencies
+        run: yarn
+      - name: Run lint and formatting check
+        run: yarn run check        
