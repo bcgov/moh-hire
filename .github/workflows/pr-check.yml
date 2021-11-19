@@ -1,5 +1,8 @@
 name: Check Code Formatting and Lint
 on:
+  push:
+    branches:
+      - master
   pull_request:
     paths:
       - "*.{js,jsx,ts,tsx}"
