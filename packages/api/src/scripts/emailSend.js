@@ -1,6 +1,6 @@
 require('dotenv').config({ path: '.env' });
 const axios = require('axios');
-
+const faker = require('faker');
 // Environment variables
 const { CHES_HOST, CHES_AUTH_URL, CHES_CLIENT_SECRET, CHES_CLIENT_ID } =
   process.env;
@@ -39,19 +39,48 @@ function createPayload(recipient) {
   };
 }
 
-async function sendEmail(email) {
-  const config = {
-    headers: {
-      authorization: await updateToken(),
-      'Content-Type': 'application/json',
-    },
-  };
+let sentCount = 0;
+async function getEmail() {
+  if (sentCount <= 100) {
+    sentCount++;
+  } else {
+    return false;
+  }
+  await new Promise((resolve) => {
+    setTimeout(resolve(), 1000);
+  });
+  return faker.internet.email();
+}
+
+async function sendEmail(email, delay) {
+  // const config = {
+  //   headers: {
+  //     authorization: await updateToken(),
+  //     'Content-Type': 'application/json',
+  //   },
+  // };
   await Promise.all([
-    axios.post(`${CHES_HOST}/api/v1/email`, createPayload(email), config),
+    //axios.post(`${CHES_HOST}/api/v1/email`, createPayload(email), config),
+
+    new Promise((resolve) => {
+      console.log(`Sending ${email}`);
+      setTimeout(resolve, delay);
+    }),
   ]);
 }
+async function sendEmailsRecursive() {
+  const email = await getEmail();
+  if (email) {
+    await sendEmail(email, 1000);
+    await sendEmailsRecursive();
+  } else {
+    console.log('all done');
+    return;
+  }
+}
+
 async function main() {
-  await sendEmail('dbayly@freshworks.io');
+  await sendEmailsRecursive();
 }
 
 main();
