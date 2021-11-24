@@ -1,5 +1,6 @@
 require('dotenv').config({ path: '.env' });
 const axios = require('axios');
+const e = require('cors');
 const faker = require('faker');
 // Environment variables
 const { CHES_HOST, CHES_AUTH_URL, CHES_CLIENT_SECRET, CHES_CLIENT_ID } =
@@ -40,16 +41,16 @@ function createPayload(recipient) {
 }
 
 let sentCount = 0;
-async function getEmail() {
-  if (sentCount <= 100) {
-    sentCount++;
-  } else {
-    return false;
-  }
+// Five requests per second
+const targetRate = 5;
+
+async function getEmails(count) {
   await new Promise((resolve) => {
     setTimeout(resolve(), 1000);
   });
-  return faker.internet.email();
+  const arr = [];
+  for (var i = 0; i < count; i++) arr.push(faker.internet.email());
+  return arr;
 }
 
 async function sendEmail(email, delay) {
@@ -63,24 +64,42 @@ async function sendEmail(email, delay) {
     //axios.post(`${CHES_HOST}/api/v1/email`, createPayload(email), config),
 
     new Promise((resolve) => {
-      console.log(`Sending ${email}`);
+      //console.log(`Sending ${email}`);
       setTimeout(resolve, delay);
     }),
   ]);
 }
-async function sendEmailsRecursive() {
-  const email = await getEmail();
-  if (email) {
-    await sendEmail(email, 1000);
-    await sendEmailsRecursive();
-  } else {
-    console.log('all done');
-    return;
-  }
+function printProgress(progress) {
+  process.stdout.clearLine();
+  process.stdout.cursorTo(0);
+  process.stdout.write(progress);
+}
+async function sendEmails() {
+  const emails = await getEmails(100);
+  const start = new Date();
+  let completed = 0;
+  const interval = setInterval(() => {
+    if (emails.length) {
+      const now = new Date();
+      const duration = (now - start) / 1000;
+
+      const currentRate = completed / duration;
+      printProgress(`Current ${currentRate}`);
+      if (currentRate <= targetRate) {
+        new Promise(async (resolve) => {
+          await sendEmail(emails.pop(), Math.random() * 100);
+          completed++;
+          resolve();
+        });
+      }
+    } else {
+      clearInterval(interval);
+    }
+  }, 100);
 }
 
 async function main() {
-  await sendEmailsRecursive();
+  await sendEmails();
 }
 
 main();
