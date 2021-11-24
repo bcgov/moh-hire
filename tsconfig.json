@@ -1,8 +1,9 @@
 {
+  "extends": "@tsconfig/node14/tsconfig.json",
   "compilerOptions": {
-    "module": "es2020",
+    "lib": ["es2020"],
+    "module": "commonjs",
     "target": "es2020",
-    "lib": ["ES2020"],
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -12,8 +13,8 @@
     "incremental": true,
     "skipLibCheck": true,
     "strict": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
