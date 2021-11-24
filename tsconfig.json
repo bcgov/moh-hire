@@ -1,20 +1,23 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "esnext",
+    "target": "es2020",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
     "sourceMap": true,
     "incremental": true,
     "skipLibCheck": true,
+    "strict": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "resolveJsonModule": true,
+    "moduleResolution": "node"
   },
   "exclude": ["node_modules", "dist", "**/*spec.ts"]
 }
