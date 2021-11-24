@@ -7,7 +7,7 @@
     "format:write": "yarn prettier --write .",
     "lint": "echo 'Linting all packages' && wsrun --parallel --exclude-missing lint",
     "test": "echo 'Running tests' && wsrun --parallel --exclude-missing test",
-    "build": "echo 'Building all packages' && wsrun --parallel --exclude-missing build",
+    "build": "echo 'Building all packages' && wsrun --stages --exclude-missing build",
     "check": "run-p 'lint' 'format:check'"
   },
   "workspaces": [
