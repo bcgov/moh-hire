@@ -6,6 +6,7 @@
     "format:check": "yarn prettier --check .",
     "format:write": "yarn prettier --write .",
     "lint": "echo 'Running lint' && wsrun --parallel --exclude-missing lint",
+    "test": "echo 'Running tests' && wsrun --parallel --exclude-missing test",
     "check": "run-p 'lint' 'format:check'"
   },
   "workspaces": [
