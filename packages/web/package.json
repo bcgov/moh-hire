@@ -7,7 +7,7 @@
     "build": "react-scripts build",
     "test": "CI=true react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --ext .ts,.tsx"
+    "lint": "echo 'Linting @ehrp/web...' && eslint --ext .ts,.tsx --fix"
   },
   "dependencies": {
     "react": "17.0.2",
