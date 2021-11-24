@@ -1,5 +1,4 @@
 module.exports = {
-  project: 'tsconfig.json',
   plugins: ['jsx-a11y', 'prettier'],
   extends: [
     'eslint:recommended',
