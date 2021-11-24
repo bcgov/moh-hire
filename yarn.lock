@@ -1813,7 +1813,7 @@ __metadata:
     rxjs: ^7.2.0
     source-map-support: ^0.5.20
     supertest: ^6.1.3
-    ts-jest: ^27.0.3
+    ts-jest: 26.4.2
     ts-loader: ^9.2.3
     ts-node: ^10.0.0
     tsconfig-paths: ^3.10.1
@@ -2036,6 +2036,15 @@ __metadata:
     slash: ^3.0.0
     strip-ansi: ^6.0.0
   checksum: f52b26ffe9b923ed67b3ff30e170b3a434d4263990f78d96cd43acbd0aa8ad36aecad2f1822f376da3a80228714fd6b7f7acd51744133cfcd2780ba0e3da537b
+  languageName: node
+  linkType: hard
+
+"@jest/create-cache-key-function@npm:^26.5.0":
+  version: 26.6.2
+  resolution: "@jest/create-cache-key-function@npm:26.6.2"
+  dependencies:
+    "@jest/types": ^26.6.2
+  checksum: 943a7f1f21bb77db7471ffa831fd7d35f9825cd2d9f8fabf05922a3220fe201ad0a3bcaeac54650da9907ee5c3178373ec000a8d354e288a2f4766fe0558c516
   languageName: node
   linkType: hard
 
@@ -2973,6 +2982,16 @@ __metadata:
     jest-diff: ^26.0.0
     pretty-format: ^26.0.0
   checksum: 5bbed3d3afa40bcac9eb2e8e76957b40b7cb86228a7a1dd455f7e30cb283a7314f7d7afaf2d46ca52ba5ce62168e0f60c57e0ab7509a6b91eab42460709b6bf1
+  languageName: node
+  linkType: hard
+
+"@types/jest@npm:26.x":
+  version: 26.0.24
+  resolution: "@types/jest@npm:26.0.24"
+  dependencies:
+    jest-diff: ^26.0.0
+    pretty-format: ^26.0.0
+  checksum: ae39675412f08d884926254e9b12bfd2b5a4e4d204c94d3148cb942174a474930d0c60540133c968f22241d4712b7940c96cbc883096eb326a4d5b206fb78bd0
   languageName: node
   linkType: hard
 
@@ -5032,7 +5051,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"buffer-from@npm:^1.0.0":
+"buffer-from@npm:1.x, buffer-from@npm:^1.0.0":
   version: 1.1.2
   resolution: "buffer-from@npm:1.1.2"
   checksum: 0448524a562b37d4d7ed9efd91685a5b77a50672c556ea254ac9a6d30e3403a517d8981f10e565db24e8339413b43c97ca2951f10e399c6125a0d8911f5679bb
@@ -5398,13 +5417,6 @@ __metadata:
   version: 2.0.0
   resolution: "ci-info@npm:2.0.0"
   checksum: 3b374666a85ea3ca43fa49aa3a048d21c9b475c96eb13c133505d2324e7ae5efd6a454f41efe46a152269e9b6a00c9edbe63ec7fa1921957165aae16625acd67
-  languageName: node
-  linkType: hard
-
-"ci-info@npm:^3.2.0":
-  version: 3.3.0
-  resolution: "ci-info@npm:3.3.0"
-  checksum: c3d86fe374938ecda5093b1ba39acb535d8309185ba3f23587747c6a057e63f45419b406d880304dbc0e1d72392c9a33e42fe9a1e299209bc0ded5efaa232b66
   languageName: node
   linkType: hard
 
@@ -10372,7 +10384,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-util@npm:^26.6.0, jest-util@npm:^26.6.2":
+"jest-util@npm:^26.1.0, jest-util@npm:^26.6.0, jest-util@npm:^26.6.2":
   version: 26.6.2
   resolution: "jest-util@npm:26.6.2"
   dependencies:
@@ -10383,20 +10395,6 @@ __metadata:
     is-ci: ^2.0.0
     micromatch: ^4.0.2
   checksum: 3c6a5fba05c4c6892cd3a9f66196ea8867087b77a5aa1a3f6cd349c785c3f1ca24abfd454664983aed1a165cab7846688e44fe8630652d666ba326b08625bc3d
-  languageName: node
-  linkType: hard
-
-"jest-util@npm:^27.0.0":
-  version: 27.3.1
-  resolution: "jest-util@npm:27.3.1"
-  dependencies:
-    "@jest/types": ^27.2.5
-    "@types/node": "*"
-    chalk: ^4.0.0
-    ci-info: ^3.2.0
-    graceful-fs: ^4.2.4
-    picomatch: ^2.2.3
-  checksum: 6958d418a867e537a7dc377558422879dabb61437eecc28a2fac44a61c14dc58dcf4514fb5bdc1ddaf19c414040243b2e9e740a046190ca7c9df294a3c911dbe
   languageName: node
   linkType: hard
 
@@ -11456,6 +11454,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mkdirp@npm:1.x, mkdirp@npm:^1.0.3, mkdirp@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "mkdirp@npm:1.0.4"
+  bin:
+    mkdirp: bin/cmd.js
+  checksum: a96865108c6c3b1b8e1d5e9f11843de1e077e57737602de1b82030815f311be11f96f09cce59bd5b903d0b29834733e5313f9301e3ed6d6f6fba2eae0df4298f
+  languageName: node
+  linkType: hard
+
 "mkdirp@npm:^0.5.1, mkdirp@npm:^0.5.3, mkdirp@npm:^0.5.4, mkdirp@npm:^0.5.5, mkdirp@npm:~0.5.1":
   version: 0.5.5
   resolution: "mkdirp@npm:0.5.5"
@@ -11464,15 +11471,6 @@ __metadata:
   bin:
     mkdirp: bin/cmd.js
   checksum: 3bce20ea525f9477befe458ab85284b0b66c8dc3812f94155af07c827175948cdd8114852ac6c6d82009b13c1048c37f6d98743eb019651ee25c39acc8aabe7d
-  languageName: node
-  linkType: hard
-
-"mkdirp@npm:^1.0.3, mkdirp@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "mkdirp@npm:1.0.4"
-  bin:
-    mkdirp: bin/cmd.js
-  checksum: a96865108c6c3b1b8e1d5e9f11843de1e077e57737602de1b82030815f311be11f96f09cce59bd5b903d0b29834733e5313f9301e3ed6d6f6fba2eae0df4298f
   languageName: node
   linkType: hard
 
@@ -16226,34 +16224,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:^27.0.3":
-  version: 27.0.7
-  resolution: "ts-jest@npm:27.0.7"
+"ts-jest@npm:26.4.2":
+  version: 26.4.2
+  resolution: "ts-jest@npm:26.4.2"
   dependencies:
+    "@jest/create-cache-key-function": ^26.5.0
+    "@types/jest": 26.x
     bs-logger: 0.x
+    buffer-from: 1.x
     fast-json-stable-stringify: 2.x
-    jest-util: ^27.0.0
+    jest-util: ^26.1.0
     json5: 2.x
     lodash.memoize: 4.x
     make-error: 1.x
+    mkdirp: 1.x
     semver: 7.x
     yargs-parser: 20.x
   peerDependencies:
-    "@babel/core": ">=7.0.0-beta.0 <8"
-    "@types/jest": ^27.0.0
-    babel-jest: ">=27.0.0 <28"
-    jest: ^27.0.0
+    jest: ">=26 <27"
     typescript: ">=3.8 <5.0"
-  peerDependenciesMeta:
-    "@babel/core":
-      optional: true
-    "@types/jest":
-      optional: true
-    babel-jest:
-      optional: true
   bin:
     ts-jest: cli.js
-  checksum: 3711361cb5ae54aac547b00f8ad118ec88333c391af4bff0420497e9faa296eace4e8272c627ecbf4be675af9f68c437e4c2ccc5693c6d744796ec7da6dda131
+  checksum: 9a2a0328324806de4a59b874235c7744837941c42d6f355a41fb3666e49a702bfdc9a872a8ac00f2e133e84e5b8f565e98d6c96750bcfe513795ef0fbe7ddf67
   languageName: node
   linkType: hard
 
