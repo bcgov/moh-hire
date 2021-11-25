@@ -12,7 +12,7 @@
     "start": "nest start",
     "start:local": "nest start --exec \"node -r ./env.js\"",
     "start:dev": "nest start --watch",
-    "start:dev:local": "nest start --watch --exec \"node -r ./env.js\"",
+    "start:dev:local": "nest start --preserveWatchOutput --watch --exec \"node -r ./env.js\"",
     "start:debug": "nest start --debug --watch",
     "start:debug:local": "nest start --debug --watch --exec \"node -r ./env.js\"",
     "start:prod": "node dist/main",
