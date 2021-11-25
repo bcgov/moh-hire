@@ -2,14 +2,22 @@ const fs = require('fs');
 const uuidV4 = require('uuid').v4;
 const faker = require('faker');
 
-function main() {
-  const columns = ['row', 'id', 'email'];
-
-  let fulltext = 'row,id,email,\n';
+function generateFakeEmailArray() {
+  const array = [];
   for (let i = 0; i < 10000; i++) {
-    fulltext += [i, uuidV4(), faker.internet.email()].join(',') + '\n';
+    array.push([{ row: i, uuid: uuidV4(), email: faker.internet.email() }]);
   }
-  fs.writeFileSync('./src/scripts/emails.csv', fulltext);
+  return array;
 }
 
-main();
+function generateEmailCSV(array, outputFilePath) {
+  let fulltext = 'row,uuid,email\n';
+  array.map((row) => {
+    fulltext += `${row.row},${row.uuid},${row.email}\n`;
+  });
+  fs.writeFileSync(outputFilePath, fulltext);
+}
+
+exports.default = {
+  generateEmailCSV,
+};

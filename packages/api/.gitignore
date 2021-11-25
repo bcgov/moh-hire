@@ -37,3 +37,4 @@ lerna-debug.log*
 # emails for the send 
 
 **/emails.csv
+**/errors.csv
