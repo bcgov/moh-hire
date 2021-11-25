@@ -12,7 +12,7 @@ function generateFakeEmailArray() {
 
 function generateEmailCSV(array, outputFilePath) {
   let fulltext = 'row,uuid,email\n';
-  array.map((row) => {
+  array.map(row => {
     fulltext += `${row.row},${row.uuid},${row.email}\n`;
   });
   fs.writeFileSync(outputFilePath, fulltext);
