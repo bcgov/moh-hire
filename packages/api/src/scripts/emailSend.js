@@ -1,16 +1,12 @@
 require('dotenv').config({ path: '.env' });
 const axios = require('axios');
-const e = require('cors');
-const faker = require('faker');
 const fs = require('fs');
 const outputCSV = require('./generatecsv').default.generateEmailCSV;
 // Environment variables
-const { CHES_HOST, CHES_AUTH_URL, CHES_CLIENT_SECRET, CHES_CLIENT_ID } =
-  process.env;
+const { CHES_HOST, CHES_AUTH_URL, CHES_CLIENT_SECRET, CHES_CLIENT_ID } = process.env;
 
-let sentCount = 0;
 // Five requests per second
-const targetRate = 50;
+const targetRate = 5;
 
 const config = {
   headers: {
@@ -53,18 +49,18 @@ function createPayload(recipient) {
     body: `HELLO WORLD`,
   };
 }
-
-async function getEmails(count) {
-  await new Promise((resolve) => {
+// TODO : Parse real email list
+async function getEmails() {
+  await new Promise(resolve => {
     setTimeout(resolve(), 1000);
   });
   const file = fs.readFileSync('./src/scripts/emails.csv').toString();
-  //for (var i = 0; i < count; i++) arr.push(faker.internet.email());
+
   // Split the string into rows, discard the columns row
   return file
     .split('\n')
     .slice(1)
-    .map((rowString) => {
+    .map(rowString => {
       // Split each row into it's variables
       let row = rowString.split(',');
       return {
@@ -78,37 +74,40 @@ async function getEmails(count) {
 async function sendEmail(email, uuid, delay) {
   await Promise.all([
     //axios.post(`${CHES_HOST}/api/v1/email`, createPayload(email), config),
-
     new Promise((resolve, reject) => {
-      //console.log(`Sending ${email}`);
-
-      // 5% will fail
+      // 5% will fail mocked out.
       if (Math.random() * 100 < 5) {
         reject();
       }
+      // Mock delay in send
       setTimeout(resolve, delay);
     }),
   ]);
 }
+
 function printProgress(progress) {
   process.stdout.clearLine();
   process.stdout.cursorTo(0);
   process.stdout.write(progress);
 }
+
 async function sendEmails() {
   const emails = await getEmails();
   const start = new Date();
   let completed = 0;
   let errors = [];
   config.headers.authorization = await updateToken();
+
+  // Set up interval function to run multiple sends at a set rate.
   const interval = setInterval(() => {
     if (emails.length) {
       const now = new Date();
       const duration = (now - start) / 1000;
       const currentRate = completed / duration;
       printProgress(`Current ${currentRate.toPrecision(3)}`);
+      // Only send email if we are under the targeted rate
       if (currentRate <= targetRate) {
-        new Promise(async (resolve) => {
+        new Promise(async resolve => {
           const current = emails.pop();
           try {
             await sendEmail(current.email, current.uuid, Math.random() * 100);
@@ -130,6 +129,7 @@ async function sendEmails() {
         });
       }
     } else {
+      // When the email queue is empty, clear the interval and store failed sends in a csv
       clearInterval(interval);
       console.log(`There were ${errors.length} errors`);
       outputCSV(errors, 'src/scripts/errors.csv');
