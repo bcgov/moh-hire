@@ -2,6 +2,7 @@ require('dotenv').config({ path: '.env' });
 const axios = require('axios');
 const e = require('cors');
 const faker = require('faker');
+const fs = require('fs');
 // Environment variables
 const { CHES_HOST, CHES_AUTH_URL, CHES_CLIENT_SECRET, CHES_CLIENT_ID } =
   process.env;
@@ -48,12 +49,24 @@ async function getEmails(count) {
   await new Promise((resolve) => {
     setTimeout(resolve(), 1000);
   });
-  const arr = [];
-  for (var i = 0; i < count; i++) arr.push(faker.internet.email());
-  return arr;
+  const file = fs.readFileSync('./src/scripts/emails.csv').toString();
+  //for (var i = 0; i < count; i++) arr.push(faker.internet.email());
+  // Split the string into rows, discard the columns row
+  return file
+    .split('\n')
+    .slice(1)
+    .map((rowString) => {
+      // Split each row into it's variables
+      let row = rowString.split(',');
+      return {
+        row: row[0],
+        id: row[1],
+        email: row[2],
+      };
+    });
 }
 
-async function sendEmail(email, delay) {
+async function sendEmail(email, uuid, delay) {
   // const config = {
   //   headers: {
   //     authorization: await updateToken(),
@@ -75,7 +88,7 @@ function printProgress(progress) {
   process.stdout.write(progress);
 }
 async function sendEmails() {
-  const emails = await getEmails(100);
+  const emails = await getEmails();
   const start = new Date();
   let completed = 0;
   const interval = setInterval(() => {
@@ -84,10 +97,10 @@ async function sendEmails() {
       const duration = (now - start) / 1000;
 
       const currentRate = completed / duration;
-      printProgress(`Current ${currentRate}`);
+      printProgress(`Current ${currentRate.toPrecision(3)}`);
       if (currentRate <= targetRate) {
         new Promise(async (resolve) => {
-          await sendEmail(emails.pop(), Math.random() * 100);
+          await sendEmail(emails.email, emails.uuid, Math.random() * 100);
           completed++;
           resolve();
         });
