@@ -24,3 +24,5 @@ jobs:
         run: yarn run check
       - name: Run all tests
         run: yarn run test
+      - name: Build All packages
+        run: make build

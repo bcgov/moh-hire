@@ -7,7 +7,9 @@ export $(shell sed 's/=.*//' ./.env)
 export NODE_ENV ?= development
 
 
-.PHONY: app-local print-env start-local-services
+.PHONY: build api-local web-local print-env run-local
+
+run-local: | build api-local web-local
 
 print-env:
 	@echo "\n**** ENVIRONMENTS ****\n"
@@ -15,14 +17,23 @@ print-env:
 	@echo "\nNODE_ENV: $(NODE_ENV)"
 	@echo "\n*********************\n"
 
-app-local: print-env start-local-services
-	@echo "++\n***** Running api + web in local Node server\n++"
-	@yarn 
-	@yarn start:local
-	@echo "\n*********************\n"
+build: print-env
+	@echo "++\n***** Building All stacks\n++"
+	@yarn build
+
+api-local:
+	@echo "++\n***** Running API in local Node env\n++"
+	@yarn workspace @ehpr/api start:dev:local
+	@echo "\n******"
+
+web-local:
+	@echo "++\n***** Running Web in local Node server\n++"
+	@yarn workspace @ehpr/web start
+	@echo "++\n*****"
+
 start-local-services:
 	@echo "++\n***** Starting local services\n++"
-	@docker-compose up -d db 
+	@docker-compose up db
 	@echo "++\n*****"
 
 stop-local-services:
