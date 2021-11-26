@@ -19,15 +19,19 @@ module.exports = {
         bcYellowWarning: '#F5A623',
         bcBlueAccent: '#38598A',
         bcBlueIndicator: '#0053A4',
-        bcLightBackground: '#F2F2F2',
+        bcLightBackground: '#E5E5E5',
         bcOrange: '#F6A622',
       },
       fontSize: {
-        '3xl': '1.625rem',
+        '3xl': '1.5rem',
+        '4xl': '2rem',
         '5xl': '2.5rem',
       },
       boxShadow: {
         '2xl': '0 4px 16px 0 rgba(35,64,117,0.3)',
+      },
+      width: {
+        layout: '1140px',
       },
       letterSpacing: {
         widest: '.3em',
