@@ -22,3 +22,5 @@ jobs:
         run: yarn
       - name: Run lint and formatting check
         run: yarn run check
+      - name: Run all tests
+        run: yarn run test
