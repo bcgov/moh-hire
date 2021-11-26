@@ -1,9 +1,9 @@
 {
   "extends": "@tsconfig/node14/tsconfig.json",
   "compilerOptions": {
-    "lib": ["es2020"],
-    "module": "es2020",
-    "target": "es2020",
+    "lib": ["es2017"],
+    "module": "commonjs",
+    "target": "es2017",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
