@@ -36,11 +36,13 @@ export enum RegistrationStatus {
 }
 
 export enum CurrentEmploymentTypes {
-  HP_HA_EMPLOYED = '',
-  HP_NOT_HA_EMPLOYED = '',
-  RETIRED = '',
-  STUDENT_EMPLOYED = '',
-  STUDENT_UNEMPLOYED = '',
+  HP_HA_EMPLOYED = 'Health Professional employed by a Health Authority',
+  // Needs rewording on the FE
+  HP_NOT_HA_EMPLOYED = 'Health Professional not employed by HA',
+  RETIRED = 'Retired Health Professional',
+  STUDENT_EMPLOYED = 'Student currently employed',
+  STUDENT_UNEMPLOYED = 'Student currently not employed',
+  OTHER = '',
 }
 
 export enum HealthAuthorities {
