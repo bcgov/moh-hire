@@ -53,7 +53,13 @@ export const Stepper: React.FC<{ formSteps: string[]; step: number }> = ({ formS
       className='w-full flex justify-center print:hidden'
     >
       {formSteps.map((formStep, index) => (
-        <Step index={index} step={step} label={formStep} isLast={stepCount === index + 1} />
+        <Step
+          key={index}
+          index={index}
+          step={step}
+          label={formStep}
+          isLast={stepCount === index + 1}
+        />
       ))}
     </div>
   );
