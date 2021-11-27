@@ -12,12 +12,15 @@ const Submission = () => {
 
   return (
     <Form>
-      <div className='w-full'>
+      <div className='w-full p-4 border-b'>
         <Stepper formSteps={FORM_STEPS} step={step} />
       </div>
       <div className='flex justify-center'>
         <Link href={step === 1 ? '/submission/1' : `/submission/${Number(step) - 1}`}>
-          <a type='button' className='w-full md:w-40 px-8 py-2 btn btn-outline md:mb-0 mr-0 '>
+          <a
+            type='button'
+            className='w-full md:w-40 px-8 py-2 btn btn-outline md:mb-0 mr-0 text-center'
+          >
             Go Back
           </a>
         </Link>
@@ -28,7 +31,10 @@ const Submission = () => {
               : `/submission/${Number(step) + 1}`
           }
         >
-          <a type='button' className='w-full md:w-40 px-8 py-2 btn btn-outline md:mb-0 mr-0 '>
+          <a
+            type='button'
+            className='w-full md:w-40 px-8 py-2 btn btn-outline md:mb-0 mr-0 text-center'
+          >
             Continue
           </a>
         </Link>
