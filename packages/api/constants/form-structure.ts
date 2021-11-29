@@ -42,7 +42,7 @@ export enum CurrentEmploymentTypes {
   RETIRED = 'Retired Health Professional',
   STUDENT_EMPLOYED = 'Student currently employed',
   STUDENT_UNEMPLOYED = 'Student currently not employed',
-  OTHER = '',
+  OTHER = 'other',
 }
 
 export enum HealthAuthorities {
