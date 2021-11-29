@@ -7,9 +7,7 @@ export $(shell sed 's/=.*//' ./.env)
 export NODE_ENV ?= development
 
 
-.PHONY: build-common watch-common app-local print-env run-local start-local-services
-
-run-local: | app-local 
+.PHONY: build-common watch-common app-local print-env start-local-services
 
 print-env:
 	@echo "\n**** ENVIRONMENTS ****\n"
