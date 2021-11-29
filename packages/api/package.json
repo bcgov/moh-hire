@@ -16,7 +16,7 @@
     "start:debug": "nest start --debug --watch",
     "start:debug:local": "nest start --debug --watch --exec \"node -r ./env.js\"",
     "start:prod": "node dist/main",
-    "lint": "echo 'Linting @ehrp/api...' && eslint --fix --cache \"{src,apps,libs,test}/**/*.ts\"",
+    "lint": "echo 'Linting @ehpr/api...' && eslint --fix --cache \"{src,apps,libs,test}/**/*.ts\"",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
