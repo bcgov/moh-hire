@@ -94,6 +94,8 @@ export const Form: React.FC = () => {
         <FormikForm>
           <div className='flex flex-col items-center'>
             <div className='w-full md:w-1/2  mb-12'>{currentStepComponent}</div>
+
+            {/* For example sake, to remove */}
             {errors ? (
               <div className='text-red-500 text-center mt-4'>
                 {Object.values(errors).map(error => (
@@ -101,6 +103,7 @@ export const Form: React.FC = () => {
                 ))}
               </div>
             ) : null}
+            {/* For example sake, to remove */}
 
             <div className='flex justify-between w-10/12 md:w-1/2 mb-14'>
               <Button
