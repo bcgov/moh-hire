@@ -9,7 +9,7 @@ export NODE_ENV ?= development
 
 .PHONY: build-common watch-common app-local print-env run-local start-local-services
 
-run-local: | build-common app-local 
+run-local: | app-local 
 
 print-env:
 	@echo "\n**** ENVIRONMENTS ****\n"
@@ -28,6 +28,7 @@ build-common: print-env
 
 app-local: start-local-services
 	@echo "++\n***** Running api + web in local Node server\n++"
+	@yarn 
 	@yarn start:local
 start-local-services:
 	@echo "++\n***** Starting local services\n++"
