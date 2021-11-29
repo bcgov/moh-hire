@@ -19,7 +19,7 @@ print-env:
 
 watch-common: print-env
 	@echo "++\n***** Watching All common packages\n++"
-	@yarn watch:commons
+	@yarn watch:common
 
 build-common: print-env
 	@echo "++\n***** Building All stacks\n++"

@@ -12,10 +12,10 @@
     "check": "run-p 'lint' 'format:check'",
     "prepare": "husky install",
     "precommit": "run-p 'format:staged'",
-    "watch:commons": "nodemon --exec \"yarn build && yarn\"",
+    "watch:common": "nodemon --exec \"yarn build && yarn\"",
     "start:api:local": "yarn workspace @ehpr/api start:dev:local",
     "start:web:local": "yarn workspace @ehpr/web start",
-    "start:local": "run-p 'watch:commons' 'start:api:local' 'start:web:local'"
+    "start:local": "run-p 'watch:common' 'start:api:local' 'start:web:local'"
   },
   "workspaces": [
     "packages/*"
