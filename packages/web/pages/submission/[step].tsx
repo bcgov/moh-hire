@@ -37,7 +37,7 @@ const Submission = () => {
       </p>
 
       <div className='bg-white rounded'>
-        <div className='p-4 border-b'>
+        <div className='p-4 border-b mb-5'>
           <Stepper formSteps={FORM_STEPS} step={step} />
         </div>
 

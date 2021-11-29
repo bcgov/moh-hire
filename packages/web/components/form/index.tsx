@@ -73,8 +73,6 @@ export const Form: React.FC = () => {
     }
 
     const checkPreviousStep = async () => {
-      console.log(formikRef.current?.values);
-
       if (!(await previousStepValidation?.isValid(formikRef.current?.values))) {
         router.replace('/submission/1');
       }
@@ -91,28 +89,31 @@ export const Form: React.FC = () => {
     >
       {({ isSubmitting, errors }) => (
         <FormikForm>
-          {currentStepComponent}
-          {errors ? (
-            <div className='text-red-500 text-center mt-4'>
-              {Object.values(errors).map(error => (
-                <p key={error}>{error}</p>
-              ))}
+          <div className='flex flex-col items-center'>
+            <div className='w-full md:w-1/2  mb-12'>{currentStepComponent}</div>
+            {errors ? (
+              <div className='text-red-500 text-center mt-4'>
+                {Object.values(errors).map(error => (
+                  <p key={error}>{error}</p>
+                ))}
+              </div>
+            ) : null}
+
+            <div className='flex justify-between w-10/12 md:w-1/2 mb-14'>
+              <Link
+                variant='secondary'
+                href={step === 1 ? '/submission/1' : `/submission/${Number(step) - 1}`}
+              >
+                Go Back
+              </Link>
+              <Button variant='primary' disabled={isSubmitting} type='submit'>
+                {isSubmitting ? (
+                  <FontAwesomeIcon icon={faSpinner} className='h-5 w-5 animate-spin' />
+                ) : (
+                  'Continue'
+                )}
+              </Button>
             </div>
-          ) : null}
-          <div className='flex justify-center'>
-            <Link
-              variant='secondary'
-              href={step === 1 ? '/submission/1' : `/submission/${Number(step) - 1}`}
-            >
-              Go Back
-            </Link>
-            <Button variant='primary' disabled={isSubmitting} type='submit'>
-              {isSubmitting ? (
-                <FontAwesomeIcon icon={faSpinner} className='h-5 w-5 animate-spin' />
-              ) : (
-                'Continue'
-              )}
-            </Button>
           </div>
         </FormikForm>
       )}
