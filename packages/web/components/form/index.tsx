@@ -1,7 +1,7 @@
 import { FormikHelpers, Formik, FormikProps, Form as FormikForm } from 'formik';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
-import { Button, Link } from '@components';
+import { Button } from '@components';
 import { Contact, Credential, Preferences, Primary, Review } from './components';
 import {
   primarySchema,
@@ -12,8 +12,6 @@ import {
   SubmissionType,
   initialSubmissionValues,
 } from './validation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const steps = [
   {
@@ -44,6 +42,7 @@ export const Form: React.FC = () => {
 
   const step = Number(router.query.step);
   const stepIndex = step - 1;
+  const isFirstStep = stepIndex === 0;
   const isLastStep = stepIndex === steps.length - 1;
 
   const previousStepValidation = steps[stepIndex - 1]?.validationSchema;
@@ -58,6 +57,10 @@ export const Form: React.FC = () => {
       router.push(`/submission/${step + 1}`);
     }
     helpers.setSubmitting(false);
+  };
+
+  const goToPreviousStep = () => {
+    router.push(`/submission/${Number(step) - 1}`);
   };
 
   /**
@@ -100,18 +103,21 @@ export const Form: React.FC = () => {
             ) : null}
 
             <div className='flex justify-between w-10/12 md:w-1/2 mb-14'>
-              <Link
+              <Button
                 variant='secondary'
-                href={step === 1 ? '/submission/1' : `/submission/${Number(step) - 1}`}
+                disabled={isFirstStep}
+                onClick={goToPreviousStep}
+                type='button'
               >
                 Go Back
-              </Link>
-              <Button variant='primary' disabled={isSubmitting} type='submit'>
-                {isSubmitting ? (
-                  <FontAwesomeIcon icon={faSpinner} className='h-5 w-5 animate-spin' />
-                ) : (
-                  'Continue'
-                )}
+              </Button>
+              <Button
+                variant='primary'
+                disabled={isSubmitting}
+                loading={isSubmitting}
+                type='submit'
+              >
+                Continue
               </Button>
             </div>
           </div>
