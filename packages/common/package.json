@@ -5,11 +5,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "echo \"Building Common package\" && rm -rf dist && tsc",
-<<<<<<< HEAD
+
     "watch": "tsc --watch"
-=======
-    "build-pre-app": "echo \"Building Common package\" && rm -rf dist && tsc"
->>>>>>> Rename common build to build-pre-app as pre application dependency build
   },
   "dependencies": {
     "@types/node": "16.11.7",
