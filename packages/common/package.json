@@ -4,7 +4,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "echo \"Building Common package\" && rm -rf dist && tsc"
+    "build": "echo \"Building Common package\" && rm -rf dist && tsc",
+    "build-pre-app": "echo \"Building Common package\" && rm -rf dist && tsc"
   },
   "dependencies": {
     "@types/node": "16.11.7",

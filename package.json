@@ -8,11 +8,11 @@
     "format:write": "yarn prettier --write .",
     "lint": "echo 'Linting all packages' && wsrun --parallel --exclude-missing lint",
     "test": "echo 'Running tests' && wsrun --parallel --exclude-missing test",
-    "build": "echo 'Building all packages' && wsrun --stages --exclude-missing build",
+    "build-common": "echo 'Building all packages' && wsrun --stages --exclude-missing build-pre-app",
     "check": "run-p 'lint' 'format:check'",
     "prepare": "husky install",
     "precommit": "run-p 'format:staged'",
-    "watch:common": "nodemon --exec \"yarn build && yarn\"",
+    "watch:common": "nodemon --exec \"yarn build-common && yarn\"",
     "start:api:local": "yarn workspace @ehpr/api start:dev:local",
     "start:web:local": "yarn workspace @ehpr/web start",
     "start:local": "run-p 'watch:common' 'start:api:local' 'start:web:local'"

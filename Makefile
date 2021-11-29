@@ -23,7 +23,7 @@ watch-common: print-env
 
 build-common: print-env
 	@echo "++\n***** Building All stacks\n++"
-	@yarn build && yarn
+	@yarn build-common && yarn
 
 
 app-local: start-local-services
