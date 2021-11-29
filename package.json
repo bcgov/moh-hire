@@ -11,7 +11,11 @@
     "build": "echo 'Building all packages' && wsrun --stages --exclude-missing build",
     "check": "run-p 'lint' 'format:check'",
     "prepare": "husky install",
-    "precommit": "run-p 'format:staged'"
+    "precommit": "run-p 'format:staged'",
+    "watch:commons": "nodemon --exec \"yarn build && yarn\"",
+    "start:api:local": "yarn workspace @ehpr/api start:dev:local",
+    "start:web:local": "yarn workspace @ehpr/web start",
+    "start:local": "run-p 'watch:commons' 'start:api:local' 'start:web:local'"
   },
   "workspaces": [
     "packages/*"
@@ -22,6 +26,7 @@
     "@typescript-eslint/parser": "5.0.0",
     "eslint-config-prettier": "8.3.0",
     "husky": "7.0.4",
+    "nodemon": "2.0.15",
     "npm-run-all": "4.1.5",
     "prettier": "2.4.1",
     "pretty-quick": "3.1.2",

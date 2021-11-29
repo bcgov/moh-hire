@@ -12,6 +12,6 @@ async function bootstrap() {
     runtimeEnv: process.env.RUNTIME_ENV,
   });
   console.log(helloWorld());
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 4000);
 }
 bootstrap();
