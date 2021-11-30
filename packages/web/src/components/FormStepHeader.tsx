@@ -17,7 +17,7 @@ export const FormStepHeader: React.FC = ({ children }) => {
     <h1
       ref={headerRef}
       tabIndex={-1}
-      className='text-bcBluePrimary text-center text-2xl focus:outline-none'
+      className='text-bcBluePrimary text-center text-2xl focus:outline-none mb-5'
     >
       {children}
     </h1>
