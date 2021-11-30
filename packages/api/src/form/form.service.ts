@@ -2,9 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { FormEntity } from './entity/form.entity';
 import { FormDTO } from '@ehpr/common/dto/form.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+
 @Injectable()
 export class FormService {
-  constructor(private readonly formRepository: Repository<FormEntity>) {}
+  constructor(
+    @InjectRepository(FormEntity)
+    private readonly formRepository: Repository<FormEntity>,
+  ) {}
   async saveForm(dto: FormDTO) {
     const newForm = this.formRepository.create(dto);
     return await this.formRepository.save(newForm);

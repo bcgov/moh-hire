@@ -1,5 +1,5 @@
 import { FormPayload } from '@ehpr/common/form-payload';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('form')
 export class FormEntity {
