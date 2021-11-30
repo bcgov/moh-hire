@@ -1,15 +1,15 @@
-import { IsString, Length } from 'class-validator';
+import { IsString, Length, Matches } from 'class-validator';
 
 export class PersonalInformationDTO {
   @IsString()
-  @Length(2, 20)
+  @Length(1, 255)
   firstName!: string;
 
   @IsString()
-  @Length(2, 20)
+  @Length(1, 255)
   lastName!: string;
 
   @IsString()
-  @Length(6, 7)
+  @Matches(/^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][\s-]?\d[ABCEGHJ-NPRSTV-Z]\d$/i)
   postalCode!: string;
 }
