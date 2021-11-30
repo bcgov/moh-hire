@@ -2,7 +2,7 @@ import { FormPayload } from '@ehpr/common/form-payload';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('form')
-export class FormDTO {
+export class FormEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
