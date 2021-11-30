@@ -9,10 +9,6 @@ export class FormEntity {
   @Column('jsonb', { nullable: false })
   payload!: FormPayload;
 
-  @Column('number', {})
-  version!: number;
-
-  toResponseObject() {
-    return {};
-  }
+  @Column('string', {})
+  version!: string;
 }
