@@ -1,17 +1,20 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Home from '../src/pages/index';
-import * as nextRouter from 'next/router';
+import Home from '../../src/pages/index';
 
-nextRouter.useRouter = jest.fn();
 const mockReplace = jest.fn();
-nextRouter.useRouter.mockImplementation(() => ({ route: '/', replace: mockReplace }));
+
+jest.mock('next/router', () => ({
+  useRouter: () => ({
+    replace: mockReplace,
+  }),
+}));
 
 describe('Home', () => {
   it('redirects to the submission page', () => {
-    const { container } = render(<Home />);
+    render(<Home />);
 
-    expect(container.firstChild).toBeNull();
+    expect(mockReplace).toHaveBeenCalledWith('/submission/1');
   });
 
   it('does not render content', () => {
