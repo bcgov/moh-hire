@@ -29,15 +29,14 @@ export const FormField: React.FC<FieldProps> = ({
       </div>
 
       <FormikField
-        name={name}
         id={name}
         aria-describedby={description ? `${name}-description` : null}
         className={classnames(
           'w-full rounded-none bg-gray-100 block h-10 border-b-2 border-bcBlack pl-1',
           { 'border-red-500': meta.touched && meta.error },
         )}
-        value={field.value || ''}
         disabled={disabled}
+        {...field}
       >
         {children}
       </FormikField>
