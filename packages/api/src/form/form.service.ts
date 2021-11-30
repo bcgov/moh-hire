@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { FormDTO } from './dto/form.dto';
 import { FormEntity } from './entity/form.entity';
-
+import { FormDTO } from '@ehpr/common/dto/form.dto';
 @Injectable()
 export class FormService {
   constructor(private readonly formRepository: Repository<FormEntity>) {}
