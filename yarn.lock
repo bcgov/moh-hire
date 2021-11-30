@@ -6044,6 +6044,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highlight.js@npm:^10.7.1":
+  version: 10.7.3
+  resolution: "highlight.js@npm:10.7.3"
+  checksum: defeafcd546b535d710d8efb8e650af9e3b369ef53e28c3dc7893eacfe263200bba4c5fcf43524ae66d5c0c296b1af0870523ceae3e3104d24b7abf6374a4fea
+  languageName: node
+  linkType: hard
+
 "hmac-drbg@npm:^1.0.1":
   version: 1.0.1
   resolution: "hmac-drbg@npm:1.0.1"
@@ -7767,6 +7774,13 @@ __metadata:
     prelude-ls: ~1.1.2
     type-check: ~0.3.2
   checksum: 0d084a524231a8246bb10fec48cdbb35282099f6954838604f3c7fc66f2e16fa66fd9cc2f3f20a541a113c4dafdf181e822c887c8a319c9195444e6c64ac395e
+  languageName: node
+  linkType: hard
+
+"libphonenumber-js@npm:^1.9.43":
+  version: 1.9.43
+  resolution: "libphonenumber-js@npm:1.9.43"
+  checksum: 0e5112fbe9c8d4ccfb7b9f0eb1e7c672234e2bb70ea32169a6189583179b2a1ebb7ed284629ead06065d167f736955410e3c6debbeb98cb2f66398187209e415
   languageName: node
   linkType: hard
 
@@ -10037,7 +10051,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reflect-metadata@npm:0.1.13":
+"reflect-metadata@npm:0.1.13, reflect-metadata@npm:^0.1.13":
   version: 0.1.13
   resolution: "reflect-metadata@npm:0.1.13"
   checksum: 798d379a7b6f6455501145419505c97dd11cbc23857a386add2b9ef15963ccf15a48d9d15507afe01d4cd74116df8a213247200bac00320bd7c11ddeaa5e8fb4
