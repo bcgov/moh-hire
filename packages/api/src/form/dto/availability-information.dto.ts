@@ -8,8 +8,10 @@ export class AvailabilityDTO {
 
   @Length(0, Object.keys(HealthAuthorities).length)
   deploymentLocations!: HealthAuthorities[];
+
   @ValidateNested()
   placementPrefs!: PlacementPreferencesDTO;
+
   @IsBoolean()
   isImmunized!: boolean;
 

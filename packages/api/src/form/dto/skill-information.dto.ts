@@ -15,6 +15,8 @@ export class SkillInformationDTO {
   @Min(0)
   registrationNumber!: number;
 
+  @IsString()
+  @IsIn(Object.values(CurrentEmploymentTypes))
   currentEmploymentType!: CurrentEmploymentTypes;
 
   @IsString()

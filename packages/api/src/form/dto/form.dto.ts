@@ -10,7 +10,8 @@ export class FormDTO {
     skillInformation: SkillInformationDTO;
     availabilityInformation: AvailabilityDTO;
   };
+
   @IsString()
-  @IsIn(['1'])
+  @IsIn(['v1'])
   version!: string;
 }
