@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import { primaryFields, primaryDefaultValues, PrimaryType } from './primary';
+import { primaryFields, primaryDefaultValues, PrimaryType } from './personal';
 import { contactFields, contactDefaultValues, ContactType } from './contact';
 import { credentialFields, credentialDefaultValues, CredentialType } from './credential';
 import { preferencesFields, preferencesDefaultValues, PreferencesType } from './preferences';

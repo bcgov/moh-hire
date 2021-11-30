@@ -1,6 +1,6 @@
 import { FormField, FormStepHeader } from '@components';
 
-export const Primary: React.FC = () => {
+export const Personal: React.FC = () => {
   return (
     <>
       <FormStepHeader>1. Primary Information</FormStepHeader>
