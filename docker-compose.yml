@@ -22,6 +22,11 @@ services:
       context: ./
       dockerfile: Dockerfile
     command: 'yarn watch:api'
+    volumes:
+      - ./packages/api:/packages/api
+      - '/packages/api/node_modules'
+      - ./packages/common:/packages/common
+      - /packages/common/node_modules
     ports:
       - '4000:4000'
     environment:
@@ -39,6 +44,11 @@ services:
       context: ./
       dockerfile: Dockerfile
     command: 'yarn watch:web'
+    volumes:
+      - ./packages/web:/packages/web
+      - /packages/web/node_modules
+      - ./packages/common:/packages/common
+      - /packages/common/node_modules
     ports:
       - '3000:3000'
     environment:
