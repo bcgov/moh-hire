@@ -1,18 +1,16 @@
-import { FormPayload } from '@ehpr/common/form-payload';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { IsIn, IsString, ValidateNested } from 'class-validator';
+import { AvailabilityDTO } from './availability-information.dto';
+import { PersonalInformationDTO } from './personal-information.dto';
+import { SkillInformationDTO } from './skill-information.dto';
 
-@Entity('form')
 export class FormDTO {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
-  @Column('jsonb', { nullable: false })
-  payload!: FormPayload;
-
-  @Column('number', {})
-  version!: number;
-
-  toResponseObject() {
-    return {};
-  }
+  @ValidateNested()
+  payload!: {
+    personalInformation: PersonalInformationDTO;
+    skillInformation: SkillInformationDTO;
+    availabilityInformation: AvailabilityDTO;
+  };
+  @IsString()
+  @IsIn(['1'])
+  version!: string;
 }
