@@ -15,6 +15,47 @@ services:
     restart: always
     networks:
       - local
+  api:
+    image: ${PROJECT}_base
+    container_name: ${PROJECT}_api
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: 'yarn watch:api'
+    volumes:
+      - ./packages/api:/packages/api
+      - '/packages/api/node_modules'
+      - ./packages/common:/packages/common
+      - /packages/common/node_modules
+    ports:
+      - '4000:4000'
+    environment:
+      - NODE_ENV=development
+      - RUNTIME_ENV='hosted
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=db
+    depends_on:
+      - db
+
+  web:
+    image: ${PROJECT}_base
+    container_name: ${PROJECT}_web
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: 'yarn watch:web'
+    volumes:
+      - ./packages/web:/packages/web
+      - /packages/web/node_modules
+      - ./packages/common:/packages/common
+      - /packages/common/node_modules
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - RUNTIME_ENV='hosted
+    depends_on:
+      - api
 networks:
   local:
     driver: bridge

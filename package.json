@@ -14,6 +14,8 @@
     "prepare": "husky install",
     "precommit": "run-p 'format:staged'",
     "watch:common": "wsrun --stages --exclude-missing watch",
+    "watch:api": "run-p 'watch:common' 'start:api:local'",
+    "watch:web": "run-p 'watch:common' 'start:web:local'",
     "start:api:local": "yarn workspace @ehpr/api start:dev:local",
     "start:web:local": "yarn workspace @ehpr/web start",
     "start:local": "run-p 'watch:common' 'start:api:local' 'start:web:local'"

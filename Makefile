@@ -26,7 +26,17 @@ start-local-services:
 
 stop-local-services:
 	@echo "++\n***** Stopping local services\n++"
+	@docker-compose down db
+	@echo "++\n*****"
+
+docker-stop:
+	@echo "++\n***** Stopping Docker containers\n++"
 	@docker-compose down
+	@echo "++\n*****"
+
+docker-run:
+	@echo "++\n***** Running docker-compose\n++"
+	@docker-compose up --build
 	@echo "++\n*****"
 
 	
