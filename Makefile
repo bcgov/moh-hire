@@ -19,7 +19,6 @@ app-local: print-env start-local-services
 	@echo "++\n***** Running api + web in local Node server\n++"
 	@yarn 
 	@yarn start:local
-	@echo "\n*********************\n"
 start-local-services:
 	@echo "++\n***** Starting local services\n++"
 	@docker-compose up -d db 
