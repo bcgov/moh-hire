@@ -18,30 +18,30 @@ services:
   api:
     image: ${PROJECT}_base
     container_name: ${PROJECT}_api
-    build: 
+    build:
       context: ./
       dockerfile: Dockerfile
     command: 'yarn watch:api'
     ports:
       - '4000:4000'
-    environment: 
+    environment:
       - NODE_ENV=development
       - RUNTIME_ENV='hosted
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_HOST=db
     depends_on:
       - db
-  
+
   web:
     image: ${PROJECT}_base
     container_name: ${PROJECT}_web
-    build: 
+    build:
       context: ./
       dockerfile: Dockerfile
     command: 'yarn watch:web'
     ports:
       - '3000:3000'
-    environment: 
+    environment:
       - NODE_ENV=development
       - RUNTIME_ENV='hosted
     depends_on:
