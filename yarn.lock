@@ -633,6 +633,7 @@ __metadata:
   resolution: "@ehpr/common@workspace:packages/common"
   dependencies:
     "@types/node": 16.11.7
+    class-validator: 0.13.2
     ts-node: 10.4.0
     typescript: 4.3.5
   languageName: unknown
@@ -4000,7 +4001,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"class-validator@npm:^0.13.2":
+"class-validator@npm:0.13.2":
   version: 0.13.2
   resolution: "class-validator@npm:0.13.2"
   dependencies:
@@ -5032,7 +5033,6 @@ __metadata:
     "@tsconfig/node14": 1.0.1
     "@typescript-eslint/eslint-plugin": 5.0.0
     "@typescript-eslint/parser": 5.0.0
-    class-validator: ^0.13.2
     eslint-config-prettier: 8.3.0
     husky: 7.0.4
     nodemon: 2.0.15
