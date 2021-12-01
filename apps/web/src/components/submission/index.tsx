@@ -96,7 +96,7 @@ export const Form: React.FC = () => {
       validate={currentStepValidation}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting, errors }) => (
+      {({ isSubmitting }) => (
         <FormikForm>
           <div className='flex flex-col items-center'>
             <div className='w-full md:w-1/2  mb-12'>{currentStepComponent}</div>
