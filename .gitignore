@@ -13,5 +13,12 @@ node_modules
 .DS_Store
 .env
 
-.eslintcache
+**/.eslintcache
 .pgdata
+
+# emails for the send 
+
+**/emails.csv
+**/errors.csv
+
+**/.next

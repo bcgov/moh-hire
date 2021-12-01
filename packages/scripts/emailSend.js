@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '.env' });
+require('dotenv').config({ path: '../../.env' });
 const axios = require('axios');
 const fs = require('fs');
 const outputCSV = require('./generatecsv').default.generateEmailCSV;
@@ -54,7 +54,7 @@ async function getEmails() {
   await new Promise(resolve => {
     setTimeout(resolve(), 1000);
   });
-  const file = fs.readFileSync('./src/scripts/emails.csv').toString();
+  const file = fs.readFileSync('./emails.csv').toString();
 
   // Split the string into rows, discard the columns row
   return file
@@ -132,12 +132,13 @@ async function sendEmails() {
       // When the email queue is empty, clear the interval and store failed sends in a csv
       clearInterval(interval);
       console.log(`There were ${errors.length} errors`);
-      outputCSV(errors, 'src/scripts/errors.csv');
+      outputCSV(errors, './errors.csv');
     }
   }, 10);
 }
 
 async function main() {
+  console.log(CHES_HOST, CHES_AUTH_URL, CHES_CLIENT_SECRET, CHES_CLIENT_ID);
   await sendEmails();
 }
 

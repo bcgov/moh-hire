@@ -4,7 +4,7 @@ const faker = require('faker');
 
 function generateFakeEmailArray() {
   const array = [];
-  for (let i = 0; i < 10000; i++) {
+  for (let i = 0; i < 100; i++) {
     array.push([{ row: i, uuid: uuidV4(), email: faker.internet.email() }]);
   }
   return array;
