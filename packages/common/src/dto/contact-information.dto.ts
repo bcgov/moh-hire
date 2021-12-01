@@ -12,7 +12,9 @@ export class ContactInformationDTO {
 
   @IsString()
   @IsOptional()
-  @Length(0, 255)
+  @Length(0, 255, {
+    message: '255 character limit',
+  })
   primaryPhoneExt!: string;
 
   @IsString()
@@ -24,7 +26,9 @@ export class ContactInformationDTO {
 
   @IsString()
   @IsOptional()
-  @Length(0, 255)
+  @Length(0, 255, {
+    message: '255 character limit',
+  })
   secondaryPhoneExt!: string;
 
   @IsString()
