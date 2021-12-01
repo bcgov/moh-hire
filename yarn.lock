@@ -595,9 +595,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ehpr/api@workspace:packages/api":
+"@ehpr/api@workspace:apps/api":
   version: 0.0.0-use.local
-  resolution: "@ehpr/api@workspace:packages/api"
+  resolution: "@ehpr/api@workspace:apps/api"
   dependencies:
     "@ehpr/common": 1.0.1
     "@nestjs/cli": 8.0.0
@@ -640,9 +640,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@ehpr/web@workspace:packages/web":
+"@ehpr/web@workspace:apps/web":
   version: 0.0.0-use.local
-  resolution: "@ehpr/web@workspace:packages/web"
+  resolution: "@ehpr/web@workspace:apps/web"
   dependencies:
     "@fortawesome/fontawesome-svg-core": 1.2.36
     "@fortawesome/free-solid-svg-icons": 5.15.4
