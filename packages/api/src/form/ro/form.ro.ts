@@ -1,4 +1,4 @@
-import { FormPayload } from '@ehpr/common/form-payload';
+import { FormPayload } from '@ehpr/common';
 
 export class FormRO {
   id!: number;

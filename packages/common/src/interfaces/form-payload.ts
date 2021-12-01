@@ -1,28 +1,15 @@
+import {
+  AvailabilityDTO,
+  ContactInformationDTO,
+  PersonalInformationDTO,
+  SkillInformationDTO,
+} from 'src';
+
 export interface FormPayload {
-  personalInformation: {
-    firstName: string;
-    lastName: string;
-    postalCode: string;
-    primaryPhone: string;
-    secondaryPhone: string;
-    email: string;
-  };
-
-  skillInformation: {
-    streamTypes: StreamTypes;
-    registrationStatus: RegistrationStatus;
-    registrationNumber: number;
-    currentEmploymentType: CurrentEmploymentTypes;
-    additionalComments?: string;
-  };
-
-  availabilityInformation: {
-    deployAnywhere: boolean;
-    deploymentLocations: HealthAuthorities[];
-    placementPrefs: PlacementPreferences;
-    isImmunized: boolean;
-    deploymentDuration: DeploymentDurations;
-  };
+  personalInformation: PersonalInformationDTO;
+  contactInformation: ContactInformationDTO;
+  skillInformation: SkillInformationDTO;
+  availabilityInformation: AvailabilityDTO;
 }
 
 // TODO get Stream types

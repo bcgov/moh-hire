@@ -2,9 +2,9 @@ import { FormikHelpers, Formik, FormikProps, Form as FormikForm } from 'formik';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { Button } from '@components';
-import { Contact, Credential, Preferences, Primary, Review } from './components';
+import { Contact, Credential, Preferences, Personal, Review } from './components';
 import {
-  primarySchema,
+  personalSchema,
   contactSchema,
   credentialSchema,
   preferencesSchema,
@@ -15,8 +15,8 @@ import {
 
 const steps = [
   {
-    component: <Primary />,
-    validationSchema: primarySchema,
+    component: <Personal />,
+    validationSchema: personalSchema,
   },
   {
     component: <Contact />,
