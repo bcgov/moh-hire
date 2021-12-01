@@ -1,4 +1,4 @@
-import { CurrentEmploymentTypes, RegistrationStatus, StreamTypes } from '@ehpr/common/form-payload';
+import { CurrentEmploymentTypes, RegistrationStatus, StreamTypes } from '../interfaces';
 import { IsIn, IsNumber, IsOptional, IsString, Length, Max, Min } from 'class-validator';
 
 export class SkillInformationDTO {

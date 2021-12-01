@@ -1,6 +1,7 @@
-import { DeploymentDurations, HealthAuthorities } from '@ehpr/common/form-payload';
 import { IsBoolean, IsIn, IsNumber, Length, ValidateNested } from 'class-validator';
-import { PlacementPreferencesDTO } from './placement-preferences.dto';
+
+import { DeploymentDurations, HealthAuthorities } from '../interfaces';
+import { PlacementPreferencesDTO } from '.';
 
 export class AvailabilityDTO {
   @IsBoolean()

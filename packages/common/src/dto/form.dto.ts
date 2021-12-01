@@ -1,8 +1,10 @@
 import { IsIn, IsString, ValidateNested } from 'class-validator';
-import { AvailabilityDTO } from './availability-information.dto';
-import { ContactInformationDTO } from './contact-information.dto';
-import { PersonalInformationDTO } from './personal-information.dto';
-import { SkillInformationDTO } from './skill-information.dto';
+import {
+  AvailabilityDTO,
+  ContactInformationDTO,
+  PersonalInformationDTO,
+  SkillInformationDTO,
+} from '.';
 
 export class FormDTO {
   @ValidateNested()
