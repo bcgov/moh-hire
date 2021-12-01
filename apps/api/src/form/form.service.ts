@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { FormEntity } from './entity/form.entity';
-import { FormDTO } from '@ehpr/common/dto/form.dto';
+import { FormDTO } from '@ehpr/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
