@@ -3,15 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { Button } from '@components';
 import { Contact, Credential, Preferences, Personal, Review } from './components';
-import {
-  personalSchema,
-  contactSchema,
-  credentialSchema,
-  preferencesSchema,
-  reviewSchema,
-  SubmissionType,
-  initialSubmissionValues,
-} from './validation';
+import { personalSchema, SubmissionType, initialSubmissionValues } from './validation';
 
 const steps = [
   {
@@ -20,24 +12,33 @@ const steps = [
   },
   {
     component: <Contact />,
-    validationSchema: contactSchema,
+    validationSchema: () => ({
+      form: 'validation not implemented for this step',
+    }),
   },
   {
     component: <Credential />,
-    validationSchema: credentialSchema,
+    validationSchema: () => ({
+      form: 'validation not implemented for this step',
+    }),
   },
   {
     component: <Preferences />,
-    validationSchema: preferencesSchema,
+    validationSchema: () => ({
+      form: 'validation not implemented for this step',
+    }),
   },
   {
     component: <Review />,
-    validationSchema: reviewSchema,
+    validationSchema: () => ({
+      form: 'validation not implemented for this step',
+    }),
   },
 ];
 
 export const Form: React.FC = () => {
-  const formikRef = useRef<FormikProps<SubmissionType>>(null);
+  // Using any here while the form is under construction, should be SubmissionType
+  const formikRef = useRef<FormikProps<any>>(null);
   const router = useRouter();
 
   const step = Number(router.query.step);
@@ -49,7 +50,11 @@ export const Form: React.FC = () => {
   const currentStepValidation = steps[stepIndex]?.validationSchema;
   const currentStepComponent = steps[stepIndex]?.component;
 
-  const handleSubmit = (values: SubmissionType, helpers: FormikHelpers<SubmissionType>) => {
+  // Partial should be temporary here until the form form is completed
+  const handleSubmit = (
+    values: Partial<SubmissionType>,
+    helpers: FormikHelpers<Partial<SubmissionType>>,
+  ) => {
     if (isLastStep) {
       console.log(values); // submit
     } else {
@@ -76,7 +81,8 @@ export const Form: React.FC = () => {
     }
 
     const checkPreviousStep = async () => {
-      if (!(await previousStepValidation?.isValid(formikRef.current?.values))) {
+      const errors = previousStepValidation(formikRef.current?.values);
+      if (Object.keys(errors).length > 0) {
         router.replace('/submission/1');
       }
     };
@@ -87,23 +93,13 @@ export const Form: React.FC = () => {
     <Formik
       innerRef={formikRef}
       initialValues={initialSubmissionValues}
-      validationSchema={currentStepValidation}
+      validate={currentStepValidation}
       onSubmit={handleSubmit}
     >
       {({ isSubmitting, errors }) => (
         <FormikForm>
           <div className='flex flex-col items-center'>
             <div className='w-full md:w-1/2  mb-12'>{currentStepComponent}</div>
-
-            {/* For example sake, to remove */}
-            {errors ? (
-              <div className='text-red-500 text-center mt-4'>
-                {Object.values(errors).map(error => (
-                  <p key={error}>{error}</p>
-                ))}
-              </div>
-            ) : null}
-            {/* For example sake, to remove */}
 
             <div className='flex justify-between w-10/12 md:w-1/2 mb-14'>
               <Button

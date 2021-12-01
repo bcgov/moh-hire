@@ -1,14 +1,9 @@
-import * as yup from 'yup';
-import { FieldsType } from '.';
+import { PersonalInformationDTO } from '@ehpr/common';
 
-export const personalFields: FieldsType<PersonalInformationType> = {
-  personalFoo: yup.string(),
-};
+export { PersonalInformationDTO } from '@ehpr/common';
 
-export interface PersonalInformationType {
-  personalFoo: string;
-}
-
-export const personalDefaultValues = {
-  personalFoo: '',
+export const personalDefaultValues: PersonalInformationDTO = {
+  firstName: '',
+  lastName: '',
+  postalCode: '',
 };
