@@ -9,6 +9,6 @@ export interface PersonalInformationType {
   personalFoo: string;
 }
 
-export const primaryDefaultValues = {
+export const personalDefaultValues = {
   personalFoo: '',
 };

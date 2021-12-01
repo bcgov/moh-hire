@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { Button } from '@components';
 import { Contact, Credential, Preferences, Personal, Review } from './components';
 import {
-  primarySchema,
+  personalSchema,
   contactSchema,
   credentialSchema,
   preferencesSchema,
@@ -16,7 +16,7 @@ import {
 const steps = [
   {
     component: <Personal />,
-    validationSchema: primarySchema,
+    validationSchema: personalSchema,
   },
   {
     component: <Contact />,
