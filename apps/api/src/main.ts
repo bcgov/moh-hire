@@ -16,7 +16,7 @@ async function bootstrap() {
       level: 'debug',
       format: winston.format.combine(
         winston.format.timestamp(),
-        process.env.NODE_ENV === 'local'
+        process.env.RUNTIME_ENV === 'local'
           ? nestWinstonModuleUtilities.format.nestLike()
           : winston.format.json(),
       ),
