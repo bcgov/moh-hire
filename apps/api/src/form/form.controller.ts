@@ -4,10 +4,7 @@ import { FormService } from './form.service';
 
 @Controller('form')
 export class FormController {
-  constructor(
-    @Inject(FormService)
-    private readonly formService: FormService,
-  ) {}
+  constructor(private readonly formService: FormService) {}
   @Post('')
   async name(@Res() res: any, @Body() body: FormDTO) {
     await this.formService.saveForm(body);

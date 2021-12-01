@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { FormEntity } from './entity/form.entity';
 import { FormController } from './form.controller';
 import { FormService } from './form.service';
 
 @Module({
-  imports: [],
+  imports: [TypeOrmModule.forFeature([FormEntity])],
   controllers: [FormController],
   providers: [FormService],
 })

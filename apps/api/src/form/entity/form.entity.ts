@@ -9,6 +9,6 @@ export class FormEntity {
   @Column('jsonb', { nullable: false })
   payload!: FormPayload;
 
-  @Column('string', {})
+  @Column('text', {})
   version!: string;
 }
