@@ -5,6 +5,9 @@ module.exports = {
     fontFamily: {
       sans: ['BCSans'],
     },
+    minHeight: {
+      4: '1rem',
+    },
     extend: {
       colors: {
         bcBluePrimary: '#003366',
