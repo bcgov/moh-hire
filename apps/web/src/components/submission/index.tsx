@@ -3,7 +3,12 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { Button } from '@components';
 import { Contact, Credential, Preferences, Personal, Review } from './components';
-import { personalSchema, SubmissionType, initialSubmissionValues } from './validation';
+import {
+  personalSchema,
+  contactSchema,
+  SubmissionType,
+  initialSubmissionValues,
+} from './validation';
 
 const steps = [
   {
@@ -12,9 +17,7 @@ const steps = [
   },
   {
     component: <Contact />,
-    validationSchema: () => ({
-      form: 'validation not implemented for this step',
-    }),
+    validationSchema: contactSchema,
   },
   {
     component: <Credential />,
