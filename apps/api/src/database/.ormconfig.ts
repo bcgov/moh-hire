@@ -16,6 +16,6 @@ export const config: ConnectionOptions = {
   cli: {
     migrationsDir: 'src/database/migrations',
   },
-  synchronize: false,
+  synchronize: true,
   namingStrategy: new DatabaseNamingStrategy(),
 };
