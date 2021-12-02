@@ -1,13 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { FormLabel } from '../../../src/components/form/FormLabel';
+import { Label } from '../../../src/components/form/Label';
 
 describe('FormLabel', () => {
   it('renders an element with the correct text', () => {
     const testId = 'input-id';
     const testLabel = 'label text';
 
-    render(<FormLabel htmlFor={testId}>{testLabel}</FormLabel>);
+    render(<Label htmlFor={testId}>{testLabel}</Label>);
 
     const label = screen.getByText(testLabel);
 
@@ -18,7 +18,7 @@ describe('FormLabel', () => {
     const testHtmlFor = 'input-id';
     const testLabel = 'label text';
 
-    render(<FormLabel htmlFor={testHtmlFor}>{testLabel}</FormLabel>);
+    render(<Label htmlFor={testHtmlFor}>{testLabel}</Label>);
 
     const label = screen.getByText(testLabel);
 
@@ -29,7 +29,7 @@ describe('FormLabel', () => {
     const testHtmlFor = 'input-id';
     const testLabel = 'label text';
 
-    render(<FormLabel htmlFor={testHtmlFor}>{testLabel}</FormLabel>);
+    render(<Label htmlFor={testHtmlFor}>{testLabel}</Label>);
 
     const label = screen.getByText(testLabel);
 

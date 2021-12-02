@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { FormError, FormLabel, FormLabelDescription } from '@components';
+import { Error, Label, Description } from '@components';
 import { Field as FormikField, useField } from 'formik';
 
 interface FieldProps extends Pick<HTMLInputElement, 'type'> {
@@ -11,21 +11,15 @@ interface FieldProps extends Pick<HTMLInputElement, 'type'> {
   max?: string;
 }
 
-export const FormField: React.FC<FieldProps> = ({
-  name,
-  label,
-  children,
-  disabled,
-  description,
-}) => {
+export const Field: React.FC<FieldProps> = ({ name, label, children, disabled, description }) => {
   const [field, meta] = useField(name);
 
   return (
     <div>
       <div className='mb-2'>
-        <FormLabel htmlFor={name}>{label}</FormLabel>
+        <Label htmlFor={name}>{label}</Label>
 
-        <FormLabelDescription id={`${name}-description`}>{description}</FormLabelDescription>
+        <Description id={`${name}-description`}>{description}</Description>
       </div>
 
       <FormikField
@@ -41,7 +35,7 @@ export const FormField: React.FC<FieldProps> = ({
         {children}
       </FormikField>
 
-      <FormError show={Boolean(meta.touched && meta.error)}>{meta.error}</FormError>
+      <Error show={Boolean(meta.touched && meta.error)}>{meta.error}</Error>
     </div>
   );
 };

@@ -1,15 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { FormLabelDescription } from '../../../src/components/form/FormLabelDescription';
+import { Description } from '../../../src/components/form/Description';
 
 describe('FormLabelDescription', () => {
   it('renders an element with the correct text', () => {
     const testDescriptionId = 'input-id';
     const testDescriptionText = 'description text';
 
-    render(
-      <FormLabelDescription id={testDescriptionId}>{testDescriptionText}</FormLabelDescription>,
-    );
+    render(<Description id={testDescriptionId}>{testDescriptionText}</Description>);
 
     const description = screen.getByText(testDescriptionText);
 
@@ -20,9 +18,7 @@ describe('FormLabelDescription', () => {
     const testDescriptionId = 'input-id';
     const testDescriptionText = 'description text';
 
-    render(
-      <FormLabelDescription id={testDescriptionId}>{testDescriptionText}</FormLabelDescription>,
-    );
+    render(<Description id={testDescriptionId}>{testDescriptionText}</Description>);
 
     const description = screen.getByText(testDescriptionText);
 
@@ -33,9 +29,7 @@ describe('FormLabelDescription', () => {
     const testDescriptionId = 'input-id';
     const testDescriptionText = 'description text';
 
-    render(
-      <FormLabelDescription id={testDescriptionId}>{testDescriptionText}</FormLabelDescription>,
-    );
+    render(<Description id={testDescriptionId}>{testDescriptionText}</Description>);
 
     const description = screen.getByText(testDescriptionText);
 
