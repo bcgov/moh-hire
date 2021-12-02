@@ -1,17 +1,16 @@
 import classnames from 'classnames';
 import { Error, Label, Description } from '@components';
-import { Field as FormikField, useField } from 'formik';
+import { Field as FormikField, useField, FieldConfig } from 'formik';
 
-interface FieldProps extends Pick<HTMLInputElement, 'type'> {
+export interface FieldProps extends FieldConfig {
   name: string;
   label: string;
-  children?: React.ReactElement;
-  disabled?: boolean;
   description?: string;
-  max?: string;
+  disabled?: boolean;
 }
 
-export const Field: React.FC<FieldProps> = ({ name, label, children, disabled, description }) => {
+export const Field: React.FC<FieldProps> = props => {
+  const { name, label, children, disabled, description, type, as } = props;
   const [field, meta] = useField(name);
 
   return (
@@ -30,6 +29,8 @@ export const Field: React.FC<FieldProps> = ({ name, label, children, disabled, d
           { 'border-red-500': meta.touched && meta.error },
         )}
         disabled={disabled}
+        as={as}
+        type={type}
         {...field}
       >
         {children}
