@@ -14,10 +14,10 @@ export class FormService {
     const newForm = this.formRepository.create(dto);
     return await this.formRepository.save(newForm);
   }
-  async getForms(): Promise<any> {
+  async getForms(): Promise<FormEntity[]> {
     return await this.formRepository.find();
   }
-  async getFormById(id: number): Promise<any> {
-    // return (await this.formRepository.findByIds([id]))[0];
+  async getFormById(id: number): Promise<FormEntity> {
+    return (await this.formRepository.findByIds([id]))[0];
   }
 }
