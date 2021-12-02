@@ -5,7 +5,7 @@ resource "aws_lambda_function" "api" {
   runtime          = "nodejs14.x"
   filename         = var.api_artifact
   source_code_hash = filebase64sha256(var.api_artifact)
-  handler          = "lambda.handler"
+  handler          = "api/lambda.handler"
   memory_size      = var.function_memory_mb
   timeout          = 30
 
