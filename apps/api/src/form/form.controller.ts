@@ -1,5 +1,5 @@
 import { Body, Controller, HttpStatus, Inject, Post, Res } from '@nestjs/common';
-import { FormDTO } from '@ehpr/common/dto/form.dto';
+import { FormDTO } from '@ehpr/common';
 import { FormService } from './form.service';
 
 @Controller('form')

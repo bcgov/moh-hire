@@ -17,4 +17,3 @@ node_modules
 .pgdata
 .build
 yarn.build.json
-packing.sh
