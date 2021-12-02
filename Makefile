@@ -44,7 +44,7 @@ export TF_BACKEND_CFG
 
 # Aliases 
 bootstrap-terraform: print-env bootstrap
-build-terraform-artifact: clean-yarn print-env pre-build build-web build-api
+build-terraform-artifact: clean-yarn print-env pre-build build-api
 
 # Local Development
 clean-yarn: 

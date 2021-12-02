@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "lib": ["esnext"],
+    "lib": [
+      "esnext"
+    ],
     "module": "commonjs",
     "target": "es2019",
     "declaration": true,
@@ -8,7 +10,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "noEmit": false,
     "incremental": true,
     "skipLibCheck": true,
@@ -19,7 +21,12 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "resolveJsonModule": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "esModuleInterop": true,
   },
-  "exclude": ["node_modules", "dist", "**/*spec.ts"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*spec.ts"
+  ]
 }
