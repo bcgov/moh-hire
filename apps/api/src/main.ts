@@ -6,7 +6,7 @@ import * as winston from 'winston';
 import { WinstonModule, utilities as nestWinstonModuleUtilities } from 'nest-winston';
 import { Documentation } from './common/documentation';
 import { SuccessResponseInterceptor } from './common/interceptors/success-response.interceptor';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ErrorExceptionFilter } from './common/error-exception.filter';
 import { TrimPipe } from './common/trim.pipe';
 
@@ -49,7 +49,7 @@ async function bootstrap() {
     }),
   );
 
-  app.useGlobalFilters(new ErrorExceptionFilter(app.get('Logger')));
+  app.useGlobalFilters(new ErrorExceptionFilter(app.get(Logger)));
   console.table({
     project: process.env.PROJECT,
     nodeEnv: process.env.NODE_ENV,

@@ -16,7 +16,7 @@ import { CommonError } from 'src/common/common.errors';
 
 @Catch(Error)
 export class ErrorExceptionFilter implements ExceptionFilter {
-  constructor(@Inject('winston') private readonly logger: Logger) {}
+  constructor(@Inject(Logger) private readonly logger: Logger) {}
 
   /**
    * Transform a generic thrown exception to a `FailedResponse`
@@ -73,8 +73,7 @@ export class ErrorExceptionFilter implements ExceptionFilter {
     if ((status >= 500 && status < 600) || !(exception instanceof GenericException)) {
       /** Log entire exception */
       /** If there's an stack, log it */
-      console.log(exception);
-      this.logger?.error(exception ?? flattenedException);
+      this.logger.error(exception);
     }
 
     if (ClassValidationParser.isClassValidatorException(flattenedException)) {

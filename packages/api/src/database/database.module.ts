@@ -11,7 +11,7 @@ import { DatabaseService } from './database.service';
       type: 'postgres',
       host: 'db',
       username: 'ehpr-admin',
-      password: 'nosepass',
+      password: process.env.POSTGRES_PASSWORD,
       database: 'ehpr2',
       entities: [join(__dirname, '../**/**.entity{.ts,.js}')],
       migrations: [join(__dirname, './migrations/**{.ts,.js}')],
