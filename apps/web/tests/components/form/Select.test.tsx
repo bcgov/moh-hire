@@ -19,60 +19,60 @@ describe('Select', () => {
 
     expect(selectElement).toBeInTheDocument();
   });
-});
 
-it('renders a label element with the correct accessible association', () => {
-  const mock = jest.fn();
-  const selectName = 'selectName';
-  const selectType = 'text';
-  const selectLabel = 'select label';
+  it('renders a label element with the correct accessible association', () => {
+    const mock = jest.fn();
+    const selectName = 'selectName';
+    const selectType = 'text';
+    const selectLabel = 'select label';
 
-  render(
-    <Formik initialValues={{ [selectName]: '' }} onSubmit={mock}>
-      <Select name={selectName} type={selectType} label={selectLabel} />
-    </Formik>,
-  );
+    render(
+      <Formik initialValues={{ [selectName]: '' }} onSubmit={mock}>
+        <Select name={selectName} type={selectType} label={selectLabel} />
+      </Formik>,
+    );
 
-  const labelElement = screen.getByText('select label');
-  const selectElement = screen.getByRole('combobox');
+    const labelElement = screen.getByText('select label');
+    const selectElement = screen.getByRole('combobox');
 
-  expect(labelElement).toBeInTheDocument();
-  expect(selectElement).toHaveAccessibleName(selectLabel);
-});
+    expect(labelElement).toBeInTheDocument();
+    expect(selectElement).toHaveAccessibleName(selectLabel);
+  });
 
-it('renders a description element with the proper accessible association', () => {
-  const mock = jest.fn();
-  const selectName = 'selectName';
-  const selectType = 'text';
-  const selectLabel = 'select label';
-  const selectDescription = 'field format description';
+  it('renders a description element with the proper accessible association', () => {
+    const mock = jest.fn();
+    const selectName = 'selectName';
+    const selectType = 'text';
+    const selectLabel = 'select label';
+    const selectDescription = 'field format description';
 
-  render(
-    <Formik initialValues={{ [selectName]: '' }} onSubmit={mock}>
-      <Select
-        name={selectName}
-        type={selectType}
-        label={selectLabel}
-        description={selectDescription}
-      />
-    </Formik>,
-  );
-  const selectElement = screen.getByRole('combobox');
-  const descriptionElement = screen.getByText('field format description');
+    render(
+      <Formik initialValues={{ [selectName]: '' }} onSubmit={mock}>
+        <Select
+          name={selectName}
+          type={selectType}
+          label={selectLabel}
+          description={selectDescription}
+        />
+      </Formik>,
+    );
+    const selectElement = screen.getByRole('combobox');
+    const descriptionElement = screen.getByText('field format description');
 
-  expect(descriptionElement).toBeInTheDocument();
-  expect(selectElement).toHaveAccessibleDescription(selectDescription);
-});
+    expect(descriptionElement).toBeInTheDocument();
+    expect(selectElement).toHaveAccessibleDescription(selectDescription);
+  });
 
-describe('Option', () => {
-  it('renders an option', () => {
-    const testValue = 'input-id';
-    const testLabel = 'Select text';
+  describe('Option', () => {
+    it('renders an option', () => {
+      const testValue = 'input-id';
+      const testLabel = 'Select text';
 
-    render(<Option value={testValue} label={testLabel} />);
+      render(<Option value={testValue} label={testLabel} />);
 
-    const optionElement = screen.getByRole('option');
+      const optionElement = screen.getByRole('option');
 
-    expect(optionElement).toBeInTheDocument();
+      expect(optionElement).toBeInTheDocument();
+    });
   });
 });
