@@ -7,14 +7,17 @@ interface MultiSelectProps extends FieldProps {
   options: OptionType[];
 }
 
+/**
+ * Description is not enabled for this component, it's not required by designs and
+ * aria-describedby is not supported by react-select
+ */
 export const MultiSelect: React.FC<MultiSelectProps> = props => {
-  const { label, name, options, disabled, description } = props;
+  const { label, name, options, disabled } = props;
 
   return (
     <Field
       name={name}
       label={label}
-      description={description}
       component={({ field, form }: FormikFieldProps) => (
         <ReactSelect
           value={field.value}
