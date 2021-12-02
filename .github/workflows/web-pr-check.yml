@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - 'packages/web/**'
+      - 'apps/web/**'
 
 jobs:
   pr-checks:
