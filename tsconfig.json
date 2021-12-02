@@ -1,15 +1,15 @@
 {
-  "extends": "@tsconfig/node14/tsconfig.json",
   "compilerOptions": {
-    "lib": ["es2020"],
+    "lib": ["esnext"],
     "module": "commonjs",
-    "target": "es2020",
+    "target": "es2019",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
+    "noEmit": false,
     "incremental": true,
     "skipLibCheck": true,
     "strict": true,
