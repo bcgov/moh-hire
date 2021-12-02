@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik'; // package will be auto mocked
 import { render, screen } from '@testing-library/react';
-import { FormField } from '../../../src/components/form/FormField';
+import { Field } from '../../../src/components/form/Field';
 
 describe('FormError', () => {
   it('renders a text input element', () => {
@@ -12,7 +12,7 @@ describe('FormError', () => {
 
     render(
       <Formik initialValues={{ [fieldName]: '' }} onSubmit={mock}>
-        <FormField name={fieldName} type={fieldType} label={fieldLabel} />
+        <Field name={fieldName} type={fieldType} label={fieldLabel} />
       </Formik>,
     );
 
@@ -29,7 +29,7 @@ describe('FormError', () => {
 
     render(
       <Formik initialValues={{ [fieldName]: '' }} onSubmit={mock}>
-        <FormField name={fieldName} type={fieldType} label={fieldLabel} />
+        <Field name={fieldName} type={fieldType} label={fieldLabel} />
       </Formik>,
     );
 
@@ -49,7 +49,7 @@ describe('FormError', () => {
 
     render(
       <Formik initialValues={{ [fieldName]: '' }} onSubmit={mock}>
-        <FormField
+        <Field
           name={fieldName}
           type={fieldType}
           label={fieldLabel}
@@ -78,7 +78,7 @@ describe('FormError', () => {
         initialErrors={{ [fieldName]: fieldError }}
         onSubmit={mock}
       >
-        <FormField name={fieldName} type={fieldType} label={fieldLabel} />
+        <Field name={fieldName} type={fieldType} label={fieldLabel} />
       </Formik>,
     );
 

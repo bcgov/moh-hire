@@ -1,8 +1,8 @@
-interface FormLabelProps {
+interface LabelProps {
   htmlFor: string;
 }
 
-export const FormLabel: React.FC<FormLabelProps> = ({ htmlFor, children }) => {
+export const Label: React.FC<LabelProps> = ({ htmlFor, children }) => {
   return (
     <label htmlFor={htmlFor} className='block text-bcBlack text-base font-bold'>
       {children}

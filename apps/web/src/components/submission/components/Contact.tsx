@@ -1,4 +1,4 @@
-import { FormField, FormStepHeader } from '@components';
+import { Field, FormStepHeader } from '@components';
 
 export const Contact: React.FC = () => {
   return (
@@ -7,7 +7,7 @@ export const Contact: React.FC = () => {
       <div className='flex flex-col gap-5'>
         <div className='grid grid-cols-3 gap-3 items-end'>
           <div className='col-span-2'>
-            <FormField
+            <Field
               name='primaryPhone'
               label='Primary Phone Number'
               type='text'
@@ -15,12 +15,12 @@ export const Contact: React.FC = () => {
             />
           </div>
           <div className='col-span-1'>
-            <FormField name='primaryPhoneExt' label='Ext. (optional)' type='text' />
+            <Field name='primaryPhoneExt' label='Ext. (optional)' type='text' />
           </div>
         </div>
         <div className='grid grid-cols-3 gap-3 items-end'>
           <div className='col-span-2'>
-            <FormField
+            <Field
               name='secondaryPhone'
               label='Secondary Phone Number (optional)'
               type='text'
@@ -28,11 +28,11 @@ export const Contact: React.FC = () => {
             />
           </div>
           <div className='col-span-1'>
-            <FormField name='secondaryPhoneExt' label='Ext. (optional)' type='text' />
+            <Field name='secondaryPhoneExt' label='Ext. (optional)' type='text' />
           </div>
         </div>
 
-        <FormField name='email' label='Email' type='email' />
+        <Field name='email' label='Email' type='email' />
       </div>
     </>
   );
