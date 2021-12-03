@@ -17,7 +17,7 @@ export class FormService {
   async getForms(): Promise<FormEntity[]> {
     return await this.formRepository.find();
   }
-  async getFormById(id: number): Promise<FormEntity> {
-    return (await this.formRepository.findByIds([id]))[0];
+  async getFormById(id: number): Promise<any> {
+    return await this.formRepository.findOneOrFail(id);
   }
 }

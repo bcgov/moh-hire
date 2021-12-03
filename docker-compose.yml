@@ -9,9 +9,9 @@ services:
     ports:
       - '5432:5432'
     environment:
-      - POSTGRES_USER=ehpr-admin
+      - POSTGRES_USER=${POSTGRES_USERNAME}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=ehpr2
+      - POSTGRES_DB=${POSTGRES_DATABASE}
     restart: always
     networks:
       - local
@@ -23,19 +23,18 @@ services:
       dockerfile: Dockerfile
     command: 'yarn watch:api'
     volumes:
-      - ./packages/api:/packages/api
-      - '/packages/api/node_modules'
+      - ./apps/api:/apps/api
+      - '/apps/api/node_modules'
       - ./packages/common:/packages/common
-      - /packages/common/node_modules
+      - '/packages/common/node_modules'
     ports:
       - '4000:4000'
-    environment:
-      - NODE_ENV=development
-      - RUNTIME_ENV='hosted
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_HOST=db
+    env_file:
+      - ./.env
     depends_on:
       - db
+    networks:
+      - local
 
   web:
     image: ${PROJECT}_base
@@ -45,15 +44,15 @@ services:
       dockerfile: Dockerfile
     command: 'yarn watch:web'
     volumes:
-      - ./packages/web:/packages/web
-      - /packages/web/node_modules
+      - ./apps/web:/apps/web
+      - '/apps/web/node_modules'
       - ./packages/common:/packages/common
-      - /packages/common/node_modules
+      - '/packages/common/node_modules'
     ports:
       - '3000:3000'
     environment:
       - NODE_ENV=development
-      - RUNTIME_ENV='hosted
+      - RUNTIME_ENV=local
     depends_on:
       - api
 networks:
