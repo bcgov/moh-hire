@@ -29,7 +29,6 @@ app_sources_bucket = "$(APP_SRC_BUCKET)"
 domain = ""
 endef
 export TFVARS_DATA
-CLOUDFRONT_ID = EH5H3TN595NCP
 
 # Terraform s3 backend config variables
 define TF_BACKEND_CFG
@@ -155,5 +154,6 @@ deploy-infra: init-tf
 	@terraform -chdir=$(TERRAFORM_DIR) apply -auto-approve -input=false
 
 deploy-app:
+	test -n $(CLOUDFRONT_ID)
 	aws s3 sync ./terraform/build/app s3://$(APP_SRC_BUCKET) --delete
 	aws --region $(AWS_REGION) cloudfront create-invalidation --distribution-id $(CLOUDFRONT_ID) --paths "/*"
