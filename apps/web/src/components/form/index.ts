@@ -6,3 +6,4 @@ export * from './Select';
 export * from './MultiSelect';
 export * from './Checkbox';
 export * from './Radio';
+export * from './Textarea';
