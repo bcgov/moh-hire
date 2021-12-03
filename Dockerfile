@@ -7,8 +7,9 @@ COPY ./tsconfig.json ./
 COPY ./packages ./packages
 COPY ./nodemon.json ./
 COPY ./.eslintrc.js ./
+COPY ./apps ./apps
 RUN yarn install
-  
+
 # Build whole all packages
 RUN yarn build
 
