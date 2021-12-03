@@ -47,6 +47,8 @@ bootstrap-terraform: print-env bootstrap
 build-terraform-artifact: clean-yarn print-env pre-build build-api
 
 # Local Development
+build-artifact-local: build-terraform-artifact
+	@yarn
 clean-yarn: 
 	@rm -rf node_modules
 	@yarn
@@ -98,9 +100,24 @@ pre-build:
 
 build-api:
 	@echo "++\n***** Building API for AWS\n++"
-	@sh packing-api.sh
+	@echo 'Building api package... \n' 
+	@yarn workspace @ehpr/api build
+	@echo 'Updating prod dependencies...\n'
+	@yarn workspaces focus @ehpr/api --production
+	@echo 'Deleting existing build dir...\n'
+	@rm -rf ./.build || true
+	@echo 'Creating build dir...\n'
+	@mkdir -p .build/api
+	@echo 'Copy Node modules....\n' && cp -r node_modules .build/api
+	@echo 'Unlink local packages...\n' && rm -rf .build/api/node_modules/@ehpr/*
+	@echo 'Hardlink local packages...\n' 
+	@cp -r ./packages/* .build/api/node_modules/@ehpr/
+	@echo 'Copy api ...\n' && cp -r apps/api/dist/* .build/api
+	@echo 'Creating Zip ...\n' && cd .build && zip -r api.zip ./api && cd ..
+	@echo 'Copying to terraform build location...\n'
 	@cp ./.build/api.zip ./terraform/build/api.zip
-	@echo "++\n*****"
+	@echo 'Done!\n'
+	@echo "++\n****"
 
 build-web:
 	@echo "++\n***** Building Web for AWS\n++"
