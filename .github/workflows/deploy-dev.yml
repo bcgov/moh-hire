@@ -16,6 +16,8 @@ jobs:
     timeout-minutes: 10
     environment:
       name: dev
+    env:
+      CLOUDFRONT_ID: '${{ secrets.CLOUDFRONT_ID }}'
     steps:
       - uses: actions/checkout@v2
         name: checkout
