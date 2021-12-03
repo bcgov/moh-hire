@@ -36,6 +36,13 @@ resource "aws_cloudfront_function" "response" {
   code    = file("${path.module}/cloudfront/response.js")
 }
 
+resource "aws_cloudfront_function" "request" {
+  name    = "${local.namespace}-cf-request"
+  runtime = "cloudfront-js-1.0"
+  comment = "Next request handler"
+  code    = file("${path.module}/cloudfront/request.js")
+}
+
 
 resource "aws_s3_bucket" "app_logs" {
   bucket = "${local.app_name}-logs"
@@ -91,6 +98,11 @@ resource "aws_cloudfront_distribution" "app" {
     function_association {
       event_type   = "viewer-response"
       function_arn = aws_cloudfront_function.response.arn
+    }
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.request.arn
     }
   }
 
