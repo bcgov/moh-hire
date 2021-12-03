@@ -22,7 +22,7 @@ export const Textarea: React.FC<TextareaProps> = ({ name, label, description, ma
       />
       {maxLength ? (
         <>
-          <p aria-live='polite' aria-hidden className='text-right relative -top-12 -left-4 h-0'>
+          <p aria-hidden className='text-right relative -top-12 -left-4 h-0'>
             {values[name]?.length}/{maxLength} <span className='sr-only'>characters remaining</span>
           </p>
           <p className='sr-only' role='alert'>
