@@ -1,6 +1,6 @@
 import { Field, FieldProps } from '@components';
 
-interface OptionType {
+export interface OptionType {
   label: string;
   value: string;
 }

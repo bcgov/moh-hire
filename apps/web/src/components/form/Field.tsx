@@ -10,7 +10,7 @@ export interface FieldProps extends FieldConfig {
 }
 
 export const Field: React.FC<FieldProps> = props => {
-  const { name, label, children, disabled, description, type, as } = props;
+  const { name, label, disabled, description, type, as, component, children } = props;
   const [field, meta] = useField(name);
 
   return (
@@ -31,6 +31,7 @@ export const Field: React.FC<FieldProps> = props => {
         disabled={disabled}
         as={as}
         type={type}
+        component={component}
         {...field}
       >
         {children}
