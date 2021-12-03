@@ -5,3 +5,4 @@ export * from './Description';
 export * from './Select';
 export * from './MultiSelect';
 export * from './Checkbox';
+export * from './Radio';
