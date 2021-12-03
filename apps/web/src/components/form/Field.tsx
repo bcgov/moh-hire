@@ -4,13 +4,26 @@ import { Field as FormikField, useField, FieldConfig } from 'formik';
 
 export interface FieldProps extends FieldConfig {
   name: string;
-  label: string;
-  description?: string;
+  label: string | React.ReactNode;
+  description?: string | React.ReactNode;
   disabled?: boolean;
+  className?: string;
+  maxLength?: number;
 }
 
 export const Field: React.FC<FieldProps> = props => {
-  const { name, label, disabled, description, type, as, component, children } = props;
+  const {
+    name,
+    label,
+    disabled,
+    description,
+    type,
+    as,
+    component,
+    className,
+    maxLength,
+    children,
+  } = props;
   const [field, meta] = useField(name);
 
   return (
@@ -24,13 +37,16 @@ export const Field: React.FC<FieldProps> = props => {
       <FormikField
         id={name}
         aria-describedby={description ? `${name}-description` : null}
-        className={classnames(
-          'w-full rounded-none bg-gray-100 block h-10 border-b-2 border-bcBlack pl-1',
-          { 'border-red-500': meta.touched && meta.error },
-        )}
+        className={
+          className ??
+          classnames('w-full rounded-none bg-gray-100 block h-10 border-b-2 border-bcBlack pl-1', {
+            'border-red-500': meta.touched && meta.error,
+          })
+        }
         disabled={disabled}
         as={as}
         type={type}
+        maxLength={maxLength}
         component={component}
         {...field}
       >
