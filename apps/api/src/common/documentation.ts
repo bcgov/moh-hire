@@ -4,7 +4,7 @@ import { FormModule } from 'src/form/form.module';
 
 export const Documentation = (app: INestApplication) => {
   const options = new DocumentBuilder()
-    .setTitle('eHPR API Documentation')
+    .setTitle('EHPR API Documentation')
     .setDescription('API to collection form submission')
     .setVersion(`1.0.0`)
     .build();
