@@ -120,6 +120,7 @@ build-api:
 
 build-web:
 	@echo "++\n***** Building Web for AWS\n++"
+	@yarn workspace @ehpr/web build
 	@yarn workspace @ehpr/web export
 	@mv ./apps/web/out ./terraform/build/app
 	@echo "++\n*****"
