@@ -120,6 +120,7 @@ build-api:
 
 build-web:
 	@echo "++\n***** Building Web for AWS\n++"
+	@yarn workspace @ehpr/web build
 	@yarn workspace @ehpr/web export
 	@mv ./apps/web/out ./terraform/build/app
 	@echo "++\n*****"
@@ -157,3 +158,12 @@ deploy-app:
 	test -n $(CLOUDFRONT_ID)
 	aws s3 sync ./terraform/build/app s3://$(APP_SRC_BUCKET) --delete
 	aws --region $(AWS_REGION) cloudfront create-invalidation --distribution-id $(CLOUDFRONT_ID) --paths "/*"
+
+# Deployment CMD
+tag-dev:
+ifdef comment
+	@git tag -fa dev -m "Deploy dev: $(comment)"
+else
+	@git tag -fa dev -m "Deploy dev: $(git rev-parse --abbrev-ref HEAD)"
+endif
+	@git push --force origin refs/tags/dev:refs/tags/dev
