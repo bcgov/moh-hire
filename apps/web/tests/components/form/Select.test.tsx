@@ -74,5 +74,17 @@ describe('Select', () => {
 
       expect(optionElement).toBeInTheDocument();
     });
+
+    it('renders an disabled and hidden option', () => {
+      const testValue = 'input-id';
+      const testLabel = 'Select text';
+
+      render(<Option value={testValue} label={testLabel} disabled={true} />);
+
+      const optionElement = screen.getByText('Select text');
+
+      expect(optionElement).toHaveAttribute('disabled', '');
+      expect(optionElement).toHaveAttribute('hidden', '');
+    });
   });
 });
