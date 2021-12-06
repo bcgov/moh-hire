@@ -17,9 +17,7 @@ const steps = [
   },
   {
     component: <Contact />,
-    validationSchema: () => ({
-      form: 'validation not implemented for this step',
-    }),
+    validationSchema: contactSchema,
   },
   {
     component: <Credential />,
