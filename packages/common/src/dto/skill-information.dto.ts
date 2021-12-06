@@ -1,4 +1,5 @@
-import { CurrentEmploymentTypes, RegistrationStatus, StreamTypes } from '../interfaces';
+import { EmploymentTypes, RegistrationStatus, HealthAuthorities } from '../interfaces';
+import { streamData } from '../data/applicant_stream_data';
 import { IsIn, IsNumber, IsOptional, IsString, Length, Max, Min } from 'class-validator';
 
 export class SkillInformationDTO {
@@ -13,8 +14,8 @@ export class SkillInformationDTO {
   }
 
   @IsString()
-  @IsIn(Object.values(StreamTypes))
-  streamTypes!: StreamTypes;
+  @IsIn(Object.keys(streamData))
+  stream!: keyof typeof streamData;
 
   @IsString()
   @IsIn(Object.values(RegistrationStatus))
@@ -26,11 +27,26 @@ export class SkillInformationDTO {
   registrationNumber!: number;
 
   @IsString()
-  @IsIn(Object.values(CurrentEmploymentTypes))
-  currentEmploymentType!: CurrentEmploymentTypes;
+  @IsIn(Object.values(EmploymentTypes))
+  currentEmployment!: EmploymentTypes;
+
+  specialties!: SpecialtyType[];
+
+  healthAuthorities!: HealthAuthorities[];
 
   @IsString()
-  @Length(1, 256)
+  @Length(1, 255)
   @IsOptional()
   additionalComments?: string;
+}
+
+export interface SpecialtyType {
+  value: string;
+  label: string;
+  subspecialties?: SubspecialtyType[];
+}
+
+export interface SubspecialtyType {
+  value: string;
+  label: string;
 }
