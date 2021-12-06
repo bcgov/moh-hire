@@ -3,6 +3,7 @@ import { Field, FieldProps } from '@components';
 export interface OptionType {
   label: string;
   value: string;
+  disabled?: boolean;
 }
 
 export const Select: React.FC<FieldProps> = props => {
@@ -16,9 +17,9 @@ export const Select: React.FC<FieldProps> = props => {
   );
 };
 
-export const Option: React.FC<OptionType> = ({ label, value }) => {
+export const Option: React.FC<OptionType> = ({ label, value, disabled }) => {
   return (
-    <option value={value} key={value}>
+    <option value={value} key={value} disabled={disabled} hidden={disabled}>
       {label}
     </option>
   );
