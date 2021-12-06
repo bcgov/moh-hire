@@ -102,7 +102,7 @@ export const Form: React.FC = () => {
       {({ isSubmitting }) => (
         <FormikForm>
           <div className='flex flex-col items-center'>
-            <div className='w-full md:w-1/2  mb-12'>{currentStepComponent}</div>
+            <div className='w-full md:w-1/2 px-6 md:px-0  mb-12'>{currentStepComponent}</div>
 
             <div className='flex justify-between w-10/12 md:w-1/2 mb-14'>
               <Button
