@@ -46,7 +46,7 @@ describe('CheckboxArray', () => {
 
     render(
       <Formik initialValues={{ [name]: '' }} onSubmit={mock}>
-        <CheckboxArray legend={legendText} options={testOptions} />
+        <CheckboxArray name={name} legend={legendText} options={testOptions} />
       </Formik>,
     );
 
@@ -71,7 +71,7 @@ describe('CheckboxArray', () => {
 
     render(
       <Formik initialValues={{ [name]: '' }} onSubmit={mock}>
-        <CheckboxArray legend={legendText} options={testOptions} />
+        <CheckboxArray name={name} legend={legendText} options={testOptions} />
       </Formik>,
     );
 
