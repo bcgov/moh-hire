@@ -50,7 +50,7 @@ export const selectStyleOverride: StylesConfig<OptionType, true> = {
     display: 'flex',
     padding: '1px',
     border: '0',
-    borderBottom: '1px solid #313132',
+    borderBottom: isDisabled ? '2px solid rgb(110, 110, 110)' : '2px solid #313132',
     background: isDisabled ? 'rgb(215, 215, 215)' : '#F5F5F5',
     borderRadius: '0',
   }),
