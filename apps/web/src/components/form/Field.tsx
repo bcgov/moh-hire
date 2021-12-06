@@ -39,9 +39,13 @@ export const Field: React.FC<FieldProps> = props => {
         aria-describedby={description ? `${name}-description` : null}
         className={
           className ??
-          classnames('w-full rounded-none bg-gray-100 block h-10 border-b-2 border-bcBlack pl-1', {
-            'border-red-500': meta.touched && meta.error,
-          })
+          classnames(
+            `w-full rounded-none bg-gray-100 block h-10
+            border-b-2 border-bcBlack pl-1 disabled:bg-bcDisabled`,
+            {
+              'border-red-500': meta.touched && meta.error,
+            },
+          )
         }
         disabled={disabled}
         as={as}

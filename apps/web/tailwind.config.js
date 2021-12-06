@@ -24,6 +24,7 @@ module.exports = {
         bcBlueIndicator: '#0053A4',
         bcLightBackground: '#E5E5E5',
         bcOrange: '#F6A622',
+        bcDisabled: '#CFCFCF',
       },
       fontSize: {
         '3xl': '1.5rem',
@@ -45,6 +46,7 @@ module.exports = {
   variants: {
     extend: {
       opacity: ['disabled'],
+      backgroundColor: ['disabled'],
     },
   },
   plugins: [require('@tailwindcss/typography')],
