@@ -1,50 +1,41 @@
-// TODO get Stream types
-export enum StreamTypes {
-  NURSE = 'Nurse',
-  // ...
+import {
+  AvailabilityDTO,
+  ContactInformationDTO,
+  PersonalInformationDTO,
+  SkillInformationDTO,
+} from 'src';
+
+export interface FormPayload {
+  personalInformation: PersonalInformationDTO;
+  contactInformation: ContactInformationDTO;
+  skillInformation: SkillInformationDTO;
+  availabilityInformation: AvailabilityDTO;
 }
 
 export enum RegistrationStatus {
-  REGISTERED = 'Registered with good standing',
-  TEMP = 'Tempoarary emergency registrant',
-  NOT_REGISTERED = 'Not registered with college',
-  NA = 'Not applicable',
+  REGISTERED = 'registered',
+  TEMP = 'temp',
+  NOT_REGISTERED = 'notRegistered',
+  NA = 'na',
 }
 
-export enum CurrentEmploymentTypes {
-  HP_HA_EMPLOYED = 'Health Professional employed by a Health Authority',
-  // Needs rewording on the FE
-  HP_NOT_HA_EMPLOYED = 'Health Professional not employed by HA',
-  RETIRED = 'Retired Health Professional',
-  STUDENT_EMPLOYED = 'Student currently employed',
-  STUDENT_UNEMPLOYED = 'Student currently not employed',
-  OTHER = 'Other',
+export enum EmploymentTypes {
+  HEALTH_SECTOR_EMPLOYED = 'healthSectorEmployed',
+  HEALTH_SECTORY_RESIDENCY = 'healthSectorResidency',
+  NOT_HEALTH_SECTOR_EMPLOYED = 'notHealthSectorEmployed',
 }
 
 export enum HealthAuthorities {
-  FIRST_NATION_HA = 'First Nation Health Authority',
-  PROVIDENCE = 'Providence Health Care',
-  PROVINCIAL_HSA = 'Provincial Health Services Authority',
-  FRASER = 'Fraser Health',
-  INTERIOR = 'Interior Health',
-  NORTHEREN = 'Northern Health',
-  VANCOUVER_COASTAL = 'Vancouver Costal Health',
-  VANCOUVER_ISLAND = 'Vancouver Island Health',
+  FIRST_NATION_HA = 'firstNationHa',
+  PROVIDENCE = 'providence',
+  PROVINCIAL_HSA = 'provincialHsa',
+  FRASER = 'fraser',
+  INTERIOR = 'interior',
+  NORTHEREN = 'nothern',
+  VANCOUVER_COASTAL = 'vancouverCoastal',
+  VANCOUVER_ISLAND = 'vancouverIsland',
 }
 
-// TODO get values
-export enum MainSpecilaization {
-  SPEC_1 = 'Specialization 1',
-  SPEC_2 = 'Specialization 2',
-  SPEC_3 = 'Specialization 3',
-}
-
-// TODO get values
-export enum SubSpecialization {
-  SUBSPEC_1 = 'Sub specialization 1',
-  SUBSPEC_2 = 'Sub specialization 2',
-  SUBSPEC_3 = 'Sub specialization 3',
-}
 export interface PlacementPreferences {
   C19PatientCare: boolean;
   C19CommunityCare: boolean;
