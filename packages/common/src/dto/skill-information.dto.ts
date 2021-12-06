@@ -41,12 +41,10 @@ export class SkillInformationDTO {
 }
 
 export interface SpecialtyType {
-  value: string;
-  label: string;
+  name: string;
   subspecialties?: SubspecialtyType[];
 }
 
 export interface SubspecialtyType {
-  value: string;
-  label: string;
+  name: string;
 }
