@@ -4,7 +4,6 @@ import {
   SkillInformationDTO,
   AvailabilityDTO,
 } from '.';
-import { Type } from 'class-transformer';
 import { IsNotEmpty, ValidateNested } from 'class-validator';
 
 export class FormPayload {

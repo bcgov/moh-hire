@@ -4,7 +4,7 @@ import {
   ValidationOptions,
   Validator,
 } from 'class-validator';
-import { FormPayload } from './form-class.dto';
+import { FormPayload } from './form-payload.dto';
 
 const validator = new Validator();
 export function IsValidForm(validationOptions?: ValidationOptions) {
