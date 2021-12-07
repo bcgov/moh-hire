@@ -1,9 +1,13 @@
 import { IsIn, IsString, ValidateNested } from 'class-validator';
-import { PayloadDTO } from '.';
+import { ValidateNestedObject } from './custom-decorator';
+import { FormClass } from './form-class.dto';
+import { Type } from 'class-transformer';
 
 export class FormDTO {
   @ValidateNested()
-  payload!: PayloadDTO;
+  @ValidateNestedObject()
+  @Type(() => FormClass)
+  payload!: FormClass;
 
   @IsString()
   @IsIn(['v1'])

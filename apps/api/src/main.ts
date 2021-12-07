@@ -44,7 +44,8 @@ async function bootstrap() {
     new TrimPipe(),
     new ValidationPipe({
       transform: true,
-      whitelist: true,
+      // whitelist: true,
+      // forbidNonWhitelisted: false,
       enableDebugMessages: true,
     }),
   );
