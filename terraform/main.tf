@@ -40,5 +40,7 @@ locals {
   app_name         = "${local.namespace}-app"
   api_name         = "${local.namespace}-api"
 
+  db_name          = "${local.namespace}-db"
+
   has_domain = var.domain != ""
 }
