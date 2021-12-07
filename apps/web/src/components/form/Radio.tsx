@@ -1,4 +1,4 @@
-import { OptionType } from '@components';
+import { Error, OptionType } from '@components';
 import { Field as FormikField } from 'formik';
 
 interface RadioProps {
@@ -19,6 +19,7 @@ export const Radio: React.FC<RadioProps> = ({ legend, name, options }) => {
           </label>
         ))}
       </div>
+      <Error name={name} />
     </fieldset>
   );
 };

@@ -53,7 +53,7 @@ export const Field: React.FC<FieldProps> = props => {
         {children}
       </FormikField>
 
-      <Error show={Boolean(meta.touched && meta.error)}>{meta.error}</Error>
+      <Error name={name} />
     </div>
   );
 };
