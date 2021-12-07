@@ -1,12 +1,4 @@
-import {
-  IsArray,
-  IsBoolean,
-  IsIn,
-  IsNumber,
-  Length,
-  MaxLength,
-  ValidateNested,
-} from 'class-validator';
+import { IsArray, IsBoolean, IsIn, IsNumber, ValidateNested } from 'class-validator';
 
 import { DeploymentDurations, HealthAuthorities } from '../interfaces';
 import { PlacementPreferencesDTO } from '.';
@@ -15,7 +7,7 @@ export class AvailabilityDTO {
   constructor(base: AvailabilityDTO) {
     this.deployAnywhere = base.deployAnywhere;
     this.deploymentLocations = base.deploymentLocations;
-    this.placementPrefs = base.placementPrefs;
+    this.placementPrefs = new PlacementPreferencesDTO(base.placementPrefs);
     this.isImmunized = base.isImmunized;
     this.deploymentDuration = base.deploymentDuration;
   }
