@@ -17,7 +17,7 @@ async function bootstrap() {
       format: winston.format.combine(
         winston.format.timestamp(),
         process.env.RUNTIME_ENV === 'local'
-          ? nestWinstonModuleUtilities.format.nestLike()
+          ? nestWinstonModuleUtilities.format.nestLike('EHPR', { prettyPrint: true })
           : winston.format.json(),
       ),
     }),
