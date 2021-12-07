@@ -13,7 +13,7 @@ export class FormEntity extends BaseEntity {
 
   @Exclude()
   @Column('timestamp', { nullable: true })
-  timestamp?: Date;
+  notifiedAt?: Date;
 
   @Exclude()
   @Column('varchar', { nullable: false })
