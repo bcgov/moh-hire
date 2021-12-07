@@ -1,14 +1,20 @@
 import { Field, FormStepHeader } from '@components';
+import { FormStepProps } from '.';
 
-export const Personal: React.FC = () => {
+export const Personal: React.FC<FormStepProps> = ({ formKey }) => {
+  const fieldNames = {
+    firstName: `${formKey}.firstName`,
+    lastName: `${formKey}.lastName`,
+    postalCode: `${formKey}.postalCode`,
+  };
   return (
     <>
       <FormStepHeader>1. Primary Information</FormStepHeader>
       <div className='flex flex-col gap-3'>
-        <Field name='firstName' label='First Name' type='text' />
-        <Field name='lastName' label='Last Name' type='text' />
+        <Field name={fieldNames.firstName} label='First Name' type='text' />
+        <Field name={fieldNames.lastName} label='Last Name' type='text' />
         <Field
-          name='postalCode'
+          name={fieldNames.postalCode}
           label='PostalCode'
           description='The right format should be A1A1A1'
           type='text'
