@@ -7,7 +7,7 @@ import {
 import { FormPayload } from './form-class.dto';
 
 const validator = new Validator();
-export function ValidateNestedObject(validationOptions?: ValidationOptions) {
+export function IsValidForm(validationOptions?: ValidationOptions) {
   return function (object: Object, propertyName: string) {
     registerDecorator({
       name: 'ValidateNestedObject',
