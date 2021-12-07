@@ -36,7 +36,7 @@ const steps: StepType[] = [
     key: FormKeys.CONTACT_INFORMATION,
   },
   {
-    component: <Credential formKey={FormKeys.SKILL_INFORMATION} />,
+    component: <Credential />,
     validationSchema: () => ({}),
     key: FormKeys.SKILL_INFORMATION,
   },
