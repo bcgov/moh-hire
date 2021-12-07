@@ -1,19 +1,12 @@
-import { IsIn, IsString, ValidateNested } from 'class-validator';
-import {
-  AvailabilityDTO,
-  ContactInformationDTO,
-  PersonalInformationDTO,
-  SkillInformationDTO,
-} from '.';
+import { IsIn, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { PayloadDTO } from '.';
 
 export class FormDTO {
   @ValidateNested()
-  payload!: {
-    personalInformation: PersonalInformationDTO;
-    contactInformation: ContactInformationDTO;
-    skillInformation: SkillInformationDTO;
-    availabilityInformation: AvailabilityDTO;
-  };
+  @IsNotEmpty()
+  @Type(() => PayloadDTO)
+  payload!: PayloadDTO;
 
   @IsString()
   @IsIn(['v1'])

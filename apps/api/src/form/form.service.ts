@@ -10,14 +10,16 @@ export class FormService {
     @InjectRepository(FormEntity)
     private readonly formRepository: Repository<FormEntity>,
   ) {}
-  async saveForm(dto: FormDTO) {
-    const newForm = this.formRepository.create(dto);
+  async saveForm(dto: FormDTO, confirmationId: string) {
+    const newForm = this.formRepository.create({ ...dto, confirmationId });
     return await this.formRepository.save(newForm);
   }
   async getForms(): Promise<FormEntity[]> {
     return await this.formRepository.find();
   }
-  async getFormById(id: number): Promise<any> {
-    return await this.formRepository.findOneOrFail(id);
+  async getFormById(id: string): Promise<FormEntity> {
+    return await this.formRepository.findOneOrFail({
+      confirmationId: id,
+    });
   }
 }
