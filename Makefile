@@ -10,6 +10,7 @@ export PROJECT := $(or $(PROJECT),ehpr)
 # Runtime and application Environments specific variable
 export NODE_ENV ?= development
 export ENV_NAME ?= dev
+export POSTGRES_USERNAME = freshworks
 
 # AWS Environments variables
 export AWS_REGION ?= ca-central-1
@@ -27,6 +28,7 @@ api_artifact = "build/api.zip"
 app_sources = "build/app"
 app_sources_bucket = "$(APP_SRC_BUCKET)"
 domain = ""
+db_username = "$(POSTGRES_USERNAME)"
 endef
 export TFVARS_DATA
 

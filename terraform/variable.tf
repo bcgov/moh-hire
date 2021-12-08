@@ -9,6 +9,12 @@ variable "function_memory_mb" {
   default = "2048"
 }
 
+variable "db_username" {}
+
+variable "azs" {
+  default = ["ca-central-1a", "ca-central-1b"]
+}
+
 variable "region" {
   default = "ca-central-1"
 }
