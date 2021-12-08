@@ -5,10 +5,10 @@ import { IsIn, IsNumber, IsOptional, IsString, Length, Max, Min } from 'class-va
 export class SkillInformationDTO {
   constructor(base?: SkillInformationDTO) {
     if (base) {
-      this.streamTypes = base.streamTypes;
+      this.stream = base.stream;
       this.registrationNumber = base.registrationNumber;
       this.registrationStatus = base.registrationStatus;
-      this.currentEmploymentType = base.currentEmploymentType;
+      this.currentEmployment = base.currentEmployment;
       this.additionalComments = base.additionalComments;
     }
   }
