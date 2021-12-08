@@ -1,7 +1,7 @@
-import { FormPayload } from '@ehpr/common';
+import { PayloadDTO } from '@ehpr/common';
 
 export class FormRO {
   id!: number;
   version!: number;
-  payload!: FormPayload;
+  payload!: PayloadDTO;
 }
