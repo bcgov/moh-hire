@@ -1,7 +1,5 @@
-import { SubmissionType } from '../validation';
-
 export interface FormStepProps {
-  formKey: keyof SubmissionType;
+  formKey: string;
 }
 
 export * from './Contact';
