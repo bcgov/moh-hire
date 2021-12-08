@@ -18,7 +18,7 @@ services:
     container_name: ${PROJECT}_common
     build:
       context: ./packages/common
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     volumes:
       - ./packages/common:/project/packages/common
       - ./:/project
@@ -27,7 +27,7 @@ services:
     container_name: ${PROJECT}_api
     build:
       context: ./apps/api
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     volumes:
       - ./:/project
     ports:
@@ -47,7 +47,7 @@ services:
     container_name: ${PROJECT}_web
     build:
       context: ./apps/web
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     volumes:
       - ./:/project
     ports:
