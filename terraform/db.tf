@@ -1,7 +1,7 @@
 
 resource "aws_db_subnet_group" "pgsql" {
   name       = "pgsql"
-  subnet_ids = [aws_subnet.private_subnet.id]
+  subnet_ids = [aws_subnet.private_az1.id, aws_subnet.private_az2.id]
 }
 
 resource "aws_rds_cluster_instance" "pgsql" {
@@ -16,7 +16,7 @@ resource "aws_rds_cluster_instance" "pgsql" {
 resource "aws_rds_cluster" "pgsql" {
   cluster_identifier  = local.db_name
   engine              = "aurora-postgresql"
-  availability_zones  = ["ca-central-1a"]
+  availability_zones  = ["ca-central-1a", "ca-central-1b"]
   database_name       = replace(var.project_code, "-", "_")
   master_username     = var.db_username
   master_password     = data.aws_ssm_parameter.postgres_password.value
