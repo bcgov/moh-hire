@@ -23,10 +23,9 @@ services:
       dockerfile: Dockerfile
     command: 'yarn watch:api'
     volumes:
+      - ./node_modules:/node_modules
       - ./apps/api:/apps/api
-      - '/apps/api/node_modules'
-      - ./packages/common:/packages/common
-      - '/packages/common/node_modules'
+      - ./packages:/packages
     ports:
       - '4000:4000'
     env_file:
@@ -42,12 +41,11 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    command: 'yarn watch:web'
+    command: 'yarn workspace @ehpr/web start'
     volumes:
+      - ./node_modules:/node_modules
       - ./apps/web:/apps/web
-      - '/apps/web/node_modules'
-      - ./packages/common:/packages/common
-      - '/packages/common/node_modules'
+      - ./packages:/packages
     ports:
       - '3000:3000'
     environment:

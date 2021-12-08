@@ -95,7 +95,7 @@ docker-build:
 
 docker-run:
 	@echo "++\n***** Running docker-compose\n++"
-	@docker-compose up
+	@docker-compose up --build
 	@echo "++\n*****"
 
 
