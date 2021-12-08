@@ -1,17 +1,3 @@
-import {
-  AvailabilityDTO,
-  ContactInformationDTO,
-  PersonalInformationDTO,
-  SkillInformationDTO,
-} from 'src';
-
-export interface FormPayload {
-  personalInformation: PersonalInformationDTO;
-  contactInformation: ContactInformationDTO;
-  skillInformation: SkillInformationDTO;
-  availabilityInformation: AvailabilityDTO;
-}
-
 // TODO get Stream types
 export enum StreamTypes {
   NURSE = 'Nurse',

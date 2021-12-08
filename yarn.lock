@@ -656,6 +656,7 @@ __metadata:
   dependencies:
     "@types/jest": 26.0.14
     "@types/node": 16.11.7
+    class-transformer: 0.5.1
     class-validator: 0.13.2
     eslint: 8.0.1
     jest: 26.6.0
