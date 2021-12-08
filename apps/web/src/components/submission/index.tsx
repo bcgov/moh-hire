@@ -8,6 +8,7 @@ import {
   contactSchema,
   SubmissionType,
   initialSubmissionValues,
+  DeepPartial,
 } from './validation';
 import { Ret } from 'class-validator-formik/dist/convertError';
 
@@ -53,8 +54,8 @@ const steps: StepType[] = [
 
 const handleValidate = (
   validator: (data: unknown) => Ret,
-  values?: SubmissionType,
-  key?: keyof SubmissionType,
+  values?: DeepPartial<SubmissionType>,
+  key?: keyof DeepPartial<SubmissionType>,
 ) => {
   if (!key) return {};
   if (!values) return {};
@@ -71,7 +72,7 @@ const handleValidate = (
 };
 
 export const Form: React.FC = () => {
-  const formikRef = useRef<FormikProps<SubmissionType>>(null);
+  const formikRef = useRef<FormikProps<DeepPartial<SubmissionType>>>(null);
   const router = useRouter();
 
   const step = Number(router.query.step);
@@ -85,7 +86,10 @@ export const Form: React.FC = () => {
   const previousStepKey = steps[stepIndex - 1]?.key;
   const currentStepKey = steps[stepIndex]?.key;
 
-  const handleSubmit = (values: SubmissionType, helpers: FormikHelpers<SubmissionType>) => {
+  const handleSubmit = (
+    values: DeepPartial<SubmissionType>,
+    helpers: FormikHelpers<DeepPartial<SubmissionType>>,
+  ) => {
     if (isLastStep) {
       console.log(values); // submit
     } else {
