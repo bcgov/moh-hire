@@ -6,8 +6,8 @@ import {
 } from '.';
 import { IsNotEmpty, ValidateNested } from 'class-validator';
 
-export class FormPayload {
-  constructor(base: FormPayload) {
+export class FormPayloadDTO {
+  constructor(base: FormPayloadDTO) {
     this.personalInformation = new PersonalInformationDTO(base.personalInformation);
     this.availabilityInformation = new AvailabilityDTO(base.availabilityInformation);
     this.skillInformation = new SkillInformationDTO(base.skillInformation);
