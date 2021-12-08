@@ -9,39 +9,69 @@ import {
   SubmissionType,
   initialSubmissionValues,
 } from './validation';
+import { Ret } from 'class-validator-formik/dist/convertError';
 
-const steps = [
+interface StepType {
+  component: React.ReactElement;
+  validationSchema: (data: unknown) => Ret;
+  key?: keyof SubmissionType;
+}
+
+enum FormKeys {
+  PERSONAL_INFORMATION = 'personalInformation',
+  CONTACT_INFORMATION = 'contactInformation',
+  SKILL_INFORMATION = 'skillInformation',
+  AVAILABILITY_INFORMATION = 'availabilityInformation',
+}
+
+const steps: StepType[] = [
   {
-    component: <Personal />,
+    component: <Personal formKey={FormKeys.PERSONAL_INFORMATION} />,
     validationSchema: personalSchema,
+    key: FormKeys.PERSONAL_INFORMATION,
   },
   {
-    component: <Contact />,
+    component: <Contact formKey={FormKeys.CONTACT_INFORMATION} />,
     validationSchema: contactSchema,
+    key: FormKeys.CONTACT_INFORMATION,
   },
   {
     component: <Credential />,
-    validationSchema: () => ({
-      form: 'validation not implemented for this step',
-    }),
+    validationSchema: () => ({}),
+    key: FormKeys.SKILL_INFORMATION,
   },
   {
-    component: <Preferences />,
-    validationSchema: () => ({
-      form: 'validation not implemented for this step',
-    }),
+    component: <Preferences formKey={FormKeys.AVAILABILITY_INFORMATION} />,
+    validationSchema: () => ({}),
+    key: FormKeys.AVAILABILITY_INFORMATION,
   },
   {
     component: <Review />,
-    validationSchema: () => ({
-      form: 'validation not implemented for this step',
-    }),
+    validationSchema: () => ({}),
   },
 ];
 
+const handleValidate = (
+  validator: (data: unknown) => Ret,
+  values?: SubmissionType,
+  key?: keyof SubmissionType,
+) => {
+  if (!key) return {};
+  if (!values) return {};
+
+  const errors = validator(values[key]);
+
+  if (Object.keys(errors).length === 0) {
+    return errors;
+  }
+
+  return {
+    [key]: errors,
+  };
+};
+
 export const Form: React.FC = () => {
-  // Using any here while the form is under construction, should be SubmissionType
-  const formikRef = useRef<FormikProps<any>>(null);
+  const formikRef = useRef<FormikProps<SubmissionType>>(null);
   const router = useRouter();
 
   const step = Number(router.query.step);
@@ -52,12 +82,10 @@ export const Form: React.FC = () => {
   const previousStepValidation = steps[stepIndex - 1]?.validationSchema;
   const currentStepValidation = steps[stepIndex]?.validationSchema;
   const currentStepComponent = steps[stepIndex]?.component;
+  const previousStepKey = steps[stepIndex - 1]?.key;
+  const currentStepKey = steps[stepIndex]?.key;
 
-  // Partial should be temporary here until the form form is completed
-  const handleSubmit = (
-    values: Partial<SubmissionType>,
-    helpers: FormikHelpers<Partial<SubmissionType>>,
-  ) => {
+  const handleSubmit = (values: SubmissionType, helpers: FormikHelpers<SubmissionType>) => {
     if (isLastStep) {
       console.log(values); // submit
     } else {
@@ -84,19 +112,23 @@ export const Form: React.FC = () => {
     }
 
     const checkPreviousStep = async () => {
-      const errors = previousStepValidation(formikRef.current?.values);
+      const errors = handleValidate(
+        previousStepValidation,
+        formikRef.current?.values,
+        previousStepKey,
+      );
       if (Object.keys(errors).length > 0) {
         router.replace('/submission/1');
       }
     };
     checkPreviousStep();
-  }, [step, router, previousStepValidation]);
+  }, [step, router, previousStepValidation, previousStepKey]);
 
   return (
     <Formik
       innerRef={formikRef}
       initialValues={initialSubmissionValues}
-      validate={currentStepValidation}
+      validate={values => handleValidate(currentStepValidation, values, currentStepKey)}
       onSubmit={handleSubmit}
     >
       {({ isSubmitting }) => (

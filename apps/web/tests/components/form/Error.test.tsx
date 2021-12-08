@@ -1,37 +1,64 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Error } from '../../../src/components/form/Error';
+import { Field, Formik } from 'formik';
 
 describe('FormError', () => {
-  it('renders an alert when show is false', () => {
-    const errorText = 'error text';
+  it('renders an empty alert when no associated error exists', () => {
+    const mockSubmit = jest.fn();
+    const fieldName = 'fieldName';
 
-    render(<Error show={false}>{errorText}</Error>);
-
+    render(
+      <Formik initialValues={{ [fieldName]: '' }} onSubmit={mockSubmit}>
+        <Error name={fieldName} />
+      </Formik>,
+    );
     const alertContainer = screen.getByRole('alert');
 
     expect(alertContainer).toBeInTheDocument();
   });
 
-  it('renders no children when show is false', () => {
-    const errorText = 'error text';
+  it('renders no children when no associated error exists', () => {
+    const mockSubmit = jest.fn();
+    const fieldName = 'fieldName';
 
-    render(<Error show={false}>{errorText}</Error>);
-
+    render(
+      <Formik initialValues={{ [fieldName]: '' }} onSubmit={mockSubmit}>
+        <Error name={fieldName} />
+      </Formik>,
+    );
     const alertContainer = screen.getByRole('alert');
 
     expect(alertContainer.firstChild).toBeNull();
   });
 
-  it('renders children when show true', () => {
+  it('renders an alert when an associated error is present', async () => {
+    const mockSubmit = jest.fn();
+    const fieldName = 'fieldName';
     const errorText = 'error text';
 
-    render(<Error show={true}>{errorText}</Error>);
+    render(
+      <Formik
+        initialValues={{ [fieldName]: '' }}
+        validate={() => {
+          return { [fieldName]: errorText };
+        }}
+        onSubmit={mockSubmit}
+      >
+        <>
+          <Field name={fieldName} />
+          <Error name={fieldName} />
+        </>
+      </Formik>,
+    );
 
-    const alertContainer = screen.getByRole('alert');
-    const errorElement = screen.getByText(errorText);
+    const input = screen.getByRole('textbox');
 
+    fireEvent.blur(input);
+
+    const alertContainer = await screen.findByRole('alert');
+
+    expect(alertContainer).toBeInTheDocument();
     expect(alertContainer.firstChild).toHaveTextContent(errorText);
-    expect(alertContainer).toContainElement(errorElement);
   });
 });

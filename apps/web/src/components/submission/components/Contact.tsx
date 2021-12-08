@@ -1,6 +1,14 @@
 import { Field, FormStepHeader } from '@components';
+import { FormStepProps } from '.';
 
-export const Contact: React.FC = () => {
+export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
+  const fieldNames = {
+    primaryPhone: `${formKey}.primaryPhone`,
+    primaryPhoneExt: `${formKey}.primaryPhoneExt`,
+    secondaryPhone: `${formKey}.secondaryPhone`,
+    secondaryPhoneExt: `${formKey}.secondaryPhoneExt`,
+    email: `${formKey}.email`,
+  };
   return (
     <>
       <FormStepHeader>2. Contact Information</FormStepHeader>
@@ -8,31 +16,31 @@ export const Contact: React.FC = () => {
         <div className='grid grid-cols-3 gap-3 items-end'>
           <div className='col-span-2'>
             <Field
-              name='primaryPhone'
+              name={fieldNames.primaryPhone}
               label='Primary Phone Number'
               type='text'
               description='(xxx xxx xxxx)'
             />
           </div>
           <div className='col-span-1'>
-            <Field name='primaryPhoneExt' label='Ext. (optional)' type='text' />
+            <Field name={fieldNames.primaryPhoneExt} label='Ext. (optional)' type='text' />
           </div>
         </div>
         <div className='grid grid-cols-3 gap-3 items-end'>
           <div className='col-span-2'>
             <Field
-              name='secondaryPhone'
+              name={fieldNames.secondaryPhone}
               label='Secondary Phone Number (optional)'
               type='text'
               description='(xxx xxx xxxx)'
             />
           </div>
           <div className='col-span-1'>
-            <Field name='secondaryPhoneExt' label='Ext. (optional)' type='text' />
+            <Field name={fieldNames.secondaryPhoneExt} label='Ext. (optional)' type='text' />
           </div>
         </div>
 
-        <Field name='email' label='Email' type='email' />
+        <Field name={fieldNames.email} label='Email' type='email' />
       </div>
     </>
   );
