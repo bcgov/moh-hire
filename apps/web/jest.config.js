@@ -3,6 +3,7 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', 'src/!**/*.d.ts', '!**/node_modules/**'],
   moduleNameMapper: {
     '^@components$': '<rootDir>/src/components',
+    '^@services$': '<rootDir>/src/services',
     /* Handle CSS imports (with CSS modules)
     https://jestjs.io/docs/webpack#mocking-css-modules */
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',

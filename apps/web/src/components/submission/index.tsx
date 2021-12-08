@@ -2,6 +2,7 @@ import { FormikHelpers, Formik, FormikProps, Form as FormikForm } from 'formik';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { Button } from '@components';
+import { submitForm } from '@services';
 import { Contact, Credential, Preferences, Personal, Review } from './components';
 import {
   personalSchema,
@@ -87,12 +88,12 @@ export const Form: React.FC = () => {
   const previousStepKey = steps[stepIndex - 1]?.key;
   const currentStepKey = steps[stepIndex]?.key;
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: DeepPartial<SubmissionType>,
     helpers: FormikHelpers<DeepPartial<SubmissionType>>,
   ) => {
     if (isLastStep) {
-      console.log(values); // submit
+      await submitForm(values);
     } else {
       helpers.setTouched({});
       router.push(`/submission/${step + 1}`);
