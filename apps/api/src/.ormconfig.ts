@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import { ConnectionOptions } from 'typeorm';
-import { DatabaseNamingStrategy } from './database.naming-strategy';
+import { DatabaseNamingStrategy } from './database/database.naming-strategy';
 dotenv.config();
 // Check typeORM documentation for more information.
 export const config: ConnectionOptions = {
@@ -11,8 +11,8 @@ export const config: ConnectionOptions = {
   username: process.env.POSTGRES_USERNAME,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DATABASE,
-  entities: ['dist/**/*.entity.js'],
-  migrations: ['src/database/migrations/*.ts'],
+  entities: ['./**/*.entity{.ts,.js}'],
+  migrations: ['./database/migrations/*{.ts,.js}'],
   cli: {
     migrationsDir: 'src/database/migrations',
   },
