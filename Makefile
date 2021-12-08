@@ -88,15 +88,17 @@ docker-down:
 	@docker-compose down
 	@echo "++\n*****"
 
+docker-up: docker-build docker-run
+
 docker-build:
-	@echo "++\n***** Running docker-compose\n++"
+	@echo "++\n***** Building docker-compose\n++"
 	@docker-compose build
 	@echo "++\n*****"
 
 docker-run:
 	@echo "++\n***** Running docker-compose\n++"
 	@yarn
-	@docker compose up --build
+	@docker compose up
 	@echo "++\n*****"
 
 
