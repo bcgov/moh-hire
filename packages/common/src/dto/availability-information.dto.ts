@@ -13,6 +13,7 @@ export class AvailabilityDTO {
       this.deploymentDuration = base.deploymentDuration;
     }
   }
+
   @IsBoolean()
   deployAnywhere!: boolean;
 
