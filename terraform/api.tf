@@ -9,11 +9,20 @@ resource "aws_lambda_function" "api" {
   memory_size      = var.function_memory_mb
   timeout          = 30
 
+  vpc_config {
+    security_group_ids = [aws_default_security_group.default_security_group.id]
+    subnet_ids         = [aws_subnet.private_az1.id, aws_subnet.private_az2.id]
+  }
+
   environment {
     variables = {
       NODE_ENV           = var.target_env
       AWS_S3_REGION      = var.region
       RUNTIME_ENV        = "hosted"
+      POSTGRES_HOST      = aws_rds_cluster.pgsql.endpoint
+      POSTGRES_DATABASE  = aws_rds_cluster.pgsql.database_name
+      POSTGRES_PASSWORD  = data.aws_ssm_parameter.postgres_password.value
+      POSTGRES_USERNAME = var.db_username
     }
   }
 }
