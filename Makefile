@@ -12,6 +12,9 @@ export NODE_ENV ?= development
 export ENV_NAME ?= dev
 export POSTGRES_USERNAME = freshworks
 
+# FE Env Vars
+export NEXT_PUBLIC_API_URL = /api/v1
+
 # AWS Environments variables
 export AWS_REGION ?= ca-central-1
 NAMESPACE = $(PROJECT)-$(ENV_NAME)
