@@ -13,41 +13,43 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${PROJECT}
     restart: always
-    networks:
-      - local
+
+  common:
+    container_name: ${PROJECT}_common
+    build:
+      context: ./packages/common
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./packages/common:/project/packages/common
+      - ./:/project
+
   api:
-    image: ${PROJECT}_base
     container_name: ${PROJECT}_api
     build:
-      context: ./
-      dockerfile: Dockerfile
-    command: 'yarn watch:api'
+      context: ./apps/api
+      dockerfile: Dockerfile.dev
     volumes:
-      - ./apps/api:/apps/api
-      - '/apps/api/node_modules'
-      - ./packages/common:/packages/common
-      - '/packages/common/node_modules'
+      - ./:/project
     ports:
       - '4000:4000'
+    environment:
+      - POSTGRES_USER=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${PROJECT}
+      - POSTGRES_HOST=db
     env_file:
       - ./.env
     depends_on:
+      - common
       - db
-    networks:
-      - local
 
   web:
-    image: ${PROJECT}_base
     container_name: ${PROJECT}_web
     build:
-      context: ./
-      dockerfile: Dockerfile
-    command: 'yarn watch:web'
+      context: ./apps/web
+      dockerfile: Dockerfile.dev
     volumes:
-      - ./apps/web:/apps/web
-      - '/apps/web/node_modules'
-      - ./packages/common:/packages/common
-      - '/packages/common/node_modules'
+      - ./:/project
     ports:
       - '3000:3000'
     environment:
@@ -56,6 +58,7 @@ services:
       - RUNTIME_ENV=local
     depends_on:
       - api
+
 networks:
   local:
     driver: bridge

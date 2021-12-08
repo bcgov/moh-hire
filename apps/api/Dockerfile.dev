@@ -1,0 +1,7 @@
+FROM node:14.17.1
+
+WORKDIR /project/apps/api
+
+EXPOSE 4000
+
+CMD [ "yarn", "run", "start:dev:local" ]

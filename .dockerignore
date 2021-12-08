@@ -1,7 +1,0 @@
-dist
-**/dist
-node_modules
-**/node_modules
-.yarn/cache
-.yarn/install-state.gz
-yarn.lock
