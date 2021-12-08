@@ -6,6 +6,7 @@ export type { PayloadDTO as SubmissionType } from '@ehpr/common';
 
 import { PersonalInformationDTO, personalDefaultValues } from './personal';
 
+// @todo remove DeepPartial when all form steps are implemented
 export type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>;
 };

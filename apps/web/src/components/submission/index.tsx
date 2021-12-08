@@ -71,6 +71,7 @@ const handleValidate = (
   };
 };
 
+// @todo remove DeepPartial when all form steps are implemented
 export const Form: React.FC = () => {
   const formikRef = useRef<FormikProps<DeepPartial<SubmissionType>>>(null);
   const router = useRouter();
