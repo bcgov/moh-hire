@@ -56,7 +56,6 @@ export class FormController {
   @HttpCode(HttpStatus.CREATED)
   @Get('/export/:passCode')
   async exportAll(@Param('passCode') passCode: string, @Res() res: Response) {
-
     // TODO: Add logging
 
     // TODO: Based on auth roles in the future.
