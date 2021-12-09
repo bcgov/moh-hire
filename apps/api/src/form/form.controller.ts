@@ -19,8 +19,9 @@ import { generateConfirmationId } from './id-generator';
 import { FormEntity } from './entity/form.entity';
 
 import { Response } from 'express';
-import { streamCsvFromData } from 'src/common/helper/csv';
-import { FormExportColumns } from 'src/common/helper/form-export';
+
+import { FormExportColumns } from 'src/common/helper/csv/formExport';
+import { streamCsvFromData } from 'src/common/helper/csv/transformer';
 
 @Controller('form')
 @ApiTags('Form')

@@ -3,8 +3,8 @@ import { Repository } from 'typeorm';
 import { FormEntity } from './entity/form.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FormDTO } from '@ehpr/common';
-import { booleanToYesNo } from 'src/common/helper/casting';
-import { FormExportColumns } from 'src/common/helper/form-export';
+import { booleanToYesNo } from 'src/common/helper/csv/casting';
+import { FormExportColumns } from 'src/common/helper/csv/formExport';
 
 @Injectable()
 export class FormService {
