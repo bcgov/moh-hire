@@ -12,13 +12,15 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { FormDTO, FormExportColumnHeaders, FormExportColumns } from '@ehpr/common';
+import { FormDTO, FormExportColumnHeaders } from '@ehpr/common';
 import { FormService } from './form.service';
 import { EmptyResponse } from 'src/common/ro/empty-response.ro';
 import { generateConfirmationId } from './id-generator';
 import { FormEntity } from './entity/form.entity';
-import { streamCsvFromData } from 'src/helpers/csv';
+
 import { Response } from 'express';
+import { streamCsvFromData } from 'src/common/helper/csv';
+import { FormExportColumns } from 'src/common/helper/form-export';
 
 @Controller('form')
 @ApiTags('Form')

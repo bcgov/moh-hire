@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { FormEntity } from './entity/form.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FormDTO, FormExportColumns } from '@ehpr/common';
-import { booleanToYesNo } from 'src/helpers/casting';
+import { FormDTO } from '@ehpr/common';
+import { booleanToYesNo } from 'src/common/helper/casting';
+import { FormExportColumns } from 'src/common/helper/form-export';
 
 @Injectable()
 export class FormService {
@@ -33,38 +34,38 @@ export class FormService {
   }
 
   async flattenAndTransformFormData(forms: FormEntity[]): Promise<FormExportColumns[]> {
-    return forms.map(form => {
+    return forms.map(({ payload }) => {
       return {
-        deployAnywhere: booleanToYesNo(form.payload.availabilityInformation.deployAnywhere),
-        deploymentDuration: form.payload.availabilityInformation.deploymentDuration.toString(),
-        deploymentLocations: form.payload.availabilityInformation.deploymentLocations.join(', '),
-        isImmunized: booleanToYesNo(form.payload.availabilityInformation.isImmunized),
+        deployAnywhere: booleanToYesNo(payload.availabilityInformation.deployAnywhere),
+        deploymentDuration: payload.availabilityInformation.deploymentDuration.toString(),
+        deploymentLocations: payload.availabilityInformation.deploymentLocations.join(', '),
+        isImmunized: booleanToYesNo(payload.availabilityInformation.isImmunized),
         C19ClinicSupport: booleanToYesNo(
-          form.payload.availabilityInformation.placementPrefs.C19ClinicSupport,
+          payload.availabilityInformation.placementPrefs.C19ClinicSupport,
         ),
         C19CommunityCare: booleanToYesNo(
-          form.payload.availabilityInformation.placementPrefs.C19CommunityCare,
+          payload.availabilityInformation.placementPrefs.C19CommunityCare,
         ),
-        C19LowRisk: booleanToYesNo(form.payload.availabilityInformation.placementPrefs.C19LowRisk),
+        C19LowRisk: booleanToYesNo(payload.availabilityInformation.placementPrefs.C19LowRisk),
         C19PatientCare: booleanToYesNo(
-          form.payload.availabilityInformation.placementPrefs.C19PatientCare,
+          payload.availabilityInformation.placementPrefs.C19PatientCare,
         ),
         WildFireOrOther: booleanToYesNo(
-          form.payload.availabilityInformation.placementPrefs.WildFireOrOther,
+          payload.availabilityInformation.placementPrefs.WildFireOrOther,
         ),
-        email: form.payload.contactInformation.email,
-        primaryPhone: form.payload.contactInformation.primaryPhone,
-        primaryPhoneExt: form.payload.contactInformation.primaryPhoneExt,
-        secondaryPhone: form.payload.contactInformation.secondaryPhone,
-        secondaryPhoneExt: form.payload.contactInformation.secondaryPhoneExt,
-        firstName: form.payload.personalInformation.firstName,
-        lastName: form.payload.personalInformation.lastName,
-        postalCode: form.payload.personalInformation.postalCode,
-        currentEmploymentType: form.payload.skillInformation.currentEmploymentType,
-        registrationNumber: form.payload.skillInformation.registrationNumber.toString(),
-        registrationStatus: form.payload.skillInformation.registrationStatus,
-        streamTypes: form.payload.skillInformation.streamTypes,
-        additionalComments: form.payload.skillInformation.additionalComments,
+        email: payload.contactInformation.email,
+        primaryPhone: payload.contactInformation.primaryPhone,
+        primaryPhoneExt: payload.contactInformation.primaryPhoneExt,
+        secondaryPhone: payload.contactInformation.secondaryPhone,
+        secondaryPhoneExt: payload.contactInformation.secondaryPhoneExt,
+        firstName: payload.personalInformation.firstName,
+        lastName: payload.personalInformation.lastName,
+        postalCode: payload.personalInformation.postalCode,
+        currentEmploymentType: payload.skillInformation.currentEmploymentType,
+        registrationNumber: payload.skillInformation.registrationNumber.toString(),
+        registrationStatus: payload.skillInformation.registrationStatus,
+        streamTypes: payload.skillInformation.streamTypes,
+        additionalComments: payload.skillInformation.additionalComments,
       };
     });
   }
