@@ -5,3 +5,4 @@ export * from './placement-preferences.dto';
 export * from './availability-information.dto';
 export * from './form.dto';
 export * from './form-payload.dto';
+export * from './export.dto';
