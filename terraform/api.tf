@@ -16,12 +16,13 @@ resource "aws_lambda_function" "api" {
 
   environment {
     variables = {
-      NODE_ENV           = var.target_env
-      AWS_S3_REGION      = var.region
-      RUNTIME_ENV        = "hosted"
-      POSTGRES_HOST      = aws_rds_cluster.pgsql.endpoint
-      POSTGRES_DATABASE  = aws_rds_cluster.pgsql.database_name
-      POSTGRES_PASSWORD  = data.aws_ssm_parameter.postgres_password.value
+      NODE_ENV          = var.target_env
+      AWS_S3_REGION     = var.region
+      RUNTIME_ENV       = "hosted"
+      POSTGRES_HOST     = aws_rds_cluster.pgsql.endpoint
+      POSTGRES_DATABASE = aws_rds_cluster.pgsql.database_name
+      POSTGRES_PASSWORD = data.aws_ssm_parameter.postgres_password.value
+      EXPORT_SECRET     = data.aws_ssm_parameter.export_key.value
       POSTGRES_USERNAME = var.db_username
     }
   }
