@@ -18,11 +18,8 @@ jobs:
     env:
       CLOUDFRONT_ID: '${{ secrets.CLOUDFRONT_ID }}'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-
-      - name: Print local env
-        run: make print-env
+      - uses: actions/checkout@v2
+        name: checkout
 
       - uses: actions/cache@v2
         name: Cache yarn
@@ -34,6 +31,9 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+      - name: Print Environment
+        run: make print-env
+
       - name: Setup terraform dir
         run: make pre-build
 
@@ -43,5 +43,13 @@ jobs:
       - name: Build api
         run: make build-api
 
-      - name: Run Terraform Plan
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-skip-session-tagging: true
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_ID }}
+          aws-region: ca-central-1
+
+      - name: Terraform config
         run: make plan
