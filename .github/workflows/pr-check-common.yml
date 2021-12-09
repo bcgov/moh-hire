@@ -1,10 +1,10 @@
-name: Web PR Checks
+name: Common PR Checks
 on:
   pull_request:
     branches:
       - main
     paths:
-      - 'apps/web/**'
+      - 'packages/common/**'
 
 jobs:
   pr-checks:
@@ -21,19 +21,16 @@ jobs:
           restore-keys: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn workspace @ehpr/web install
+        run: yarn workspace @ehpr/common install
 
       - name: Run formatting check
         run: yarn format:check
 
-      - name: Build dependencies
-        run: yarn build-common
-
       - name: Lint web package
-        run: yarn workspace @ehpr/web lint
+        run: yarn workspace @ehpr/common lint
 
       - name: Test web package
-        run: yarn workspace @ehpr/web test
+        run: yarn workspace @ehpr/common test
 
       - name: Build web package
-        run: yarn workspace @ehpr/web build
+        run: yarn workspace @ehpr/common build
