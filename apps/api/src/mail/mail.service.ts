@@ -12,8 +12,6 @@ import { MailError } from './mail.error';
 @Injectable()
 export class MailService {
   constructor(
-    @Inject('winston')
-    private readonly logger: Logger,
     @Optional()
     private readonly mailerService: MailerService,
   ) {}
