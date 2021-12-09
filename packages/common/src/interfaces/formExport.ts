@@ -1,26 +1,39 @@
+// Order determines the CSV column order
+
 export enum FormExportColumnHeaders {
-  deployAnywhere = 'Deploy Anywhere',
-  deploymentDuration = 'Deployment Duration',
-  deploymentLocations = 'Deployment Location',
+  firstName = 'First Name',
+  lastName = 'Last Name',
+
+  streamTypes = 'Stream Types',
+
+  email = 'Email',
+
+  primaryPhone = 'Primary Phone',
+  primaryPhoneExt = 'Primary Phone Ext',
+
+  postalCode = 'Postal Code',
+
   isImmunized = 'Immunization',
+
+  registrationNumber = 'Registration Number',
+  registrationStatus = 'Registration Status',
+
+  deployAnywhere = 'Deploy Anywhere',
   C19ClinicSupport = 'C19 Clinic Support',
   C19CommunityCare = 'C19 Community Care',
   C19LowRisk = 'C19 Low Risk',
   C19PatientCare = 'C19 Patient Care',
-  WildFireOrOther = 'Wild Fire Or Other',
-  email = 'Email',
-  primaryPhone = 'Primary Phone',
-  primaryPhoneExt = 'Primary Phone Ext',
-  secondaryPhone = 'secondaryPhone',
+  WildFireOrOther = 'Wildfire Or Other',
+
+  deploymentDuration = 'Deployment Duration',
+  deploymentLocations = 'Deployment Location',
+
+  secondaryPhone = 'Secondary Phone',
   secondaryPhoneExt = 'secondaryPhoneExt',
-  firstName = 'firstName',
-  lastName = 'lastName',
-  postalCode = 'postalCode',
-  currentEmploymentType = 'currentEmploymentType',
-  registrationNumber = 'registrationNumber',
-  registrationStatus = 'registrationStatus',
-  streamTypes = 'streamTypes',
-  additionalComments = 'additionalComments',
+
+  currentEmploymentType = 'Current Employment Type',
+
+  additionalComments = 'Additional Comments',
 }
 
 export interface FormExportColumns {
