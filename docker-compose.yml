@@ -15,6 +15,16 @@ services:
     restart: always
     networks:
       - local
+  common:
+    image: ${PROJECT}_base
+    container_name: ${PROJECT}_common
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: 'yarn watch:common'
+    volumes:
+      - ./node_modules:/node_modules
+      - ./packages:/packages
   api:
     image: ${PROJECT}_base
     container_name: ${PROJECT}_api
@@ -23,16 +33,16 @@ services:
       dockerfile: Dockerfile
     command: 'yarn watch:api'
     volumes:
+      - ./node_modules:/node_modules
       - ./apps/api:/apps/api
-      - '/apps/api/node_modules'
-      - ./packages/common:/packages/common
-      - '/packages/common/node_modules'
+      - ./packages:/packages
     ports:
       - '4000:4000'
     env_file:
       - ./.env
     depends_on:
       - db
+      - common
     networks:
       - local
 
@@ -44,10 +54,9 @@ services:
       dockerfile: Dockerfile
     command: 'yarn watch:web'
     volumes:
+      - ./node_modules:/node_modules
       - ./apps/web:/apps/web
-      - '/apps/web/node_modules'
-      - ./packages/common:/packages/common
-      - '/packages/common/node_modules'
+      - ./packages:/packages
     ports:
       - '3000:3000'
     environment:

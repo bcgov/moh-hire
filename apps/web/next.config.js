@@ -4,6 +4,7 @@ module.exports = {
     scrollRestoration: true,
   },
   reactStrictMode: true,
+  swcMinify: false,
   async redirects() {
     return [
       {
