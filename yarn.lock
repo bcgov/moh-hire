@@ -627,6 +627,7 @@ __metadata:
     "@vendia/serverless-express": 4.3.11
     aws-sdk: 2.1017.0
     class-transformer: 0.5.1
+    csv-stringify: 6.0.4
     dotenv: 10.0.0
     eslint: 8.0.1
     express: 4.17.1
@@ -4955,6 +4956,13 @@ __metadata:
   version: 3.0.10
   resolution: "csstype@npm:3.0.10"
   checksum: 20a8fa324f2b33ddf94aa7507d1b6ab3daa6f3cc308888dc50126585d7952f2471de69b2dbe0635d1fdc31223fef8e070842691877e725caf456e2378685a631
+  languageName: node
+  linkType: hard
+
+"csv-stringify@npm:6.0.4":
+  version: 6.0.4
+  resolution: "csv-stringify@npm:6.0.4"
+  checksum: f8efdfc1ed84b3f5dd9a52d561ff0a57363910f8f264b486713cc3b69e1e6d4b33067c43423f1462a5eeaa98bdb25554dbf1898d57590a20235ae31ad2b3d4ca
   languageName: node
   linkType: hard
 
