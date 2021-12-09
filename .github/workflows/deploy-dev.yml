@@ -1,4 +1,4 @@
-name: Terraform PR Check
+name: Deployment to aws dev environment
 on:
   push:
     branches:
@@ -7,7 +7,7 @@ on:
       - dev
 env:
   PROJECT: ehpr
-  NODE_ENV: testing
+  NODE_ENV: development
   ENV_NAME: dev
 
 jobs:
@@ -53,4 +53,7 @@ jobs:
           aws-region: ca-central-1
 
       - name: Terraform config
-        run: make plan
+        run: |
+          make plan
+          make deploy-infra
+          make deploy-app
