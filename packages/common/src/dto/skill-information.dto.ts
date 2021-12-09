@@ -2,12 +2,14 @@ import { CurrentEmploymentTypes, RegistrationStatus, StreamTypes } from '../inte
 import { IsIn, IsNumber, IsOptional, IsString, Length, Max, Min } from 'class-validator';
 
 export class SkillInformationDTO {
-  constructor(base: SkillInformationDTO) {
-    this.streamTypes = base.streamTypes;
-    this.registrationNumber = base.registrationNumber;
-    this.registrationStatus = base.registrationStatus;
-    this.currentEmploymentType = base.currentEmploymentType;
-    this.additionalComments = base.additionalComments;
+  constructor(base?: SkillInformationDTO) {
+    if (base) {
+      this.streamTypes = base.streamTypes;
+      this.registrationNumber = base.registrationNumber;
+      this.registrationStatus = base.registrationStatus;
+      this.currentEmploymentType = base.currentEmploymentType;
+      this.additionalComments = base.additionalComments;
+    }
   }
 
   @IsString()

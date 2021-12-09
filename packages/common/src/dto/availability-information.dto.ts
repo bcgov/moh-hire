@@ -4,12 +4,14 @@ import { DeploymentDurations, HealthAuthorities } from '../interfaces';
 import { PlacementPreferencesDTO } from '.';
 
 export class AvailabilityDTO {
-  constructor(base: AvailabilityDTO) {
-    this.deployAnywhere = base.deployAnywhere;
-    this.deploymentLocations = base.deploymentLocations;
-    this.placementPrefs = new PlacementPreferencesDTO(base.placementPrefs);
-    this.isImmunized = base.isImmunized;
-    this.deploymentDuration = base.deploymentDuration;
+  constructor(base?: AvailabilityDTO) {
+    if (base) {
+      this.deployAnywhere = base.deployAnywhere;
+      this.deploymentLocations = base.deploymentLocations;
+      this.placementPrefs = new PlacementPreferencesDTO(base.placementPrefs);
+      this.isImmunized = base.isImmunized;
+      this.deploymentDuration = base.deploymentDuration;
+    }
   }
   @IsBoolean()
   deployAnywhere!: boolean;

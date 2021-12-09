@@ -4,12 +4,14 @@ const TEN_DIGIT_PHONE_REGEX = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]
 const OPTIONAL_TEN_DIGIT_PHONE_REGEX = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/;
 
 export class ContactInformationDTO {
-  constructor(base: ContactInformationDTO) {
-    this.primaryPhone = base.primaryPhone;
-    this.primaryPhoneExt = base.primaryPhoneExt;
-    this.email = base.email;
-    this.secondaryPhone = base.secondaryPhone;
-    this.secondaryPhoneExt = base.secondaryPhoneExt;
+  constructor(base?: ContactInformationDTO) {
+    if (base) {
+      this.primaryPhone = base.primaryPhone;
+      this.primaryPhoneExt = base.primaryPhoneExt;
+      this.email = base.email;
+      this.secondaryPhone = base.secondaryPhone;
+      this.secondaryPhoneExt = base.secondaryPhoneExt;
+    }
   }
   @IsString()
   @Matches(TEN_DIGIT_PHONE_REGEX, {
