@@ -1,0 +1,33 @@
+name: Terraform PR check
+
+on:
+  pull_request:
+    paths:
+      - 'terraform/**'
+
+jobs:
+  checks:
+    name: Checks
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    env:
+      ENV_NAME: dev
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Print local env
+        run: make print-env
+
+      - uses: actions/cache@v2
+        name: Cache yarn
+        with:
+          path: ./.yarn/cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
+
+      - name: Build api
+        run: make build-api
+
+      - name: Run Terraform Plan
+        run: make plan
