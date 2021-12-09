@@ -34,11 +34,11 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Build web app
-        run: make build-web
-
       - name: Setup terraform dir
         run: make pre-build
+
+      - name: Build web app
+        run: make build-web
 
       - name: Build api
         run: make build-api
