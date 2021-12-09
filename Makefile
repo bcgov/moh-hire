@@ -125,6 +125,7 @@ build-api:
 	@echo 'Copy api/.ormconfig ...\n' && cp -r apps/api/dist/.ormconfig.js .build/api
 	@echo 'Creating Zip ...\n' && cd .build && zip -r api.zip ./api && cd ..
 	@echo 'Copying to terraform build location...\n'
+	@mkdir ./terraform/build
 	@cp ./.build/api.zip ./terraform/build/api.zip
 	@echo 'Done!\n'
 	@echo "++\n****"
