@@ -12,7 +12,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { FormDTO, FormExportColumnHeaders } from '@ehpr/common';
+import { FormDTO } from '@ehpr/common';
 import { FormService } from './form.service';
 import { EmptyResponse } from 'src/common/ro/empty-response.ro';
 import { generateConfirmationId } from './id-generator';
@@ -20,7 +20,7 @@ import { FormEntity } from './entity/form.entity';
 
 import { Response } from 'express';
 
-import { FormExportColumns } from 'src/common/helper/csv/formExport';
+import { FormExportColumnHeaders, FormExportColumns } from 'src/common/helper/csv/formExport';
 import { streamCsvFromData } from 'src/common/helper/csv/transformer';
 
 @Controller('form')
