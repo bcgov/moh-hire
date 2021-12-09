@@ -15,6 +15,16 @@ services:
     restart: always
     networks:
       - local
+  common:
+    image: ${PROJECT}_base
+    container_name: ${PROJECT}_common
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: 'yarn watch:common'
+    volumes:
+      - ./node_modules:/node_modules
+      - ./packages:/packages
   api:
     image: ${PROJECT}_base
     container_name: ${PROJECT}_api
@@ -32,6 +42,7 @@ services:
       - ./.env
     depends_on:
       - db
+      - common
     networks:
       - local
 
@@ -41,7 +52,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    command: 'yarn workspace @ehpr/web start'
+    command: 'yarn watch:web'
     volumes:
       - ./node_modules:/node_modules
       - ./apps/web:/apps/web

@@ -6,7 +6,7 @@
     "dev": "next dev",
     "export": "next build && next export",
     "build": "next build",
-    "start": "next start",
+    "start": "next start --preserveWatchOutput",
     "lint": "next lint",
     "test": "jest"
   },
