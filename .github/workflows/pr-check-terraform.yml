@@ -5,13 +5,18 @@ on:
     paths:
       - 'terraform/**'
 
+env:
+  PROJECT: ehpr
+  NODE_ENV: development
+  ENV_NAME: dev
+
 jobs:
   checks:
     name: Checks
     runs-on: ubuntu-20.04
-    timeout-minutes: 5
+    timeout-minutes: 10
     env:
-      ENV_NAME: dev
+      CLOUDFRONT_ID: '${{ secrets.CLOUDFRONT_ID }}'
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -28,6 +33,12 @@ jobs:
 
       - name: Install dependencies
         run: yarn
+
+      - name: Build web app
+        run: make build-web
+
+      - name: Setup terraform dir
+        run: make pre-build
 
       - name: Build api
         run: make build-api
