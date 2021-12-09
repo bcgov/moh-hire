@@ -56,6 +56,9 @@ export class FormController {
   @HttpCode(HttpStatus.CREATED)
   @Get('/export/:passCode')
   async exportAll(@Param('passCode') passCode: string, @Res() res: Response) {
+
+    // TODO: Add logging
+
     // TODO: Based on auth roles in the future.
     if (passCode === process.env.EXPORT_SECRET) {
       res.set({
@@ -63,7 +66,8 @@ export class FormController {
         'Content-Disposition': 'attachment;filename=ehrp.csv',
       });
 
-      // TODO: Needs to be paginated
+      // NOTE: Could be paginated
+      // Current Metric ~ 150K records ~ 3 sec ~ 38 MB
       const allForms = await this.formService.getForms();
 
       // TODO: Support filter and sorting parameters in future.
