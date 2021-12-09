@@ -55,34 +55,34 @@ export class FormController {
     summary: 'Export Data',
   })
   @UseInterceptors(ClassSerializerInterceptor)
-  @ApiResponse({ status: HttpStatus.CREATED, type: EmptyResponse })
+  @ApiResponse({ status: HttpStatus.OK, type: EmptyResponse })
   @HttpCode(HttpStatus.CREATED)
   @Get('/export/:passCode')
   async exportAll(@Param('passCode') passCode: string, @Res() res: Response) {
     // TODO: Add logging
 
     // TODO: Based on auth roles in the future.
-    if (passCode === process.env.EXPORT_SECRET) {
-      res.set({
-        'Content-Type': 'text/csv',
-        'Content-Disposition': 'attachment;filename=ehrp.csv',
-      });
-
-      // NOTE: Could be paginated
-      // Current Metric ~ 150K records ~ 3 sec ~ 38 MB
-      const allForms = await this.formService.getForms();
-
-      // TODO: Support filter and sorting parameters in future.
-      const flattenedData = await this.formService.flattenAndTransformFormData(allForms);
-
-      const columns = Object.entries(FormExportColumnHeaders).map(([key, header]) => ({
-        key,
-        header,
-      }));
-      const stringifier = await streamCsvFromData<FormExportColumns>(columns, flattenedData, res);
-      stringifier.end();
-    } else {
+    if (passCode !== process.env.EXPORT_SECRET) {
       throw new UnauthorizedException();
     }
+
+    res.set({
+      'Content-Type': 'text/csv',
+      'Content-Disposition': 'attachment;filename=ehrp.csv',
+    });
+
+    // NOTE: Could be paginated
+    // Current Metric ~ 150K records ~ 3 sec ~ 38 MB
+    const allForms = await this.formService.getForms();
+
+    // TODO: Support filter and sorting parameters in future.
+    const flattenedData = await this.formService.flattenAndTransformFormData(allForms);
+
+    const columns = Object.entries(FormExportColumnHeaders).map(([key, header]) => ({
+      key,
+      header,
+    }));
+    const stringifier = await streamCsvFromData<FormExportColumns>(columns, flattenedData, res);
+    stringifier.end();
   }
 }
