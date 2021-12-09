@@ -7,15 +7,17 @@ import {
 import { IsNotEmpty, ValidateNested } from 'class-validator';
 
 export class FormPayloadDTO {
-  constructor(base: FormPayloadDTO) {
-    this.personalInformation = new PersonalInformationDTO(base.personalInformation);
-    this.availabilityInformation = new AvailabilityDTO(base.availabilityInformation);
-    this.skillInformation = new SkillInformationDTO(base.skillInformation);
-    this.contactInformation = new ContactInformationDTO(base.contactInformation);
+  constructor(base?: FormPayloadDTO) {
+    if (base) {
+      this.personalInformation = new PersonalInformationDTO(base.personalInformation);
+      this.availabilityInformation = new AvailabilityDTO(base.availabilityInformation);
+      this.skillInformation = new SkillInformationDTO(base.skillInformation);
+      this.contactInformation = new ContactInformationDTO(base.contactInformation);
+    }
   }
   @ValidateNested()
   @IsNotEmpty()
-  personalInformation: PersonalInformationDTO;
+  personalInformation!: PersonalInformationDTO;
 
   @ValidateNested()
   @IsNotEmpty()

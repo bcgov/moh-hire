@@ -8,10 +8,12 @@ import { IsNotEmpty, IsString, Length, Matches } from 'class-validator';
 const postalCodeRegex = /^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][\s-]?\d[ABCEGHJ-NPRSTV-Z]\d$/i;
 
 export class PersonalInformationDTO {
-  constructor(base: PersonalInformationDTO) {
-    this.firstName = base.firstName;
-    this.lastName = base.lastName;
-    this.postalCode = base.postalCode;
+  constructor(base?: PersonalInformationDTO) {
+    if (base) {
+      this.firstName = base.firstName;
+      this.lastName = base.lastName;
+      this.postalCode = base.postalCode;
+    }
   }
   @IsString()
   @Length(1, 255, { message: 'First Name must be between 1 and 255 characters' })
