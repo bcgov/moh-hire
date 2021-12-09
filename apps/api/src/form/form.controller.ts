@@ -12,7 +12,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ExportDTO, FormDTO, FormExportColumnHeaders, FormExportColumns } from '@ehpr/common';
+import { FormDTO, FormExportColumnHeaders, FormExportColumns } from '@ehpr/common';
 import { FormService } from './form.service';
 import { EmptyResponse } from 'src/common/ro/empty-response.ro';
 import { generateConfirmationId } from './id-generator';
@@ -54,9 +54,10 @@ export class FormController {
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({ status: HttpStatus.CREATED, type: EmptyResponse })
   @HttpCode(HttpStatus.CREATED)
-  @Post('/export')
-  async exportAll(@Body() body: ExportDTO, @Res() res: Response) {
-    if (body.passCode === process.env.EXPORT_SECRET) {
+  @Get('/export/:passCode')
+  async exportAll(@Param('passCode') passCode: string, @Res() res: Response) {
+    // TODO: Based on auth roles in the future.
+    if (passCode === process.env.EXPORT_SECRET) {
       res.set({
         'Content-Type': 'text/csv',
         'Content-Disposition': 'attachment;filename=ehrp.csv',
