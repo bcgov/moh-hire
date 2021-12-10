@@ -4,7 +4,7 @@ export enum FormExportColumnHeaders {
   firstName = 'First Name',
   lastName = 'Last Name',
 
-  streamTypes = 'Stream Types',
+  stream = 'Stream',
 
   email = 'Email',
 
@@ -31,7 +31,7 @@ export enum FormExportColumnHeaders {
   secondaryPhone = 'Secondary Phone',
   secondaryPhoneExt = 'secondaryPhoneExt',
 
-  currentEmploymentType = 'Current Employment Type',
+  currentEmployment = 'Current Employment Type',
 
   additionalComments = 'Additional Comments',
 }
@@ -58,9 +58,9 @@ export interface FormExportColumns {
   lastName?: string;
   postalCode?: string;
 
-  currentEmploymentType?: string;
+  currentEmployment?: string;
   registrationNumber?: string;
   registrationStatus?: string;
-  streamTypes?: string;
+  stream?: string;
   additionalComments?: string;
 }
