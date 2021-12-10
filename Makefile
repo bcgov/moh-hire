@@ -95,6 +95,7 @@ docker-build:
 
 docker-run:
 	@echo "++\n***** Running docker-compose\n++"
+	@yarn
 	@docker-compose up --build
 	@echo "++\n*****"
 
