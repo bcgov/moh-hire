@@ -1,7 +1,6 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString, Length, Matches } from 'class-validator';
+import {IsEmail, IsNotEmpty, IsOptional, IsString, Length, Matches, ValidateIf} from 'class-validator';
 
-const TEN_DIGIT_PHONE_REGEX = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/;
-const OPTIONAL_TEN_DIGIT_PHONE_REGEX = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/;
+const TEN_DIGIT_PHONE_REGEX = /^\(?([0-9]{3})\)?[ -.●]?([0-9]{3})[ -.●]?([0-9]{4})$/;
 
 export class ContactInformationDTO {
   constructor(base?: ContactInformationDTO) {
@@ -26,11 +25,11 @@ export class ContactInformationDTO {
   })
   primaryPhoneExt!: string;
 
+  @ValidateIf(o => !!o.secondaryPhone)
   @IsString()
-  @Matches(OPTIONAL_TEN_DIGIT_PHONE_REGEX, {
+  @Matches(TEN_DIGIT_PHONE_REGEX, {
     message: 'Phone number must be a 10 digit number',
   })
-  @IsOptional()
   secondaryPhone!: string;
 
   @IsString()
