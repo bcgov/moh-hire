@@ -1,0 +1,58 @@
+name: Terraform PR Checks
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'terraform/**'
+
+env:
+  PROJECT: ehpr
+  NODE_ENV: development
+  ENV_NAME: dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: dev
+    env:
+      CLOUDFRONT_ID: '${{ secrets.CLOUDFRONT_ID }}'
+    steps:
+      - uses: actions/checkout@v2
+        name: checkout
+
+      - uses: actions/cache@v2
+        name: Cache yarn
+        with:
+          path: ./.yarn/cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Print Environment
+        run: make print-env
+
+      - name: Setup terraform dir
+        run: make pre-build
+
+      - name: Build web app
+        run: make build-web
+
+      - name: Build api
+        run: make build-api
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-skip-session-tagging: true
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_ID }}
+          aws-region: ca-central-1
+
+      - name: Terraform config
+        run: |
+          make plan
