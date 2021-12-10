@@ -2,6 +2,7 @@ import { OptionType } from '@components';
 import {
   EmploymentTypes,
   HealthAuthorities,
+  NotEmployedReasons,
   RegistrationStatus,
   SkillInformationDTO,
   streamData,
@@ -130,5 +131,20 @@ export const healthAuthorityOptions = [
   {
     value: HealthAuthorities.VANCOUVER_ISLAND,
     label: 'Vancouver Island Health',
+  },
+];
+
+export const notEmployedReasonOptions = [
+  {
+    value: NotEmployedReasons.RETIRED,
+    label: 'Retired',
+  },
+  {
+    value: NotEmployedReasons.STUDENT,
+    label: 'Student',
+  },
+  {
+    value: NotEmployedReasons.OTHER,
+    label: 'Other',
   },
 ];

@@ -18,6 +18,7 @@ import {
   SubmissionType,
   registrationStatusOptions,
   healthAuthorityOptions,
+  notEmployedReasonOptions,
   employmentOptions,
   streamOptions,
   getSpecialtyOptions,
@@ -48,7 +49,13 @@ export const Credential: React.FC = () => {
     setFieldValue('skillInformation.healthAuthorities', []);
   }, [setFieldValue, currentEmployment]);
 
-  const isHealthAuthorityEmployed = currentEmployment === EmploymentTypes.HEALTH_SECTOR_EMPLOYED;
+  const isHealthAuthorityEmployed = [
+    EmploymentTypes.HEALTH_SECTOR_EMPLOYED,
+    EmploymentTypes.HEALTH_SECTORY_RESIDENCY,
+  ].includes(currentEmployment);
+
+  const isNotHealthAuthorityEmployed =
+    currentEmployment === EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED;
 
   return (
     <div className='flex flex-col gap-5'>
@@ -131,6 +138,14 @@ export const Credential: React.FC = () => {
           name='skillInformation.healthAuthorities'
           legend='Please indicate which Health Authority (select all the apply):'
           options={healthAuthorityOptions}
+        />
+      ) : null}
+
+      {isNotHealthAuthorityEmployed ? (
+        <Radio
+          name='skillInformation.notEmployedReason'
+          legend='<new question coming>'
+          options={notEmployedReasonOptions}
         />
       ) : null}
 
