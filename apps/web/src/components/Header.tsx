@@ -1,6 +1,9 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
+
+import logo from '@assets/img/bc_logo.png';
 
 export const Header: React.FC = () => {
   const router = useRouter();
@@ -16,12 +19,7 @@ export const Header: React.FC = () => {
         <div className='layout-grid gap-0 h-full flex flex-row items-center align-center'>
           <Link href='/'>
             <a>
-              <img
-                src='/assets/img/bc_logo.png'
-                alt='government of british columbia'
-                width={160}
-                height={45}
-              />
+              <Image src={logo} alt='government of british columbia' width={160} height={45} />
             </a>
           </Link>
           <div className='ml-7 pl-7 border-l-2 border-bcYellowPrimary'>
