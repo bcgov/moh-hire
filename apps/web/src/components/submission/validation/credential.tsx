@@ -12,7 +12,7 @@ export { SkillInformationDTO } from '@ehpr/common';
 
 export const defaultSpecialtyValue = {
   name: '',
-  subSpecialties: [],
+  subspecialties: [],
 };
 
 export const credentialDefaultValues: Partial<SkillInformationDTO> = {
@@ -41,7 +41,7 @@ export const getSpecialtyOptions = (stream: keyof typeof streamData): OptionType
   }));
 };
 
-export const getSubSpecialtyOptions = (
+export const getSubspecialtyOptions = (
   stream: string,
   specialties: string[],
 ): Array<OptionType[] | null> | null => {
@@ -50,31 +50,31 @@ export const getSubSpecialtyOptions = (
   const currentStream = streamData[stream];
   if (!currentStream) return null;
 
-  const subSpecialties: Array<OptionType[] | null> = [];
+  const subspecialties: Array<OptionType[] | null> = [];
 
   for (const specialty of specialties) {
     const currentSpecialty = currentStream.specialties?.[specialty];
     // if selected specialtiy isn't found, don't return subspecialties
-    const currentSubSpecialties = currentSpecialty?.subSpecialties;
+    const currentSubSpecialties = currentSpecialty?.subspecialties;
 
     if (!currentSpecialty || !currentSubSpecialties) {
-      subSpecialties.push(null);
+      subspecialties.push(null);
       continue;
     }
 
-    const currentSubSpecialtyOption: OptionType[] = [];
+    const currentSubspecialtyOption: OptionType[] = [];
 
     Object.entries(currentSubSpecialties).forEach(([key, value]) =>
-      currentSubSpecialtyOption.push({
+      currentSubspecialtyOption.push({
         value: key,
         label: value.name,
       }),
     );
 
-    subSpecialties.push(currentSubSpecialtyOption);
+    subspecialties.push(currentSubspecialtyOption);
   }
 
-  return subSpecialties;
+  return subspecialties;
 };
 
 export const registrationStatusOptions = [

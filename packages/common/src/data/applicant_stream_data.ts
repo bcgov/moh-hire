@@ -2,8 +2,8 @@ export type Stream = Record<
   string,
   { name: string; specialties: Record<string, Specialty> | null }
 >;
-export type Specialty = { name: string; subSpecialties: SubSpecialty };
-export type SubSpecialty = Record<string, { name: string }> | null;
+export type Specialty = { name: string; subspecialties: Subspecialty };
+export type Subspecialty = Record<string, { name: string }> | null;
 
 export const streamData: Stream = {
   AlliedHealthProfessional: {
@@ -11,71 +11,71 @@ export const streamData: Stream = {
     specialties: {
       AnesthesiaAssistant: {
         name: 'Anesthesia Assistant',
-        subSpecialties: null,
+        subspecialties: null,
       },
       CardiovascularPerfusionist: {
         name: 'Cardiovascular Perfusionist',
-        subSpecialties: null,
+        subspecialties: null,
       },
       ClinicalCounsellor: {
         name: 'Clinical Counsellor',
-        subSpecialties: null,
+        subspecialties: null,
       },
       DiagnosticMedicalSonographer: {
         name: 'Diagnostic Medical Sonographer',
-        subSpecialties: null,
+        subspecialties: null,
       },
       ExercisePhysiologist: {
         name: 'Exercise Physiologist',
-        subSpecialties: null,
+        subspecialties: null,
       },
       MagneticResonanceImagingTechnologistMRITech: {
         name: 'Magnetic Resonance Imaging Technologist (MRI Tech)',
-        subSpecialties: null,
+        subspecialties: null,
       },
       MedicalLaboratoryAssistant: {
         name: 'Medical Laboratory Assistant',
-        subSpecialties: null,
+        subspecialties: null,
       },
       MedicalLaboratoryTechnologist: {
         name: 'Medical Laboratory Technologist',
-        subSpecialties: null,
+        subspecialties: null,
       },
       OccupationalTherapist: {
         name: 'Occupational Therapist',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Physiotherapist: {
         name: 'Physiotherapist',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Psychologist: {
         name: 'Psychologist',
-        subSpecialties: null,
+        subspecialties: null,
       },
       RecreationTherapist: {
         name: 'Recreation Therapist',
-        subSpecialties: null,
+        subspecialties: null,
       },
       RegisteredDietician: {
         name: 'Registered Dietician',
-        subSpecialties: null,
+        subspecialties: null,
       },
       RehabAssistant: {
         name: 'Rehab Assistant',
-        subSpecialties: null,
+        subspecialties: null,
       },
       RespiratoryTherapist: {
         name: 'Respiratory Therapist',
-        subSpecialties: null,
+        subspecialties: null,
       },
       SocialWorker: {
         name: 'Social Worker',
-        subSpecialties: null,
+        subspecialties: null,
       },
       SpeechLanguagePathologist: {
         name: 'Speech Language Pathologist',
-        subSpecialties: null,
+        subspecialties: null,
       },
     },
   },
@@ -84,15 +84,15 @@ export const streamData: Stream = {
     specialties: {
       DentalHygienist: {
         name: 'Dental Hygienist',
-        subSpecialties: null,
+        subspecialties: null,
       },
       DentalTherapist: {
         name: 'Dental Therapist',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Dentist: {
         name: 'Dentist',
-        subSpecialties: null,
+        subspecialties: null,
       },
     },
   },
@@ -101,23 +101,23 @@ export const streamData: Stream = {
     specialties: {
       AdvancedCareParamedic: {
         name: 'Advanced Care Paramedic',
-        subSpecialties: null,
+        subspecialties: null,
       },
       CommunityParamedic: {
         name: 'Community Paramedic',
-        subSpecialties: null,
+        subspecialties: null,
       },
       CriticalCareParamedic: {
         name: 'Critical Care Paramedic',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Firefighter: {
         name: 'Firefighter',
-        subSpecialties: null,
+        subspecialties: null,
       },
       PrimaryCareParamedic: {
         name: 'Primary Care Paramedic',
-        subSpecialties: null,
+        subspecialties: null,
       },
     },
   },
@@ -126,31 +126,31 @@ export const streamData: Stream = {
     specialties: {
       Acute: {
         name: 'Acute',
-        subSpecialties: null,
+        subspecialties: null,
       },
       AssistedLiving: {
         name: 'Assisted Living',
-        subSpecialties: null,
+        subspecialties: null,
       },
       HomeSupport: {
         name: 'Home Support',
-        subSpecialties: null,
+        subspecialties: null,
       },
       LongTermCare: {
         name: 'Long Term Care',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Palliative: {
         name: 'Palliative',
-        subSpecialties: null,
+        subspecialties: null,
       },
       PrivateHome: {
         name: 'Private Home',
-        subSpecialties: null,
+        subspecialties: null,
       },
       SelfEmployed: {
         name: 'Self-Employed',
-        subSpecialties: null,
+        subspecialties: null,
       },
     },
   },
@@ -171,7 +171,7 @@ export const streamData: Stream = {
     specialties: {
       ClinicalNurseEducators: {
         name: 'Clinical Nurse Educators',
-        subSpecialties: {
+        subspecialties: {
           CertifiedSTI: {
             name: 'Certified STI',
           },
@@ -287,7 +287,7 @@ export const streamData: Stream = {
       },
       LicensedPracticalNurse: {
         name: 'Licensed Practical Nurse',
-        subSpecialties: {
+        subspecialties: {
           CertifiedSTI: {
             name: 'Certified STI',
           },
@@ -406,7 +406,7 @@ export const streamData: Stream = {
       },
       NursePractitioner: {
         name: 'Nurse Practitioner',
-        subSpecialties: {
+        subspecialties: {
           Cardiovascular: {
             name: 'Cardiovascular',
           },
@@ -528,7 +528,7 @@ export const streamData: Stream = {
       },
       RegisteredNurse: {
         name: 'Registered Nurse',
-        subSpecialties: {
+        subspecialties: {
           CertifiedSTI: {
             name: 'Certified STI',
           },
@@ -644,7 +644,7 @@ export const streamData: Stream = {
       },
       RegisteredPsychiatricNurse: {
         name: 'Registered Psychiatric Nurse',
-        subSpecialties: {
+        subspecialties: {
           CertifiedSTI: {
             name: 'Certified STI',
           },
@@ -765,11 +765,11 @@ export const streamData: Stream = {
     specialties: {
       Pharmacist: {
         name: 'Pharmacist',
-        subSpecialties: null,
+        subspecialties: null,
       },
       PharmacyTech: {
         name: 'Pharmacy Tech',
-        subSpecialties: null,
+        subspecialties: null,
       },
     },
   },
@@ -778,63 +778,63 @@ export const streamData: Stream = {
     specialties: {
       Anaesthesiology: {
         name: 'Anaesthesiology',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Cardiology: {
         name: 'Cardiology',
-        subSpecialties: null,
+        subspecialties: null,
       },
       ClinicalImmunologyAllergy: {
         name: 'Clinical Immunology & Allergy',
-        subSpecialties: null,
+        subspecialties: null,
       },
       ClinicalPharmacologyToxicology: {
         name: 'Clinical Pharmacology & Toxicology',
-        subSpecialties: null,
+        subspecialties: null,
       },
       ClinicianInvestigatorProgram: {
         name: 'Clinician Investigator Program',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Dermatology: {
         name: 'Dermatology',
-        subSpecialties: null,
+        subspecialties: null,
       },
       EligibleInternationalMedicalGraduate: {
         name: 'Eligible International Medical Graduate',
-        subSpecialties: null,
+        subspecialties: null,
       },
       EndocrinologyMetabolism: {
         name: 'Endocrinology & Metabolism',
-        subSpecialties: null,
+        subspecialties: null,
       },
       FamilyPhysician: {
         name: 'Family Physician',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Gastroenterology: {
         name: 'Gastroenterology',
-        subSpecialties: null,
+        subspecialties: null,
       },
       GynecologicReproductiveEndocrinologyInfertility: {
         name: 'Gynecologic Reproductive Endocrinology & Infertility',
-        subSpecialties: null,
+        subspecialties: null,
       },
       GynecologyObstetrics: {
         name: 'Gynecology & Obstetrics',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Hematology: {
         name: 'Hematology',
-        subSpecialties: null,
+        subspecialties: null,
       },
       InfectiousDiseases: {
         name: 'Infectious Diseases',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Medicine: {
         name: 'Medicine',
-        subSpecialties: {
+        subspecialties: {
           Biochemistry: {
             name: 'Biochemistry',
           },
@@ -887,27 +887,27 @@ export const streamData: Stream = {
       },
       Microbiology: {
         name: 'Microbiology',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Nephrology: {
         name: 'Nephrology',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Neurology: {
         name: 'Neurology',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Oncology: {
         name: 'Oncology',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Ophthalmology: {
         name: 'Ophthalmology',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Pathology: {
         name: 'Pathology',
-        subSpecialties: {
+        subspecialties: {
           Forensic: {
             name: 'Forensic',
           },
@@ -924,11 +924,11 @@ export const streamData: Stream = {
       },
       Pediatric: {
         name: 'Pediatric',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Psychiatry: {
         name: 'Psychiatry',
-        subSpecialties: {
+        subspecialties: {
           ChildAdolescent: {
             name: 'Child & Adolescent',
           },
@@ -942,7 +942,7 @@ export const streamData: Stream = {
       },
       Radiology: {
         name: 'Radiology',
-        subSpecialties: {
+        subspecialties: {
           Interventional: {
             name: 'Interventional',
           },
@@ -959,19 +959,19 @@ export const streamData: Stream = {
       },
       Resident: {
         name: 'Resident',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Respirology: {
         name: 'Respirology',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Rheumatology: {
         name: 'Rheumatology',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Surgery: {
         name: 'Surgery',
-        subSpecialties: {
+        subspecialties: {
           Colorectal: {
             name: 'Colorectal',
           },
@@ -1009,11 +1009,11 @@ export const streamData: Stream = {
       },
       SurgicalFoundations: {
         name: 'Surgical Foundations',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Urology: {
         name: 'Urology',
-        subSpecialties: null,
+        subspecialties: null,
       },
     },
   },
@@ -1026,31 +1026,31 @@ export const streamData: Stream = {
     specialties: {
       EmployedStudentNurse: {
         name: 'Employed Student Nurse',
-        subSpecialties: null,
+        subspecialties: null,
       },
       LicensedPracticalNursestudent: {
         name: 'Licensed Practical Nurse student',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Medicalstudent: {
         name: 'Medical student',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Midwiferystudent: {
         name: 'Midwifery student',
-        subSpecialties: null,
+        subspecialties: null,
       },
       Pharmacystudent: {
         name: 'Pharmacy student',
-        subSpecialties: null,
+        subspecialties: null,
       },
       RegisteredNursestudent: {
         name: 'Registered Nurse student',
-        subSpecialties: null,
+        subspecialties: null,
       },
       RegisteredPsychiatricNursestudent: {
         name: 'Registered Psychiatric Nurse student',
-        subSpecialties: null,
+        subspecialties: null,
       },
     },
   },

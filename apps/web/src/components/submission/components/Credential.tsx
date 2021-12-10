@@ -22,7 +22,7 @@ import {
   employmentOptions,
   streamOptions,
   getSpecialtyOptions,
-  getSubSpecialtyOptions,
+  getSubspecialtyOptions,
 } from '../validation';
 
 import { defaultSpecialtyValue } from '../validation/credential';
@@ -35,8 +35,8 @@ export const Credential: React.FC = () => {
 
   const specialtyOptions = stream ? getSpecialtyOptions(stream) : null;
 
-  const subSpecialties = selectedSpecialties
-    ? getSubSpecialtyOptions(stream, selectedSpecialties)
+  const subspecialties = selectedSpecialties
+    ? getSubspecialtyOptions(stream, selectedSpecialties)
     : null;
 
   // reset specialties if stream changes
@@ -98,7 +98,7 @@ export const Credential: React.FC = () => {
                   disabled={!specialtyOptions}
                   index={index}
                   specialties={specialtyOptions}
-                  subSpecialties={subSpecialties?.[index]}
+                  subspecialties={subspecialties?.[index]}
                 />
               ))}
               <div className='flex items-center'>
@@ -175,14 +175,14 @@ interface SpecialtySelectorProps {
   disabled: boolean;
   index: number;
   specialties: OptionType[] | null;
-  subSpecialties?: OptionType[] | null;
+  subspecialties?: OptionType[] | null;
 }
 
 const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
   disabled,
   index,
   specialties,
-  subSpecialties,
+  subspecialties,
 }) => {
   const { values } = useFormikContext<SubmissionType>();
   const { specialties: formSpecialties }: SkillInformationDTO = values.skillInformation;
@@ -211,9 +211,9 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
       <div className='col-span-1'>
         <MultiSelect
           label='Subspecialty/Training'
-          name={`skillInformation.specialties[${index}].subSpecialties`}
-          disabled={!subSpecialties}
-          options={subSpecialties || []}
+          name={`skillInformation.specialties[${index}].subspecialties`}
+          disabled={!subspecialties}
+          options={subspecialties || []}
         />
       </div>
     </div>
