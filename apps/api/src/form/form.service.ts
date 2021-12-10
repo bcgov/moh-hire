@@ -61,10 +61,10 @@ export class FormService {
         firstName: payload.personalInformation.firstName,
         lastName: payload.personalInformation.lastName,
         postalCode: payload.personalInformation.postalCode,
-        currentEmploymentType: payload.skillInformation.currentEmploymentType,
+        currentEmploymentType: payload.skillInformation.currentEmployment,
         registrationNumber: payload.skillInformation.registrationNumber.toString(),
         registrationStatus: payload.skillInformation.registrationStatus,
-        streamTypes: payload.skillInformation.streamTypes,
+        streamTypes: payload.skillInformation.stream,
         additionalComments: payload.skillInformation.additionalComments,
       };
     });
