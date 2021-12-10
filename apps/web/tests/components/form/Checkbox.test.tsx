@@ -46,7 +46,7 @@ describe('CheckboxArray', () => {
 
     render(
       <Formik initialValues={{ [name]: '' }} onSubmit={mock}>
-        <CheckboxArray legend={legendText} options={testOptions} />
+        <CheckboxArray name={name} legend={legendText} options={testOptions} />
       </Formik>,
     );
 
@@ -71,12 +71,58 @@ describe('CheckboxArray', () => {
 
     render(
       <Formik initialValues={{ [name]: '' }} onSubmit={mock}>
-        <CheckboxArray legend={legendText} options={testOptions} />
+        <CheckboxArray name={name} legend={legendText} options={testOptions} />
       </Formik>,
     );
 
     const checkboxElements = screen.getAllByRole('checkbox');
 
     expect(checkboxElements.length).toBe(testOptions.length);
+  });
+
+  it('should render a list of checkboxes with the same name', () => {
+    const mock = jest.fn();
+    const name = 'checkboxName';
+    const legendText = 'checkboxLabel';
+    const testOptions = [
+      { value: 'testValue1', label: 'testLabel1' },
+      { value: 'testValue2', label: 'testLabel2' },
+      { value: 'testValue3', label: 'testLabel3' },
+    ];
+
+    render(
+      <Formik initialValues={{ [name]: '' }} onSubmit={mock}>
+        <CheckboxArray name={name} legend={legendText} options={testOptions} />
+      </Formik>,
+    );
+
+    const checkboxElements = screen.getAllByRole('checkbox');
+
+    checkboxElements.forEach(checkboxElement => {
+      expect(checkboxElement).toHaveAttribute('name', name);
+    });
+  });
+
+  it("should render a list of checkboxes with the option value as the checkbox's value", () => {
+    const mock = jest.fn();
+    const name = 'checkboxName';
+    const legendText = 'checkboxLabel';
+    const testOptions = [
+      { value: 'testValue1', label: 'testLabel1' },
+      { value: 'testValue2', label: 'testLabel2' },
+      { value: 'testValue3', label: 'testLabel3' },
+    ];
+
+    render(
+      <Formik initialValues={{ [name]: '' }} onSubmit={mock}>
+        <CheckboxArray name={name} legend={legendText} options={testOptions} />
+      </Formik>,
+    );
+
+    const checkboxElements = screen.getAllByRole('checkbox');
+
+    checkboxElements.forEach((checkboxElement, index) => {
+      expect(checkboxElement).toHaveAttribute('value', testOptions[index].value);
+    });
   });
 });
