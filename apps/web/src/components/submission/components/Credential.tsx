@@ -12,6 +12,7 @@ import {
   Textarea,
   Field,
   OptionType,
+  Error,
 } from '@components';
 
 import {
@@ -101,6 +102,11 @@ export const Credential: React.FC = () => {
                   subspecialties={subspecialties?.[index]}
                 />
               ))}
+
+              <div className='mb-2'>
+                <Error name='skillInformation.specialties' />
+              </div>
+
               <div className='flex items-center'>
                 {specialties.length !== specialtyOptions?.length ? (
                   <button
