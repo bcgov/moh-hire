@@ -5,6 +5,7 @@ import { FormPayloadDTO } from '@ehpr/common';
 
 @Entity('form')
 export class FormEntity extends BaseEntity {
+  @Exclude()
   @Column('jsonb', { nullable: false })
   payload!: FormPayloadDTO;
 
@@ -12,8 +13,8 @@ export class FormEntity extends BaseEntity {
   confirmationId!: string;
 
   @Exclude()
-  @Column('timestamp', { nullable: true })
-  notifiedAt?: Date;
+  @Column('varchar', { nullable: true })
+  chesId?: string;
 
   @Exclude()
   @Column('varchar', { nullable: false })

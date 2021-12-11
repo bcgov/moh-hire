@@ -1,44 +1,49 @@
-import { Inject, Injectable, Logger, Optional } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as path from 'path';
 import axios from 'axios';
 import * as fs from 'fs';
-import { MailerService } from '@nestjs-modules/mailer';
 import * as handlebars from 'handlebars';
 import { Mailable } from './mailables/mail-base.mailable';
 import { MailOptions } from './mail-options.interface';
 import { GenericException } from 'src/common/generic-exception';
 import { MailError } from './mail.error';
+import { ChesResponse } from './types/ches-response';
 
 @Injectable()
 export class MailService {
-  constructor(
-    @Optional()
-    private readonly mailerService: MailerService,
-  ) {}
+  constructor() {
+    const templatePath = path.resolve(`${__dirname}/templates/partials/layout.hbs`);
+    const templateContent = fs.readFileSync(templatePath, 'utf-8');
+    handlebars.registerPartial('layout', templateContent);
+  }
   /**
    * Sends an email
    *
    * @param mailOptions - Email to be sent
    * @returns A promise for the result of sending the email
    */
-  public async sendMailWithChes(mailOptions: MailOptions): Promise<void> {
+  public async sendMailWithChes(mailOptions: MailOptions): Promise<ChesResponse> {
     const emailBody = {
       from: mailOptions.from,
       to: mailOptions.to,
       subject: mailOptions.subject,
       bodyType: 'html',
-      body: mailOptions.template,
-      contexts: mailOptions.context,
+      body: mailOptions.body,
     };
     const token = await this.getChesToken();
+
     try {
-      await axios.post(`${process.env.CHES_SERVICE_HOST}/api/v1/email`, emailBody, {
-        headers: {
-          authorization: `bearer ${token}`,
-          host: (process.env.CHES_SERVICE_HOST as string).replace('https://', ''),
-          'content-type': 'application/json',
+      const { data } = await axios.post<ChesResponse>(
+        `${process.env.CHES_SERVICE_HOST}/api/v1/email`,
+        emailBody,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+            'content-type': 'application/json',
+          },
         },
-      });
+      );
+      return data;
     } catch (e) {
       throw new GenericException(MailError.FAILED_TO_SEND_EMAIL, e);
     }
@@ -60,7 +65,6 @@ export class MailService {
           },
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            Host: (process.env.CHES_AUTH_URL as string).replace('https://', ''),
           },
         },
       );
@@ -77,30 +81,21 @@ export class MailService {
    * @returns A promise for the result of sending the email
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public async sendMailable(mailable: Mailable<any>): Promise<void> {
+  public async sendMailable(mailable: Mailable<any>): Promise<ChesResponse> {
     const mailOptions: Partial<MailOptions> = {
       from: process.env.MAIL_FROM,
-      to: mailable.recipient.email,
+      to: [mailable.recipient.email],
       subject: mailable.subject,
-      template: mailable.template,
-      context: mailable.context,
     };
 
-    if (process.env.USE_MAILTRAP === 'true') {
-      return await this.mailerService.sendMail({
-        ...mailOptions,
-        template: mailable.template,
-      } as MailOptions);
-    } else {
-      const templatePath = path.resolve(`${__dirname}/templates/${mailable.template}.hbs`);
-      const templateContent = fs.readFileSync(templatePath, 'utf-8');
-      const template = handlebars.compile(templateContent, { strict: true });
-      const body = template(mailable.context);
+    const templatePath = path.resolve(`${__dirname}/templates/${mailable.template}.hbs`);
+    const templateContent = fs.readFileSync(templatePath, 'utf-8');
+    const template = handlebars.compile(templateContent, { strict: true });
+    const body = template(mailable.context);
 
-      return await this.sendMailWithChes({
-        ...mailOptions,
-        body,
-      } as MailOptions);
-    }
+    return await this.sendMailWithChes({
+      ...mailOptions,
+      body,
+    } as MailOptions);
   }
 }

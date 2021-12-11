@@ -11,6 +11,10 @@ variable "function_memory_mb" {
 
 variable "db_username" {}
 
+variable "mail_from" {}
+
+variable "ches_client_id" {}
+
 variable "azs" {
   default = ["ca-central-1a", "ca-central-1b"]
 }

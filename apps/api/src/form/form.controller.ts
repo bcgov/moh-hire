@@ -12,15 +12,13 @@ import {
   UnauthorizedException,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { FormDTO } from '@ehpr/common';
 import { FormService } from './form.service';
 import { EmptyResponse } from 'src/common/ro/empty-response.ro';
 import { generateConfirmationId } from './id-generator';
 import { FormEntity } from './entity/form.entity';
 import { MailService } from 'src/mail/mail.service';
-import { ConfirmationMailable } from 'src/mail/mailables/confirmation.mailable';
-import { Recipient } from 'src/mail/types/recipient';
 
 import { Response } from 'express';
 

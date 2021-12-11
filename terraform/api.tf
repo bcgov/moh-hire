@@ -16,14 +16,19 @@ resource "aws_lambda_function" "api" {
 
   environment {
     variables = {
-      NODE_ENV          = var.target_env
-      AWS_S3_REGION     = var.region
-      RUNTIME_ENV       = "hosted"
-      POSTGRES_HOST     = aws_rds_cluster.pgsql.endpoint
-      POSTGRES_DATABASE = aws_rds_cluster.pgsql.database_name
-      POSTGRES_PASSWORD = data.aws_ssm_parameter.postgres_password.value
-      EXPORT_SECRET     = data.aws_ssm_parameter.export_key.value
-      POSTGRES_USERNAME = var.db_username
+      NODE_ENV           = var.target_env
+      AWS_S3_REGION      = var.region
+      RUNTIME_ENV        = "hosted"
+      POSTGRES_HOST      = aws_rds_cluster.pgsql.endpoint
+      POSTGRES_DATABASE  = aws_rds_cluster.pgsql.database_name
+      POSTGRES_PASSWORD  = data.aws_ssm_parameter.postgres_password.value
+      POSTGRES_USERNAME  = var.db_username
+      CHES_CLIENT_ID     = var.ches_client_id
+      CHES_CLIENT_SECRET = data.aws_ssm_parameter.ches_client_secret.value
+      CHES_SERVICE_HOST  = data.aws_ssm_parameter.ches_service_host.value
+      CHES_AUTH_URL      = data.aws_ssm_parameter.ches_auth_url.value
+      MAIL_FROM          = var.mail_from
+      EXPORT_SECRET      = data.aws_ssm_parameter.export_key.value
     }
   }
 }
