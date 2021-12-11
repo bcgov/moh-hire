@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { FormEntity } from './entity/form.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FormDTO } from '@ehpr/common';
+import { FormDTO, PersonalInformationDTO } from '@ehpr/common';
 import { booleanToYesNo } from 'src/common/helper/csv/casting';
 import { FormExportColumns } from 'src/common/helper/csv/formExport';
 import { MailService } from 'src/mail/mail.service';
