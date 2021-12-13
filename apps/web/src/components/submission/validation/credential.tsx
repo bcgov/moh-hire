@@ -5,7 +5,10 @@ import {
   NotEmployedReasons,
   RegistrationStatus,
   SkillInformationDTO,
-  streamData,
+  getStreams,
+  getSpecialtiesByStreamId,
+  getSubSpecialtiesBySpecialtyId,
+  StreamId,
 } from '@ehpr/common';
 
 export { SkillInformationDTO } from '@ehpr/common';
@@ -25,54 +28,29 @@ export const credentialDefaultValues: Partial<SkillInformationDTO> = {
   additionalComments: undefined,
 };
 
-export const streamOptions = Object.entries(streamData).map(([key, value]) => ({
-  value: key,
-  label: value.name,
+export const streamOptions = getStreams().map(({ id, name }) => ({
+  value: id,
+  label: name,
 }));
 
-export const getSpecialtyOptions = (stream: keyof typeof streamData): OptionType[] | null => {
-  const specialties = streamData[stream]?.specialties;
+export const getSpecialtyOptions = (streamSelection: StreamId): OptionType[] | null => {
+  const specialties = getSpecialtiesByStreamId(streamSelection);
 
-  if (!specialties) return null;
-
-  return Object.entries(specialties).map(([key, value]) => ({
-    value: key,
-    label: value.name,
+  return specialties.map(({ id, name }) => ({
+    value: id,
+    label: name,
   }));
 };
 
-export const getSubspecialtyOptions = (
-  stream: string,
-  specialties: string[],
-): Array<OptionType[] | null> | null => {
-  if (specialties.length === 0) return [];
-
-  const currentStream = streamData[stream];
-  if (!currentStream) return null;
-
-  const subspecialties: Array<OptionType[] | null> = [];
-
-  for (const specialty of specialties) {
-    const currentSpecialty = currentStream.specialties?.[specialty];
-    // if selected specialtiy isn't found, don't return subspecialties
-    const currentSubSpecialties = currentSpecialty?.subspecialties;
-
-    if (!currentSpecialty || !currentSubSpecialties) {
-      subspecialties.push(null);
-      continue;
-    }
-
-    const currentSubspecialtyOption: OptionType[] = [];
-
-    Object.entries(currentSubSpecialties).forEach(([key, value]) =>
-      currentSubspecialtyOption.push({
-        value: key,
-        label: value.name,
-      }),
-    );
-
-    subspecialties.push(currentSubspecialtyOption);
-  }
+export const getSubspecialtyOptions = (specialties: string[]): Array<OptionType[] | null> => {
+  const subspecialties = specialties.map(specialty => {
+    const subspecialty = getSubSpecialtiesBySpecialtyId(specialty);
+    if (!subspecialty) return null;
+    return subspecialty.map(({ id, name }) => ({
+      value: id,
+      label: name,
+    }));
+  });
 
   return subspecialties;
 };

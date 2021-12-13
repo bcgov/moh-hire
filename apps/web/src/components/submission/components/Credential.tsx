@@ -36,9 +36,7 @@ export const Credential: React.FC = () => {
 
   const specialtyOptions = stream ? getSpecialtyOptions(stream) : null;
 
-  const subspecialties = selectedSpecialties
-    ? getSubspecialtyOptions(stream, selectedSpecialties)
-    : null;
+  const subspecialties = selectedSpecialties ? getSubspecialtyOptions(selectedSpecialties) : null;
 
   // reset specialties if stream changes
   useEffect(() => {
@@ -218,7 +216,7 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
         <MultiSelect
           label='Subspecialty/Training'
           name={`skillInformation.specialties[${index}].subspecialties`}
-          disabled={!subspecialties}
+          disabled={!subspecialties || subspecialties.length === 0}
           options={subspecialties || []}
         />
       </div>

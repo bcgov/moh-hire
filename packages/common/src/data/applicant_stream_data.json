@@ -1,0 +1,937 @@
+{
+  "streams": {
+    "byId": {
+      "AlliedHealthProfessional": {
+        "id": "AlliedHealthProfessional",
+        "name": "Allied Health Professional",
+        "specialties": [
+          "AnesthesiaAssistant",
+          "CardiovascularPerfusionist",
+          "ClinicalCounsellor",
+          "DiagnosticMedicalSonographer",
+          "ExercisePhysiologist",
+          "MagneticResonanceImagingTechnologistMRITech",
+          "MedicalLaboratoryAssistant",
+          "MedicalLaboratoryTechnologist",
+          "OccupationalTherapist",
+          "Physiotherapist",
+          "Psychologist",
+          "RecreationTherapist",
+          "RegisteredDietician",
+          "RehabAssistant",
+          "RespiratoryTherapist",
+          "SocialWorker",
+          "SpeechLanguagePathologist"
+        ]
+      },
+      "DentalProfessional": {
+        "id": "DentalProfessional",
+        "name": "Dental Professional",
+        "specialties": ["DentalHygienist", "DentalTherapist", "Dentist"]
+      },
+      "EmergencyResponder": {
+        "id": "EmergencyResponder",
+        "name": "Emergency Responder",
+        "specialties": [
+          "AdvancedCareParamedic",
+          "CommunityParamedic",
+          "CriticalCareParamedic",
+          "Firefighter",
+          "PrimaryCareParamedic"
+        ]
+      },
+      "HealthCareAssistant": {
+        "id": "HealthCareAssistant",
+        "name": "Health Care Assistant",
+        "specialties": [
+          "Acute",
+          "AssistedLiving",
+          "HomeSupport",
+          "LongTermCare",
+          "Palliative",
+          "PrivateHome",
+          "SelfEmployed"
+        ]
+      },
+      "Midwife": { "id": "Midwife", "name": "Midwife", "specialties": ["SelfEmployed"] },
+      "Naturopath": { "id": "Naturopath", "name": "Naturopath", "specialties": ["SelfEmployed"] },
+      "Nonclinical": {
+        "id": "Nonclinical",
+        "name": "Non-clinical ",
+        "specialties": ["SelfEmployed"]
+      },
+      "Nurse": {
+        "id": "Nurse",
+        "name": "Nurse",
+        "specialties": [
+          "ClinicalNurseEducators",
+          "LicensedPracticalNurse",
+          "NursePractitioner",
+          "RegisteredNurse",
+          "RegisteredPsychiatricNurse"
+        ]
+      },
+      "Pharmacy": {
+        "id": "Pharmacy",
+        "name": "Pharmacy",
+        "specialties": ["Pharmacist", "PharmacyTech"]
+      },
+      "Physician": {
+        "id": "Physician",
+        "name": "Physician",
+        "specialties": [
+          "Anaesthesiology",
+          "Cardiology",
+          "ClinicalImmunologyAllergy",
+          "ClinicalPharmacologyToxicology",
+          "ClinicianInvestigatorProgram",
+          "Dermatology",
+          "EligibleInternationalMedicalGraduate",
+          "EndocrinologyMetabolism",
+          "FamilyPhysician",
+          "Gastroenterology",
+          "GynecologicReproductiveEndocrinologyInfertility",
+          "GynecologyObstetrics",
+          "Hematology",
+          "InfectiousDiseases",
+          "Medicine",
+          "Microbiology",
+          "Nephrology",
+          "Neurology",
+          "Oncology",
+          "Ophthalmology",
+          "Pathology",
+          "Pediatric",
+          "Psychiatry",
+          "Radiology",
+          "Resident",
+          "Respirology",
+          "Rheumatology",
+          "Surgery",
+          "SurgicalFoundations",
+          "Urology"
+        ]
+      },
+      "Podiatrist": { "id": "Podiatrist", "name": "Podiatrist", "specialties": ["Urology"] },
+      "Student": {
+        "id": "Student",
+        "name": "Student",
+        "specialties": [
+          "EmployedStudentNurse",
+          "LicensedPracticalNursestudent",
+          "Medicalstudent",
+          "Midwiferystudent",
+          "Pharmacystudent",
+          "RegisteredNursestudent",
+          "RegisteredPsychiatricNursestudent"
+        ]
+      }
+    },
+    "allIds": [
+      "AlliedHealthProfessional",
+      "DentalProfessional",
+      "EmergencyResponder",
+      "HealthCareAssistant",
+      "Midwife",
+      "Naturopath",
+      "Nonclinical",
+      "Nurse",
+      "Pharmacy",
+      "Physician",
+      "Podiatrist",
+      "Student"
+    ]
+  },
+  "specialties": {
+    "byId": {
+      "AnesthesiaAssistant": {
+        "id": "AnesthesiaAssistant",
+        "name": "Anesthesia Assistant",
+        "subspecialties": []
+      },
+      "CardiovascularPerfusionist": {
+        "id": "CardiovascularPerfusionist",
+        "name": "Cardiovascular Perfusionist",
+        "subspecialties": []
+      },
+      "ClinicalCounsellor": {
+        "id": "ClinicalCounsellor",
+        "name": "Clinical Counsellor",
+        "subspecialties": []
+      },
+      "DiagnosticMedicalSonographer": {
+        "id": "DiagnosticMedicalSonographer",
+        "name": "Diagnostic Medical Sonographer",
+        "subspecialties": []
+      },
+      "ExercisePhysiologist": {
+        "id": "ExercisePhysiologist",
+        "name": "Exercise Physiologist",
+        "subspecialties": []
+      },
+      "MagneticResonanceImagingTechnologistMRITech": {
+        "id": "MagneticResonanceImagingTechnologistMRITech",
+        "name": "Magnetic Resonance Imaging Technologist (MRI Tech)",
+        "subspecialties": []
+      },
+      "MedicalLaboratoryAssistant": {
+        "id": "MedicalLaboratoryAssistant",
+        "name": "Medical Laboratory Assistant",
+        "subspecialties": []
+      },
+      "MedicalLaboratoryTechnologist": {
+        "id": "MedicalLaboratoryTechnologist",
+        "name": "Medical Laboratory Technologist",
+        "subspecialties": []
+      },
+      "OccupationalTherapist": {
+        "id": "OccupationalTherapist",
+        "name": "Occupational Therapist",
+        "subspecialties": []
+      },
+      "Physiotherapist": {
+        "id": "Physiotherapist",
+        "name": "Physiotherapist",
+        "subspecialties": []
+      },
+      "Psychologist": { "id": "Psychologist", "name": "Psychologist", "subspecialties": [] },
+      "RecreationTherapist": {
+        "id": "RecreationTherapist",
+        "name": "Recreation Therapist",
+        "subspecialties": []
+      },
+      "RegisteredDietician": {
+        "id": "RegisteredDietician",
+        "name": "Registered Dietician",
+        "subspecialties": []
+      },
+      "RehabAssistant": { "id": "RehabAssistant", "name": "Rehab Assistant", "subspecialties": [] },
+      "RespiratoryTherapist": {
+        "id": "RespiratoryTherapist",
+        "name": "Respiratory Therapist",
+        "subspecialties": []
+      },
+      "SocialWorker": { "id": "SocialWorker", "name": "Social Worker", "subspecialties": [] },
+      "SpeechLanguagePathologist": {
+        "id": "SpeechLanguagePathologist",
+        "name": "Speech Language Pathologist",
+        "subspecialties": []
+      },
+      "DentalHygienist": {
+        "id": "DentalHygienist",
+        "name": "Dental Hygienist",
+        "subspecialties": []
+      },
+      "DentalTherapist": {
+        "id": "DentalTherapist",
+        "name": "Dental Therapist",
+        "subspecialties": []
+      },
+      "Dentist": { "id": "Dentist", "name": "Dentist", "subspecialties": [] },
+      "AdvancedCareParamedic": {
+        "id": "AdvancedCareParamedic",
+        "name": "Advanced Care Paramedic",
+        "subspecialties": []
+      },
+      "CommunityParamedic": {
+        "id": "CommunityParamedic",
+        "name": "Community Paramedic",
+        "subspecialties": []
+      },
+      "CriticalCareParamedic": {
+        "id": "CriticalCareParamedic",
+        "name": "Critical Care Paramedic",
+        "subspecialties": []
+      },
+      "Firefighter": { "id": "Firefighter", "name": "Firefighter", "subspecialties": [] },
+      "PrimaryCareParamedic": {
+        "id": "PrimaryCareParamedic",
+        "name": "Primary Care Paramedic",
+        "subspecialties": []
+      },
+      "Acute": { "id": "Acute", "name": "Acute", "subspecialties": [] },
+      "AssistedLiving": { "id": "AssistedLiving", "name": "Assisted Living", "subspecialties": [] },
+      "HomeSupport": { "id": "HomeSupport", "name": "Home Support", "subspecialties": [] },
+      "LongTermCare": { "id": "LongTermCare", "name": "Long Term Care", "subspecialties": [] },
+      "Palliative": { "id": "Palliative", "name": "Palliative", "subspecialties": [] },
+      "PrivateHome": { "id": "PrivateHome", "name": "Private Home", "subspecialties": [] },
+      "SelfEmployed": { "id": "SelfEmployed", "name": "Self-Employed", "subspecialties": [] },
+      "ClinicalNurseEducators": {
+        "id": "ClinicalNurseEducators",
+        "name": "Clinical Nurse Educators",
+        "subspecialties": [
+          "Cardiovascular",
+          "CertifiedSTI",
+          "ChronicDiseaseManagement",
+          "CommunityHealth",
+          "CriticalCareAdult",
+          "CriticalCarePediatric",
+          "EmergencyAdult",
+          "EmergencyPediatrics",
+          "Gerontological",
+          "HighAcuity",
+          "HomeCare",
+          "HospicePalliativeCare",
+          "IENs",
+          "IntensiveCare",
+          "LabourandDelivery",
+          "LongTermCare",
+          "MedicalSurgical",
+          "Neonatal",
+          "NeonatalIntensiveCare",
+          "Neuroscience",
+          "NewGradNurse",
+          "NursingManagement",
+          "Obstetrics",
+          "OccupationalHealth",
+          "Oncology",
+          "Orthopaedic",
+          "Pediatrics",
+          "Perianesthesia",
+          "Perinatal",
+          "Perioperative",
+          "PrimaryCare",
+          "PsychiatricandMentalHealth",
+          "PublicHealth",
+          "Rehabilitation",
+          "Renal",
+          "RNFirstCall",
+          "RuralRemote",
+          "Wound"
+        ]
+      },
+      "LicensedPracticalNurse": {
+        "id": "LicensedPracticalNurse",
+        "name": "Licensed Practical Nurse",
+        "subspecialties": [
+          "Cardiovascular",
+          "CertifiedSTI",
+          "ChronicDiseaseManagement",
+          "CommunityHealth",
+          "CriticalCareAdult",
+          "CriticalCarePediatric",
+          "EmergencyAdult",
+          "EmergencyPediatrics",
+          "Gerontological",
+          "HighAcuity",
+          "HomeCare",
+          "HospicePalliativeCare",
+          "IENs",
+          "IntensiveCare",
+          "LabourandDelivery",
+          "LongTermCare",
+          "MedicalSurgical",
+          "Neonatal",
+          "NeonatalIntensiveCare",
+          "Nephrology",
+          "Neuroscience",
+          "NewGradNurse",
+          "NursingManagement",
+          "Obstetrics",
+          "OccupationalHealth",
+          "Oncology",
+          "Orthopaedic",
+          "Pediatrics",
+          "Perianesthesia",
+          "Perinatal",
+          "Perioperative",
+          "PrimaryCare",
+          "PsychiatricandMentalHealth",
+          "PublicHealth",
+          "Rehabilitation",
+          "Renal",
+          "RNFirstCall",
+          "RuralRemote",
+          "Wound"
+        ]
+      },
+      "NursePractitioner": {
+        "id": "NursePractitioner",
+        "name": "Nurse Practitioner",
+        "subspecialties": [
+          "Adult",
+          "Cardiovascular",
+          "CertifiedSTI",
+          "ChronicDiseaseManagement",
+          "CommunityHealth",
+          "CriticalCareAdult",
+          "CriticalCarePediatric",
+          "EmergencyAdult",
+          "EmergencyPediatrics",
+          "Family",
+          "Gerontological",
+          "HighAcuity",
+          "HomeCare",
+          "HospicePalliativeCare",
+          "IENs",
+          "IntensiveCare",
+          "LabourandDelivery",
+          "LongTermCare",
+          "MedicalSurgical",
+          "Neonatal",
+          "NeonatalIntensiveCare",
+          "Neuroscience",
+          "NewGradNurse",
+          "NursingManagement",
+          "Obstetrics",
+          "OccupationalHealth",
+          "Oncology",
+          "Orthopaedic",
+          "Pediatrics",
+          "Perianesthesia",
+          "Perinatal",
+          "Perioperative",
+          "PrimaryCare",
+          "PsychiatricandMentalHealth",
+          "PublicHealth",
+          "Rehabilitation",
+          "Renal",
+          "RNFirstCall",
+          "RuralRemote",
+          "Wound"
+        ]
+      },
+      "RegisteredNurse": {
+        "id": "RegisteredNurse",
+        "name": "Registered Nurse",
+        "subspecialties": [
+          "Cardiovascular",
+          "CertifiedSTI",
+          "ChronicDiseaseManagement",
+          "CommunityHealth",
+          "CriticalCareAdult",
+          "CriticalCarePediatric",
+          "EmergencyAdult",
+          "EmergencyPediatrics",
+          "Gerontological",
+          "HighAcuity",
+          "HomeCare",
+          "HospicePalliativeCare",
+          "IENs",
+          "IntensiveCare",
+          "LabourandDelivery",
+          "LongTermCare",
+          "MedicalSurgical",
+          "Neonatal",
+          "NeonatalIntensiveCare",
+          "Neuroscience",
+          "NewGradNurse",
+          "NursingManagement",
+          "Obstetrics",
+          "OccupationalHealth",
+          "Oncology",
+          "Orthopaedic",
+          "Pediatrics",
+          "Perianesthesia",
+          "Perinatal",
+          "Perioperative",
+          "PrimaryCare",
+          "PsychiatricandMentalHealth",
+          "PublicHealth",
+          "Rehabilitation",
+          "Renal",
+          "RNFirstCall",
+          "RuralRemote",
+          "Wound"
+        ]
+      },
+      "RegisteredPsychiatricNurse": {
+        "id": "RegisteredPsychiatricNurse",
+        "name": "Registered Psychiatric Nurse",
+        "subspecialties": [
+          "Cardiovascular",
+          "CertifiedSTI",
+          "ChronicDiseaseManagement",
+          "CommunityHealth",
+          "CriticalCareAdult",
+          "CriticalCarePediatric",
+          "EmergencyAdult",
+          "EmergencyPediatrics",
+          "Gerontological",
+          "HighAcuity",
+          "HomeCare",
+          "HospicePalliativeCare",
+          "IENs",
+          "IntensiveCare",
+          "LabourandDelivery",
+          "LongTermCare",
+          "MedicalSurgical",
+          "Neonatal",
+          "NeonatalIntensiveCare",
+          "Neuroscience",
+          "NewGradNurse",
+          "NursingManagement",
+          "Obstetrics",
+          "OccupationalHealth",
+          "Oncology",
+          "Orthopaedic",
+          "Pediatrics",
+          "Perianesthesia",
+          "Perinatal",
+          "Perioperative",
+          "PrimaryCare",
+          "PsychiatricandMentalHealth",
+          "PublicHealth",
+          "Rehabilitation",
+          "Renal",
+          "RNFirstCall",
+          "RuralRemote",
+          "Wound"
+        ]
+      },
+      "Pharmacist": { "id": "Pharmacist", "name": "Pharmacist", "subspecialties": ["Wound"] },
+      "PharmacyTech": {
+        "id": "PharmacyTech",
+        "name": "Pharmacy Tech",
+        "subspecialties": ["Wound"]
+      },
+      "Anaesthesiology": {
+        "id": "Anaesthesiology",
+        "name": "Anaesthesiology",
+        "subspecialties": ["Wound"]
+      },
+      "Cardiology": { "id": "Cardiology", "name": "Cardiology", "subspecialties": ["Wound"] },
+      "ClinicalImmunologyAllergy": {
+        "id": "ClinicalImmunologyAllergy",
+        "name": "Clinical Immunology & Allergy",
+        "subspecialties": ["Wound"]
+      },
+      "ClinicalPharmacologyToxicology": {
+        "id": "ClinicalPharmacologyToxicology",
+        "name": "Clinical Pharmacology & Toxicology",
+        "subspecialties": ["Wound"]
+      },
+      "ClinicianInvestigatorProgram": {
+        "id": "ClinicianInvestigatorProgram",
+        "name": "Clinician Investigator Program",
+        "subspecialties": ["Wound"]
+      },
+      "Dermatology": { "id": "Dermatology", "name": "Dermatology", "subspecialties": ["Wound"] },
+      "EligibleInternationalMedicalGraduate": {
+        "id": "EligibleInternationalMedicalGraduate",
+        "name": "Eligible International Medical Graduate",
+        "subspecialties": ["Wound"]
+      },
+      "EndocrinologyMetabolism": {
+        "id": "EndocrinologyMetabolism",
+        "name": "Endocrinology & Metabolism",
+        "subspecialties": ["Wound"]
+      },
+      "FamilyPhysician": {
+        "id": "FamilyPhysician",
+        "name": "Family Physician",
+        "subspecialties": ["Wound"]
+      },
+      "Gastroenterology": {
+        "id": "Gastroenterology",
+        "name": "Gastroenterology",
+        "subspecialties": ["Wound"]
+      },
+      "GynecologicReproductiveEndocrinologyInfertility": {
+        "id": "GynecologicReproductiveEndocrinologyInfertility",
+        "name": "Gynecologic Reproductive Endocrinology & Infertility",
+        "subspecialties": ["Wound"]
+      },
+      "GynecologyObstetrics": {
+        "id": "GynecologyObstetrics",
+        "name": "Gynecology & Obstetrics",
+        "subspecialties": ["Wound"]
+      },
+      "Hematology": { "id": "Hematology", "name": "Hematology", "subspecialties": ["Wound"] },
+      "InfectiousDiseases": {
+        "id": "InfectiousDiseases",
+        "name": "Infectious Diseases",
+        "subspecialties": ["Wound"]
+      },
+      "Medicine": {
+        "id": "Medicine",
+        "name": "Medicine",
+        "subspecialties": [
+          "Adolescent",
+          "Biochemistry",
+          "CriticalCare",
+          "Emergency",
+          "GeneralInternalMedicine",
+          "Genetics",
+          "Geriatric",
+          "InfectiousDiseases",
+          "MaternalFetal",
+          "NeonatalPerinatal",
+          "Nuclear",
+          "Occupational",
+          "Pain",
+          "Palliative",
+          "PhysicalMedicineRehabilitation",
+          "PublicHealthandPreventive",
+          "Respiratory"
+        ]
+      },
+      "Microbiology": {
+        "id": "Microbiology",
+        "name": "Microbiology",
+        "subspecialties": ["Respiratory"]
+      },
+      "Nephrology": { "id": "Nephrology", "name": "Nephrology", "subspecialties": ["Respiratory"] },
+      "Neurology": { "id": "Neurology", "name": "Neurology", "subspecialties": ["Respiratory"] },
+      "Oncology": { "id": "Oncology", "name": "Oncology", "subspecialties": ["Respiratory"] },
+      "Ophthalmology": {
+        "id": "Ophthalmology",
+        "name": "Ophthalmology",
+        "subspecialties": ["Respiratory"]
+      },
+      "Pathology": {
+        "id": "Pathology",
+        "name": "Pathology",
+        "subspecialties": ["Anatomical", "Forensic", "General", "Hematological", "Neuro"]
+      },
+      "Pediatric": { "id": "Pediatric", "name": "Pediatric", "subspecialties": ["Neuro"] },
+      "Psychiatry": {
+        "id": "Psychiatry",
+        "name": "Psychiatry",
+        "subspecialties": ["Adult", "ChildAdolescent", "Forensic", "Geriatric"]
+      },
+      "Radiology": {
+        "id": "Radiology",
+        "name": "Radiology",
+        "subspecialties": [
+          "Diagnostic",
+          "Interventional",
+          "Neuroradiology",
+          "Pediatric",
+          "RadiationOncology"
+        ]
+      },
+      "Resident": { "id": "Resident", "name": "Resident", "subspecialties": ["RadiationOncology"] },
+      "Respirology": {
+        "id": "Respirology",
+        "name": "Respirology",
+        "subspecialties": ["RadiationOncology"]
+      },
+      "Rheumatology": {
+        "id": "Rheumatology",
+        "name": "Rheumatology",
+        "subspecialties": ["RadiationOncology"]
+      },
+      "Surgery": {
+        "id": "Surgery",
+        "name": "Surgery",
+        "subspecialties": [
+          "Cardiac",
+          "Colorectal",
+          "EmergencyMedicine",
+          "General",
+          "GeneralSurgicalOncology",
+          "Neuro",
+          "Orthopedic",
+          "OtolaryngologyHeadandNeck",
+          "Pediatric",
+          "Plastic",
+          "Thoracic",
+          "Vascular"
+        ]
+      },
+      "SurgicalFoundations": {
+        "id": "SurgicalFoundations",
+        "name": "Surgical Foundations",
+        "subspecialties": ["Vascular"]
+      },
+      "Urology": { "id": "Urology", "name": "Urology", "subspecialties": ["Vascular"] },
+      "EmployedStudentNurse": {
+        "id": "EmployedStudentNurse",
+        "name": "Employed Student Nurse",
+        "subspecialties": ["Vascular"]
+      },
+      "LicensedPracticalNursestudent": {
+        "id": "LicensedPracticalNursestudent",
+        "name": "Licensed Practical Nurse student",
+        "subspecialties": ["Vascular"]
+      },
+      "Medicalstudent": {
+        "id": "Medicalstudent",
+        "name": "Medical student",
+        "subspecialties": ["Vascular"]
+      },
+      "Midwiferystudent": {
+        "id": "Midwiferystudent",
+        "name": "Midwifery student",
+        "subspecialties": ["Vascular"]
+      },
+      "Pharmacystudent": {
+        "id": "Pharmacystudent",
+        "name": "Pharmacy student",
+        "subspecialties": ["Vascular"]
+      },
+      "RegisteredNursestudent": {
+        "id": "RegisteredNursestudent",
+        "name": "Registered Nurse student",
+        "subspecialties": ["Vascular"]
+      },
+      "RegisteredPsychiatricNursestudent": {
+        "id": "RegisteredPsychiatricNursestudent",
+        "name": "Registered Psychiatric Nurse student",
+        "subspecialties": ["Vascular"]
+      }
+    },
+    "allIds": [
+      "AnesthesiaAssistant",
+      "CardiovascularPerfusionist",
+      "ClinicalCounsellor",
+      "DiagnosticMedicalSonographer",
+      "ExercisePhysiologist",
+      "MagneticResonanceImagingTechnologistMRITech",
+      "MedicalLaboratoryAssistant",
+      "MedicalLaboratoryTechnologist",
+      "OccupationalTherapist",
+      "Physiotherapist",
+      "Psychologist",
+      "RecreationTherapist",
+      "RegisteredDietician",
+      "RehabAssistant",
+      "RespiratoryTherapist",
+      "SocialWorker",
+      "SpeechLanguagePathologist",
+      "DentalHygienist",
+      "DentalTherapist",
+      "Dentist",
+      "AdvancedCareParamedic",
+      "CommunityParamedic",
+      "CriticalCareParamedic",
+      "Firefighter",
+      "PrimaryCareParamedic",
+      "Acute",
+      "AssistedLiving",
+      "HomeSupport",
+      "LongTermCare",
+      "Palliative",
+      "PrivateHome",
+      "SelfEmployed",
+      "ClinicalNurseEducators",
+      "LicensedPracticalNurse",
+      "NursePractitioner",
+      "RegisteredNurse",
+      "RegisteredPsychiatricNurse",
+      "Pharmacist",
+      "PharmacyTech",
+      "Anaesthesiology",
+      "Cardiology",
+      "ClinicalImmunologyAllergy",
+      "ClinicalPharmacologyToxicology",
+      "ClinicianInvestigatorProgram",
+      "Dermatology",
+      "EligibleInternationalMedicalGraduate",
+      "EndocrinologyMetabolism",
+      "FamilyPhysician",
+      "Gastroenterology",
+      "GynecologicReproductiveEndocrinologyInfertility",
+      "GynecologyObstetrics",
+      "Hematology",
+      "InfectiousDiseases",
+      "Medicine",
+      "Microbiology",
+      "Nephrology",
+      "Neurology",
+      "Oncology",
+      "Ophthalmology",
+      "Pathology",
+      "Pediatric",
+      "Psychiatry",
+      "Radiology",
+      "Resident",
+      "Respirology",
+      "Rheumatology",
+      "Surgery",
+      "SurgicalFoundations",
+      "Urology",
+      "EmployedStudentNurse",
+      "LicensedPracticalNursestudent",
+      "Medicalstudent",
+      "Midwiferystudent",
+      "Pharmacystudent",
+      "RegisteredNursestudent",
+      "RegisteredPsychiatricNursestudent"
+    ]
+  },
+  "subspecialties": {
+    "byId": {
+      "Cardiovascular": { "id": "Cardiovascular", "name": "Cardiovascular" },
+      "CertifiedSTI": { "id": "CertifiedSTI", "name": "Certified STI" },
+      "ChronicDiseaseManagement": {
+        "id": "ChronicDiseaseManagement",
+        "name": "Chronic Disease Management"
+      },
+      "CommunityHealth": { "id": "CommunityHealth", "name": "Community Health" },
+      "CriticalCareAdult": { "id": "CriticalCareAdult", "name": "Critical Care Adult" },
+      "CriticalCarePediatric": { "id": "CriticalCarePediatric", "name": "Critical Care Pediatric" },
+      "EmergencyAdult": { "id": "EmergencyAdult", "name": "Emergency Adult" },
+      "EmergencyPediatrics": { "id": "EmergencyPediatrics", "name": "Emergency Pediatrics" },
+      "Gerontological": { "id": "Gerontological", "name": "Gerontological" },
+      "HighAcuity": { "id": "HighAcuity", "name": "High Acuity" },
+      "HomeCare": { "id": "HomeCare", "name": "Home Care" },
+      "HospicePalliativeCare": { "id": "HospicePalliativeCare", "name": "Hospice Palliative Care" },
+      "IENs": { "id": "IENs", "name": "IENs" },
+      "IntensiveCare": { "id": "IntensiveCare", "name": "Intensive Care" },
+      "LabourandDelivery": { "id": "LabourandDelivery", "name": "Labour and Delivery" },
+      "LongTermCare": { "id": "LongTermCare", "name": "Long Term Care" },
+      "MedicalSurgical": { "id": "MedicalSurgical", "name": "Medical Surgical" },
+      "Neonatal": { "id": "Neonatal", "name": "Neonatal" },
+      "NeonatalIntensiveCare": { "id": "NeonatalIntensiveCare", "name": "Neonatal Intensive Care" },
+      "Neuroscience": { "id": "Neuroscience", "name": "Neuroscience" },
+      "NewGradNurse": { "id": "NewGradNurse", "name": "New Grad Nurse" },
+      "NursingManagement": { "id": "NursingManagement", "name": "Nursing Management" },
+      "Obstetrics": { "id": "Obstetrics", "name": "Obstetrics" },
+      "OccupationalHealth": { "id": "OccupationalHealth", "name": "Occupational Health" },
+      "Oncology": { "id": "Oncology", "name": "Oncology" },
+      "Orthopaedic": { "id": "Orthopaedic", "name": "Orthopaedic" },
+      "Pediatrics": { "id": "Pediatrics", "name": "Pediatrics" },
+      "Perianesthesia": { "id": "Perianesthesia", "name": "Perianesthesia" },
+      "Perinatal": { "id": "Perinatal", "name": "Perinatal" },
+      "Perioperative": { "id": "Perioperative", "name": "Perioperative" },
+      "PrimaryCare": { "id": "PrimaryCare", "name": "Primary Care" },
+      "PsychiatricandMentalHealth": {
+        "id": "PsychiatricandMentalHealth",
+        "name": "Psychiatric and Mental Health"
+      },
+      "PublicHealth": { "id": "PublicHealth", "name": "Public Health" },
+      "Rehabilitation": { "id": "Rehabilitation", "name": "Rehabilitation" },
+      "Renal": { "id": "Renal", "name": "Renal" },
+      "RNFirstCall": { "id": "RNFirstCall", "name": "RN First Call" },
+      "RuralRemote": { "id": "RuralRemote", "name": "Rural/Remote" },
+      "Wound": { "id": "Wound", "name": "\"Wound" },
+      "Nephrology": { "id": "Nephrology", "name": "Nephrology" },
+      "Adult": { "id": "Adult", "name": "Adult" },
+      "Family": { "id": "Family", "name": "Family" },
+      "Adolescent": { "id": "Adolescent", "name": "Adolescent" },
+      "Biochemistry": { "id": "Biochemistry", "name": "Biochemistry" },
+      "CriticalCare": { "id": "CriticalCare", "name": "Critical Care" },
+      "Emergency": { "id": "Emergency", "name": "Emergency" },
+      "GeneralInternalMedicine": {
+        "id": "GeneralInternalMedicine",
+        "name": "General Internal Medicine"
+      },
+      "Genetics": { "id": "Genetics", "name": "Genetics" },
+      "Geriatric": { "id": "Geriatric", "name": "Geriatric" },
+      "InfectiousDiseases": { "id": "InfectiousDiseases", "name": "Infectious Diseases" },
+      "MaternalFetal": { "id": "MaternalFetal", "name": "Maternal Fetal" },
+      "NeonatalPerinatal": { "id": "NeonatalPerinatal", "name": "Neonatal Perinatal" },
+      "Nuclear": { "id": "Nuclear", "name": "Nuclear" },
+      "Occupational": { "id": "Occupational", "name": "Occupational" },
+      "Pain": { "id": "Pain", "name": "Pain" },
+      "Palliative": { "id": "Palliative", "name": "Palliative" },
+      "PhysicalMedicineRehabilitation": {
+        "id": "PhysicalMedicineRehabilitation",
+        "name": "Physical Medicine & Rehabilitation"
+      },
+      "PublicHealthandPreventive": {
+        "id": "PublicHealthandPreventive",
+        "name": "Public Health and Preventive"
+      },
+      "Respiratory": { "id": "Respiratory", "name": "Respiratory" },
+      "Anatomical": { "id": "Anatomical", "name": "Anatomical" },
+      "Forensic": { "id": "Forensic", "name": "Forensic" },
+      "General": { "id": "General", "name": "General" },
+      "Hematological": { "id": "Hematological", "name": "Hematological" },
+      "Neuro": { "id": "Neuro", "name": "Neuro" },
+      "ChildAdolescent": { "id": "ChildAdolescent", "name": "Child & Adolescent" },
+      "Diagnostic": { "id": "Diagnostic", "name": "Diagnostic" },
+      "Interventional": { "id": "Interventional", "name": "Interventional" },
+      "Neuroradiology": { "id": "Neuroradiology", "name": "Neuroradiology" },
+      "Pediatric": { "id": "Pediatric", "name": "Pediatric" },
+      "RadiationOncology": { "id": "RadiationOncology", "name": "Radiation Oncology" },
+      "Cardiac": { "id": "Cardiac", "name": "Cardiac" },
+      "Colorectal": { "id": "Colorectal", "name": "Colorectal" },
+      "EmergencyMedicine": { "id": "EmergencyMedicine", "name": "Emergency Medicine" },
+      "GeneralSurgicalOncology": {
+        "id": "GeneralSurgicalOncology",
+        "name": "General Surgical Oncology"
+      },
+      "Orthopedic": { "id": "Orthopedic", "name": "Orthopedic" },
+      "OtolaryngologyHeadandNeck": {
+        "id": "OtolaryngologyHeadandNeck",
+        "name": "Otolaryngology - Head and Neck"
+      },
+      "Plastic": { "id": "Plastic", "name": "Plastic" },
+      "Thoracic": { "id": "Thoracic", "name": "Thoracic" },
+      "Vascular": { "id": "Vascular", "name": "Vascular" }
+    },
+    "allIds": [
+      "Cardiovascular",
+      "CertifiedSTI",
+      "ChronicDiseaseManagement",
+      "CommunityHealth",
+      "CriticalCareAdult",
+      "CriticalCarePediatric",
+      "EmergencyAdult",
+      "EmergencyPediatrics",
+      "Gerontological",
+      "HighAcuity",
+      "HomeCare",
+      "HospicePalliativeCare",
+      "IENs",
+      "IntensiveCare",
+      "LabourandDelivery",
+      "LongTermCare",
+      "MedicalSurgical",
+      "Neonatal",
+      "NeonatalIntensiveCare",
+      "Neuroscience",
+      "NewGradNurse",
+      "NursingManagement",
+      "Obstetrics",
+      "OccupationalHealth",
+      "Oncology",
+      "Orthopaedic",
+      "Pediatrics",
+      "Perianesthesia",
+      "Perinatal",
+      "Perioperative",
+      "PrimaryCare",
+      "PsychiatricandMentalHealth",
+      "PublicHealth",
+      "Rehabilitation",
+      "Renal",
+      "RNFirstCall",
+      "RuralRemote",
+      "Wound",
+      "Nephrology",
+      "Adult",
+      "Family",
+      "Adolescent",
+      "Biochemistry",
+      "CriticalCare",
+      "Emergency",
+      "GeneralInternalMedicine",
+      "Genetics",
+      "Geriatric",
+      "InfectiousDiseases",
+      "MaternalFetal",
+      "NeonatalPerinatal",
+      "Nuclear",
+      "Occupational",
+      "Pain",
+      "Palliative",
+      "PhysicalMedicineRehabilitation",
+      "PublicHealthandPreventive",
+      "Respiratory",
+      "Anatomical",
+      "Forensic",
+      "General",
+      "Hematological",
+      "Neuro",
+      "ChildAdolescent",
+      "Diagnostic",
+      "Interventional",
+      "Neuroradiology",
+      "Pediatric",
+      "RadiationOncology",
+      "Cardiac",
+      "Colorectal",
+      "EmergencyMedicine",
+      "GeneralSurgicalOncology",
+      "Orthopedic",
+      "OtolaryngologyHeadandNeck",
+      "Plastic",
+      "Thoracic",
+      "Vascular"
+    ]
+  }
+}

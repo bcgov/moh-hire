@@ -4,7 +4,6 @@ import {
   HealthAuthorities,
   NotEmployedReasons,
 } from '../interfaces';
-import { streamData } from '../data/applicant_stream_data';
 import {
   ArrayMaxSize,
   ArrayMinSize,
@@ -18,6 +17,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { IsArrayOfSpecialties } from './is-array-of-specialties.decorator';
+import { StreamId, validStreamIds } from '../helper';
 
 export class SkillInformationDTO {
   constructor(base?: SkillInformationDTO) {
@@ -32,9 +32,9 @@ export class SkillInformationDTO {
     }
   }
 
-  @IsIn(Object.keys(streamData), { message: 'Invalid stream type selection' })
+  @IsIn(validStreamIds, { message: 'Invalid stream type selection' })
   @IsString({ message: 'Stream Type is required' })
-  stream!: keyof typeof streamData;
+  stream!: StreamId;
 
   @IsIn(Object.values(RegistrationStatus), { message: 'Invalid registration status selection' })
   @IsString({ message: 'Registration status is required' })
