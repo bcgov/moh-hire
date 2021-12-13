@@ -11,6 +11,8 @@ export PROJECT := $(or $(PROJECT),ehpr)
 export NODE_ENV ?= development
 export ENV_NAME ?= dev
 export POSTGRES_USERNAME = freshworks
+export CHES_CLIENT_ID ?= EHPR_SERVICE_CLIENT
+export MAIL_FROM ?= noreply@gov.bc.ca
 
 # FE Env Vars
 export NEXT_PUBLIC_API_URL = /api/v1
@@ -32,6 +34,8 @@ app_sources = "build/app"
 app_sources_bucket = "$(APP_SRC_BUCKET)"
 domain = ""
 db_username = "$(POSTGRES_USERNAME)"
+ches_client_id = "$(CHES_CLIENT_ID)"
+mail_from = "$(MAIL_FROM)"
 endef
 export TFVARS_DATA
 

@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Inject,
   Param,
   Post,
   Res,
@@ -17,6 +18,7 @@ import { FormService } from './form.service';
 import { EmptyResponse } from 'src/common/ro/empty-response.ro';
 import { generateConfirmationId } from './id-generator';
 import { FormEntity } from './entity/form.entity';
+import { MailService } from 'src/mail/mail.service';
 
 import { Response } from 'express';
 
@@ -26,7 +28,10 @@ import { streamCsvFromData } from 'src/common/helper/csv/transformer';
 @Controller('form')
 @ApiTags('Form')
 export class FormController {
-  constructor(private readonly formService: FormService) {}
+  constructor(
+    @Inject(FormService) private readonly formService: FormService,
+    @Inject(MailService) private readonly mailService: MailService,
+  ) {}
 
   @ApiOperation({
     summary: 'Create a new record',
