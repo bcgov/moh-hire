@@ -1,4 +1,5 @@
 
+# This is the IAM policy that the service account used in CI is going to carry. 
 
 data "aws_iam_policy_document" "service_account" {
   statement {
@@ -50,6 +51,7 @@ data "aws_iam_policy_document" "service_account" {
   }
 }
 
+# Uncomment when output iam is required - Less noisy this way
 
 # output "service_account_iam" {
 #   value = data.aws_iam_policy_document.service_account.json
