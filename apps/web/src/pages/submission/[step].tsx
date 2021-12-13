@@ -53,7 +53,7 @@ const Submission = () => {
           please have your registration number available.
         </p>
         <p className='mb-4'>
-          <b>If you encounter problems completing/submitting this form, please email </b>
+          <b>If you encounter problems completing this form, please email </b>
           <ExternalLink href='mailto:EHPRQuestions@gov.bc.ca'>EHPRQuestions@gov.bc.ca</ExternalLink>
           .
         </p>
