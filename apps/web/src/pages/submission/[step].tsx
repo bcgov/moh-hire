@@ -15,7 +15,7 @@ const Submission = () => {
   const prevStepRef = useRef<number>(1);
   useEffect(() => {
     if (!isNaN(step) && prevStepRef.current !== step && formRef.current) {
-      window.scrollTo({ left: 0, top: formRef.current.offsetTop, behavior: 'smooth' });
+      window.scrollTo(0, formRef.current.offsetTop);
       prevStepRef.current = step;
     }
   }, [step]);
