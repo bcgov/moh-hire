@@ -64,12 +64,12 @@ export async function createNestApp(): Promise<{
   // Validation pipe
   app.useGlobalPipes(
     new TrimPipe(),
-    new ValidationPipe({
-      transform: true,
-      whitelist: true,
-      forbidNonWhitelisted: false,
-      enableDebugMessages: true,
-    }),
+    // new ValidationPipe({
+    //   transform: true,
+    //   whitelist: true,
+    //   forbidNonWhitelisted: false,
+    //   enableDebugMessages: true,
+    // }),
   );
 
   // Global Error Filter
