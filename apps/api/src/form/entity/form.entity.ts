@@ -14,7 +14,7 @@ export class FormEntity extends BaseEntity {
 
   @Exclude()
   @Column('varchar', { nullable: true })
-  chesId?: string;
+  chesTransactionId?: string;
 
   @Exclude()
   @Column('varchar', { nullable: false })

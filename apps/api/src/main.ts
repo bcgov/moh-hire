@@ -64,12 +64,12 @@ export async function createNestApp(): Promise<{
   // Validation pipe
   app.useGlobalPipes(
     new TrimPipe(),
-    new ValidationPipe({
-      transform: true,
-      whitelist: true,
-      forbidNonWhitelisted: false,
-      enableDebugMessages: true,
-    }),
+    // new ValidationPipe({
+    //   transform: true,
+    //   whitelist: true,
+    //   forbidNonWhitelisted: false,
+    //   enableDebugMessages: true,
+    // }),
   );
 
   // Global Error Filter
@@ -89,7 +89,7 @@ export async function createNestApp(): Promise<{
 }
 
 async function bootstrap() {
-  const { app, ...other } = await createNestApp();
+  const { app } = await createNestApp();
   app.enableCors();
   await app.listen(process.env.APP_PORT || 4000);
 }

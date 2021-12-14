@@ -26,12 +26,17 @@ export class FormService {
 
     const savedForm = await this.formRepository.save(newForm);
 
-    const notifiedForm = await this.sendMail(savedForm);
+    const notifiedForm = await this.sendFormConfirmationEmail(savedForm);
 
     return notifiedForm;
   }
 
-  private async sendMail(form: FormEntity) {
+  /**
+   * Uses form object as payload to send confirmation email
+   * @param form form object to use for sending confirmation email
+   * @returns modified form object with ches transaction id
+   */
+  private async sendFormConfirmationEmail(form: FormEntity): Promise<FormEntity> {
     const { payload } = form;
     const { email } = payload.contactInformation;
     const mailable = new ConfirmationMailable({ email } as Recipient, {
@@ -41,7 +46,7 @@ export class FormService {
 
     try {
       const { txId } = await this.mailService.sendMailable(mailable);
-      form.chesId = txId;
+      form.chesTransactionId = txId;
       form = await this.formRepository.save(form);
     } catch (e) {
       this.logger.warn(e);
@@ -66,6 +71,8 @@ export class FormService {
   async flattenAndTransformFormData(forms: FormEntity[]): Promise<FormExportColumns[]> {
     return forms.map(({ payload }) => {
       return {
+        ...payload.contactInformation,
+        ...payload.personalInformation,
         deployAnywhere: booleanToYesNo(payload.availabilityInformation.deployAnywhere),
         deploymentDuration: payload.availabilityInformation.deploymentDuration.toString(),
         deploymentLocations: payload.availabilityInformation.deploymentLocations.join(', '),
@@ -83,14 +90,6 @@ export class FormService {
         WildFireOrOther: booleanToYesNo(
           payload.availabilityInformation.placementPrefs.WildFireOrOther,
         ),
-        email: payload.contactInformation.email,
-        primaryPhone: payload.contactInformation.primaryPhone,
-        primaryPhoneExt: payload.contactInformation.primaryPhoneExt,
-        secondaryPhone: payload.contactInformation.secondaryPhone,
-        secondaryPhoneExt: payload.contactInformation.secondaryPhoneExt,
-        firstName: payload.personalInformation.firstName,
-        lastName: payload.personalInformation.lastName,
-        postalCode: payload.personalInformation.postalCode,
         currentEmploymentType: payload.skillInformation.currentEmployment,
         registrationNumber: payload.skillInformation.registrationNumber.toString(),
         registrationStatus: payload.skillInformation.registrationStatus,
