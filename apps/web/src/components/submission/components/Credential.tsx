@@ -19,7 +19,7 @@ import {
   SubmissionType,
   registrationStatusOptions,
   healthAuthorityOptions,
-  notEmployedReasonOptions,
+  employmentCircumstanceOptions,
   employmentOptions,
   streamOptions,
   getSpecialtyOptions,
@@ -147,9 +147,9 @@ export const Credential: React.FC = () => {
 
       {isNotHealthAuthorityEmployed ? (
         <Radio
-          name='skillInformation.notEmployedReason'
-          legend='<new question coming>'
-          options={notEmployedReasonOptions}
+          name='skillInformation.employmentCircumstance'
+          legend='Select your circumstance:'
+          options={employmentCircumstanceOptions}
         />
       ) : null}
 

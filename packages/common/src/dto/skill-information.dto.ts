@@ -2,7 +2,7 @@ import {
   EmploymentTypes,
   RegistrationStatus,
   HealthAuthorities,
-  NotEmployedReasons,
+  EmploymentCircumstances,
 } from '../interfaces';
 import {
   ArrayMaxSize,
@@ -27,7 +27,7 @@ export class SkillInformationDTO {
       this.registrationStatus = base.registrationStatus;
       this.specialties = base.specialties?.map(specialty => new SpecialtyDTO(specialty));
       this.currentEmployment = base.currentEmployment;
-      this.notEmployedReason = base.notEmployedReason;
+      this.employmentCircumstance = base.employmentCircumstance;
       this.additionalComments = base.additionalComments;
     }
   }
@@ -65,9 +65,9 @@ export class SkillInformationDTO {
   healthAuthorities!: HealthAuthorities[];
 
   @ValidateIf(o => EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED === o.currentEmployment)
-  @IsIn(Object.values(NotEmployedReasons), { message: 'Invalid <question> selection' })
-  @IsString({ message: '<question> selection is required' })
-  notEmployedReason!: NotEmployedReasons;
+  @IsIn(Object.values(EmploymentCircumstances), { message: 'Invalid circumstance selection' })
+  @IsString({ message: 'Circumstance selection is required' })
+  employmentCircumstance!: EmploymentCircumstances;
 
   @IsString()
   @Length(0, 50)

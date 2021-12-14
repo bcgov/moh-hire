@@ -2,7 +2,7 @@ import { OptionType } from '@components';
 import {
   EmploymentTypes,
   HealthAuthorities,
-  NotEmployedReasons,
+  EmploymentCircumstances,
   RegistrationStatus,
   SkillInformationDTO,
   getStreams,
@@ -112,17 +112,17 @@ export const healthAuthorityOptions = [
   },
 ];
 
-export const notEmployedReasonOptions = [
+export const employmentCircumstanceOptions = [
   {
-    value: NotEmployedReasons.RETIRED,
+    value: EmploymentCircumstances.RETIRED,
     label: 'Retired',
   },
   {
-    value: NotEmployedReasons.STUDENT,
+    value: EmploymentCircumstances.STUDENT,
     label: 'Student',
   },
   {
-    value: NotEmployedReasons.OTHER,
+    value: EmploymentCircumstances.OTHER,
     label: 'Other',
   },
 ];
