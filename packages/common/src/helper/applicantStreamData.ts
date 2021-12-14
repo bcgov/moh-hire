@@ -1,7 +1,7 @@
 import data from '../data/applicant_stream_data.json';
 
 export type Stream = { id: string; name: string; specialties: string[] };
-export type Specialty = { id: string; name: string; subspecialties: string[] | null };
+export type Specialty = { id: string; name: string; subspecialties: string[] };
 export type Subspecialty = { id: string; name: string };
 
 type ApplicantStreamData = {
@@ -44,6 +44,6 @@ export const getSpecialtiesByStreamId = (streamId: StreamId): Specialty[] => {
 
 export const getSubSpecialtiesBySpecialtyId = (specialtyId: SpecialtyId): Subspecialty[] | null => {
   const specialty = getSpecialtyById(specialtyId);
-  if (!specialty || !specialty.subspecialties) return null;
+  if (!specialty) return null;
   return specialty.subspecialties.map(subspecialtyId => getSubSpecialtyById(subspecialtyId));
 };
