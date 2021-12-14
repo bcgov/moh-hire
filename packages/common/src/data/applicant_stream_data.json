@@ -796,7 +796,7 @@
       "Renal": { "id": "Renal", "name": "Renal" },
       "RNFirstCall": { "id": "RNFirstCall", "name": "RN First Call" },
       "RuralRemote": { "id": "RuralRemote", "name": "Rural/Remote" },
-      "Wound": { "id": "Wound", "name": "\"Wound" },
+      "Wound": { "id": "Wound", "name": "Wound" },
       "Nephrology": { "id": "Nephrology", "name": "Nephrology" },
       "Adult": { "id": "Adult", "name": "Adult" },
       "Family": { "id": "Family", "name": "Family" },
