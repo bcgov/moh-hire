@@ -103,11 +103,6 @@ docker-run:
 	@docker-compose up --build
 	@echo "++\n*****"
 
-docker-tests:
-	@echo "+\n++ Running tests...\n+"
-	@yarn
-	@docker-compose run --entrypoint "yarn test:e2e" api
-
 
 # Build application stack
 
