@@ -33,7 +33,7 @@ export const streamOptions = getStreams().map(({ id, name }) => ({
   label: name,
 }));
 
-export const getSpecialtyOptions = (streamSelection: StreamId): OptionType[] | null => {
+export const getSpecialtyOptions = (streamSelection: StreamId): OptionType[] => {
   const specialties = getSpecialtiesByStreamId(streamSelection);
 
   return specialties.map(({ id, name }) => ({
