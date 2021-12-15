@@ -25,6 +25,7 @@ export const credentialDefaultValues: Partial<SkillInformationDTO> = {
   currentEmployment: undefined,
   specialties: [defaultSpecialtyValue],
   healthAuthorities: [],
+  employmentCircumstance: undefined,
   additionalComments: undefined,
 };
 
