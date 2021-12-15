@@ -32,7 +32,7 @@ export const Credential: React.FC = () => {
   const { values, setFieldValue } = useFormikContext<SubmissionType>();
   const { stream, specialties, currentEmployment }: SkillInformationDTO = values.skillInformation;
 
-  const selectedSpecialties = specialties.map(specialty => specialty.name);
+  const selectedSpecialties = specialties.map(specialty => specialty.id);
 
   const specialtyOptions = stream ? getSpecialtyOptions(stream) : null;
 
@@ -191,14 +191,14 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
   const { values } = useFormikContext<SubmissionType>();
   const { specialties: formSpecialties }: SkillInformationDTO = values.skillInformation;
 
-  const specialtyOptionIsDisabled = (name: string): boolean =>
-    !!formSpecialties.find(specialty => specialty.name === name);
+  const specialtyOptionIsDisabled = (specialtyId: string): boolean =>
+    !!formSpecialties.find(specialty => specialty.id === specialtyId);
 
   return (
     <div className='grid grid-cols-2 gap-2 w-full'>
       <div className='col-span-1'>
         <Select
-          name={`skillInformation.specialties[${index}].name`}
+          name={`skillInformation.specialties[${index}].id`}
           label='Main Speciality'
           disabled={disabled}
         >

@@ -78,7 +78,7 @@ export class SkillInformationDTO {
 export class SpecialtyDTO {
   constructor(base?: SpecialtyDTO) {
     if (base) {
-      this.name = base.name;
+      this.id = base.id;
       this.subspecialties = base.subspecialties?.map(
         subspecialty => new SubspecialtyDTO(subspecialty),
       );
@@ -87,7 +87,7 @@ export class SpecialtyDTO {
 
   @IsString({ message: 'Specialty is required' })
   @Length(5, 255, { message: 'Specialty must be between 1 and 255 characters' })
-  name!: string;
+  id!: string;
 
   @IsArray({ message: 'Health authority selection is required' })
   @ArrayMinSize(1, { message: 'Health authority selection is required' })
@@ -101,10 +101,10 @@ export class SpecialtyDTO {
 export class SubspecialtyDTO {
   constructor(base?: SubspecialtyDTO) {
     if (base) {
-      this.name = base.name;
+      this.id = base.id;
     }
   }
 
   @IsString({ message: 'Specialty is required' })
-  name!: string;
+  id!: string;
 }

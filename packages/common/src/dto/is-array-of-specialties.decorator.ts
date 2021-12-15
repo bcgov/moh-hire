@@ -28,13 +28,13 @@ const isValidString = (string: string) => {
 
 const specialtyNotListed = (specialty: SpecialtyDTO, formSpecialties: Specialty[]) => {
   // validate specialty is including in selected stream specialty list
-  if (!formSpecialties.find(formSpecialty => formSpecialty.id === specialty.name)) {
+  if (!formSpecialties.find(formSpecialty => formSpecialty.id === specialty.id)) {
     return true;
   }
 };
 
 const subspecialtyNotListed = (subspecialty: SubspecialtyDTO, formSpecialties: Subspecialty[]) => {
-  if (!formSpecialties.find(formSpecialty => formSpecialty.id === subspecialty.name)) {
+  if (!formSpecialties.find(formSpecialty => formSpecialty.id === subspecialty.id)) {
     return true;
   }
 };
@@ -49,13 +49,13 @@ export class IsArrayOfSpecialties implements ValidatorConstraintInterface {
     const formSpecialties = getSpecialtiesByStreamId(skillInformationState.stream);
 
     for (const specialty of value) {
-      // validate specialty.name is correct type
-      if (!isValidString(specialty.name)) return false;
+      // validate specialty.id is correct type
+      if (!isValidString(specialty.id)) return false;
       // validate specialty is valid selection
       if (specialtyNotListed(specialty, formSpecialties)) return false;
 
       // don't validate subspecialties if they haven't been selected and aren't required by the specialty
-      const formSubspecialties = getSubSpecialtiesBySpecialtyId(specialty.name);
+      const formSubspecialties = getSubSpecialtiesBySpecialtyId(specialty.id);
       if (!formSubspecialties || formSubspecialties.length === 0) continue;
 
       // return false if specialty has subspecialties but none are selected
@@ -65,7 +65,7 @@ export class IsArrayOfSpecialties implements ValidatorConstraintInterface {
         // return false if subspecialties are not in the list of specialty's subspecialties
         if (subspecialtyNotListed(subspecialty, formSubspecialties)) return false;
         // return false if the value is not a string
-        if (!isValidString(subspecialty.name)) {
+        if (!isValidString(subspecialty.id)) {
           return false;
         }
       }
@@ -84,7 +84,7 @@ export class IsArrayOfSpecialties implements ValidatorConstraintInterface {
     const formSpecialties = getSpecialtiesByStreamId(skillInformationState.stream);
 
     for (const specialty of value) {
-      if (!isValidString(specialty.name)) {
+      if (!isValidString(specialty.id)) {
         return SpecialtyErrorEnum.SPECIALTY_REQUIRED;
       }
       if (specialtyNotListed(specialty, formSpecialties)) {
@@ -101,7 +101,7 @@ export class IsArrayOfSpecialties implements ValidatorConstraintInterface {
       }
 
       for (const subspecialty of specialty.subspecialties) {
-        if (!isValidString(subspecialty.name)) {
+        if (!isValidString(subspecialty.id)) {
           return SpecialtyErrorEnum.SUBSPECIALTY_REQUIRED;
         }
         if (subspecialtyNotListed(subspecialty, formSpecialties)) {

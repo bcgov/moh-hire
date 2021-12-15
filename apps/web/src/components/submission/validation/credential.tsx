@@ -14,7 +14,7 @@ import {
 export { SkillInformationDTO } from '@ehpr/common';
 
 export const defaultSpecialtyValue = {
-  name: '',
+  id: '',
   subspecialties: [],
 };
 
