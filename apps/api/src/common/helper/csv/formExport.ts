@@ -32,6 +32,7 @@ export enum FormExportColumnHeaders {
   secondaryPhoneExt = 'secondaryPhoneExt',
 
   currentEmployment = 'Current Employment Type',
+  employmentCircumstance = 'Employment Circumstance',
 
   additionalComments = 'Additional Comments',
 }
@@ -63,4 +64,5 @@ export interface FormExportColumns {
   registrationStatus?: string;
   stream?: string;
   additionalComments?: string;
+  employmentCircumstance?: string;
 }

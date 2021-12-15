@@ -92,6 +92,7 @@ export class FormService {
         lastName: payload.personalInformation.lastName,
         postalCode: payload.personalInformation.postalCode,
         currentEmployment: payload.skillInformation.currentEmployment,
+        employmentCircumstance: payload.skillInformation.employmentCircumstance,
         registrationNumber: payload.skillInformation.registrationNumber.toString(),
         registrationStatus: payload.skillInformation.registrationStatus,
         stream: payload.skillInformation.stream,
