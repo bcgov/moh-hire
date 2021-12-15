@@ -28,8 +28,9 @@ export class FormService {
       newForm.version = '1.0.0';
     }
     const savedForm = await this.formRepository.save(newForm);
-
+    this.logger.log(`Saved form with id ${savedForm.id}`);
     if (savedForm.payload?.contactInformation.email) {
+      this.logger.log(`Sending confirmation email for form ${savedForm.id}`);
       const notifiedForm = await this.sendMail(savedForm);
       return notifiedForm;
     }

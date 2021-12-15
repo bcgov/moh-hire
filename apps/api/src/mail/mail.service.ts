@@ -41,6 +41,7 @@ export class MailService {
             authorization: `Bearer ${token}`,
             'content-type': 'application/json',
           },
+          timeout: 20000,
         },
       );
       return data;
