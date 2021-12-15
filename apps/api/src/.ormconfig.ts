@@ -4,7 +4,6 @@ import { DatabaseNamingStrategy } from './database/database.naming-strategy';
 dotenv.config();
 // Check typeORM documentation for more information.
 export const config: ConnectionOptions = {
-  name: 'default',
   host: process.env.POSTGRES_HOST,
   type: 'postgres',
   port: 5432,
