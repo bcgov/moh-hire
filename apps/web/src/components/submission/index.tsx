@@ -111,7 +111,6 @@ export const Form: React.FC = () => {
    * form when the previous step hasn't been completed.
    */
   useEffect(() => {
-    return;
     if (!router.query.step) return;
 
     if (step === 1) {
