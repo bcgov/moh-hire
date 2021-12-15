@@ -6,7 +6,7 @@ import { FormPayloadDTO } from '@ehpr/common';
 @Entity('form')
 export class FormEntity extends BaseEntity {
   @Exclude()
-  @Column('jsonb', { nullable: false })
+  @Column('jsonb', { nullable: true })
   payload!: FormPayloadDTO;
 
   @Column('varchar', { nullable: true })

@@ -27,9 +27,6 @@ export class FormService {
     if (!newForm.version) {
       newForm.version = '1.0.0';
     }
-    if (!newForm.payload) {
-      newForm.payload = {};
-    }
     const savedForm = await this.formRepository.save(newForm);
 
     const notifiedForm = await this.sendMail(savedForm);
