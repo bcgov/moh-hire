@@ -54,9 +54,9 @@ export class IsArrayOfSpecialties implements ValidatorConstraintInterface {
       // validate specialty is valid selection
       if (specialtyNotListed(specialty, formSpecialties)) return false;
 
-      // return true if selected specialty doesn't have subspecialties
+      // don't validate subspecialties if they haven't been selected and aren't required by the specialty
       const formSubspecialties = getSubSpecialtiesBySpecialtyId(specialty.name);
-      if (!formSubspecialties || formSubspecialties.length === 0) return true;
+      if (!formSubspecialties || formSubspecialties.length === 0) continue;
 
       // return false if specialty has subspecialties but none are selected
       if (!specialty.subspecialties || specialty.subspecialties?.length === 0) return false;
@@ -90,6 +90,10 @@ export class IsArrayOfSpecialties implements ValidatorConstraintInterface {
       if (specialtyNotListed(specialty, formSpecialties)) {
         return SpecialtyErrorEnum.INVALID_SPECIALTY;
       }
+
+      // don't validate subspecialties if they haven't been selected and aren't required by the specialty
+      const formSubspecialties = getSubSpecialtiesBySpecialtyId(specialty.name);
+      if (!formSubspecialties || formSubspecialties.length === 0) continue;
 
       // check existance and length of subspecialties
       if (!specialty.subspecialties || specialty.subspecialties?.length === 0) {
