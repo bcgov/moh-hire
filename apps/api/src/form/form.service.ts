@@ -29,9 +29,11 @@ export class FormService {
     }
     const savedForm = await this.formRepository.save(newForm);
 
-    const notifiedForm = await this.sendMail(savedForm);
-
-    return notifiedForm;
+    if (savedForm.payload?.contactInformation.email) {
+      const notifiedForm = await this.sendMail(savedForm);
+      return notifiedForm;
+    }
+    return savedForm;
   }
 
   private async sendMail(form: FormEntity) {
