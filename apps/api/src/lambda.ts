@@ -6,7 +6,7 @@ import {
   Callback,
   Handler,
 } from 'aws-lambda';
-import { createNestApp } from './main';
+import { createNestApp } from './app.config';
 
 let cachedServer: Handler;
 
