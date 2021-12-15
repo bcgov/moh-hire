@@ -8,6 +8,8 @@ import { FormExportColumns } from 'src/common/helper/csv/formExport';
 import { MailService } from 'src/mail/mail.service';
 import { ConfirmationMailable } from 'src/mail/mailables/confirmation.mailable';
 import { Recipient } from 'src/mail/types/recipient';
+import { GenericException } from 'src/common/generic-exception';
+import { MailError } from 'src/mail/mail.error';
 
 @Injectable()
 export class FormService {
@@ -39,18 +41,22 @@ export class FormService {
 
   private async sendMail(form: FormEntity) {
     const { payload } = form;
+    this.logger.log(payload);
     const { email } = payload.contactInformation;
     const mailable = new ConfirmationMailable({ email } as Recipient, {
       firstName: (payload.personalInformation as PersonalInformationDTO).firstName,
       confirmationId: form.confirmationId,
     });
 
+    this.logger.log(mailable);
+
     try {
       const { txId } = await this.mailService.sendMailable(mailable);
       form.chesId = txId;
       form = await this.formRepository.save(form);
     } catch (e) {
-      this.logger.warn(e);
+      this.logger.log(e);
+      throw new GenericException(MailError.FAILED_TO_SEND_EMAIL, e);
     }
 
     return form;

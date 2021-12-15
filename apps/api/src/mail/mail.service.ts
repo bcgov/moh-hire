@@ -30,24 +30,23 @@ export class MailService {
       bodyType: 'html',
       body: mailOptions.body,
     };
-    const token = await this.getChesToken();
 
-    try {
-      const { data } = await axios.post<ChesResponse>(
-        `${process.env.CHES_SERVICE_HOST}/api/v1/email`,
-        emailBody,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-            'content-type': 'application/json',
-          },
-          timeout: 20000,
+    console.log(emailBody);
+    const token = await this.getChesToken();
+    console.log(token);
+    const { data } = await axios.post<ChesResponse>(
+      `${process.env.CHES_SERVICE_HOST}/api/v1/email`,
+      emailBody,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+          'content-type': 'application/json',
         },
-      );
-      return data;
-    } catch (e) {
-      throw new GenericException(MailError.FAILED_TO_SEND_EMAIL, e);
-    }
+        timeout: 20000,
+      },
+    );
+    console.log(data);
+    return data;
   }
 
   /**
@@ -55,24 +54,20 @@ export class MailService {
    *
    */
   private async getChesToken() {
-    try {
-      const token = await axios.post(
-        process.env.CHES_AUTH_URL as string,
-        new URLSearchParams({ grant_type: 'client_credentials' }),
-        {
-          auth: {
-            username: process.env.CHES_CLIENT_ID as string,
-            password: process.env.CHES_CLIENT_SECRET as string,
-          },
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
+    const token = await axios.post(
+      process.env.CHES_AUTH_URL as string,
+      new URLSearchParams({ grant_type: 'client_credentials' }),
+      {
+        auth: {
+          username: process.env.CHES_CLIENT_ID as string,
+          password: process.env.CHES_CLIENT_SECRET as string,
         },
-      );
-      return token.data.access_token;
-    } catch (e) {
-      throw new GenericException(MailError.FAILED_TO_GET_CHES_TOKEN, e);
-    }
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      },
+    );
+    return token.data.access_token;
   }
 
   /**
@@ -89,11 +84,16 @@ export class MailService {
       subject: mailable.subject,
     };
 
-    const templatePath = path.resolve(`${__dirname}/templates/${mailable.template}.hbs`);
-    const templateContent = fs.readFileSync(templatePath, 'utf-8');
-    const template = handlebars.compile(templateContent, { strict: true });
-    const body = template(mailable.context);
+    console.log(mailOptions);
 
+    const templatePath = path.resolve(`${__dirname}/templates/${mailable.template}.hbs`);
+    console.log(templatePath);
+    const templateContent = fs.readFileSync(templatePath, 'utf-8');
+    console.log(templateContent);
+    const template = handlebars.compile(templateContent, { strict: true });
+    console.log(template);
+    const body = template(mailable.context);
+    console.log(body);
     return await this.sendMailWithChes({
       ...mailOptions,
       body,
