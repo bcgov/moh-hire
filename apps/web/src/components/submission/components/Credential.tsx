@@ -44,9 +44,10 @@ export const Credential: React.FC = () => {
     setFieldValue('skillInformation.specialties', [defaultSpecialtyValue]);
   }, [setFieldValue, stream]);
 
-  // reset health authority if employment changes
+  // reset health authority/employment circumstance if employment status changes
   useEffect(() => {
     setFieldValue('skillInformation.healthAuthorities', []);
+    setFieldValue('skillInformation.employmentCircumstance', null);
   }, [setFieldValue, currentEmployment]);
 
   // reset registraion number if registation status changes to unregistered
@@ -55,14 +56,6 @@ export const Credential: React.FC = () => {
       setFieldValue('skillInformation.registrationNumber', undefined);
     }
   }, [setFieldValue, registrationStatus]);
-
-  const isHealthAuthorityEmployed = [
-    EmploymentTypes.HEALTH_SECTOR_EMPLOYED,
-    EmploymentTypes.HEALTH_SECTORY_RESIDENCY,
-  ].includes(currentEmployment);
-
-  const isNotHealthAuthorityEmployed =
-    currentEmployment === EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED;
 
   const isRegistered = [RegistrationStatus.REGISTERED, RegistrationStatus.TEMP].includes(
     registrationStatus,
@@ -152,21 +145,7 @@ export const Credential: React.FC = () => {
         options={employmentOptions}
       />
 
-      {isHealthAuthorityEmployed ? (
-        <CheckboxArray
-          name='skillInformation.healthAuthorities'
-          legend='Please indicate which Health Authority (select all the apply):'
-          options={healthAuthorityOptions}
-        />
-      ) : null}
-
-      {isNotHealthAuthorityEmployed ? (
-        <Radio
-          name='skillInformation.employmentCircumstance'
-          legend='Select your circumstance:'
-          options={employmentCircumstanceOptions}
-        />
-      ) : null}
+      <SecondaryEmploymentQuestion employmentStatus={currentEmployment} />
 
       <Textarea
         name='skillInformation.additionalComments'
@@ -234,4 +213,37 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
       </div>
     </div>
   );
+};
+
+const SecondaryEmploymentQuestion: React.FC<{ employmentStatus: EmploymentTypes }> = ({
+  employmentStatus,
+}) => {
+  switch (employmentStatus) {
+    case EmploymentTypes.HEALTH_SECTOR_EMPLOYED:
+      return (
+        <CheckboxArray
+          name='skillInformation.healthAuthorities'
+          legend='Please indicate which Health Authority (select all the apply):'
+          options={healthAuthorityOptions}
+        />
+      );
+    case EmploymentTypes.HEALTH_SECTORY_RESIDENCY:
+      return (
+        <CheckboxArray
+          name='skillInformation.healthAuthorities'
+          legend='Indicate where you are doing your practicum/residency (select all that apply):'
+          options={healthAuthorityOptions}
+        />
+      );
+    case EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED:
+      return (
+        <Radio
+          name='skillInformation.employmentCircumstance'
+          legend='Select your circumstance:'
+          options={employmentCircumstanceOptions}
+        />
+      );
+    default:
+      return null;
+  }
 };
