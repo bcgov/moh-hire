@@ -51,7 +51,17 @@ export class MailService {
    *
    */
   private async getChesToken() {
-    const token = await axios.post(
+    const payload = {
+      grant_type: 'client_credentials',
+      client_id: process.env.CHES_CLIENT_ID,
+      client_secret: process.env.CHES_CLIENT_SECRET,
+    };
+    const formData = stringify(payload);
+    const token = await axios.post(process.env.CHES_AUTH_URL as string, formData, {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      timeout: 5000,
+    });
+    /*const token = await axios.post(
       process.env.CHES_AUTH_URL as string,
       stringify({ grant_type: 'client_credentials' }),
       {
@@ -64,7 +74,7 @@ export class MailService {
         },
         timeout: 5000,
       },
-    );
+    );*/
     return token.data.access_token;
   }
 
