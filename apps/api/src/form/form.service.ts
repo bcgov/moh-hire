@@ -8,6 +8,8 @@ import { FormExportColumns } from 'src/common/helper/csv/formExport';
 import { MailService } from 'src/mail/mail.service';
 import { ConfirmationMailable } from 'src/mail/mailables/confirmation.mailable';
 import { Recipient } from 'src/mail/types/recipient';
+import { GenericException } from 'src/common/generic-exception';
+import { MailError } from 'src/mail/mail.error';
 
 @Injectable()
 export class FormService {
@@ -25,14 +27,14 @@ export class FormService {
     } as Partial<FormEntity>);
 
     const savedForm = await this.formRepository.save(newForm);
+    this.logger.log(`Saved form with id ${savedForm.id} and sending email confirmation`);
 
-    const notifiedForm = await this.sendMail(savedForm);
-
-    return notifiedForm;
+    return this.sendMail(savedForm);
   }
 
   private async sendMail(form: FormEntity) {
     const { payload } = form;
+
     const { email } = payload.contactInformation;
     const mailable = new ConfirmationMailable({ email } as Recipient, {
       firstName: (payload.personalInformation as PersonalInformationDTO).firstName,
@@ -43,6 +45,7 @@ export class FormService {
       const { txId } = await this.mailService.sendMailable(mailable);
       form.chesId = txId;
       form = await this.formRepository.save(form);
+      this.logger.log(`Confirmation email sent for form ${form.id}`);
     } catch (e) {
       this.logger.warn(e);
     }

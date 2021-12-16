@@ -2,11 +2,10 @@ import { Injectable } from '@nestjs/common';
 import * as path from 'path';
 import axios from 'axios';
 import * as fs from 'fs';
+import { stringify } from 'qs';
 import * as handlebars from 'handlebars';
 import { Mailable } from './mailables/mail-base.mailable';
 import { MailOptions } from './mail-options.interface';
-import { GenericException } from 'src/common/generic-exception';
-import { MailError } from './mail.error';
 import { ChesResponse } from './types/ches-response';
 
 @Injectable()
@@ -30,23 +29,21 @@ export class MailService {
       bodyType: 'html',
       body: mailOptions.body,
     };
-    const token = await this.getChesToken();
 
-    try {
-      const { data } = await axios.post<ChesResponse>(
-        `${process.env.CHES_SERVICE_HOST}/api/v1/email`,
-        emailBody,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-            'content-type': 'application/json',
-          },
+    const token = await this.getChesToken();
+    const { data } = await axios.post<ChesResponse>(
+      `${process.env.CHES_SERVICE_HOST}/api/v1/email`,
+      emailBody,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+          'content-type': 'application/json',
         },
-      );
-      return data;
-    } catch (e) {
-      throw new GenericException(MailError.FAILED_TO_SEND_EMAIL, e);
-    }
+        timeout: 20000,
+      },
+    );
+
+    return data;
   }
 
   /**
@@ -54,24 +51,21 @@ export class MailService {
    *
    */
   private async getChesToken() {
-    try {
-      const token = await axios.post(
-        process.env.CHES_AUTH_URL as string,
-        new URLSearchParams({ grant_type: 'client_credentials' }),
-        {
-          auth: {
-            username: process.env.CHES_CLIENT_ID as string,
-            password: process.env.CHES_CLIENT_SECRET as string,
-          },
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
+    const token = await axios.post(
+      process.env.CHES_AUTH_URL as string,
+      stringify({ grant_type: 'client_credentials' }),
+      {
+        auth: {
+          username: process.env.CHES_CLIENT_ID as string,
+          password: process.env.CHES_CLIENT_SECRET as string,
         },
-      );
-      return token.data.access_token;
-    } catch (e) {
-      throw new GenericException(MailError.FAILED_TO_GET_CHES_TOKEN, e);
-    }
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        timeout: 5000,
+      },
+    );
+    return token.data.access_token;
   }
 
   /**
@@ -89,8 +83,11 @@ export class MailService {
     };
 
     const templatePath = path.resolve(`${__dirname}/templates/${mailable.template}.hbs`);
+
     const templateContent = fs.readFileSync(templatePath, 'utf-8');
+
     const template = handlebars.compile(templateContent, { strict: true });
+
     const body = template(mailable.context);
 
     return await this.sendMailWithChes({
