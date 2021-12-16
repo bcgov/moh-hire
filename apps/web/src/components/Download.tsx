@@ -1,5 +1,4 @@
-import Image from 'next/image';
-
+/* eslint-disable @next/next/no-img-element */
 export interface DownloadProps {
   ext: string;
   icon: string;
@@ -13,7 +12,7 @@ export const Download: React.FC<DownloadProps> = props => {
         <span className='inline-block mr-4 text-bcBluePrimary font-bold'>
           Download {ext.toUpperCase()}
         </span>
-        <Image src={icon} height='17' width='14' alt='download' />
+        <img src={icon} height='17' width='14' alt='download' />
       </button>
     </>
   );
