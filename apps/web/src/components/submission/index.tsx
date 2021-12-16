@@ -94,7 +94,11 @@ export const Form: React.FC = () => {
     helpers: FormikHelpers<DeepPartial<SubmissionType>>,
   ) => {
     if (isLastStep) {
-      await submitForm(values);
+      const { data } = await submitForm(values);
+      router.push({
+        pathname: '/confirmation',
+        query: { id: data.data.confirmationId },
+      });
     } else {
       helpers.setTouched({});
       router.push(`/submission/${step + 1}`);
