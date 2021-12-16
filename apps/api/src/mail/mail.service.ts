@@ -5,8 +5,6 @@ import * as fs from 'fs';
 import * as handlebars from 'handlebars';
 import { Mailable } from './mailables/mail-base.mailable';
 import { MailOptions } from './mail-options.interface';
-import { GenericException } from 'src/common/generic-exception';
-import { MailError } from './mail.error';
 import { ChesResponse } from './types/ches-response';
 
 @Injectable()
@@ -65,6 +63,7 @@ export class MailService {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
+        timeout: 5000,
       },
     );
     return token.data.access_token;
