@@ -26,9 +26,6 @@ export class FormService {
       confirmationId,
     } as Partial<FormEntity>);
 
-    if (!newForm.version) {
-      newForm.version = '1.0.0';
-    }
     const savedForm = await this.formRepository.save(newForm);
     this.logger.log(`Saved form with id ${savedForm.id}`);
     if (savedForm.payload?.contactInformation.email) {
