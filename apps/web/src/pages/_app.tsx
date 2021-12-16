@@ -6,7 +6,6 @@ import type { AppProps } from 'next/app';
 import { Footer, Header } from '@components';
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
-console.log('backend url = ', axios.defaults.baseURL);
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
