@@ -59,13 +59,11 @@ export const Credential: React.FC = () => {
   return (
     <div className='flex flex-col gap-5'>
       <FormStepHeader>3. Credential Information</FormStepHeader>
-      <div className='mb-2'>
-        <Select name='skillInformation.stream' label='Stream Type'>
-          {streamOptions.map(stream => (
-            <Option key={stream.value} label={stream.label} value={stream.value} />
-          ))}
-        </Select>
-      </div>
+      <Select name='skillInformation.stream' label='Stream Type'>
+        {streamOptions.map(stream => (
+          <Option key={stream.value} label={stream.label} value={stream.value} />
+        ))}
+      </Select>
 
       {stream ? (
         <div className='flex flex-col items-start'>
@@ -73,7 +71,8 @@ export const Credential: React.FC = () => {
             name='skillInformation.specialties'
             render={arrayHelpers => (
               <>
-                <div className='flex flex-col w-full gap-8 mb-4'>
+                <fieldset className='flex flex-col w-full gap-8 mb-4'>
+                  <legend className='font-semibold mb-4'>Select your specialties</legend>
                   {specialties?.map((_, index) => (
                     <SpecialtySelector
                       key={index}
@@ -83,7 +82,7 @@ export const Credential: React.FC = () => {
                       subspecialties={subspecialties?.[index]}
                     />
                   ))}
-                </div>
+                </fieldset>
 
                 <div className='mb-2'>
                   <Error name='skillInformation.specialties' />
