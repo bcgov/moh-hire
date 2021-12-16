@@ -1,7 +1,9 @@
 variable "project_code" {}
+variable "lz2_project" {}
 variable "api_artifact" {}
 variable "app_sources" {}
 variable "target_env" {}
+variable "target_aws_account_id" {}
 variable "domain" {}
 variable "app_sources_bucket" {}
 

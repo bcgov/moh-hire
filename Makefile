@@ -14,6 +14,17 @@ export POSTGRES_USERNAME = freshworks
 export CHES_CLIENT_ID ?= EHPR_SERVICE_CLIENT
 export MAIL_FROM ?= noreply@gov.bc.ca
 
+# LZ2 
+LZ2_PROJECT = bcbwlp
+
+# Terraform Cloud backend config variables
+define TF_BACKEND_CFG
+workspaces { name = "$(LZ2_PROJECT)-$(ENV_NAME)" }
+hostname     = "app.terraform.io"
+organization = "bcgov"
+endef
+export TF_BACKEND_CFG
+
 # FE Env Vars
 export NEXT_PUBLIC_API_URL = /api/v1
 
@@ -38,15 +49,6 @@ ches_client_id = "$(CHES_CLIENT_ID)"
 mail_from = "$(MAIL_FROM)"
 endef
 export TFVARS_DATA
-
-# Terraform s3 backend config variables
-define TF_BACKEND_CFG
-region="$(AWS_REGION)"
-bucket="$(NAMESPACE)-tf-state"
-dynamodb_table="$(NAMESPACE)-tf-lock"
-endef
-export TF_BACKEND_CFG
-
 
 .PHONY: app-local print-env start-local-services bootstrap bootstrap-terraform
 

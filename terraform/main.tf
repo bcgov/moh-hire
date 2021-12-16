@@ -6,14 +6,16 @@ terraform {
     }
   }
 
-  backend "s3" {
-    key     = "terraform.tfstate"
-    encrypt = true
+  backend "remote" {
+    required_version = "~> 1.0.0"
   }
 }
 
 provider "aws" {
   region = var.region
+  assume_role {
+    role_arn = "arn:aws:iam::${var.target_aws_account_id}:role/BCGOV_${var.target_env}_Automation_Admin_Role"
+  }
   default_tags {
     tags = {
       Environment = var.target_env
@@ -26,6 +28,9 @@ provider "aws" {
 provider "aws" {
   alias  = "us-east-1"
   region = "us-east-1"
+  assume_role {
+    role_arn = "arn:aws:iam::${var.target_aws_account_id}:role/BCGOV_${var.target_env}_Automation_Admin_Role"
+  }
   default_tags {
     tags = {
       Environment = var.target_env
@@ -36,11 +41,11 @@ provider "aws" {
 }
 
 locals {
-  namespace        = "${var.project_code}-${var.target_env}"
-  app_name         = "${local.namespace}-app"
-  api_name         = "${local.namespace}-api"
+  namespace = "${var.project_code}-${var.target_env}"
+  app_name  = "${local.namespace}-app"
+  api_name  = "${local.namespace}-api"
 
-  db_name          = "${local.namespace}-db"
+  db_name = "${local.namespace}-db"
 
   has_domain = var.domain != ""
 }
