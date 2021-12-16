@@ -27,8 +27,7 @@ export class FormService {
     } as Partial<FormEntity>);
 
     const savedForm = await this.formRepository.save(newForm);
-    this.logger.log(`Saved form with id ${savedForm.id}`);
-    this.logger.log(`Sending confirmation email for form ${savedForm.id}`);
+    this.logger.log(`Saved form with id ${savedForm.id} and sending email confrimation`);
 
     return this.sendMail(savedForm);
   }
