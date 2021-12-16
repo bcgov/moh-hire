@@ -59,11 +59,7 @@ export const Credential: React.FC = () => {
   return (
     <div className='flex flex-col gap-5'>
       <FormStepHeader>3. Credential Information</FormStepHeader>
-      <Select
-        name='skillInformation.stream'
-        label='Stream Type'
-        description='If your current employment are both full time employment and student, please select the stream that you want to volunteer'
-      >
+      <Select name='skillInformation.stream' label='Stream Type'>
         {streamOptions.map(stream => (
           <Option key={stream.value} label={stream.label} value={stream.value} />
         ))}
@@ -71,18 +67,18 @@ export const Credential: React.FC = () => {
 
       <Radio
         name='skillInformation.registrationStatus'
-        legend='Please select which best applied to your current registration status'
+        legend='Select which best applies to your current registration status'
         options={registrationStatusOptions}
       />
 
       <Field
         name='skillInformation.registrationNumber'
-        label='Please indicate registration number from your credentialing body'
+        label='Indicate your registration number from your credentialing body (optional)'
       />
 
       <Radio
         name='skillInformation.currentEmployment'
-        legend='Please select which best applied to your current employment'
+        legend='Select which best applies to your current employment status'
         options={employmentOptions}
       />
 
@@ -163,11 +159,8 @@ export const Credential: React.FC = () => {
         maxLength={50}
         description={
           <>
-            <p>Other specialty information not captured above.</p>
-            <p>
-              State your role title if you selected &apos;Non-Clinical Health Authority
-              Employee&apos; above
-            </p>
+            <p>Please provide any additional specialty information not captured above.</p>
+            <p>If you selected &apos;Non-Clinical&apos;, please provide your job title.</p>
           </>
         }
       />
