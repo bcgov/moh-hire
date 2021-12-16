@@ -7,7 +7,6 @@ export * from './FormStepHeader';
 export * from './Button';
 export * from './Link';
 export * from './Notice';
-export * from './Download';
 
 // Form Controls
 export * from './form';

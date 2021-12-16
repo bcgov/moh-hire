@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { withRouter, NextRouter, useRouter } from 'next/router';
-import { ExternalLink, Notice, Download } from '@components';
+import { ExternalLink, Notice, Button } from '@components';
 
 interface WithRouterProps {
   router: NextRouter;
@@ -41,7 +41,10 @@ const Confirmation: React.FC<WithRouterProps> = props => {
             .
           </p>
         </section>
-        <Download icon='/assets/img/download.svg' ext='pdf' />
+        <Button variant='outline'>
+          <span className='inline-block mr-4 text-bcBluePrimary font-bold'>Download PDF</span>
+          <img src='/assets/img/download.svg' height='17' width='14' alt='download' />
+        </Button>
       </div>
     </div>
   ) : (
