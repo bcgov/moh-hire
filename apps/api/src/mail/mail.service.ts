@@ -29,9 +29,7 @@ export class MailService {
       body: mailOptions.body,
     };
 
-    console.log(emailBody);
     const token = await this.getChesToken();
-    console.log(token);
     const { data } = await axios.post<ChesResponse>(
       `${process.env.CHES_SERVICE_HOST}/api/v1/email`,
       emailBody,
@@ -43,7 +41,7 @@ export class MailService {
         timeout: 20000,
       },
     );
-    console.log(data);
+
     return data;
   }
 
@@ -83,16 +81,14 @@ export class MailService {
       subject: mailable.subject,
     };
 
-    console.log(mailOptions);
-
     const templatePath = path.resolve(`${__dirname}/templates/${mailable.template}.hbs`);
-    console.log(templatePath);
+
     const templateContent = fs.readFileSync(templatePath, 'utf-8');
-    console.log(templateContent);
+
     const template = handlebars.compile(templateContent, { strict: true });
-    console.log(template);
+
     const body = template(mailable.context);
-    console.log(body);
+
     return await this.sendMailWithChes({
       ...mailOptions,
       body,
