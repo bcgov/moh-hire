@@ -28,12 +28,9 @@ export class FormService {
 
     const savedForm = await this.formRepository.save(newForm);
     this.logger.log(`Saved form with id ${savedForm.id}`);
-    if (savedForm.payload?.contactInformation.email) {
-      this.logger.log(`Sending confirmation email for form ${savedForm.id}`);
-      const notifiedForm = await this.sendMail(savedForm);
-      return notifiedForm;
-    }
-    return savedForm;
+    this.logger.log(`Sending confirmation email for form ${savedForm.id}`);
+
+    return this.sendMail(savedForm);
   }
 
   private async sendMail(form: FormEntity) {
