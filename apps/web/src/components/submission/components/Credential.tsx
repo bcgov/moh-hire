@@ -91,15 +91,17 @@ export const Credential: React.FC = () => {
           name='skillInformation.specialties'
           render={arrayHelpers => (
             <>
-              {specialties?.map((_, index) => (
-                <SpecialtySelector
-                  key={index}
-                  disabled={!specialtyOptions}
-                  index={index}
-                  specialties={specialtyOptions}
-                  subspecialties={subspecialties?.[index]}
-                />
-              ))}
+              <div className='flex flex-col w-full gap-8 mb-4'>
+                {specialties?.map((_, index) => (
+                  <SpecialtySelector
+                    key={index}
+                    disabled={!specialtyOptions}
+                    index={index}
+                    specialties={specialtyOptions}
+                    subspecialties={subspecialties?.[index]}
+                  />
+                ))}
+              </div>
 
               <div className='mb-2'>
                 <Error name='skillInformation.specialties' />
@@ -195,7 +197,7 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
     !!formSpecialties.find(specialty => specialty.id === specialtyId);
 
   return (
-    <div className='grid grid-cols-2 gap-2 w-full'>
+    <div className='grid md:grid-cols-2 gap-2 w-full ring-gray-200 ring-1 ring-offset-10 rounded-sm'>
       <div className='col-span-1'>
         <Select
           name={`skillInformation.specialties[${index}].id`}

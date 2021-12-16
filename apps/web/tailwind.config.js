@@ -28,6 +28,9 @@ module.exports = {
         '4xl': '2rem',
         '5xl': '2.5rem',
       },
+      ringOffsetWidth: {
+        10: '10px',
+      },
       boxShadow: {
         '2xl': '0 4px 16px 0 rgba(35,64,117,0.3)',
       },
