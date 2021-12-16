@@ -10,6 +10,7 @@ import {
   SubmissionType,
   initialSubmissionValues,
   DeepPartial,
+  credentialSchema,
 } from './validation';
 import { Ret } from 'class-validator-formik/dist/convertError';
 
@@ -39,7 +40,7 @@ const steps: StepType[] = [
   },
   {
     component: <Credential />,
-    validationSchema: () => ({}),
+    validationSchema: credentialSchema,
     key: FormKeys.SKILL_INFORMATION,
   },
   {

@@ -23,7 +23,12 @@ export const MultiSelect: React.FC<MultiSelectProps> = props => {
           inputId={name}
           options={options}
           value={field.value}
-          onChange={value => form.setFieldValue(name, value)}
+          onChange={value =>
+            form.setFieldValue(
+              name,
+              value.map(value => ({ id: value.value, ...value })), // also set the name field to match DTOs
+            )
+          }
           onBlur={field.onBlur}
           isDisabled={disabled}
           styles={selectStyleOverride}

@@ -125,4 +125,6 @@ describe('CheckboxArray', () => {
       expect(checkboxElement).toHaveAttribute('value', testOptions[index].value);
     });
   });
+
+  // @todo test for form errors
 });

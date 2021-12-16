@@ -3,6 +3,7 @@ import { createValidator } from 'class-validator-formik';
 import { contactDefaultValues } from './contact';
 import { credentialDefaultValues } from './credential';
 import { PersonalInformationDTO, personalDefaultValues } from './personal';
+import { SkillInformationDTO } from './credential';
 
 export type { FormPayloadDTO as SubmissionType } from '@ehpr/common';
 
@@ -20,5 +21,6 @@ export const initialSubmissionValues: DeepPartial<FormPayloadDTO> = {
 
 export const personalSchema = createValidator(PersonalInformationDTO);
 export const contactSchema = createValidator(ContactInformationDTO);
+export const credentialSchema = createValidator(SkillInformationDTO);
 
 export * from './credential';

@@ -2,16 +2,20 @@ import { OptionType } from '@components';
 import {
   EmploymentTypes,
   HealthAuthorities,
+  EmploymentCircumstances,
   RegistrationStatus,
   SkillInformationDTO,
-  streamData,
+  getStreams,
+  getSpecialtiesByStreamId,
+  getSubSpecialtiesBySpecialtyId,
+  StreamId,
 } from '@ehpr/common';
 
 export { SkillInformationDTO } from '@ehpr/common';
 
 export const defaultSpecialtyValue = {
-  name: '',
-  subSpecialties: [],
+  id: '',
+  subspecialties: [],
 };
 
 export const credentialDefaultValues: Partial<SkillInformationDTO> = {
@@ -21,59 +25,35 @@ export const credentialDefaultValues: Partial<SkillInformationDTO> = {
   currentEmployment: undefined,
   specialties: [defaultSpecialtyValue],
   healthAuthorities: [],
+  employmentCircumstance: undefined,
   additionalComments: undefined,
 };
 
-export const streamOptions = Object.entries(streamData).map(([key, value]) => ({
-  value: key,
-  label: value.name,
+export const streamOptions = getStreams().map(({ id, name }) => ({
+  value: id,
+  label: name,
 }));
 
-export const getSpecialtyOptions = (stream: keyof typeof streamData): OptionType[] | null => {
-  const specialties = streamData[stream]?.specialties;
+export const getSpecialtyOptions = (streamSelection: StreamId): OptionType[] => {
+  const specialties = getSpecialtiesByStreamId(streamSelection);
 
-  if (!specialties) return null;
-
-  return Object.entries(specialties).map(([key, value]) => ({
-    value: key,
-    label: value.name,
+  return specialties.map(({ id, name }) => ({
+    value: id,
+    label: name,
   }));
 };
 
-export const getSubSpecialtyOptions = (
-  stream: string,
-  specialties: string[],
-): Array<OptionType[] | null> | null => {
-  if (specialties.length === 0) return [];
+export const getSubspecialtyOptions = (specialties: string[]): Array<OptionType[] | null> => {
+  const subspecialties = specialties.map(specialty => {
+    const subspecialty = getSubSpecialtiesBySpecialtyId(specialty);
+    if (!subspecialty) return null;
+    return subspecialty.map(({ id, name }) => ({
+      value: id,
+      label: name,
+    }));
+  });
 
-  const currentStream = streamData[stream];
-  if (!currentStream) return null;
-
-  const subSpecialties: Array<OptionType[] | null> = [];
-
-  for (const specialty of specialties) {
-    const currentSpecialty = currentStream.specialties?.[specialty];
-    // if selected specialtiy isn't found, don't return subspecialties
-    const currentSubSpecialties = currentSpecialty?.subSpecialties;
-
-    if (!currentSpecialty || !currentSubSpecialties) {
-      subSpecialties.push(null);
-      continue;
-    }
-
-    const currentSubSpecialtyOption: OptionType[] = [];
-
-    Object.entries(currentSubSpecialties).forEach(([key, value]) =>
-      currentSubSpecialtyOption.push({
-        value: key,
-        label: value.name,
-      }),
-    );
-
-    subSpecialties.push(currentSubSpecialtyOption);
-  }
-
-  return subSpecialties;
+  return subspecialties;
 };
 
 export const registrationStatusOptions = [
@@ -130,5 +110,20 @@ export const healthAuthorityOptions = [
   {
     value: HealthAuthorities.VANCOUVER_ISLAND,
     label: 'Vancouver Island Health',
+  },
+];
+
+export const employmentCircumstanceOptions = [
+  {
+    value: EmploymentCircumstances.RETIRED,
+    label: 'Retired',
+  },
+  {
+    value: EmploymentCircumstances.STUDENT,
+    label: 'Student',
+  },
+  {
+    value: EmploymentCircumstances.OTHER,
+    label: 'Other',
   },
 ];

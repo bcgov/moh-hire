@@ -1,4 +1,4 @@
-import { OptionType } from '@components';
+import { Error, OptionType } from '@components';
 import { Field as FormikField } from 'formik';
 
 interface CheckboxProps {
@@ -42,6 +42,7 @@ export const CheckboxArray: React.FC<CheckboxArrayProps> = ({ name, legend, opti
       {options.map(option => (
         <Checkbox key={option.value} name={name} value={option.value} label={option.label} />
       ))}
+      <Error name={name} />
     </fieldset>
   );
 };

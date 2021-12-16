@@ -36,6 +36,12 @@ export enum HealthAuthorities {
   VANCOUVER_ISLAND = 'vancouverIsland',
 }
 
+export enum EmploymentCircumstances {
+  RETIRED = 'retired',
+  STUDENT = 'student',
+  OTHER = 'other',
+}
+
 export interface PlacementPreferences {
   C19PatientCare: boolean;
   C19CommunityCare: boolean;

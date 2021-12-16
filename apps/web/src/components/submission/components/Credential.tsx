@@ -12,16 +12,18 @@ import {
   Textarea,
   Field,
   OptionType,
+  Error,
 } from '@components';
 
 import {
   SubmissionType,
   registrationStatusOptions,
   healthAuthorityOptions,
+  employmentCircumstanceOptions,
   employmentOptions,
   streamOptions,
   getSpecialtyOptions,
-  getSubSpecialtyOptions,
+  getSubspecialtyOptions,
 } from '../validation';
 
 import { defaultSpecialtyValue } from '../validation/credential';
@@ -30,13 +32,11 @@ export const Credential: React.FC = () => {
   const { values, setFieldValue } = useFormikContext<SubmissionType>();
   const { stream, specialties, currentEmployment }: SkillInformationDTO = values.skillInformation;
 
-  const selectedSpecialties = specialties.map(specialty => specialty.name);
+  const selectedSpecialties = specialties.map(specialty => specialty.id);
 
   const specialtyOptions = stream ? getSpecialtyOptions(stream) : null;
 
-  const subSpecialties = selectedSpecialties
-    ? getSubSpecialtyOptions(stream, selectedSpecialties)
-    : null;
+  const subspecialties = selectedSpecialties ? getSubspecialtyOptions(selectedSpecialties) : null;
 
   // reset specialties if stream changes
   useEffect(() => {
@@ -48,7 +48,13 @@ export const Credential: React.FC = () => {
     setFieldValue('skillInformation.healthAuthorities', []);
   }, [setFieldValue, currentEmployment]);
 
-  const isHealthAuthorityEmployed = currentEmployment === EmploymentTypes.HEALTH_SECTOR_EMPLOYED;
+  const isHealthAuthorityEmployed = [
+    EmploymentTypes.HEALTH_SECTOR_EMPLOYED,
+    EmploymentTypes.HEALTH_SECTORY_RESIDENCY,
+  ].includes(currentEmployment);
+
+  const isNotHealthAuthorityEmployed =
+    currentEmployment === EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED;
 
   return (
     <div className='flex flex-col gap-5'>
@@ -91,9 +97,14 @@ export const Credential: React.FC = () => {
                   disabled={!specialtyOptions}
                   index={index}
                   specialties={specialtyOptions}
-                  subSpecialties={subSpecialties?.[index]}
+                  subspecialties={subspecialties?.[index]}
                 />
               ))}
+
+              <div className='mb-2'>
+                <Error name='skillInformation.specialties' />
+              </div>
+
               <div className='flex items-center'>
                 {specialties.length !== specialtyOptions?.length ? (
                   <button
@@ -134,6 +145,14 @@ export const Credential: React.FC = () => {
         />
       ) : null}
 
+      {isNotHealthAuthorityEmployed ? (
+        <Radio
+          name='skillInformation.employmentCircumstance'
+          legend='Select your circumstance:'
+          options={employmentCircumstanceOptions}
+        />
+      ) : null}
+
       <Textarea
         name='skillInformation.additionalComments'
         label={
@@ -160,26 +179,26 @@ interface SpecialtySelectorProps {
   disabled: boolean;
   index: number;
   specialties: OptionType[] | null;
-  subSpecialties?: OptionType[] | null;
+  subspecialties?: OptionType[] | null;
 }
 
 const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
   disabled,
   index,
   specialties,
-  subSpecialties,
+  subspecialties,
 }) => {
   const { values } = useFormikContext<SubmissionType>();
   const { specialties: formSpecialties }: SkillInformationDTO = values.skillInformation;
 
-  const specialtyOptionIsDisabled = (name: string): boolean =>
-    !!formSpecialties.find(specialty => specialty.name === name);
+  const specialtyOptionIsDisabled = (specialtyId: string): boolean =>
+    !!formSpecialties.find(specialty => specialty.id === specialtyId);
 
   return (
     <div className='grid grid-cols-2 gap-2 w-full'>
       <div className='col-span-1'>
         <Select
-          name={`skillInformation.specialties[${index}].name`}
+          name={`skillInformation.specialties[${index}].id`}
           label='Main Speciality'
           disabled={disabled}
         >
@@ -196,9 +215,9 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
       <div className='col-span-1'>
         <MultiSelect
           label='Subspecialty/Training'
-          name={`skillInformation.specialties[${index}].subSpecialties`}
-          disabled={!subSpecialties}
-          options={subSpecialties || []}
+          name={`skillInformation.specialties[${index}].subspecialties`}
+          disabled={!subspecialties || subspecialties.length === 0}
+          options={subspecialties || []}
         />
       </div>
     </div>

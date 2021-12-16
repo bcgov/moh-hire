@@ -1,6 +1,23 @@
-import { EmploymentTypes, RegistrationStatus, HealthAuthorities } from '../interfaces';
-import { streamData } from '../data/applicant_stream_data';
-import { IsIn, IsNumber, IsOptional, IsString, Length, Max, Min } from 'class-validator';
+import {
+  EmploymentTypes,
+  RegistrationStatus,
+  HealthAuthorities,
+  EmploymentCircumstances,
+} from '../interfaces';
+import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsArray,
+  IsIn,
+  IsOptional,
+  IsString,
+  Length,
+  Validate,
+  ValidateIf,
+  ValidateNested,
+} from 'class-validator';
+import { IsArrayOfSpecialties } from './is-array-of-specialties.decorator';
+import { StreamId, validStreamIds } from '../helper';
 
 export class SkillInformationDTO {
   constructor(base?: SkillInformationDTO) {
@@ -8,43 +25,86 @@ export class SkillInformationDTO {
       this.stream = base.stream;
       this.registrationNumber = base.registrationNumber;
       this.registrationStatus = base.registrationStatus;
+      this.specialties = base.specialties?.map(specialty => new SpecialtyDTO(specialty));
       this.currentEmployment = base.currentEmployment;
+      this.employmentCircumstance = base.employmentCircumstance;
       this.additionalComments = base.additionalComments;
     }
   }
 
-  @IsString()
-  @IsIn(Object.keys(streamData))
-  stream!: keyof typeof streamData;
+  @IsIn(validStreamIds, { message: 'Invalid stream type selection' })
+  @IsString({ message: 'Stream Type is required' })
+  stream!: StreamId;
 
-  @IsString()
-  @IsIn(Object.values(RegistrationStatus))
+  @IsIn(Object.values(RegistrationStatus), { message: 'Invalid registration status selection' })
+  @IsString({ message: 'Registration status is required' })
   registrationStatus!: RegistrationStatus;
 
-  @IsNumber()
-  @Max(99999999)
-  @Min(0)
-  registrationNumber!: number;
+  @IsString({ message: 'Invalid value' })
+  @IsOptional()
+  registrationNumber!: string;
 
-  @IsString()
-  @IsIn(Object.values(EmploymentTypes))
+  @IsIn(Object.values(EmploymentTypes), { message: 'Invalid employment type selection' })
+  @IsString({ message: 'Current employment selection is required' })
   currentEmployment!: EmploymentTypes;
 
-  specialties!: SpecialtyType[];
+  @ValidateIf(o => !!o.stream)
+  @Validate(IsArrayOfSpecialties)
+  specialties!: SpecialtyDTO[];
 
+  @ValidateIf(o =>
+    [EmploymentTypes.HEALTH_SECTOR_EMPLOYED, EmploymentTypes.HEALTH_SECTORY_RESIDENCY].includes(
+      o.currentEmployment,
+    ),
+  )
+  @IsArray({ message: 'Health authority selection is required' })
+  @ArrayMinSize(1, { message: 'Health authority selection is required' })
+  @ArrayMaxSize(Object.values(HealthAuthorities).length, {
+    message: 'Invalid health authority selection',
+  })
   healthAuthorities!: HealthAuthorities[];
 
+  @ValidateIf(o => EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED === o.currentEmployment)
+  @IsIn(Object.values(EmploymentCircumstances), { message: 'Invalid circumstance selection' })
+  @IsString({ message: 'Circumstance selection is required' })
+  employmentCircumstance!: EmploymentCircumstances;
+
   @IsString()
-  @Length(1, 255)
+  @Length(0, 50)
   @IsOptional()
   additionalComments?: string;
 }
 
-export interface SpecialtyType {
-  name: string;
-  subspecialties?: SubspecialtyType[];
+export class SpecialtyDTO {
+  constructor(base?: SpecialtyDTO) {
+    if (base) {
+      this.id = base.id;
+      this.subspecialties = base.subspecialties?.map(
+        subspecialty => new SubspecialtyDTO(subspecialty),
+      );
+    }
+  }
+
+  @IsString({ message: 'Specialty is required' })
+  @Length(5, 255, { message: 'Specialty must be between 1 and 255 characters' })
+  id!: string;
+
+  @IsArray({ message: 'Health authority selection is required' })
+  @ArrayMinSize(1, { message: 'Health authority selection is required' })
+  @ArrayMaxSize(5, {
+    message: 'Invalid subspecialty selection',
+  })
+  @ValidateNested()
+  subspecialties?: SubspecialtyDTO[];
 }
 
-export interface SubspecialtyType {
-  name: string;
+export class SubspecialtyDTO {
+  constructor(base?: SubspecialtyDTO) {
+    if (base) {
+      this.id = base.id;
+    }
+  }
+
+  @IsString({ message: 'Specialty is required' })
+  id!: string;
 }
