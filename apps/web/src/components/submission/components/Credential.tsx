@@ -201,7 +201,7 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
       <div className='col-span-1'>
         <Select
           name={`skillInformation.specialties[${index}].id`}
-          label='Main Speciality'
+          label={`Main Speciality #${index + 1}`}
           disabled={disabled}
         >
           {specialties?.map((specialty, index) => (
@@ -216,7 +216,7 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
       </div>
       <div className='col-span-1'>
         <MultiSelect
-          label='Subspecialty/Training'
+          label={`Subspecialty/Training #${index + 1}`}
           name={`skillInformation.specialties[${index}].subspecialties`}
           disabled={!subspecialties || subspecialties.length === 0}
           options={subspecialties || []}
