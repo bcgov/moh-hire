@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { FieldArray, useFormikContext } from 'formik';
-import { EmploymentTypes, SkillInformationDTO } from '@ehpr/common';
+import { EmploymentTypes, RegistrationStatus, SkillInformationDTO } from '@ehpr/common';
 
 import {
   FormStepHeader,
@@ -30,7 +30,8 @@ import { defaultSpecialtyValue } from '../validation/credential';
 
 export const Credential: React.FC = () => {
   const { values, setFieldValue } = useFormikContext<SubmissionType>();
-  const { stream, specialties, currentEmployment }: SkillInformationDTO = values.skillInformation;
+  const { stream, specialties, currentEmployment, registrationStatus }: SkillInformationDTO =
+    values.skillInformation;
 
   const selectedSpecialties = specialties.map(specialty => specialty.id);
 
@@ -55,6 +56,10 @@ export const Credential: React.FC = () => {
 
   const isNotHealthAuthorityEmployed =
     currentEmployment === EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED;
+
+  const isRegistered = [RegistrationStatus.REGISTERED, RegistrationStatus.TEMP].includes(
+    registrationStatus,
+  );
 
   return (
     <div className='flex flex-col gap-5'>
@@ -88,7 +93,7 @@ export const Credential: React.FC = () => {
                   <Error name='skillInformation.specialties' />
                 </div>
 
-                <div className='flex items-center'>
+                <div className='flex justify-center md:justify-start items-center w-full'>
                   {specialties.length !== specialtyOptions?.length ? (
                     <button
                       type='button'
@@ -127,10 +132,12 @@ export const Credential: React.FC = () => {
         options={registrationStatusOptions}
       />
 
-      <Field
-        name='skillInformation.registrationNumber'
-        label='Indicate your registration number from your credentialing body (optional)'
-      />
+      {isRegistered ? (
+        <Field
+          name='skillInformation.registrationNumber'
+          label='Indicate your registration number from your credentialing body (optional)'
+        />
+      ) : null}
 
       <Radio
         name='skillInformation.currentEmployment'
