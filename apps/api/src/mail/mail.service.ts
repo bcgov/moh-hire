@@ -59,7 +59,7 @@ export class MailService {
     const formData = stringify(payload);
     const token = await axios.post(process.env.CHES_AUTH_URL as string, formData, {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      timeout: 5000,
+      timeout: 10000,
     });
     /*const token = await axios.post(
       process.env.CHES_AUTH_URL as string,
