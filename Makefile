@@ -20,7 +20,7 @@ export NEXT_PUBLIC_API_URL = /api/v1
 # AWS Environments variables
 export AWS_REGION ?= ca-central-1
 NAMESPACE = $(PROJECT)-$(ENV_NAME)
-APP_SRC_BUCKET = $(NAMESPACE)-app
+APP_SRC_BUCKET = $(NAMESPACE)-app-dist
 
 # Terraform variables
 TERRAFORM_DIR = terraform
@@ -173,6 +173,9 @@ plan: init-tf
 deploy-infra: init-tf 
 	# Creating all AWS infrastructure.
 	@terraform -chdir=$(TERRAFORM_DIR) apply -auto-approve -input=false
+
+destroy: init-tf
+	terraform -chdir=$(TERRAFORM_DIR) destroy
 
 deploy-app:
 	test -n $(CLOUDFRONT_ID)

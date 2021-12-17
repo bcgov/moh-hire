@@ -1,17 +1,8 @@
 
-resource "aws_s3_bucket" "bucket_logs" {
-  bucket = "${local.namespace}-bucket-logs"
-  acl    = "log-delivery-write"
-}
+
 resource "aws_s3_bucket" "app" {
   bucket = var.app_sources_bucket
   acl    = "private"
-
-  logging {
-    target_bucket = aws_s3_bucket.bucket_logs.id
-    target_prefix = "${var.app_sources_bucket}/"
-  }
-
   versioning {
     enabled = true
   }
