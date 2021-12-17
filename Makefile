@@ -39,11 +39,15 @@ mail_from = "$(MAIL_FROM)"
 endef
 export TFVARS_DATA
 
-# Terraform s3 backend config variables
+# Terraform cloud backend config variables
+# LZ2 
+LZ2_PROJECT = bcbwlp
+
+# Terraform Cloud backend config variables
 define TF_BACKEND_CFG
-region="$(AWS_REGION)"
-bucket="$(NAMESPACE)-tf-state"
-dynamodb_table="$(NAMESPACE)-tf-lock"
+workspaces { name = "$(LZ2_PROJECT)-$(ENV_NAME)" }
+hostname     = "app.terraform.io"
+organization = "bcgov"
 endef
 export TF_BACKEND_CFG
 
@@ -160,7 +164,7 @@ init-tf: write-config-tf
 	# Initializing the terraform environment
 	@terraform -chdir=$(TERRAFORM_DIR) init -input=false \
 		-reconfigure \
-		-backend-config=backend.hcl
+		-backend-config=backend.hcl -upgrade
 
 plan: init-tf
 	# Creating all AWS infrastructure.

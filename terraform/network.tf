@@ -1,85 +1,88 @@
-resource "aws_vpc" "vpc" {
-  cidr_block           = "10.0.0.0/16"
-  enable_dns_support   = true
-  enable_dns_hostnames = true
-  tags = {
-    environment = local.namespace
-    Name        = local.namespace
-  }
+// Not working at the moment
+// module "network" {
+//   source      = "git::https://github.com/BCDevOps/terraform-octk-aws-sea-network-info.git//?ref=master"
+//   environment = var.target_env
+// }
+
+// Have manually copy/pasted the code from the above module
+// TODO re-enable the module once fixed and remove the code below
+locals {
+	env_map = {
+		dev = "Dev"
+		test = "Test"
+		prod = "Prod"
+		sandbox = "Sandbox"
+		unclass = "UnClass"
+	}
+	environment = local.env_map[lower(var.target_env)]
+	vpc_name = "${local.environment}_vpc"
+	availability_zones = ["a", "b"]
+	web_subnet_names = [for az in local.availability_zones : "Web_${local.environment}_az${az}_net"]
+	app_subnet_names = [for az in local.availability_zones : "App_${local.environment}_az${az}_net"]
+	data_subnet_names = [for az in local.availability_zones : "Data_${local.environment}_az${az}_net"]
+
+	security_group_name_suffix = "_sg"
+
+	web_security_group_name = "Web${local.security_group_name_suffix}"
+	app_security_group_name = "App${local.security_group_name_suffix}"
+	data_security_group_name = "Data${local.security_group_name_suffix}"
 }
 
-resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.vpc.id
-  tags = {
-    Name        = local.namespace
-    environment = local.namespace
-  }
+data "aws_vpc" "main" {
+	filter {
+		name = "tag:Name"
+		values = [
+			local.vpc_name]
+	}
 }
 
-resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.vpc.id
-  tags = {
-    Name        = local.namespace
-    environment = local.namespace
-  }
+data "aws_subnet_ids" "web" {
+	vpc_id = data.aws_vpc.main.id
+	filter {
+		name = "tag:Name"
+		values = local.web_subnet_names
+	}
 }
 
-resource "aws_route" "public" {
-  route_table_id         = aws_route_table.public.id
-  destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_internet_gateway.igw.id
+data "aws_subnet_ids" "app" {
+	vpc_id = data.aws_vpc.main.id
+	filter {
+		name = "tag:Name"
+		values = local.app_subnet_names
+	}
 }
 
-resource "aws_subnet" "public_az1" {
-  vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "10.0.1.0/24"
-  map_public_ip_on_launch = true
-  availability_zone       = "ca-central-1a"
-  tags = {
-    Name        = "${local.namespace}-public-az1"
-    environment = local.namespace
-  }
+data "aws_subnet_ids" "data" {
+	vpc_id = data.aws_vpc.main.id
+	filter {
+		name = "tag:Name"
+		values = local.data_subnet_names
+	}
 }
 
-resource "aws_route_table_association" "public_az1" {
-  subnet_id      = aws_subnet.public_az1.id
-  route_table_id = aws_route_table.public.id
+data "aws_subnet" "web" {
+	for_each = data.aws_subnet_ids.web.ids
+	id = each.value
 }
 
-resource "aws_subnet" "public_az2" {
-  vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "10.0.2.0/24"
-  map_public_ip_on_launch = true
-  availability_zone       = "ca-central-1b"
-  tags = {
-    Name        = "${local.namespace}-public-az2"
-    environment = local.namespace
-  }
+data "aws_subnet" "app" {
+	for_each = data.aws_subnet_ids.app.ids
+	id = each.value
 }
 
-resource "aws_route_table_association" "public_az2" {
-  subnet_id      = aws_subnet.public_az2.id
-  route_table_id = aws_route_table.public.id
+data "aws_subnet" "data" {
+	for_each = data.aws_subnet_ids.data.ids
+	id = each.value
 }
 
-resource "aws_subnet" "private_az1" {
-  vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "10.0.10.0/24"
-  map_public_ip_on_launch = false
-  availability_zone       = "ca-central-1a" 
-  tags = {
-    Name        = "${local.namespace}-private-az1"
-    environment = local.namespace
-  }
+data "aws_security_group" "web" {
+	name = local.web_security_group_name
 }
 
-resource "aws_subnet" "private_az2" {
-  vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "10.0.11.0/24"
-  map_public_ip_on_launch = false
-  availability_zone       = "ca-central-1b" 
-  tags = {
-    Name        = "${local.namespace}-private-az2"
-    environment = local.namespace
-  }
+data "aws_security_group" "app" {
+	name = local.app_security_group_name
+}
+
+data "aws_security_group" "data" {
+	name = local.data_security_group_name
 }

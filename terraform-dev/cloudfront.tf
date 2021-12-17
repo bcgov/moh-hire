@@ -30,7 +30,6 @@ resource "aws_cloudfront_origin_access_identity" "app" {
 
 
 resource "aws_cloudfront_function" "response" {
-  provider = aws.us-east-1
   name    = "${local.namespace}-cf-response"
   runtime = "cloudfront-js-1.0"
   comment = "Add security headers"
@@ -38,7 +37,6 @@ resource "aws_cloudfront_function" "response" {
 }
 
 resource "aws_cloudfront_function" "request" {
-  provider = aws.us-east-1
   name    = "${local.namespace}-cf-request"
   runtime = "cloudfront-js-1.0"
   comment = "Next request handler"
