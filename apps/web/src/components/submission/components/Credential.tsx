@@ -107,7 +107,7 @@ export const Credential: React.FC = () => {
                 <Error name='skillInformation.specialties' />
               </div>
 
-              <div className='flex items-center'>
+              <div className='flex justify-center md:justify-start items-center w-full'>
                 {specialties.length !== specialtyOptions?.length ? (
                   <button
                     type='button'
