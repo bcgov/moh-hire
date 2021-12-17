@@ -13,11 +13,11 @@ export const Disclosure: React.FC<DisclosureProps> = ({ buttonText, content }) =
     <HeadlessDisclosure>
       {({ open }) => (
         <>
-          <HeadlessDisclosure.Button className={'flex justify-between w-full'}>
+          <HeadlessDisclosure.Button className={'flex justify-between items-center w-full'}>
             {buttonText}
             <FontAwesomeIcon
               icon={faChevronDown}
-              className={classnames({ 'text-gray-500 transform rotate-180': open })}
+              className={classnames('text-gray-500', { 'transform rotate-180': open })}
             />
           </HeadlessDisclosure.Button>
           <HeadlessDisclosure.Panel className='text-gray-500'>{content}</HeadlessDisclosure.Panel>
