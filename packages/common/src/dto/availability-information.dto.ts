@@ -18,7 +18,7 @@ export class AvailabilityDTO {
   deployAnywhere!: boolean;
 
   @IsArray()
-  deploymentLocations!: HealthAuthorities[];
+  deploymentLocations!: string[];
 
   @ValidateNested()
   placementPrefs!: PlacementPreferencesDTO;
