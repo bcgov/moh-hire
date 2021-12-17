@@ -4,6 +4,7 @@ import { contactDefaultValues } from './contact';
 import { credentialDefaultValues } from './credential';
 import { PersonalInformationDTO, personalDefaultValues } from './personal';
 import { SkillInformationDTO } from './credential';
+import { OptionType } from '@components';
 
 export type { SubmissionPayloadDTO as SubmissionType } from '@ehpr/common';
 
@@ -18,6 +19,11 @@ export const initialSubmissionValues: DeepPartial<SubmissionPayloadDTO> = {
   skillInformation: credentialDefaultValues,
   availabilityInformation: undefined,
 };
+
+export const yesNoOptions: OptionType[] = [
+  { value: 'yes', label: 'Yes' },
+  { value: 'no', label: 'No' },
+];
 
 export const personalSchema = createValidator(PersonalInformationDTO);
 export const contactSchema = createValidator(ContactInformationDTO);
