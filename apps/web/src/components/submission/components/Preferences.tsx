@@ -1,14 +1,25 @@
 import { FormStepHeader, Radio, Disclosure, Checkbox, OptionType, Error } from '@components';
 import { getLhasbyHaId, HaId } from '@ehpr/common';
 import { useFormikContext } from 'formik';
+import { useEffect, useRef } from 'react';
 import { FormStepProps } from '.';
 import { SubmissionType } from '../validation';
 import { getHsdaOptions, getLhaOptions, haOptions } from '../validation/preferences';
 
 export const Preferences: React.FC<FormStepProps> = () => {
-  const { values } = useFormikContext<SubmissionType>();
-
+  const { values, setFieldValue } = useFormikContext<SubmissionType>();
   const { deployAnywhere } = values.availabilityInformation;
+
+  const previousDeployAnywhere = useRef(deployAnywhere);
+
+  useEffect(() => {
+    // only reset locations when deploy anywhere is changed (i.e. changed from true to false)
+    // prevents resetting locations on component mount
+    if (deployAnywhere !== previousDeployAnywhere.current) {
+      setFieldValue('availabilityInformation.deploymentLocations', []);
+    }
+    previousDeployAnywhere.current = deployAnywhere;
+  }, [deployAnywhere, setFieldValue]);
 
   return (
     <>
