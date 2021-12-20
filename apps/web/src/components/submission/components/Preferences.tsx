@@ -83,7 +83,7 @@ const DeploymentLocationSelector: React.FC = () => {
               </span>
             }
             content={
-              <>
+              <div className='p-5 pt-0'>
                 <div className='mb-2'>
                   <button
                     type='button'
@@ -103,14 +103,16 @@ const DeploymentLocationSelector: React.FC = () => {
                     Un-select all
                   </button>
                 </div>
-                {getHsdaOptions(value).map(({ value, label }) => (
-                  <HsdaLocationSelector
-                    key={value}
-                    region={label}
-                    lhaOptions={getLhaOptions(value)}
-                  />
-                ))}
-              </>
+                <div className='flex flex-col gap-5'>
+                  {getHsdaOptions(value).map(({ value, label }) => (
+                    <HsdaLocationSelector
+                      key={value}
+                      region={label}
+                      lhaOptions={getLhaOptions(value)}
+                    />
+                  ))}
+                </div>
+              </div>
             }
           />
         </div>
@@ -126,7 +128,7 @@ interface LocationListProps {
 
 const HsdaLocationSelector: React.FC<LocationListProps> = ({ region, lhaOptions }) => {
   return (
-    <fieldset className='mb-5'>
+    <fieldset>
       <legend className='font-bold text-black mb-2 text-base'>{region}</legend>
       <div className='grid grid-cols-2 gap-4 p-5 border border-gray-400 rounded text-black bg-white'>
         {lhaOptions.map(location => (
