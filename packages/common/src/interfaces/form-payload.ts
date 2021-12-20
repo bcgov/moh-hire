@@ -5,7 +5,7 @@ import {
   SkillInformationDTO,
 } from 'src';
 
-export interface FormPayload {
+export interface SubmissionPayload {
   personalInformation: PersonalInformationDTO;
   contactInformation: ContactInformationDTO;
   skillInformation: SkillInformationDTO;

@@ -1,10 +1,10 @@
 import { Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { FormEntity } from './entity/form.entity';
+import { SubmissionEntity } from './entity/submission.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FormDTO, PersonalInformationDTO } from '@ehpr/common';
+import { SubmissionDTO, PersonalInformationDTO } from '@ehpr/common';
 import { booleanToYesNo } from 'src/common/helper/csv/casting';
-import { FormExportColumns } from 'src/common/helper/csv/formExport';
+import { SubmissionExportColumns } from 'src/common/helper/csv/submissionExport';
 import { MailService } from 'src/mail/mail.service';
 import { ConfirmationMailable } from 'src/mail/mailables/confirmation.mailable';
 import { Recipient } from 'src/mail/types/recipient';
@@ -12,62 +12,66 @@ import { GenericException } from 'src/common/generic-exception';
 import { MailError } from 'src/mail/mail.error';
 
 @Injectable()
-export class FormService {
+export class SubmissionService {
   constructor(
     @Inject(Logger) private readonly logger: LoggerService,
-    @InjectRepository(FormEntity)
-    private readonly formRepository: Repository<FormEntity>,
+    @InjectRepository(SubmissionEntity)
+    private readonly submissionRepository: Repository<SubmissionEntity>,
     @Inject(MailService)
     private readonly mailService: MailService,
   ) {}
-  async saveForm(dto: FormDTO, confirmationId: string): Promise<FormEntity> {
-    const newForm = this.formRepository.create({
+  async saveSubmission(dto: SubmissionDTO, confirmationId: string): Promise<SubmissionEntity> {
+    const newSubmission = this.submissionRepository.create({
       ...dto,
       confirmationId,
-    } as Partial<FormEntity>);
+    } as Partial<SubmissionEntity>);
 
-    const savedForm = await this.formRepository.save(newForm);
-    this.logger.log(`Saved form with id ${savedForm.id} and sending email confirmation`);
+    const savedSubmission = await this.submissionRepository.save(newSubmission);
+    this.logger.log(
+      `Saved submission with id ${savedSubmission.id} and sending email confirmation`,
+    );
 
-    return this.sendMail(savedForm);
+    return this.sendMail(savedSubmission);
   }
 
-  private async sendMail(form: FormEntity) {
-    const { payload } = form;
+  private async sendMail(submission: SubmissionEntity) {
+    const { payload } = submission;
 
     const { email } = payload.contactInformation;
     const mailable = new ConfirmationMailable({ email } as Recipient, {
       firstName: (payload.personalInformation as PersonalInformationDTO).firstName,
-      confirmationId: form.confirmationId,
+      confirmationId: submission.confirmationId,
     });
 
     try {
       const { txId } = await this.mailService.sendMailable(mailable);
-      form.chesId = txId;
-      form = await this.formRepository.save(form);
-      this.logger.log(`Confirmation email sent for form ${form.id}`);
+      submission.chesId = txId;
+      submission = await this.submissionRepository.save(submission);
+      this.logger.log(`Confirmation email sent for submission: ${submission.id}`);
     } catch (e) {
       this.logger.warn(e);
     }
 
-    return form;
+    return submission;
   }
 
-  async getForms(): Promise<FormEntity[]> {
-    return await this.formRepository.find();
+  async getSubmissions(): Promise<SubmissionEntity[]> {
+    return await this.submissionRepository.find();
   }
-  async getFormById(id: string): Promise<FormEntity> {
-    return await this.formRepository.findOneOrFail({
+  async getSubmissionById(id: string): Promise<SubmissionEntity> {
+    return await this.submissionRepository.findOneOrFail({
       confirmationId: id,
     });
   }
 
-  async getAllForms(): Promise<FormEntity[]> {
-    return await this.formRepository.find({});
+  async getAllSubmissions(): Promise<SubmissionEntity[]> {
+    return await this.submissionRepository.find({});
   }
 
-  async flattenAndTransformFormData(forms: FormEntity[]): Promise<FormExportColumns[]> {
-    return forms.map(({ payload }) => {
+  async flattenAndTransformSubmissionData(
+    submissions: SubmissionEntity[],
+  ): Promise<SubmissionExportColumns[]> {
+    return submissions.map(({ payload }) => {
       return {
         deployAnywhere: booleanToYesNo(payload.availabilityInformation.deployAnywhere),
         deploymentDuration: payload.availabilityInformation.deploymentDuration.toString(),
