@@ -1,4 +1,4 @@
-import { ArrayMaxSize, ArrayMinSize, IsArray, IsBoolean } from 'class-validator';
+import { ArrayMaxSize, ArrayMinSize, IsArray, IsBoolean, ValidateIf } from 'class-validator';
 
 import { DeploymentDurations } from '../interfaces';
 import { PlacementPreferencesDTO } from '.';
@@ -18,6 +18,7 @@ export class AvailabilityDTO {
   @IsBoolean({ message: 'This field is required' })
   deployAnywhere!: boolean;
 
+  @ValidateIf(o => o.deployAnywhere === false)
   @IsArray({ message: 'Location selection is required' })
   @ArrayMinSize(1, { message: 'Location selection is required' })
   @ArrayMaxSize(validLhaIds.length, {

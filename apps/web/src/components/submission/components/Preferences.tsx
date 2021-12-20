@@ -2,22 +2,23 @@ import { FormStepHeader, Radio, Disclosure, Checkbox, OptionType, Error } from '
 import { getLhasbyHaId, HaId } from '@ehpr/common';
 import { useFormikContext } from 'formik';
 import { FormStepProps } from '.';
-import { SubmissionType, yesNoOptions } from '../validation';
+import { SubmissionType } from '../validation';
 import { getHsdaOptions, getLhaOptions, haOptions } from '../validation/preferences';
 
 export const Preferences: React.FC<FormStepProps> = () => {
   const { values } = useFormikContext<SubmissionType>();
 
+  const { deployAnywhere } = values.availabilityInformation;
+
   return (
     <>
       <FormStepHeader>4. Employment Preferences</FormStepHeader>
-      <Radio
+      <Radio.Boolean
         name='availabilityInformation.deployAnywhere'
         legend='Are you willing to deploy anywhere in BC?'
-        options={yesNoOptions}
         horizontal
       />
-      {(values.availabilityInformation?.deployAnywhere as any) === 'no' ? (
+      {deployAnywhere === false ? (
         <fieldset>
           <legend className='text-gray-500 font-bold mb-2 text-base'>
             Indicate the locations you are willing to support (click on the drop-down in each region
