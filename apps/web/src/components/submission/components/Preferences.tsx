@@ -4,7 +4,7 @@ import { useFormikContext } from 'formik';
 import { useEffect, useRef } from 'react';
 import { FormStepProps } from '.';
 import { SubmissionType } from '../validation';
-import { getHsdaOptions, getLhaOptions, haOptions } from '../validation/preferences';
+import { getHsdaOptions, getLhaOptions, haOptions, HaPdfSizeMap } from '../validation/preferences';
 
 export const Preferences: React.FC<FormStepProps> = () => {
   const { values, setFieldValue } = useFormikContext<SubmissionType>();
@@ -90,7 +90,17 @@ const DeploymentLocationSelector: React.FC = () => {
           <Disclosure
             buttonText={
               <span className='font-bold text-black p-5'>
-                {label} (<span className='font-bold text-bcBlueLink'>PDF, 1.4MB</span>)
+                {label} (
+                <a
+                  href={HaPdfSizeMap[value].url}
+                  target='_blank'
+                  rel='noreferrer'
+                  className='font-bold text-bcBlueLink'
+                  aria-label={`${label} map PDF`}
+                >
+                  PDF, {HaPdfSizeMap[value].size}MB
+                </a>
+                )
               </span>
             }
             content={
