@@ -74,10 +74,10 @@ const DeploymentLocationSelector: React.FC = () => {
   return (
     <div>
       {haOptions.map(({ value, label }) => (
-        <div key={value} className='px-5 bg-bcLightGray rounded mb-4'>
+        <div key={value} className='bg-bcLightGray rounded mb-4'>
           <Disclosure
             buttonText={
-              <span className='font-bold text-black py-4'>
+              <span className='font-bold text-black p-5'>
                 {label} (<span className='font-bold text-bcBlueLink'>PDF, 1.4MB</span>)
               </span>
             }
