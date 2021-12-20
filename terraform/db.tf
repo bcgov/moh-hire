@@ -1,7 +1,7 @@
 
 resource "aws_db_subnet_group" "pgsql" {
   name       = "pgsql"
-  subnet_ids = [aws_subnet.private_az1.id, aws_subnet.private_az2.id]
+  subnet_ids = data.aws_subnet_ids.data.ids
 }
 
 resource "aws_rds_cluster_instance" "pgsql" {
@@ -24,7 +24,7 @@ resource "aws_rds_cluster" "pgsql" {
   deletion_protection = true
 
   db_subnet_group_name   = aws_db_subnet_group.pgsql.name
-  vpc_security_group_ids = [aws_security_group.postgres.id]
+  vpc_security_group_ids = [data.aws_security_group.data.id]
 
   # 2AM-4AM PST
   preferred_backup_window = "09:00-11:00"

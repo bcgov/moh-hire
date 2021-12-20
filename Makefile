@@ -20,7 +20,7 @@ export NEXT_PUBLIC_API_URL = /api/v1
 # AWS Environments variables
 export AWS_REGION ?= ca-central-1
 NAMESPACE = $(PROJECT)-$(ENV_NAME)
-APP_SRC_BUCKET = $(NAMESPACE)-app
+APP_SRC_BUCKET = $(NAMESPACE)-app-dist
 
 # Terraform variables
 TERRAFORM_DIR = terraform
@@ -39,11 +39,15 @@ mail_from = "$(MAIL_FROM)"
 endef
 export TFVARS_DATA
 
-# Terraform s3 backend config variables
+# Terraform cloud backend config variables
+# LZ2 
+LZ2_PROJECT = bcbwlp
+
+# Terraform Cloud backend config variables
 define TF_BACKEND_CFG
-region="$(AWS_REGION)"
-bucket="$(NAMESPACE)-tf-state"
-dynamodb_table="$(NAMESPACE)-tf-lock"
+workspaces { name = "$(LZ2_PROJECT)-$(ENV_NAME)" }
+hostname     = "app.terraform.io"
+organization = "bcgov"
 endef
 export TF_BACKEND_CFG
 
@@ -160,7 +164,7 @@ init-tf: write-config-tf
 	# Initializing the terraform environment
 	@terraform -chdir=$(TERRAFORM_DIR) init -input=false \
 		-reconfigure \
-		-backend-config=backend.hcl
+		-backend-config=backend.hcl -upgrade
 
 plan: init-tf
 	# Creating all AWS infrastructure.
@@ -170,9 +174,14 @@ deploy-infra: init-tf
 	# Creating all AWS infrastructure.
 	@terraform -chdir=$(TERRAFORM_DIR) apply -auto-approve -input=false
 
+destroy: init-tf
+	terraform -chdir=$(TERRAFORM_DIR) destroy
+
 deploy-app:
 	test -n $(CLOUDFRONT_ID)
 	aws s3 sync ./terraform/build/app s3://$(APP_SRC_BUCKET) --delete
+
+deploy-app-manual: deploy-app
 	aws --region $(AWS_REGION) cloudfront create-invalidation --distribution-id $(CLOUDFRONT_ID) --paths "/*"
 
 # Deployment CMD

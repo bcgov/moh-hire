@@ -10,8 +10,8 @@ resource "aws_lambda_function" "api" {
   timeout          = 30
 
   vpc_config {
-    security_group_ids = [aws_default_security_group.default_security_group.id]
-    subnet_ids         = [aws_subnet.private_az1.id, aws_subnet.private_az2.id]
+    security_group_ids = [data.aws_security_group.app.id]
+    subnet_ids         = data.aws_subnet_ids.app.ids
   }
 
   environment {
@@ -82,6 +82,7 @@ resource "aws_apigatewayv2_stage" "api" {
 
 resource "aws_cloudwatch_log_group" "api_gateway" {
   name = "api-gateway/${local.api_name}"
+  retention_in_days = 90
 }
 
 resource "aws_lambda_permission" "api_allow_gateway" {

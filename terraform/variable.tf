@@ -1,4 +1,7 @@
 variable "project_code" {}
+
+variable "target_aws_account_id" {}
+
 variable "api_artifact" {}
 variable "app_sources" {}
 variable "target_env" {}

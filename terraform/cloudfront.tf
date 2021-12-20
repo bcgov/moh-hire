@@ -30,6 +30,7 @@ resource "aws_cloudfront_origin_access_identity" "app" {
 
 
 resource "aws_cloudfront_function" "response" {
+  provider = aws.us-east-1
   name    = "${local.namespace}-cf-response"
   runtime = "cloudfront-js-1.0"
   comment = "Add security headers"
@@ -37,6 +38,7 @@ resource "aws_cloudfront_function" "response" {
 }
 
 resource "aws_cloudfront_function" "request" {
+  provider = aws.us-east-1
   name    = "${local.namespace}-cf-request"
   runtime = "cloudfront-js-1.0"
   comment = "Next request handler"
@@ -44,19 +46,10 @@ resource "aws_cloudfront_function" "request" {
 }
 
 
-resource "aws_s3_bucket" "app_logs" {
-  bucket = "${local.app_name}-logs"
-  acl    = "log-delivery-write"
-}
-
 resource "aws_cloudfront_distribution" "app" {
   comment = local.app_name
 
   aliases = local.has_domain ? [var.domain] : []
-
-  logging_config {
-    bucket = aws_s3_bucket.app_logs.bucket_domain_name
-  }
 
   origin {
     domain_name = aws_s3_bucket.app.bucket_regional_domain_name

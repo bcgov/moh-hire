@@ -9,7 +9,7 @@ env:
   PROJECT: ehpr
   NODE_ENV: development
   ENV_NAME: dev
-
+  TF_VERSION: 1.1.1
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -32,6 +32,11 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+          cli_config_credentials_token: ${{ secrets.TFC_TEAM_TOKEN }}
+
       - name: Print Environment
         run: make print-env
 
@@ -51,6 +56,9 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_ID }}
           aws-region: ca-central-1
+          role-to-assume: ${{ secrets.AWS_SA_ROLE_ARN }}
+          role-duration-seconds: 900
+          role-session-name: ci-deployment
 
       - name: Terraform config
         run: |
