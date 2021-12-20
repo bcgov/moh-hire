@@ -9,7 +9,7 @@ interface WithRouterProps {
 const Confirmation: React.FC<WithRouterProps> = props => {
   const nextRouter = useRouter();
   const { router } = props;
-  const id = router?.query?.id;
+  const id = router.query?.id;
 
   useEffect(() => {
     // if the page is accessed directly, redirect to the home page
@@ -17,7 +17,10 @@ const Confirmation: React.FC<WithRouterProps> = props => {
       nextRouter.push('/');
     }
   });
-  return id ? (
+
+  if (!id) return null;
+
+  return (
     <div className='md:pt-40 pt-12 px-5 md:px-4'>
       <div className='max-w-xl text-center'>
         <div className='text-3xl md:text-4xl px-5 md:px-2 text-bcBluePrimary mb-5 '>
@@ -25,7 +28,7 @@ const Confirmation: React.FC<WithRouterProps> = props => {
         </div>
         <Notice>
           <p className='leading-8'>
-            Your EHPR registration number: <b>{id}</b>
+            Your EHPR registration ID: <b>{id}</b>
           </p>
         </Notice>
         <section className='px-5 mb-5'>
@@ -47,8 +50,6 @@ const Confirmation: React.FC<WithRouterProps> = props => {
         </Button>
       </div>
     </div>
-  ) : (
-    <></>
   );
 };
 
