@@ -1,4 +1,4 @@
-import { FormStepHeader, Radio, Disclosure, Checkbox, OptionType } from '@components';
+import { FormStepHeader, Radio, Disclosure, Checkbox, OptionType, Error } from '@components';
 import { getLhasbyHaId, HaId } from '@ehpr/common';
 import { useFormikContext } from 'formik';
 import { FormStepProps } from '.';
@@ -24,6 +24,7 @@ export const Preferences: React.FC<FormStepProps> = () => {
             and select the locations)
           </legend>
           <DeploymentLocationSelector />
+          <Error name='availabilityInformation.deploymentLocations' />
         </fieldset>
       ) : null}
     </>

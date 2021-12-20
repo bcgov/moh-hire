@@ -1,12 +1,12 @@
+import { AvailabilityDTO } from '@ehpr/common';
 import { OptionType } from '@components';
 import { getHas, getHsdasByHaId, getLhasByHsdaId, HaId } from '@ehpr/common';
 
-export interface PreferencesType {
-  preferencesFoo: string;
-}
+export { PersonalInformationDTO } from '@ehpr/common';
 
-export const preferencesDefaultValues = {
-  preferencesFoo: '',
+export const preferencesDefaultValues: Partial<AvailabilityDTO> = {
+  deployAnywhere: undefined,
+  deploymentLocations: [],
 };
 
 export const haOptions = getHas().map(({ id, name }) => ({

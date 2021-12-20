@@ -1,7 +1,8 @@
-import { IsArray, IsBoolean, IsIn, IsNumber, ValidateNested } from 'class-validator';
+import { ArrayMaxSize, ArrayMinSize, IsArray, IsBoolean } from 'class-validator';
 
-import { DeploymentDurations, HealthAuthorities } from '../interfaces';
+import { DeploymentDurations } from '../interfaces';
 import { PlacementPreferencesDTO } from '.';
+import { LhaId, validLhaIds } from '../helper';
 
 export class AvailabilityDTO {
   constructor(base?: AvailabilityDTO) {
@@ -14,19 +15,19 @@ export class AvailabilityDTO {
     }
   }
 
-  @IsBoolean()
+  @IsBoolean({ message: 'This field is required' })
   deployAnywhere!: boolean;
 
-  @IsArray()
-  deploymentLocations!: string[];
+  @IsArray({ message: 'Location selection is required' })
+  @ArrayMinSize(1, { message: 'Location selection is required' })
+  @ArrayMaxSize(validLhaIds.length, {
+    message: 'Invalid location selection',
+  })
+  deploymentLocations!: LhaId[];
 
-  @ValidateNested()
   placementPrefs!: PlacementPreferencesDTO;
 
-  @IsBoolean()
   isImmunized!: boolean;
 
-  @IsNumber()
-  @IsIn(Object.values(DeploymentDurations))
   deploymentDuration!: DeploymentDurations;
 }
