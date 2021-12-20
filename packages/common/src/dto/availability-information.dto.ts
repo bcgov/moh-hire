@@ -35,7 +35,7 @@ export class AvailabilityDTO {
 
   @IsArray({ message: 'Placement options are required' })
   @ArrayMinSize(1, { message: 'Placement options are required' })
-  @ArrayMaxSize(Object.keys(PlacementOptions).length, {
+  @ArrayMaxSize(Object.values(PlacementOptions).length, {
     message: 'Invalid placement options',
   })
   placementOptions!: PlacementOptions[];
@@ -44,6 +44,6 @@ export class AvailabilityDTO {
   hasImmunizationTraining!: boolean;
 
   @IsString({ message: 'Deployment duration is required' })
-  @IsIn(Object.keys(DeploymentDurations), { message: 'Invalid deployment duration selection' })
+  @IsIn(Object.values(DeploymentDurations), { message: 'Invalid deployment duration selection' })
   deploymentDuration!: DeploymentDurations;
 }

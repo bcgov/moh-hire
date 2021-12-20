@@ -1,4 +1,4 @@
-import { AvailabilityDTO } from '@ehpr/common';
+import { AvailabilityDTO, PlacementOptions, DeploymentDurations } from '@ehpr/common';
 import { OptionType } from '@components';
 import { getHas, getHsdasByHaId, getLhasByHsdaId, HaId } from '@ehpr/common';
 
@@ -57,3 +57,22 @@ export const HaPdfSizeMap: Record<HaId, { size: number; url: string }> = {
     url: 'https://www2.gov.bc.ca/assets/gov/data/geographic/land-use/administrative-boundaries/health-boundaries/5_northern_health_authority.pdf',
   },
 };
+
+export const placementOptions = [
+  { label: 'Critical care/intensive care units', value: PlacementOptions.CRITICAL_CARE_ICU },
+  { label: 'Emergency Departments', value: PlacementOptions.EMERGENCY_DEPARTMENTS },
+  { label: 'Long term care', value: PlacementOptions.LONG_TERM_CARE },
+  { label: 'Home support', value: PlacementOptions.HOME_SUPPORT },
+  {
+    label: 'COVID-19 specific support (such as immunization and testing)',
+    value: PlacementOptions.COVID_19_SUPPORT,
+  },
+  { label: 'Anywhere needed', value: PlacementOptions.ANYWHERE },
+  { label: 'Other', value: PlacementOptions.OTHER },
+];
+
+export const deploymentDurationOptions = [
+  { label: '2 - 4 weeks', value: DeploymentDurations.TWO_TO_FOUR_WEEKS },
+  { label: '4 - 8 weeks', value: DeploymentDurations.FOUR_TO_EIGHT },
+  { label: '8+ weeks', value: DeploymentDurations.EIGHT_PLUS },
+];

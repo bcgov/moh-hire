@@ -1,10 +1,25 @@
-import { FormStepHeader, Radio, Disclosure, Checkbox, OptionType, Error } from '@components';
+import {
+  FormStepHeader,
+  Radio,
+  Disclosure,
+  Checkbox,
+  OptionType,
+  Error,
+  CheckboxArray,
+} from '@components';
 import { getLhasbyHaId, HaId } from '@ehpr/common';
 import { useFormikContext } from 'formik';
 import { useEffect, useRef } from 'react';
 import { FormStepProps } from '.';
 import { SubmissionType } from '../validation';
-import { getHsdaOptions, getLhaOptions, haOptions, HaPdfSizeMap } from '../validation/preferences';
+import {
+  deploymentDurationOptions,
+  getHsdaOptions,
+  getLhaOptions,
+  haOptions,
+  HaPdfSizeMap,
+  placementOptions,
+} from '../validation/preferences';
 
 export const Preferences: React.FC<FormStepProps> = () => {
   const { values, setFieldValue } = useFormikContext<SubmissionType>();
@@ -22,7 +37,7 @@ export const Preferences: React.FC<FormStepProps> = () => {
   }, [deployAnywhere, setFieldValue]);
 
   return (
-    <>
+    <div className='flex flex-col gap-4'>
       <FormStepHeader>4. Employment Preferences</FormStepHeader>
       <Radio.Boolean
         name='availabilityInformation.deployAnywhere'
@@ -39,7 +54,21 @@ export const Preferences: React.FC<FormStepProps> = () => {
           <Error name='availabilityInformation.deploymentLocations' />
         </fieldset>
       ) : null}
-    </>
+      <CheckboxArray
+        legend='Indicate the placement option(s) you are willing to support'
+        name='availabilityInformation.placementOptions'
+        options={placementOptions}
+      />
+      <Radio.Boolean
+        legend='Have you received immunization training in the past five years?'
+        name='availabilityInformation.hasImmunizationTraining'
+      />
+      <Radio
+        name='availabilityInformation.deploymentDuration'
+        legend='Indicate the maximum duration of deployment you are willing to support'
+        options={deploymentDurationOptions}
+      />
+    </div>
   );
 };
 
