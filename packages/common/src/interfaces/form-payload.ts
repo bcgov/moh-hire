@@ -42,12 +42,12 @@ export enum EmploymentCircumstances {
   OTHER = 'other',
 }
 
-export interface PlacementPreferences {
-  C19PatientCare: boolean;
-  C19CommunityCare: boolean;
-  C19LowRisk: boolean;
-  C19ClinicSupport: boolean;
-  WildFireOrOther: boolean;
+export enum PlacementOptions {
+  C19PatientCare,
+  C19CommunityCare,
+  C19LowRisk,
+  C19ClinicSupport,
+  WildFireOrOther,
 }
 
 export enum DeploymentDurations {
