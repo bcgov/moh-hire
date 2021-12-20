@@ -6,6 +6,7 @@ export * from './Stepper';
 export * from './FormStepHeader';
 export * from './Button';
 export * from './Link';
+export * from './Notice';
 
 // Form Controls
 export * from './form';

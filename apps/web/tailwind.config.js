@@ -38,6 +38,9 @@ module.exports = {
         widest: '.3em',
         wider: '.1em',
       },
+      borderWidth: {
+        10: '10px',
+      },
     },
   },
   variants: {
