@@ -206,3 +206,14 @@ migration-revert:
 	@docker exec $(LOCAL_API_CONTAINER_NAME) yarn workspace @ehpr/api typeorm migration:revert
 
 # docker exec ehpr_api yarn typeorm migration:generate -n AddSubmissionEntity
+
+# DB Tunneling
+open-db-tunnel:
+	# Needs exported credentials for a matching LZ2 space
+	@echo "Running for ENV_NAME=$(ENV_NAME)"
+	# Checking you have the SSM plugin for the AWS cli installed
+	session-manager-plugin
+	rm ssh-keypair ssh-keypair.pub || true
+	ssh-keygen -t rsa -f ssh-keypair -N ''
+	aws ec2-instance-connect send-ssh-public-key --instance-id $(BASTION_INSTANCE_ID) --availability-zone ca-central-1b --instance-os-user ssm-user --ssh-public-key file://ssh-keypair.pub
+	ssh -i ssh-keypair ssm-user@$(BASTION_INSTANCE_ID) -L 5432:$(DB_HOST):5432 -o ProxyCommand="aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
