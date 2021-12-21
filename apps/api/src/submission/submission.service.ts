@@ -76,19 +76,9 @@ export class SubmissionService {
         deployAnywhere: booleanToYesNo(payload.availabilityInformation.deployAnywhere),
         deploymentDuration: payload.availabilityInformation.deploymentDuration.toString(),
         deploymentLocations: payload.availabilityInformation.deploymentLocations.join(', '),
-        isImmunized: booleanToYesNo(payload.availabilityInformation.isImmunized),
-        C19ClinicSupport: booleanToYesNo(
-          payload.availabilityInformation.placementPrefs.C19ClinicSupport,
-        ),
-        C19CommunityCare: booleanToYesNo(
-          payload.availabilityInformation.placementPrefs.C19CommunityCare,
-        ),
-        C19LowRisk: booleanToYesNo(payload.availabilityInformation.placementPrefs.C19LowRisk),
-        C19PatientCare: booleanToYesNo(
-          payload.availabilityInformation.placementPrefs.C19PatientCare,
-        ),
-        WildFireOrOther: booleanToYesNo(
-          payload.availabilityInformation.placementPrefs.WildFireOrOther,
+        placementOptions: payload.availabilityInformation.placementOptions.join(', '),
+        hasImmunizationTraining: booleanToYesNo(
+          payload.availabilityInformation.hasImmunizationTraining,
         ),
         email: payload.contactInformation.email,
         primaryPhone: payload.contactInformation.primaryPhone,

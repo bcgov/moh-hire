@@ -42,17 +42,18 @@ export enum EmploymentCircumstances {
   OTHER = 'other',
 }
 
-export interface PlacementPreferences {
-  C19PatientCare: boolean;
-  C19CommunityCare: boolean;
-  C19LowRisk: boolean;
-  C19ClinicSupport: boolean;
-  WildFireOrOther: boolean;
+export enum PlacementOptions {
+  CRITICAL_CARE_ICU = 'criticalCareICU',
+  EMERGENCY_DEPARTMENTS = 'emergencyDepartments',
+  LONG_TERM_CARE = 'longTermCare',
+  HOME_SUPPORT = 'homeSupport',
+  COVID_19_SUPPORT = 'covid19Support',
+  ANYWHERE = 'anywhere',
+  OTHER = 'other',
 }
 
 export enum DeploymentDurations {
-  ZERO_TO_TWO = 1,
-  TWO_TO_FOUR,
-  FOUR_TO_EIGHT,
-  EIGHT_PLUS,
+  TWO_TO_FOUR_WEEKS = 'twoToFour',
+  FOUR_TO_EIGHT = 'fourToEight',
+  EIGHT_PLUS = 'eightPlus',
 }

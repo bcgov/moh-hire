@@ -1,16 +1,25 @@
-import { ArrayMaxSize, ArrayMinSize, IsArray, IsBoolean, ValidateIf } from 'class-validator';
+import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsArray,
+  IsBoolean,
+  IsIn,
+  IsString,
+  Validate,
+  ValidateIf,
+} from 'class-validator';
 
-import { DeploymentDurations } from '../interfaces';
-import { PlacementPreferencesDTO } from '.';
+import { DeploymentDurations, PlacementOptions } from '../interfaces';
 import { LhaId, validLhaIds } from '../helper';
+import { IsArrayOfLhas } from './is-valid-lha.decorator';
 
 export class AvailabilityDTO {
   constructor(base?: AvailabilityDTO) {
     if (base) {
       this.deployAnywhere = base.deployAnywhere;
       this.deploymentLocations = base.deploymentLocations;
-      this.placementPrefs = new PlacementPreferencesDTO(base.placementPrefs);
-      this.isImmunized = base.isImmunized;
+      this.placementOptions = base.placementOptions;
+      this.hasImmunizationTraining = base.hasImmunizationTraining;
       this.deploymentDuration = base.deploymentDuration;
     }
   }
@@ -24,11 +33,20 @@ export class AvailabilityDTO {
   @ArrayMaxSize(validLhaIds.length, {
     message: 'Invalid location selection',
   })
+  @Validate(IsArrayOfLhas)
   deploymentLocations!: LhaId[];
 
-  placementPrefs!: PlacementPreferencesDTO;
+  @IsArray({ message: 'Placement options are required' })
+  @ArrayMinSize(1, { message: 'Placement options are required' })
+  @ArrayMaxSize(Object.values(PlacementOptions).length, {
+    message: 'Invalid placement options',
+  })
+  placementOptions!: PlacementOptions[];
 
-  isImmunized!: boolean;
+  @IsBoolean({ message: 'This field is required' })
+  hasImmunizationTraining!: boolean;
 
+  @IsString({ message: 'Deployment duration is required' })
+  @IsIn(Object.values(DeploymentDurations), { message: 'Invalid deployment duration selection' })
   deploymentDuration!: DeploymentDurations;
 }
