@@ -52,7 +52,7 @@ export async function createNestApp(): Promise<{
   app.setGlobalPrefix(API_PREFIX);
 
   // Enabling Documentation
-  if (process.env.NODE_ENV !== 'prod') {
+  if (process.env.NODE_ENV !== 'production') {
     Documentation(app);
   }
 
@@ -76,6 +76,7 @@ export async function createNestApp(): Promise<{
   // Printing the environment variables
   console.table({
     project: process.env.PROJECT,
+    envName: process.env.ENV_NAME,
     nodeEnv: process.env.NODE_ENV,
     runtimeEnv: process.env.RUNTIME_ENV,
   });
