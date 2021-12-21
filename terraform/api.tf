@@ -16,7 +16,8 @@ resource "aws_lambda_function" "api" {
 
   environment {
     variables = {
-      TARGET_ENV           = var.target_env
+      TARGET_ENV         = var.target_env
+      NODE_ENV           = "production"
       AWS_S3_REGION      = var.region
       RUNTIME_ENV        = "hosted"
       POSTGRES_HOST      = aws_rds_cluster.pgsql.endpoint
