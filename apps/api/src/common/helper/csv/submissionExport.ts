@@ -1,6 +1,6 @@
 // Order determines the CSV column order
 
-export enum FormExportColumnHeaders {
+export enum SubmissionExportColumnHeaders {
   firstName = 'First Name',
   lastName = 'Last Name',
 
@@ -37,7 +37,7 @@ export enum FormExportColumnHeaders {
   additionalComments = 'Additional Comments',
 }
 
-export interface FormExportColumns {
+export interface SubmissionExportColumns {
   deployAnywhere?: string;
   deploymentDuration?: string;
   deploymentLocations?: string;

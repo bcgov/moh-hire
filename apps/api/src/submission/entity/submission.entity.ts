@@ -1,13 +1,13 @@
 import { Entity, Column } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { BaseEntity } from 'src/database/base.entity';
-import { FormPayloadDTO } from '@ehpr/common';
+import { SubmissionPayloadDTO } from '@ehpr/common';
 
-@Entity('form')
-export class FormEntity extends BaseEntity {
+@Entity('submission')
+export class SubmissionEntity extends BaseEntity {
   @Exclude()
   @Column('jsonb', { nullable: false })
-  payload!: FormPayloadDTO;
+  payload!: SubmissionPayloadDTO;
 
   @Column('varchar', { nullable: true })
   confirmationId!: string;

@@ -3,5 +3,5 @@ export * from './contact-information.dto';
 export * from './skill-information.dto';
 export * from './placement-preferences.dto';
 export * from './availability-information.dto';
-export * from './form.dto';
-export * from './form-payload.dto';
+export * from './submission.dto';
+export * from './submission-payload.dto';

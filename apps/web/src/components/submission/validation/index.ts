@@ -1,18 +1,18 @@
-import { ContactInformationDTO, FormPayloadDTO } from '@ehpr/common';
+import { ContactInformationDTO, SubmissionPayloadDTO } from '@ehpr/common';
 import { createValidator } from 'class-validator-formik';
 import { contactDefaultValues } from './contact';
 import { credentialDefaultValues } from './credential';
 import { PersonalInformationDTO, personalDefaultValues } from './personal';
 import { SkillInformationDTO } from './credential';
 
-export type { FormPayloadDTO as SubmissionType } from '@ehpr/common';
+export type { SubmissionPayloadDTO as SubmissionType } from '@ehpr/common';
 
 // @todo remove DeepPartial when all form steps are implemented
 export type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>;
 };
 
-export const initialSubmissionValues: DeepPartial<FormPayloadDTO> = {
+export const initialSubmissionValues: DeepPartial<SubmissionPayloadDTO> = {
   personalInformation: personalDefaultValues,
   contactInformation: contactDefaultValues,
   skillInformation: credentialDefaultValues,
