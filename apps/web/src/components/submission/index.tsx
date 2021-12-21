@@ -11,6 +11,7 @@ import {
   initialSubmissionValues,
   DeepPartial,
   credentialSchema,
+  preferencesSchema,
 } from './validation';
 import { Ret } from 'class-validator-formik/dist/convertError';
 
@@ -45,7 +46,7 @@ const steps: StepType[] = [
   },
   {
     component: <Preferences formKey={FormKeys.AVAILABILITY_INFORMATION} />,
-    validationSchema: () => ({}),
+    validationSchema: preferencesSchema,
     key: FormKeys.AVAILABILITY_INFORMATION,
   },
   {
