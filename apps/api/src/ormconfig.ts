@@ -5,8 +5,8 @@ dotenv.config();
 // Check typeORM documentation for more information.
 
 const nodeEnv = process.env.NODE_ENV || 'development';
-const entitiesPath = nodeEnv === 'production' ? './**/*.entity.js' : 'dist/**/*.entity.js';
-const migrationPath = nodeEnv === 'production' ? './migration/*.js' : 'dist/migration/*.js';
+const entitiesPath = nodeEnv === 'production' ? './**/*.entity.js' : './**/*.entity.js';
+const migrationPath = nodeEnv === 'production' ? './migration/*.js' : './migration/*.js';
 
 const config: PostgresConnectionOptions = {
   host: process.env.POSTGRES_HOST,
