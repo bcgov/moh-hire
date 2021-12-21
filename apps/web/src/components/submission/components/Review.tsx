@@ -118,7 +118,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
           Edit
         </Link>
       </div>
-      <div className={`grid grid-cols-${columns} gap-7`}>{children}</div>
+      <div className={`grid grid-cols-1 md:grid-cols-${columns} gap-7`}>{children}</div>
     </div>
   );
 };
@@ -132,7 +132,7 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ label, value }) => {
   return (
     <div className=''>
       <h3 className='font-bold mb-2'>{label}</h3>
-      {value ? <p className='break-all'>{value}</p> : null}
+      {value ? <p className='break-words'>{value}</p> : null}
     </div>
   );
 };
