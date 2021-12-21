@@ -59,7 +59,6 @@ describe('Credential', () => {
     );
 
     expect(screen.getByRole('combobox', { name: 'Stream Type' })).toBeInTheDocument();
-    expect(screen.getByRole('combobox', { name: 'Main Speciality #1' })).toBeInTheDocument();
     registrationStatusOptions.forEach(label =>
       expect(screen.getByRole('radio', { name: label.label })).toBeInTheDocument(),
     );
@@ -67,12 +66,7 @@ describe('Credential', () => {
       screen.getByRole('group', {
         name: 'Select which best applies to your current registration status',
       }),
-    ).toBeInTheDocument(),
-      expect(
-        screen.getByRole('textbox', {
-          name: 'Indicate your registration number from your credentialing body (optional)',
-        }),
-      ).toBeInTheDocument();
+    ).toBeInTheDocument();
     expect(
       screen.getByRole('group', {
         name: 'Select which best applies to your current employment status',
@@ -81,7 +75,6 @@ describe('Credential', () => {
       employmentOptions.forEach(label =>
         expect(screen.getByRole('radio', { name: label.label })).toBeInTheDocument(),
       );
-    expect(screen.getByText('Subspecialty/Training #1')).toBeInTheDocument();
     expect(
       screen.getByRole('textbox', { name: 'Additional Comments (optional) 50 characters max' }),
     ).toBeInTheDocument();
