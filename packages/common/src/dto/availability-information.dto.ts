@@ -5,11 +5,13 @@ import {
   IsBoolean,
   IsIn,
   IsString,
+  Validate,
   ValidateIf,
 } from 'class-validator';
 
 import { DeploymentDurations, PlacementOptions } from '../interfaces';
 import { LhaId, validLhaIds } from '../helper';
+import { IsArrayOfLhas } from './is-valid-lha.decorator';
 
 export class AvailabilityDTO {
   constructor(base?: AvailabilityDTO) {
@@ -31,6 +33,7 @@ export class AvailabilityDTO {
   @ArrayMaxSize(validLhaIds.length, {
     message: 'Invalid location selection',
   })
+  @Validate(IsArrayOfLhas)
   deploymentLocations!: LhaId[];
 
   @IsArray({ message: 'Placement options are required' })
