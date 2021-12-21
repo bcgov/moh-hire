@@ -4,18 +4,42 @@ import { SubmissionType } from '../validation';
 
 export const Review: React.FC = () => {
   const { values } = useFormikContext<SubmissionType>();
+  const { personalInformation, contactInformation } = values;
+  const { firstName, lastName, postalCode } = personalInformation;
+  const { primaryPhone, primaryPhoneExt, secondaryPhone, secondaryPhoneExt, email } =
+    contactInformation;
+
   return (
     <>
       <FormStepHeader>5. Review and Submit</FormStepHeader>
       <div className='grid grid-cols-1 divide-y divide-gray-400 -my-7'>
         <ReviewSection sectionHeader='Primary Information' step={1} columns={3}>
-          <ReviewItem label='First Name' value={values.personalInformation.firstName} />
-          <ReviewItem label='Last Name' value={values.personalInformation.lastName} />
-          <ReviewItem label='Postal Code' value={values.personalInformation.postalCode} />
+          <ReviewItem label='First Name' value={firstName} />
+          <ReviewItem label='Last Name' value={lastName} />
+          <ReviewItem label='Postal Code' value={postalCode} />
+        </ReviewSection>
+
+        <ReviewSection sectionHeader='Contact Information' step={2} columns={2}>
+          <ReviewItem
+            label='Primary Phone Number'
+            value={phoneNumberWithExtension(primaryPhone, primaryPhoneExt)}
+          />
+          <ReviewItem
+            label='Secondary Phone Number'
+            value={phoneNumberWithExtension(secondaryPhone, secondaryPhoneExt)}
+          />
+          <ReviewItem label='Email Address' value={email} />
         </ReviewSection>
       </div>
     </>
   );
+};
+
+const phoneNumberWithExtension = (phoneNumber: string, extension?: string) => {
+  if (extension) {
+    return phoneNumber + ' | ' + extension;
+  }
+  return phoneNumber;
 };
 
 interface ReviewSectionProps {
