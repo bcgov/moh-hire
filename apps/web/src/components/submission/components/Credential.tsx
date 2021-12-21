@@ -32,6 +32,14 @@ import {
 
 import { defaultSpecialtyValue } from '../validation/credential';
 
+export const isHealthAuthorityEmployed = (employment: EmploymentTypes) =>
+  [EmploymentTypes.HEALTH_SECTOR_EMPLOYED, EmploymentTypes.HEALTH_SECTORY_RESIDENCY].includes(
+    employment,
+  );
+
+export const isNotHealthAuthorityEmployed = (employment: EmploymentTypes) =>
+  employment === EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED;
+
 export const Credential: React.FC = () => {
   const { values, setFieldValue } = useFormikContext<SubmissionType>();
   const { stream, specialties, currentEmployment, registrationStatus }: SkillInformationDTO =
