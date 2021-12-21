@@ -44,7 +44,7 @@ const Confirmation: React.FC<WithRouterProps> = props => {
             .
           </p>
         </section>
-        <Button variant='outline'>
+        <Button variant='secondary'>
           <span className='inline-block mr-4 text-bcBluePrimary font-bold'>Download PDF</span>
           <img src='/assets/img/download.svg' height='17' width='14' alt='download' />
         </Button>
