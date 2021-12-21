@@ -59,7 +59,7 @@ describe('Credential', () => {
     );
 
     expect(screen.getByRole('combobox', { name: 'Stream Type' })).toBeInTheDocument();
-    expect(screen.getByRole('combobox', { name: 'Main Speciality' })).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: 'Main Speciality #1' })).toBeInTheDocument();
     registrationStatusOptions.forEach(label =>
       expect(screen.getByRole('radio', { name: label.label })).toBeInTheDocument(),
     );
