@@ -93,7 +93,7 @@ export class SubmissionService {
         registrationNumber: payload.skillInformation.registrationNumber.toString(),
         registrationStatus: payload.skillInformation.registrationStatus,
         stream: payload.skillInformation.stream,
-        additionalComments: payload.skillInformation.additionalComments,
+        nonClinicalJobTitle: payload.skillInformation.nonClinicalJobTitle,
       };
     });
   }
