@@ -17,6 +17,9 @@ export MAIL_FROM ?= noreply@gov.bc.ca
 # FE Env Vars
 export NEXT_PUBLIC_API_URL = /api/v1
 
+# Docker container names
+LOCAL_API_CONTAINER_NAME = $(PROJECT)_api
+
 # AWS Environments variables
 export AWS_REGION ?= ca-central-1
 NAMESPACE = $(PROJECT)-$(ENV_NAME)
@@ -192,3 +195,14 @@ else
 	@git tag -fa dev -m "Deploy dev: $(git rev-parse --abbrev-ref HEAD)"
 endif
 	@git push --force origin refs/tags/dev:refs/tags/dev
+
+
+# Typeorm Migrations
+
+migration-generate:
+	@docker exec $(LOCAL_API_CONTAINER_NAME) yarn workspace @ehpr/api typeorm migration:generate -n $(name)
+
+migration-revert:
+	@docker exec $(LOCAL_API_CONTAINER_NAME) yarn workspace @ehpr/api typeorm migration:revert
+
+# docker exec ehpr_api yarn typeorm migration:generate -n AddSubmissionEntity
