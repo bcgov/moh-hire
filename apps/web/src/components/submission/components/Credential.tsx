@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { FieldArray, useFormikContext } from 'formik';
-import { EmploymentTypes, SkillInformationDTO } from '@ehpr/common';
+import { EmploymentTypes, RegistrationStatus, SkillInformationDTO } from '@ehpr/common';
 
 import {
   FormStepHeader,
@@ -30,7 +30,8 @@ import { defaultSpecialtyValue } from '../validation/credential';
 
 export const Credential: React.FC = () => {
   const { values, setFieldValue } = useFormikContext<SubmissionType>();
-  const { stream, specialties, currentEmployment }: SkillInformationDTO = values.skillInformation;
+  const { stream, specialties, currentEmployment, registrationStatus }: SkillInformationDTO =
+    values.skillInformation;
 
   const selectedSpecialties = specialties.map(specialty => specialty.id);
 
@@ -48,6 +49,13 @@ export const Credential: React.FC = () => {
     setFieldValue('skillInformation.healthAuthorities', []);
   }, [setFieldValue, currentEmployment]);
 
+  // reset registraion number if registation status changes to unregistered
+  useEffect(() => {
+    if (![RegistrationStatus.REGISTERED, RegistrationStatus.TEMP].includes(registrationStatus)) {
+      setFieldValue('skillInformation.registrationNumber', undefined);
+    }
+  }, [setFieldValue, registrationStatus]);
+
   const isHealthAuthorityEmployed = [
     EmploymentTypes.HEALTH_SECTOR_EMPLOYED,
     EmploymentTypes.HEALTH_SECTORY_RESIDENCY,
@@ -55,6 +63,10 @@ export const Credential: React.FC = () => {
 
   const isNotHealthAuthorityEmployed =
     currentEmployment === EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED;
+
+  const isRegistered = [RegistrationStatus.REGISTERED, RegistrationStatus.TEMP].includes(
+    registrationStatus,
+  );
 
   return (
     <div className='flex flex-col gap-5'>
@@ -65,75 +77,80 @@ export const Credential: React.FC = () => {
         ))}
       </Select>
 
+      {stream ? (
+        <div className='flex flex-col items-start'>
+          <FieldArray
+            name='skillInformation.specialties'
+            render={arrayHelpers => (
+              <>
+                <fieldset className='flex flex-col w-full gap-8 mb-4'>
+                  <legend className='font-semibold mb-4'>Select your specialties</legend>
+                  {specialties?.map((_, index) => (
+                    <SpecialtySelector
+                      key={index}
+                      disabled={!specialtyOptions}
+                      index={index}
+                      specialties={specialtyOptions}
+                      subspecialties={subspecialties?.[index]}
+                    />
+                  ))}
+                </fieldset>
+
+                <div className='mb-2'>
+                  <Error name='skillInformation.specialties' />
+                </div>
+
+                <div className='flex justify-center md:justify-start items-center w-full'>
+                  {specialties.length !== specialtyOptions?.length ? (
+                    <button
+                      type='button'
+                      className='text-bcBlueLink'
+                      aria-label='add another specialty'
+                      onClick={() => arrayHelpers.push({ ...defaultSpecialtyValue })}
+                    >
+                      Add
+                    </button>
+                  ) : null}
+                  {specialties.length > 1 && specialties.length !== specialtyOptions?.length ? (
+                    <span aria-hidden className='text-sm mx-1'>
+                      |
+                    </span>
+                  ) : null}
+                  {specialties.length > 1 ? (
+                    <button
+                      type='button'
+                      className='text-bcRedError'
+                      aria-label='delete the last specialty'
+                      onClick={() => arrayHelpers.pop()}
+                    >
+                      Delete
+                    </button>
+                  ) : null}
+                </div>
+              </>
+            )}
+          />
+        </div>
+      ) : null}
+
       <Radio
         name='skillInformation.registrationStatus'
         legend='Select which best applies to your current registration status'
         options={registrationStatusOptions}
       />
 
-      <Field
-        name='skillInformation.registrationNumber'
-        label='Indicate your registration number from your credentialing body (optional)'
-      />
+      {isRegistered ? (
+        <Field
+          name='skillInformation.registrationNumber'
+          label='Indicate your registration number from your credentialing body (optional)'
+        />
+      ) : null}
 
       <Radio
         name='skillInformation.currentEmployment'
         legend='Select which best applies to your current employment status'
         options={employmentOptions}
       />
-
-      <div className='flex flex-col items-start'>
-        <FieldArray
-          name='skillInformation.specialties'
-          render={arrayHelpers => (
-            <>
-              <div className='flex flex-col w-full gap-8 mb-4'>
-                {specialties?.map((_, index) => (
-                  <SpecialtySelector
-                    key={index}
-                    disabled={!specialtyOptions}
-                    index={index}
-                    specialties={specialtyOptions}
-                    subspecialties={subspecialties?.[index]}
-                  />
-                ))}
-              </div>
-
-              <div className='mb-2'>
-                <Error name='skillInformation.specialties' />
-              </div>
-
-              <div className='flex justify-center md:justify-start items-center w-full'>
-                {specialties.length !== specialtyOptions?.length ? (
-                  <button
-                    type='button'
-                    className='text-bcBlueLink'
-                    aria-label='add another specialty'
-                    onClick={() => arrayHelpers.push({ ...defaultSpecialtyValue })}
-                  >
-                    Add
-                  </button>
-                ) : null}
-                {specialties.length > 1 && specialties.length !== specialtyOptions?.length ? (
-                  <span aria-hidden className='text-sm mx-1'>
-                    |
-                  </span>
-                ) : null}
-                {specialties.length > 1 ? (
-                  <button
-                    type='button'
-                    className='text-bcRedError'
-                    aria-label='delete the last specialty'
-                    onClick={() => arrayHelpers.pop()}
-                  >
-                    Delete
-                  </button>
-                ) : null}
-              </div>
-            </>
-          )}
-        />
-      </div>
 
       {isHealthAuthorityEmployed ? (
         <CheckboxArray
