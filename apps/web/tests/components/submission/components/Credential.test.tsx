@@ -81,7 +81,7 @@ describe('Credential', () => {
       employmentOptions.forEach(label =>
         expect(screen.getByRole('radio', { name: label.label })).toBeInTheDocument(),
       );
-    expect(screen.getByText('Subspecialty/Training')).toBeInTheDocument();
+    expect(screen.getByText('Subspecialty/Training #1')).toBeInTheDocument();
     expect(
       screen.getByRole('textbox', { name: 'Additional Comments (optional) 50 characters max' }),
     ).toBeInTheDocument();
