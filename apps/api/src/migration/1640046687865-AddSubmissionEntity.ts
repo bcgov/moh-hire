@@ -4,6 +4,8 @@ export class AddSubmissionEntity1640046687865 implements MigrationInterface {
   name = 'AddSubmissionEntity1640046687865';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
+    console.log('####### MIGRATIONS RUNNING #######');
+
     await queryRunner.query(`
             CREATE TABLE "submission" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(),
                 "created_date" TIMESTAMP NOT NULL DEFAULT now(),
