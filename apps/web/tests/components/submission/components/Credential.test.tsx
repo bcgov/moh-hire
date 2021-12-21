@@ -59,7 +59,7 @@ describe('Credential', () => {
     );
 
     expect(screen.getByRole('combobox', { name: 'Stream Type' })).toBeInTheDocument();
-    expect(screen.getByRole('combobox', { name: 'Main Speciality' })).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: 'Main Speciality #1' })).toBeInTheDocument();
     registrationStatusOptions.forEach(label =>
       expect(screen.getByRole('radio', { name: label.label })).toBeInTheDocument(),
     );
@@ -81,12 +81,7 @@ describe('Credential', () => {
       employmentOptions.forEach(label =>
         expect(screen.getByRole('radio', { name: label.label })).toBeInTheDocument(),
       );
-    expect(
-      screen.getByRole('combobox', {
-        name: 'Main Speciality',
-      }),
-    ).toBeInTheDocument();
-    expect(screen.getByText('Subspecialty/Training')).toBeInTheDocument();
+    expect(screen.getByText('Subspecialty/Training #1')).toBeInTheDocument();
     expect(
       screen.getByRole('textbox', { name: 'Additional Comments (optional) 50 characters max' }),
     ).toBeInTheDocument();
