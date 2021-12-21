@@ -79,14 +79,7 @@ export const Credential: React.FC = () => {
       </Select>
 
       {isNonClinical ? (
-        <Field
-          name='skillInformation.nonClinicalJobTitle'
-          label={
-            <p>
-              Provide your job title <span className='sr-only'>40 characters max</span>
-            </p>
-          }
-        />
+        <Field name='skillInformation.nonClinicalJobTitle' label={`Provide your job title`} />
       ) : null}
 
       {isClinical ? (
