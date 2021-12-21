@@ -26,7 +26,7 @@ export const credentialDefaultValues: Partial<SkillInformationDTO> = {
   specialties: [defaultSpecialtyValue],
   healthAuthorities: [],
   employmentCircumstance: undefined,
-  additionalComments: undefined,
+  nonClinicalJobTitle: undefined,
 };
 
 export const streamOptions = getStreams().map(({ id, name }) => ({

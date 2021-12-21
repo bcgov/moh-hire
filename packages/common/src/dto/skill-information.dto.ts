@@ -9,15 +9,17 @@ import {
   ArrayMinSize,
   IsArray,
   IsIn,
+  IsNotEmpty,
   IsOptional,
   IsString,
   Length,
+  MaxLength,
   Validate,
   ValidateIf,
   ValidateNested,
 } from 'class-validator';
 import { IsArrayOfSpecialties } from './is-array-of-specialties.decorator';
-import { StreamId, validStreamIds } from '../helper';
+import { StreamId, streamsById, validStreamIds } from '../helper';
 
 export class SkillInformationDTO {
   constructor(base?: SkillInformationDTO) {
@@ -28,7 +30,7 @@ export class SkillInformationDTO {
       this.specialties = base.specialties?.map(specialty => new SpecialtyDTO(specialty));
       this.currentEmployment = base.currentEmployment;
       this.employmentCircumstance = base.employmentCircumstance;
-      this.additionalComments = base.additionalComments;
+      this.nonClinicalJobTitle = base.nonClinicalJobTitle;
     }
   }
 
@@ -69,10 +71,11 @@ export class SkillInformationDTO {
   @IsString({ message: 'Circumstance selection is required' })
   employmentCircumstance!: EmploymentCircumstances;
 
-  @IsString()
-  @Length(0, 50)
-  @IsOptional()
-  additionalComments?: string;
+  @MaxLength(40, { message: 'Job title must be less than 40 characters' })
+  @IsString({ message: 'Job title is required' })
+  @IsNotEmpty({ message: 'Job title is required' })
+  @ValidateIf(o => o.stream === streamsById.Nonclinical.id)
+  nonClinicalJobTitle?: string;
 }
 
 export class SpecialtyDTO {

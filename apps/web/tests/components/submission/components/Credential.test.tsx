@@ -75,9 +75,6 @@ describe('Credential', () => {
       employmentOptions.forEach(label =>
         expect(screen.getByRole('radio', { name: label.label })).toBeInTheDocument(),
       );
-    expect(
-      screen.getByRole('textbox', { name: 'Additional Comments (optional) 50 characters max' }),
-    ).toBeInTheDocument();
   });
 
   it('should render health authority checkboxes when health authority employment is selected ', async () => {

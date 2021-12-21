@@ -1,6 +1,11 @@
 import { useEffect } from 'react';
 import { FieldArray, useFormikContext } from 'formik';
-import { EmploymentTypes, RegistrationStatus, SkillInformationDTO } from '@ehpr/common';
+import {
+  EmploymentTypes,
+  RegistrationStatus,
+  streamsById,
+  SkillInformationDTO,
+} from '@ehpr/common';
 
 import {
   FormStepHeader,
@@ -9,7 +14,6 @@ import {
   Select,
   CheckboxArray,
   Radio,
-  Textarea,
   Field,
   OptionType,
   Error,
@@ -42,6 +46,7 @@ export const Credential: React.FC = () => {
   // reset specialties if stream changes
   useEffect(() => {
     setFieldValue('skillInformation.specialties', [defaultSpecialtyValue]);
+    setFieldValue('skillInformation.nonClinicalJobTitle', undefined);
   }, [setFieldValue, stream]);
 
   // reset health authority/employment circumstance if employment status changes
@@ -61,6 +66,9 @@ export const Credential: React.FC = () => {
     registrationStatus,
   );
 
+  const isNonClinical = stream === streamsById.Nonclinical.id;
+  const isClinical = stream && !isNonClinical; // stream is selected and is not non-clinical
+
   return (
     <div className='flex flex-col gap-5'>
       <FormStepHeader>3. Credential Information</FormStepHeader>
@@ -70,7 +78,11 @@ export const Credential: React.FC = () => {
         ))}
       </Select>
 
-      {stream ? (
+      {isNonClinical ? (
+        <Field name='skillInformation.nonClinicalJobTitle' label={`Provide your job title`} />
+      ) : null}
+
+      {isClinical ? (
         <div className='flex flex-col items-start'>
           <FieldArray
             name='skillInformation.specialties'
@@ -125,20 +137,17 @@ export const Credential: React.FC = () => {
           />
         </div>
       ) : null}
-
       <Radio
         name='skillInformation.registrationStatus'
         legend='Select which best applies to your current registration status'
         options={registrationStatusOptions}
       />
-
       {isRegistered ? (
         <Field
           name='skillInformation.registrationNumber'
           label='Indicate your registration number from your credentialing body (optional)'
         />
       ) : null}
-
       <Radio
         name='skillInformation.currentEmployment'
         legend='Select which best applies to your current employment status'
@@ -146,22 +155,6 @@ export const Credential: React.FC = () => {
       />
 
       <SecondaryEmploymentQuestion employmentStatus={currentEmployment} />
-
-      <Textarea
-        name='skillInformation.additionalComments'
-        label={
-          <p>
-            Additional Comments (optional) <span className='sr-only'>50 characters max</span>
-          </p>
-        }
-        maxLength={50}
-        description={
-          <>
-            <p>Please provide any additional specialty information not captured above.</p>
-            <p>If you selected &apos;Non-Clinical&apos;, please provide your job title.</p>
-          </>
-        }
-      />
     </div>
   );
 };

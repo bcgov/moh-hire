@@ -25,6 +25,10 @@ export type StreamId = keyof typeof applicantStreamData.streams.byId;
 export type SpecialtyId = keyof typeof applicantStreamData.specialties.byId;
 export type SubspecialtyId = keyof typeof applicantStreamData.subspecialties.byId;
 
+export const streamsById = applicantStreamData.streams.byId;
+export const specialtiesById = applicantStreamData.specialties.byId;
+export const subspecialtiesById = applicantStreamData.subspecialties.byId;
+
 const { streams, specialties, subspecialties } = applicantStreamData;
 
 export const validStreamIds = streams.allIds;

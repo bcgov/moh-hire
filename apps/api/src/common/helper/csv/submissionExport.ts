@@ -34,7 +34,7 @@ export enum SubmissionExportColumnHeaders {
   currentEmployment = 'Current Employment Type',
   employmentCircumstance = 'Employment Circumstance',
 
-  additionalComments = 'Additional Comments',
+  nonClinicalJobTitle = 'Non Clinical Job Title',
 }
 
 export interface SubmissionExportColumns {
@@ -63,6 +63,6 @@ export interface SubmissionExportColumns {
   registrationNumber?: string;
   registrationStatus?: string;
   stream?: string;
-  additionalComments?: string;
+  nonClinicalJobTitle?: string;
   employmentCircumstance?: string;
 }
