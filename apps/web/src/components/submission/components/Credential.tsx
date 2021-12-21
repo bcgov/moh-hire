@@ -49,6 +49,13 @@ export const Credential: React.FC = () => {
     setFieldValue('skillInformation.healthAuthorities', []);
   }, [setFieldValue, currentEmployment]);
 
+  // reset registraion number if registation status changes to unregistered
+  useEffect(() => {
+    if (![RegistrationStatus.REGISTERED, RegistrationStatus.TEMP].includes(registrationStatus)) {
+      setFieldValue('skillInformation.registrationNumber', undefined);
+    }
+  }, [setFieldValue, registrationStatus]);
+
   const isHealthAuthorityEmployed = [
     EmploymentTypes.HEALTH_SECTOR_EMPLOYED,
     EmploymentTypes.HEALTH_SECTORY_RESIDENCY,
