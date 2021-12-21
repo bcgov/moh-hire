@@ -9,6 +9,11 @@ import {
   getSpecialtiesByStreamId,
   getSubSpecialtiesBySpecialtyId,
   StreamId,
+  getStreamById,
+  getSpecialtyById,
+  SpecialtyId,
+  SubspecialtyId,
+  getSubSpecialtyById,
 } from '@ehpr/common';
 
 export { SkillInformationDTO } from '@ehpr/common';
@@ -27,6 +32,21 @@ export const credentialDefaultValues: Partial<SkillInformationDTO> = {
   healthAuthorities: [],
   employmentCircumstance: undefined,
   nonClinicalJobTitle: undefined,
+};
+
+export const getStreamLabelById = (id: StreamId) => {
+  const stream = getStreamById(id);
+  return stream.name;
+};
+
+export const getSpecialtyLabelById = (id: SpecialtyId) => {
+  const specialty = getSpecialtyById(id);
+  return specialty.name;
+};
+
+export const getSubspecialtyLabelById = (id: SubspecialtyId) => {
+  const subspecialty = getSubSpecialtyById(id);
+  return subspecialty.name;
 };
 
 export const streamOptions = getStreams().map(({ id, name }) => ({
@@ -56,6 +76,10 @@ export const getSubspecialtyOptions = (specialties: string[]): Array<OptionType[
   return subspecialties;
 };
 
+export const getOptionLabelByValue = (options: OptionType[], value: string) => {
+  return options.find(option => option.value === value)?.label;
+};
+
 export const registrationStatusOptions = [
   { value: RegistrationStatus.REGISTERED, label: 'Registered with good standing' },
   { value: RegistrationStatus.TEMP, label: 'Temporary emergency registrant' },
@@ -63,7 +87,7 @@ export const registrationStatusOptions = [
   { value: RegistrationStatus.NA, label: 'Not applicable' },
 ];
 
-export const employmentOptions = [
+export const employmentOptions: OptionType[] = [
   {
     label: 'Employed in the health sector',
     value: EmploymentTypes.HEALTH_SECTOR_EMPLOYED,
