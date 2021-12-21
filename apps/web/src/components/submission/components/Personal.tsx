@@ -15,7 +15,7 @@ export const Personal: React.FC<FormStepProps> = ({ formKey }) => {
         <Field name={fieldNames.lastName} label='Last Name' type='text' />
         <Field
           name={fieldNames.postalCode}
-          label='PostalCode'
+          label='Postal Code'
           description='The right format should be A1A1A1'
           type='text'
         />
