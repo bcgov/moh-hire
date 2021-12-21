@@ -63,10 +63,10 @@ const Submission = () => {
             </p>
             <p className='mb-4'>
               Your personal information is being collected in compliance with BC privacy legislation
-              under sections 26(c) and (e) of the Freedom of Information and Protection of Privacy
-              Act. Your information will be retained for five years and be shared with the Ministry
-              of Health, Health Match BC and health authorities, to support B.C.’s health emergency
-              response.
+              under sections 26(c) and (e) of the{' '}
+              <i>Freedom of Information and Protection of Privacy Act.</i> Your information will be
+              retained for five years and be shared with the Ministry of Health, Health Match BC and
+              health authorities, to support B.C.’s health emergency response.
             </p>
 
             <p className='font-bold'>
