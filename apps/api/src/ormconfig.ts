@@ -3,7 +3,7 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
 import { DatabaseNamingStrategy } from './database/database.naming-strategy';
 dotenv.config();
 // Check typeORM documentation for more information.
-export const config: PostgresConnectionOptions = {
+const config: PostgresConnectionOptions = {
   host: process.env.POSTGRES_HOST,
   type: 'postgres',
   port: 5432,
@@ -11,11 +11,15 @@ export const config: PostgresConnectionOptions = {
   username: process.env.POSTGRES_USERNAME,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DATABASE,
-  entities: ['./**/*.entity.js'],
-  migrations: ['./database/migrations/*{.ts,.js}'],
+  entities: ['**/**/*.entity.js'],
+  migrations: ['**/migration/*.js'],
   cli: {
-    migrationsDir: 'src/database/migrations',
+    migrationsDir: 'src/migration',
+    entitiesDir: 'src/**/entity/*.entity.ts',
   },
-  synchronize: true,
+  synchronize: false,
+  migrationsRun: true,
   namingStrategy: new DatabaseNamingStrategy(),
 };
+
+export default config;

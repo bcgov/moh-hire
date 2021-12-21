@@ -17,6 +17,9 @@ export MAIL_FROM ?= noreply@gov.bc.ca
 # FE Env Vars
 export NEXT_PUBLIC_API_URL = /api/v1
 
+# Docker container names
+LOCAL_API_CONTAINER_NAME = $(PROJECT)_api
+
 # AWS Environments variables
 export AWS_REGION ?= ca-central-1
 NAMESPACE = $(PROJECT)-$(ENV_NAME)
@@ -192,3 +195,25 @@ else
 	@git tag -fa dev -m "Deploy dev: $(git rev-parse --abbrev-ref HEAD)"
 endif
 	@git push --force origin refs/tags/dev:refs/tags/dev
+
+
+# Typeorm Migrations
+
+migration-generate:
+	@docker exec $(LOCAL_API_CONTAINER_NAME) yarn workspace @ehpr/api typeorm migration:generate -n $(name)
+
+migration-revert:
+	@docker exec $(LOCAL_API_CONTAINER_NAME) yarn workspace @ehpr/api typeorm migration:revert
+
+# docker exec ehpr_api yarn typeorm migration:generate -n AddSubmissionEntity
+
+# DB Tunneling
+open-db-tunnel:
+	# Needs exported credentials for a matching LZ2 space
+	@echo "Running for ENV_NAME=$(ENV_NAME)"
+	# Checking you have the SSM plugin for the AWS cli installed
+	session-manager-plugin
+	rm ssh-keypair ssh-keypair.pub || true
+	ssh-keygen -t rsa -f ssh-keypair -N ''
+	aws ec2-instance-connect send-ssh-public-key --instance-id $(BASTION_INSTANCE_ID) --availability-zone ca-central-1b --instance-os-user ssm-user --ssh-public-key file://ssh-keypair.pub
+	ssh -i ssh-keypair ssm-user@$(BASTION_INSTANCE_ID) -L 5454:$(DB_HOST):5432 -o ProxyCommand="aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
