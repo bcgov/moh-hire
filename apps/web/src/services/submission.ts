@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { DeepPartial, SubmissionType } from 'src/components/submission/validation';
 
-export const submitForm = async (form: DeepPartial<SubmissionType>) => {
+export const submitForm = async (submission: DeepPartial<SubmissionType>) => {
   // @todo when the form is fully implemented this object should be of type FormDTO
-  const formData = {
-    payload: form,
+  const submissionData = {
+    payload: submission,
     version: 'v1',
   };
-  return await axios.post(`/form`, formData);
+  return await axios.post(`/submission`, submissionData);
 };
