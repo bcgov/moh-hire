@@ -65,17 +65,17 @@ describe('Credential', () => {
     );
     expect(
       screen.getByRole('group', {
-        name: 'Please select which best applied to your current registration status',
+        name: 'Select which best applies to your current registration status',
       }),
     ).toBeInTheDocument(),
       expect(
         screen.getByRole('textbox', {
-          name: 'Please indicate registration number from your credentialing body',
+          name: 'Indicate your registration number from your credentialing body (optional)',
         }),
       ).toBeInTheDocument();
     expect(
       screen.getByRole('group', {
-        name: 'Please select which best applied to your current employment',
+        name: 'Select which best applies to your current employment status',
       }),
     ).toBeInTheDocument(),
       employmentOptions.forEach(label =>
