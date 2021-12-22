@@ -1,5 +1,5 @@
 import { FormStepHeader, Link } from '@components';
-import { EmploymentTypes, SpecialtyDTO } from '@ehpr/common';
+import { booleanToYesNo, EmploymentTypes, SpecialtyDTO } from '@ehpr/common';
 import { useFormikContext } from 'formik';
 import {
   employmentCircumstanceOptions,
@@ -12,10 +12,15 @@ import {
   registrationStatusOptions,
   SubmissionType,
 } from '../validation';
+import {
+  deploymentDurationOptions,
+  placementOptions as allPlacementOptions,
+} from '../validation/preferences';
 
 export const Review: React.FC = () => {
   const { values } = useFormikContext<SubmissionType>();
-  const { personalInformation, contactInformation, skillInformation } = values;
+  const { personalInformation, contactInformation, skillInformation, availabilityInformation } =
+    values;
   const { firstName, lastName, postalCode } = personalInformation;
   const { primaryPhone, primaryPhoneExt, secondaryPhone, secondaryPhoneExt, email } =
     contactInformation;
@@ -29,6 +34,17 @@ export const Review: React.FC = () => {
     healthAuthorities,
     nonClinicalJobTitle,
   } = skillInformation;
+  const {
+    deployAnywhere,
+    deploymentLocations,
+    placementOptions,
+    hasImmunizationTraining,
+    deploymentDuration,
+  } = availabilityInformation;
+
+  if (!stream) {
+    return null;
+  }
 
   return (
     <>
@@ -94,6 +110,26 @@ export const Review: React.FC = () => {
               value={getOptionLabelByValue(employmentCircumstanceOptions, employmentCircumstance)}
             />
           ) : null}
+        </ReviewSection>
+        <ReviewSection sectionHeader='Employment Preferences' step={4} columns={1}>
+          <ReviewItem
+            label='Are you willing to deploy anywhere in BC?'
+            value={booleanToYesNo(deployAnywhere)}
+          />
+          <ReviewItemList
+            label='Indicate the placement option(s) you are willing to support'
+            values={placementOptions?.map(placementOption =>
+              getOptionLabelByValue(allPlacementOptions, placementOption),
+            )}
+          />
+          <ReviewItem
+            label='Have you received immunization training in the past five years?'
+            value={booleanToYesNo(hasImmunizationTraining)}
+          />
+          <ReviewItem
+            label='Indicate the maximum duration of deployment you are willing to support'
+            value={getOptionLabelByValue(deploymentDurationOptions, deploymentDuration)}
+          />
         </ReviewSection>
       </div>
     </>
