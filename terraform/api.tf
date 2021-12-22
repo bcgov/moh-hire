@@ -29,6 +29,8 @@ resource "aws_lambda_function" "api" {
       CHES_SERVICE_HOST  = data.aws_ssm_parameter.ches_service_host.value
       CHES_AUTH_URL      = data.aws_ssm_parameter.ches_auth_url.value
       MAIL_FROM          = var.mail_from
+      BUILD_ID           = var.build_id
+      BUILD_INFO         = var.build_info
     }
   }
 }

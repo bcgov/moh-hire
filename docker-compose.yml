@@ -40,6 +40,9 @@ services:
       - '4000:4000'
     env_file:
       - ./.env
+    environment:
+      - BUILD_ID=${COMMIT_SHA}
+      - BUILD_INFO=${LAST_COMMIT_MESSAGE}
     depends_on:
       - db
       - common

@@ -14,6 +14,10 @@ export POSTGRES_USERNAME = freshworks
 export CHES_CLIENT_ID ?= EHPR_SERVICE_CLIENT
 export MAIL_FROM ?= noreply@gov.bc.ca
 
+# Git
+export COMMIT_SHA:=$(shell git rev-parse --short=7 HEAD)
+export LAST_COMMIT_MESSAGE:=$(shell git log -1 --oneline --decorate=full --no-color --format="%h, %cn, %f, %D" | sed 's/->/:/')
+
 # FE Env Vars
 export NEXT_PUBLIC_API_URL = /api/v1
 
@@ -39,6 +43,8 @@ domain = ""
 db_username = "$(POSTGRES_USERNAME)"
 ches_client_id = "$(CHES_CLIENT_ID)"
 mail_from = "$(MAIL_FROM)"
+build_id = "$(COMMIT_SHA)"
+build_info = "$(LAST_COMMIT_MESSAGE)"
 endef
 export TFVARS_DATA
 
