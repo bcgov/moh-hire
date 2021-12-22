@@ -33,7 +33,7 @@ export class ContactInformationDTO {
     message: '4 character limit',
   })
   @Matches(EXTENSION_REGEX, {
-    message: 'Extension must be a number with a maximum length of 3 digits.',
+    message: 'Extension must be a number with up to 3 digits.',
   })
   primaryPhoneExt!: string;
 
@@ -50,7 +50,7 @@ export class ContactInformationDTO {
     message: 'Extensions can be a maximum of 3 digits',
   })
   @Matches(EXTENSION_REGEX, {
-    message: 'Extension must be a number with a maximum length of 3 digits.',
+    message: 'Extension must be a number with up to 3 digits.',
   })
   secondaryPhoneExt!: string;
 
