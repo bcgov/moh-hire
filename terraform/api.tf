@@ -29,7 +29,6 @@ resource "aws_lambda_function" "api" {
       CHES_SERVICE_HOST  = data.aws_ssm_parameter.ches_service_host.value
       CHES_AUTH_URL      = data.aws_ssm_parameter.ches_auth_url.value
       MAIL_FROM          = var.mail_from
-      EXPORT_SECRET      = data.aws_ssm_parameter.export_key.value
     }
   }
 }
@@ -82,8 +81,7 @@ resource "aws_apigatewayv2_stage" "api" {
 }
 
 resource "aws_cloudwatch_log_group" "api_gateway" {
-  name = "api-gateway/${local.api_name}"
-  retention_in_days = 90
+  name = "api-gateway/${local.api_name}-logs"
 }
 
 resource "aws_lambda_permission" "api_allow_gateway" {
