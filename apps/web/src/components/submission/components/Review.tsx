@@ -1,7 +1,6 @@
 import { FormStepHeader, Link } from '@components';
-import { SpecialtyDTO } from '@ehpr/common';
+import { EmploymentTypes, SpecialtyDTO } from '@ehpr/common';
 import { useFormikContext } from 'formik';
-import { isHealthAuthorityEmployed, isNotHealthAuthorityEmployed } from '.';
 import {
   employmentCircumstanceOptions,
   employmentOptions,
@@ -71,7 +70,7 @@ export const Review: React.FC = () => {
             label='Select which best applies to your current employment status'
             value={getOptionLabelByValue(employmentOptions, currentEmployment)}
           />
-          {isHealthAuthorityEmployed(currentEmployment) ? (
+          {currentEmployment === EmploymentTypes.HEALTH_SECTOR_EMPLOYED ? (
             <ReviewItemList
               label='Indicate where you are employed (select all that apply)'
               values={healthAuthorities?.map(healthAuthority =>
@@ -79,7 +78,15 @@ export const Review: React.FC = () => {
               )}
             />
           ) : null}
-          {isNotHealthAuthorityEmployed(currentEmployment) ? (
+          {currentEmployment === EmploymentTypes.HEALTH_SECTORY_RESIDENCY ? (
+            <ReviewItemList
+              label='Indicate where you are doing your practicum/residency (select all that apply)'
+              values={healthAuthorities?.map(healthAuthority =>
+                getOptionLabelByValue(healthAuthorityOptions, healthAuthority),
+              )}
+            />
+          ) : null}
+          {currentEmployment === EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED ? (
             <ReviewItem
               label='Select your circumstance'
               value={getOptionLabelByValue(employmentCircumstanceOptions, employmentCircumstance)}
