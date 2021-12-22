@@ -27,6 +27,7 @@ export const Review: React.FC = () => {
     currentEmployment,
     employmentCircumstance,
     healthAuthorities,
+    nonClinicalJobTitle,
   } = skillInformation;
 
   return (
@@ -53,6 +54,7 @@ export const Review: React.FC = () => {
 
         <ReviewSection sectionHeader='Credential Information' step={3} columns={1}>
           <ReviewItem label='Stream Type' value={getStreamLabelById(stream)} />
+          <ReviewItem label='Provide your job title' value={nonClinicalJobTitle} />
           {specialties.map((specialty: SpecialtyDTO) => (
             <ReviewSpecialty key={specialty.id} specialty={specialty} />
           ))}
