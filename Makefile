@@ -196,6 +196,13 @@ else
 endif
 	@git push --force origin refs/tags/dev:refs/tags/dev
 
+tag-test:
+ifdef comment
+	@git tag -fa test -m "Deploy test: $(comment)"
+else
+	@git tag -fa test -m "Deploy test: $(git rev-parse --abbrev-ref HEAD)"
+endif
+	@git push --force origin refs/tags/test:refs/tags/test
 
 # Typeorm Migrations
 

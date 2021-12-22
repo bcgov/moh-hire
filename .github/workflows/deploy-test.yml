@@ -1,4 +1,4 @@
-name: Deployment to aws dev environment
+name: Deployment to aws test environment
 on:
   push:
     branches:
