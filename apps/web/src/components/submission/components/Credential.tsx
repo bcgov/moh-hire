@@ -47,6 +47,9 @@ export const Credential: React.FC = () => {
   useEffect(() => {
     setFieldValue('skillInformation.specialties', [defaultSpecialtyValue]);
     setFieldValue('skillInformation.nonClinicalJobTitle', undefined);
+    if (stream === streamsById.Nonclinical.id) {
+      setFieldValue('skillInformation.specialties', []);
+    }
   }, [setFieldValue, stream]);
 
   // reset health authority/employment circumstance if employment status changes
