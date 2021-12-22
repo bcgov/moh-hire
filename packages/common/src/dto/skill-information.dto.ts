@@ -50,7 +50,7 @@ export class SkillInformationDTO {
   @IsString({ message: 'Current employment selection is required' })
   currentEmployment!: EmploymentTypes;
 
-  @ValidateIf(o => !!o.stream)
+  @ValidateIf(o => !!o.stream && o.stream !== streamsById.Nonclinical.id)
   @Validate(IsArrayOfSpecialties)
   specialties!: SpecialtyDTO[];
 
