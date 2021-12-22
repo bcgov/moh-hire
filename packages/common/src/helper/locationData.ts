@@ -56,3 +56,58 @@ export const getLhasbyHaId = (haId: HaId): Lha[] => {
   });
   return lhas;
 };
+
+const getHsdabyLhaId = (lhaId: LhaId) => {
+  const allHsdas: Hsda[] = Object.values(JSON.parse(JSON.stringify(hsdas.byId)));
+
+  return allHsdas.find(hsda => hsda.lhas.includes(lhaId));
+};
+
+const getHaByHsdaId = (hsdaId: HsdaId) => {
+  const allHas: Ha[] = Object.values(JSON.parse(JSON.stringify(has.byId)));
+
+  return allHas.find(ha => ha.hsdas.includes(hsdaId));
+};
+
+type FullHsdaType = { id: string; name: string; lhas: Lha[] };
+type FullHaType = { id: string; name: string; hsdas: FullHsdaType[] };
+
+/**
+ * Takes a list of LHA ids and reconstructs the HSDAs and HAS as a single object
+ *
+ * @param lhaIds list of lha ids
+ * @returns full object structure with Ha, Hsda, Lha relations
+ */
+export const rebuildHaStructure = (lhaIds: LhaId[]): Record<HaId, FullHaType> => {
+  const selectedHsdas: Record<HsdaId, FullHsdaType> = {};
+
+  lhaIds.forEach((lhaId: LhaId) => {
+    const relatedHsda = getHsdabyLhaId(lhaId);
+    const fullLha = getLhaById(lhaId);
+    if (!relatedHsda) return;
+    const selectedHsda = selectedHsdas[relatedHsda.id];
+
+    if (!selectedHsda) {
+      selectedHsdas[relatedHsda.id] = { ...relatedHsda, lhas: [fullLha] };
+    } else {
+      selectedHsda.lhas.push(fullLha);
+    }
+  });
+
+  const selectedHas: Record<HaId, FullHaType> = {};
+
+  Object.values(selectedHsdas).forEach(hsda => {
+    const relatedHa = getHaByHsdaId(hsda.id);
+
+    if (!relatedHa) return;
+    const selectedHa = selectedHas[relatedHa.id];
+
+    if (!selectedHa) {
+      selectedHas[relatedHa.id] = { ...relatedHa, hsdas: [hsda] };
+    } else {
+      selectedHa.hsdas.push(hsda);
+    }
+  });
+
+  return selectedHas;
+};

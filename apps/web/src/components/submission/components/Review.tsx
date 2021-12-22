@@ -1,5 +1,11 @@
 import { FormStepHeader, Link } from '@components';
-import { booleanToYesNo, EmploymentTypes, SpecialtyDTO } from '@ehpr/common';
+import {
+  booleanToYesNo,
+  EmploymentTypes,
+  SpecialtyDTO,
+  rebuildHaStructure,
+  Lha,
+} from '@ehpr/common';
 import { useFormikContext } from 'formik';
 import {
   employmentCircumstanceOptions,
@@ -116,6 +122,9 @@ export const Review: React.FC = () => {
             label='Are you willing to deploy anywhere in BC?'
             value={booleanToYesNo(deployAnywhere)}
           />
+
+          <ReviewDeploymentHsda lhas={deploymentLocations} />
+
           <ReviewItemList
             label='Indicate the placement option(s) you are willing to support'
             values={placementOptions?.map(placementOption =>
@@ -217,6 +226,45 @@ const ReviewSpecialty: React.FC<ReviewSpecialtyProps> = ({ specialty }) => {
           getSubspecialtyLabelById(subspecialty.id),
         )}
       />
+    </div>
+  );
+};
+
+interface ReviewDeploymentHsdaProps {
+  lhas: string[];
+}
+
+const ReviewDeploymentHsda: React.FC<ReviewDeploymentHsdaProps> = ({ lhas }) => {
+  const haStructure = rebuildHaStructure(lhas);
+  const has = Object.values(haStructure);
+  return (
+    <div className='flex flex-col gap-3'>
+      <h3 className='font-bold'>
+        Indicate the locations you are willing to support (click on the drop-down in each region and
+        select the locations)
+      </h3>
+      {has.map(ha => (
+        <div key={ha.id}>
+          <h4 className='font-bold mb-2'>{ha.name}</h4>
+          <div className='grid grid-cols-2 gap-3 justify-content-stretch'>
+            {Object.values(ha.hsdas).map(hsda => (
+              <div key={hsda.id}>
+                <h5 className='mb-1'>{hsda.name}</h5>
+                <ul
+                  key={ha.id}
+                  className='flex flex-col gap-2 py-4 px-5 rounded border border-gray-300'
+                >
+                  {hsda.lhas.map((lha: Lha) => (
+                    <li key={lha.id} className=''>
+                      {lha.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
