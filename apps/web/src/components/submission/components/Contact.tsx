@@ -4,7 +4,7 @@ import { FormStepProps } from '.';
 import { SubmissionType } from '../validation';
 
 export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
-  const { values, setFieldValue } = useFormikContext<SubmissionType>();
+  const { values } = useFormikContext<SubmissionType>();
   const fieldNames = {
     primaryPhone: `${formKey}.primaryPhone`,
     primaryPhoneExt: `${formKey}.primaryPhoneExt`,
