@@ -34,6 +34,9 @@ module.exports = {
       boxShadow: {
         '2xl': '0 4px 16px 0 rgba(35,64,117,0.3)',
       },
+      minWidth: {
+        5: '1.25rem',
+      },
       width: {
         layout: '1140px',
       },
