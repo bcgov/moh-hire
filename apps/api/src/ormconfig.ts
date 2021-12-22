@@ -25,6 +25,7 @@ const config: PostgresConnectionOptions = {
   synchronize: false,
   migrationsRun: true,
   namingStrategy: new DatabaseNamingStrategy(),
+  logging: true,
 };
 
 export default config;
