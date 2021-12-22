@@ -6,7 +6,7 @@ dotenv.config();
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const entitiesPath = nodeEnv === 'production' ? './**/*.entity.js' : 'dist/**/*.entity.js';
-const migrationPath = nodeEnv === 'production' ? './migration/*.js' : 'dist/migration/*.js';
+const migrationPath = nodeEnv === 'production' ? 'migration/*.js' : 'dist/migration/*.js';
 
 const config: PostgresConnectionOptions = {
   host: process.env.POSTGRES_HOST,
