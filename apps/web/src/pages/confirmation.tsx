@@ -20,7 +20,7 @@ const Confirmation: React.FC<WithRouterProps> = props => {
 
   if (!id) return null;
 
-  let dashedId =
+  const dashedId =
     id.substring(0, 3) +
     '-' +
     id.substring(3, 6) +
