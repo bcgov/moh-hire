@@ -9,7 +9,7 @@ interface WithRouterProps {
 const Confirmation: React.FC<WithRouterProps> = props => {
   const nextRouter = useRouter();
   const { router } = props;
-  const id: any = router.query?.id;
+  const id: string = router.query?.id as string;
 
   useEffect(() => {
     // if the page is accessed directly, redirect to the home page
