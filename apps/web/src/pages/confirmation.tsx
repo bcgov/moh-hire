@@ -5,7 +5,6 @@ import { ExternalLink, Notice, Button } from '@components';
 interface WithRouterProps {
   router: NextRouter;
 }
-const ID_REFEX = /[]/;
 
 const Confirmation: React.FC<WithRouterProps> = props => {
   const nextRouter = useRouter();
