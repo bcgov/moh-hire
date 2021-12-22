@@ -41,6 +41,7 @@ services:
     env_file:
       - ./.env
     environment:
+      - POSTGRES_HOST=db
       - BUILD_ID=${COMMIT_SHA}
       - BUILD_INFO=${LAST_COMMIT_MESSAGE}
     depends_on:
