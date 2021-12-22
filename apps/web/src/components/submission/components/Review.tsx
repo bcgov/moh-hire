@@ -258,7 +258,7 @@ const ReviewDeploymentHsda: React.FC<ReviewDeploymentHsdaProps> = ({ lhas }) => 
       {has.map(ha => (
         <div key={ha.id}>
           <h4 className='font-bold mb-2'>{ha.name}</h4>
-          <div className='grid grid-cols-2 gap-3 justify-content-stretch'>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-3 justify-content-stretch'>
             {Object.values(ha.hsdas).map(hsda => (
               <div key={hsda.id}>
                 <h5 className='mb-1'>{hsda.name}</h5>
