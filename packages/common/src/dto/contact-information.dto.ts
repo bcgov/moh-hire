@@ -9,6 +9,7 @@ import {
 } from 'class-validator';
 
 const TEN_DIGIT_PHONE_REGEX = /^\(?([0-9]{3})\)?[ -.●]?([0-9]{3})[ -.●]?([0-9]{4})$/;
+const EXTENSION_REGEX = /^[0-9]{0,3}$/;
 
 export class ContactInformationDTO {
   constructor(base?: ContactInformationDTO) {
@@ -28,8 +29,11 @@ export class ContactInformationDTO {
 
   @IsString()
   @IsOptional()
-  @Length(0, 255, {
-    message: '255 character limit',
+  @Length(0, 3, {
+    message: '4 character limit',
+  })
+  @Matches(EXTENSION_REGEX, {
+    message: 'Extension must be a number with a maximum length of 3 digits.',
   })
   primaryPhoneExt!: string;
 
@@ -42,8 +46,11 @@ export class ContactInformationDTO {
 
   @IsString()
   @IsOptional()
-  @Length(0, 255, {
-    message: '255 character limit',
+  @Length(0, 3, {
+    message: 'Extensions can be a maximum of 3 digits',
+  })
+  @Matches(EXTENSION_REGEX, {
+    message: 'Extension must be a number with a maximum length of 3 digits.',
   })
   secondaryPhoneExt!: string;
 
