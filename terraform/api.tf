@@ -75,16 +75,7 @@ resource "aws_apigatewayv2_stage" "api" {
   api_id      = aws_apigatewayv2_api.api.id
   name        = "$default"
   auto_deploy = true
-
-  /*access_log_settings {
-    destination_arn = aws_cloudwatch_log_group.api_gateway.arn
-    format          = local.api_gateway_log_format
-  }*/
 }
-
-/*resource "aws_cloudwatch_log_group" "api_gateway" {
-  name = "api-gateway/${local.api_name}-logs"
-}*/
 
 resource "aws_lambda_permission" "api_allow_gateway" {
   action        = "lambda:InvokeFunction"
