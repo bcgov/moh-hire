@@ -1,4 +1,4 @@
-import { FormStepHeader, Link } from '@components';
+import { Checkbox, Error, FormStepHeader, Link, Notice } from '@components';
 import {
   booleanToYesNo,
   EmploymentTypes,
@@ -123,7 +123,9 @@ export const Review: React.FC = () => {
             value={booleanToYesNo(deployAnywhere)}
           />
 
-          <ReviewDeploymentHsda lhas={deploymentLocations} />
+          {deploymentLocations?.length > 0 ? (
+            <ReviewDeploymentHsda lhas={deploymentLocations} />
+          ) : null}
 
           <ReviewItemList
             label='Indicate the placement option(s) you are willing to support'
@@ -140,6 +142,16 @@ export const Review: React.FC = () => {
             value={getOptionLabelByValue(deploymentDurationOptions, deploymentDuration)}
           />
         </ReviewSection>
+
+        <div className='py-7'>
+          <Notice>
+            <Checkbox
+              label={`By checking the box, I certify that I am the person named on this form and all information is true and complete to the best of my knowledge.`}
+              name='confirm'
+            />
+          </Notice>
+          <Error name='confirm' />
+        </div>
       </div>
     </>
   );
