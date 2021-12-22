@@ -43,7 +43,7 @@ export class ContactInformationDTO {
   @IsString()
   @IsOptional()
   @Length(0, 255, {
-    message: 'Extensions can be a maximum of 255 digits',
+    message: '255 character limit',
   })
   secondaryPhoneExt!: string;
 
