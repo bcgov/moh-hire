@@ -3,13 +3,11 @@ import { Repository } from 'typeorm';
 import { SubmissionEntity } from './entity/submission.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SubmissionDTO, PersonalInformationDTO } from '@ehpr/common';
-import { booleanToYesNo } from 'src/common/helper/csv/casting';
+import { booleanToYesNo } from '@ehpr/common';
 import { SubmissionExportColumns } from 'src/common/helper/csv/submissionExport';
 import { MailService } from 'src/mail/mail.service';
 import { ConfirmationMailable } from 'src/mail/mailables/confirmation.mailable';
 import { Recipient } from 'src/mail/types/recipient';
-import { GenericException } from 'src/common/generic-exception';
-import { MailError } from 'src/mail/mail.error';
 
 @Injectable()
 export class SubmissionService {
