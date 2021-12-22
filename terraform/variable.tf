@@ -25,3 +25,7 @@ variable "azs" {
 variable "region" {
   default = "ca-central-1"
 }
+
+variable "build_id" {}
+
+variable "build_info" {}

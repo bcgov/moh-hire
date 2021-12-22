@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+import { join } from 'path';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 import { DatabaseNamingStrategy } from './database/database.naming-strategy';
 dotenv.config();
@@ -6,7 +7,7 @@ dotenv.config();
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const entitiesPath = nodeEnv === 'production' ? './**/*.entity.js' : 'dist/**/*.entity.js';
-const migrationPath = nodeEnv === 'production' ? './migration/*.js' : 'dist/migration/*.js';
+const migrationPath = nodeEnv === 'production' ? '../migration/*.js' : 'dist/migration/*.js';
 
 const config: PostgresConnectionOptions = {
   host: process.env.POSTGRES_HOST,
@@ -25,6 +26,7 @@ const config: PostgresConnectionOptions = {
   synchronize: false,
   migrationsRun: true,
   namingStrategy: new DatabaseNamingStrategy(),
+  logging: true,
 };
 
 export default config;

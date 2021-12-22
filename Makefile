@@ -9,10 +9,14 @@ export PROJECT := $(or $(PROJECT),ehpr)
 
 # Runtime and application Environments specific variable
 export NODE_ENV ?= development
-export ENV_NAME ?= dev
+export ENV_NAME ?= test
 export POSTGRES_USERNAME = freshworks
 export CHES_CLIENT_ID ?= EHPR_SERVICE_CLIENT
 export MAIL_FROM ?= noreply@gov.bc.ca
+
+# Git
+export COMMIT_SHA:=$(shell git rev-parse --short=7 HEAD)
+export LAST_COMMIT_MESSAGE:=$(shell git log -1 --oneline --decorate=full --no-color --format="%h, %cn, %f, %D" | sed 's/->/:/')
 
 # FE Env Vars
 export NEXT_PUBLIC_API_URL = /api/v1
@@ -39,6 +43,8 @@ domain = ""
 db_username = "$(POSTGRES_USERNAME)"
 ches_client_id = "$(CHES_CLIENT_ID)"
 mail_from = "$(MAIL_FROM)"
+build_id = "$(COMMIT_SHA)"
+build_info = "$(LAST_COMMIT_MESSAGE)"
 endef
 export TFVARS_DATA
 
@@ -134,7 +140,7 @@ build-api:
 	@echo 'Hardlink local packages...\n' 
 	@cp -r ./packages/* .build/api/node_modules/@ehpr/
 	@echo 'Copy api ...\n' && cp -r apps/api/dist/* .build/api
-	@echo 'Copy api/.ormconfig ...\n' && cp -r apps/api/dist/ormconfig.js .build/api
+	@echo 'Copy api/ormconfig ...\n' && cp -r apps/api/dist/ormconfig.js .build/api
 	@echo 'Creating Zip ...\n' && cd .build && zip -r api.zip ./api && cd ..
 	@echo 'Copying to terraform build location...\n'
 	@cp ./.build/api.zip ./terraform/build/api.zip
@@ -196,6 +202,13 @@ else
 endif
 	@git push --force origin refs/tags/dev:refs/tags/dev
 
+tag-test:
+ifdef comment
+	@git tag -fa test -m "Deploy test: $(comment)"
+else
+	@git tag -fa test -m "Deploy test: $(git rev-parse --abbrev-ref HEAD)"
+endif
+	@git push --force origin refs/tags/test:refs/tags/test
 
 # Typeorm Migrations
 
