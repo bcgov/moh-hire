@@ -81,10 +81,13 @@ export const getOptionLabelByValue = (options: OptionType[], value: string) => {
 };
 
 export const registrationStatusOptions = [
-  { value: RegistrationStatus.REGISTERED, label: 'Registered with good standing' },
+  { value: RegistrationStatus.REGISTERED, label: 'Registered in good standing' },
   { value: RegistrationStatus.TEMP, label: 'Temporary emergency registrant' },
-  { value: RegistrationStatus.NOT_REGISTERED, label: 'Not registered with college' },
-  { value: RegistrationStatus.NA, label: 'Not applicable' },
+  { value: RegistrationStatus.NOT_REGISTERED, label: 'Unregistered' },
+  {
+    value: RegistrationStatus.NA,
+    label: 'Not applicable (i.e., you/your profession does not have a regulatory body)',
+  },
 ];
 
 export const employmentOptions: OptionType[] = [
