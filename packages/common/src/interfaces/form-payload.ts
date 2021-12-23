@@ -26,14 +26,15 @@ export enum EmploymentTypes {
 }
 
 export enum HealthAuthorities {
-  FIRST_NATION_HA = 'firstNationHa',
+  FIRST_NATIONS_HA = 'firstNationsHa',
   PROVIDENCE = 'providence',
   PROVINCIAL_HSA = 'provincialHsa',
   FRASER = 'fraser',
   INTERIOR = 'interior',
-  NORTHEREN = 'nothern',
-  VANCOUVER_COASTAL = 'vancouverCoastal',
   VANCOUVER_ISLAND = 'vancouverIsland',
+  NORTHEREN = 'northern',
+  VANCOUVER_COASTAL = 'vancouverCoastal',
+  PRIVATE_EMPLOYER = 'privateEmployer',
 }
 
 export enum EmploymentCircumstances {
