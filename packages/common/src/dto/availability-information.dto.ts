@@ -46,7 +46,7 @@ export class AvailabilityDTO {
   @IsBoolean({ message: 'This field is required' })
   hasImmunizationTraining!: boolean;
 
-  @IsString({ message: 'Deployment duration is required' })
   @IsIn(Object.values(DeploymentDurations), { message: 'Invalid deployment duration selection' })
+  @IsString({ message: 'Deployment duration is required' })
   deploymentDuration!: DeploymentDurations;
 }
