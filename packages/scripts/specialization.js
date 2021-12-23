@@ -1,13 +1,29 @@
 const fs = require('fs');
+const csv = require('csv-parser');
 
 const alphaNumeric = str => {
   return str.replace(/([^a-zA-Z0-9])/g, '');
 };
 
-function main() {
-  const file = fs.readFileSync('./specialties.csv').toString();
-  // Remove col names;
-  let rows = file.split('\n').slice(1);
+function readData(fileName) {
+  return new Promise((resolve, reject) => {
+    var rows = [];
+    fs.createReadStream(fileName)
+      .pipe(csv(['stream', 'specialty', 'subspecialty']))
+      .on('data', data => rows.push(data))
+      .on('end', () => {
+        console.log('CSV file successfully processed');
+        resolve(rows);
+      })
+      .on('error', reject);
+  });
+}
+
+async function main() {
+  const rows = await readData('./specialties.csv');
+  // remove headers
+  rows.shift();
+
   let heirarchy = {
     streams: {
       byId: {},
@@ -30,28 +46,28 @@ function main() {
   let currentSubspecialty = '';
   let currentSubspecialtyName = '';
 
-  while (rows.length) {
-    const currentRow = rows[0].split(',');
+  for (let i = 0; i < rows.length; i++) {
+    const currentRow = rows[i];
 
-    if (currentRow[0]) {
-      currentStream = alphaNumeric(currentRow[0]);
-      currentStreamName = currentRow[0];
+    if (currentRow.stream) {
+      currentStream = alphaNumeric(currentRow.stream);
+      currentStreamName = currentRow.stream;
       // reset specialty and subspecialty
       currentSpecialty = '';
       currentSpecialtyName = '';
       currentSubspecialty = '';
       currentSubspecialtyName = '';
     }
-    if (currentRow[1]) {
-      currentSpecialty = alphaNumeric(currentRow[1]);
-      currentSpecialtyName = currentRow[1];
+    if (currentRow.specialty) {
+      currentSpecialty = alphaNumeric(currentRow.specialty);
+      currentSpecialtyName = currentRow.specialty;
       // reset subspecialty
       currentSubspecialty = '';
       currentSubspecialtyName = '';
     }
-    if (currentRow[2]) {
-      currentSubspecialty = alphaNumeric(currentRow[2]);
-      currentSubspecialtyName = currentRow[2];
+    if (currentRow.subspecialty) {
+      currentSubspecialty = alphaNumeric(currentRow.subspecialty);
+      currentSubspecialtyName = currentRow.subspecialty;
     }
 
     if (currentStream) {
@@ -98,9 +114,8 @@ function main() {
         heirarchy.specialties.byId[currentSpecialty].subspecialties.push(currentSubspecialty);
       }
     }
-
-    rows = rows.splice(1);
   }
+
   fs.writeFileSync('./streams.json', JSON.stringify(heirarchy), 'utf-8');
 }
 

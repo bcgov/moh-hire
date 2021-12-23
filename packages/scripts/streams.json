@@ -279,7 +279,7 @@
           "Renal",
           "RNFirstCall",
           "RuralRemote",
-          "Wound"
+          "WoundOstomyandContinence"
         ]
       },
       "LicensedPracticalNurse": {
@@ -324,7 +324,7 @@
           "Renal",
           "RNFirstCall",
           "RuralRemote",
-          "Wound"
+          "WoundOstomyandContinence"
         ]
       },
       "NursePractitioner": {
@@ -370,7 +370,7 @@
           "Renal",
           "RNFirstCall",
           "RuralRemote",
-          "Wound"
+          "WoundOstomyandContinence"
         ]
       },
       "RegisteredNurse": {
@@ -414,7 +414,7 @@
           "Renal",
           "RNFirstCall",
           "RuralRemote",
-          "Wound"
+          "WoundOstomyandContinence"
         ]
       },
       "RegisteredPsychiatricNurse": {
@@ -458,7 +458,7 @@
           "Renal",
           "RNFirstCall",
           "RuralRemote",
-          "Wound"
+          "WoundOstomyandContinence"
         ]
       },
       "Pharmacist": { "id": "Pharmacist", "name": "Pharmacist", "subspecialties": [] },
@@ -716,7 +716,10 @@
       "Renal": { "id": "Renal", "name": "Renal" },
       "RNFirstCall": { "id": "RNFirstCall", "name": "RN First Call" },
       "RuralRemote": { "id": "RuralRemote", "name": "Rural/Remote" },
-      "Wound": { "id": "Wound", "name": "\"Wound" },
+      "WoundOstomyandContinence": {
+        "id": "WoundOstomyandContinence",
+        "name": "Wound, Ostomy and Continence"
+      },
       "Nephrology": { "id": "Nephrology", "name": "Nephrology" },
       "Adult": { "id": "Adult", "name": "Adult" },
       "Family": { "id": "Family", "name": "Family" },
@@ -811,7 +814,7 @@
       "Renal",
       "RNFirstCall",
       "RuralRemote",
-      "Wound",
+      "WoundOstomyandContinence",
       "Nephrology",
       "Adult",
       "Family",
