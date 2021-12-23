@@ -108,20 +108,7 @@
           "Urology"
         ]
       },
-      "Podiatrist": { "id": "Podiatrist", "name": "Podiatrist", "specialties": [] },
-      "Student": {
-        "id": "Student",
-        "name": "Student",
-        "specialties": [
-          "EmployedStudentNurse",
-          "LicensedPracticalNursestudent",
-          "Medicalstudent",
-          "Midwiferystudent",
-          "Pharmacystudent",
-          "RegisteredNursestudent",
-          "RegisteredPsychiatricNursestudent"
-        ]
-      }
+      "Podiatrist": { "id": "Podiatrist", "name": "Podiatrist", "specialties": [] }
     },
     "allIds": [
       "AlliedHealthProfessional",
@@ -134,8 +121,7 @@
       "Nurse",
       "Pharmacy",
       "Physician",
-      "Podiatrist",
-      "Student"
+      "Podiatrist"
     ]
   },
   "specialties": {
@@ -611,38 +597,7 @@
         "name": "Surgical Foundations",
         "subspecialties": []
       },
-      "Urology": { "id": "Urology", "name": "Urology", "subspecialties": [] },
-      "EmployedStudentNurse": {
-        "id": "EmployedStudentNurse",
-        "name": "Employed Student Nurse",
-        "subspecialties": []
-      },
-      "LicensedPracticalNursestudent": {
-        "id": "LicensedPracticalNursestudent",
-        "name": "Licensed Practical Nurse student",
-        "subspecialties": []
-      },
-      "Medicalstudent": { "id": "Medicalstudent", "name": "Medical student", "subspecialties": [] },
-      "Midwiferystudent": {
-        "id": "Midwiferystudent",
-        "name": "Midwifery student",
-        "subspecialties": []
-      },
-      "Pharmacystudent": {
-        "id": "Pharmacystudent",
-        "name": "Pharmacy student",
-        "subspecialties": []
-      },
-      "RegisteredNursestudent": {
-        "id": "RegisteredNursestudent",
-        "name": "Registered Nurse student",
-        "subspecialties": []
-      },
-      "RegisteredPsychiatricNursestudent": {
-        "id": "RegisteredPsychiatricNursestudent",
-        "name": "Registered Psychiatric Nurse student",
-        "subspecialties": []
-      }
+      "Urology": { "id": "Urology", "name": "Urology", "subspecialties": [] }
     },
     "allIds": [
       "AnesthesiaAssistant",
@@ -713,14 +668,7 @@
       "Rheumatology",
       "Surgery",
       "SurgicalFoundations",
-      "Urology",
-      "EmployedStudentNurse",
-      "LicensedPracticalNursestudent",
-      "Medicalstudent",
-      "Midwiferystudent",
-      "Pharmacystudent",
-      "RegisteredNursestudent",
-      "RegisteredPsychiatricNursestudent"
+      "Urology"
     ]
   },
   "subspecialties": {
