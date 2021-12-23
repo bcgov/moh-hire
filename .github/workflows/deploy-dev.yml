@@ -42,8 +42,8 @@ jobs:
       - name: Setup terraform dir
         run: make pre-build
 
-      # - name: Build web app
-      #   run: make build-web
+      - name: Build web app
+        run: make build-web
 
       - name: Build api
         run: make build-api
@@ -61,6 +61,6 @@ jobs:
 
       - name: Terraform config
         run: |
-          # make plan
+          make plan
           make deploy-infra
-          # make deploy-app
+          make deploy-app
