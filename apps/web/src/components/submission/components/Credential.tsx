@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { FieldArray, useFormikContext } from 'formik';
 import {
   EmploymentTypes,
@@ -43,19 +43,26 @@ export const Credential: React.FC = () => {
 
   const subspecialties = selectedSpecialties ? getSubspecialtyOptions(selectedSpecialties) : null;
 
+  const previousStream = useRef(stream);
+  const previousCurrentEmployment = useRef(currentEmployment);
   // reset specialties if stream changes
   useEffect(() => {
-    setFieldValue('skillInformation.specialties', [defaultSpecialtyValue]);
-    setFieldValue('skillInformation.nonClinicalJobTitle', undefined);
-    if (stream === streamsById.Nonclinical.id) {
-      setFieldValue('skillInformation.specialties', []);
+    if (stream !== previousStream.current) {
+      setFieldValue('skillInformation.specialties', [defaultSpecialtyValue]);
+      setFieldValue('skillInformation.nonClinicalJobTitle', undefined);
+      if (stream === streamsById.Nonclinical.id) {
+        setFieldValue('skillInformation.specialties', []);
+      }
     }
   }, [setFieldValue, stream]);
 
   // reset health authority/employment circumstance if employment status changes
   useEffect(() => {
-    setFieldValue('skillInformation.healthAuthorities', []);
-    setFieldValue('skillInformation.employmentCircumstance', null);
+    if (currentEmployment !== previousCurrentEmployment.current) {
+      setFieldValue('skillInformation.healthAuthorities', []);
+
+      setFieldValue('skillInformation.employmentCircumstance', null);
+    }
   }, [setFieldValue, currentEmployment]);
 
   // reset registraion number if registation status changes to unregistered
@@ -71,7 +78,6 @@ export const Credential: React.FC = () => {
 
   const isNonClinical = stream === streamsById.Nonclinical.id;
   const isClinical = stream && !isNonClinical; // stream is selected and is not non-clinical
-
   return (
     <div className='flex flex-col gap-5'>
       <FormStepHeader>3. Credential Information</FormStepHeader>
