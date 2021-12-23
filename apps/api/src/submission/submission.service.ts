@@ -40,7 +40,7 @@ export class SubmissionService {
     const { email } = payload.contactInformation;
     const mailable = new ConfirmationMailable({ email } as Recipient, {
       firstName: (payload.personalInformation as PersonalInformationDTO).firstName,
-      confirmationId: submission.confirmationId,
+      confirmationId: this.convertIdToDasshhedId(submission.confirmationId),
     });
 
     try {
@@ -96,5 +96,19 @@ export class SubmissionService {
         nonClinicalJobTitle: payload.skillInformation.nonClinicalJobTitle,
       };
     });
+  }
+  private convertIdToDasshhedId(id: string): string {
+    return (
+      id.substring(0, 3) +
+      '-' +
+      id.substring(3, 6) +
+      '-' +
+      id.substring(6, 9) +
+      '-' +
+      id.substring(9)
+    );
+  }
+  private convertDashedIdToId(dashedId: string) {
+    return dashedId.replace('-', '');
   }
 }

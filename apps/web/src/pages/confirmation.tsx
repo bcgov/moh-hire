@@ -9,7 +9,7 @@ interface WithRouterProps {
 const Confirmation: React.FC<WithRouterProps> = props => {
   const nextRouter = useRouter();
   const { router } = props;
-  const id = router.query?.id;
+  const id: string = router.query?.id as string;
 
   useEffect(() => {
     // if the page is accessed directly, redirect to the home page
@@ -20,6 +20,14 @@ const Confirmation: React.FC<WithRouterProps> = props => {
 
   if (!id) return null;
 
+  const dashedId =
+    id.substring(0, 3) +
+    '-' +
+    id.substring(3, 6) +
+    '-' +
+    id.substring(6, 9) +
+    '-' +
+    id.substring(9);
   return (
     <div className='md:pt-40 pt-12 px-5 md:px-4'>
       <div className='max-w-xl text-center'>
@@ -28,7 +36,7 @@ const Confirmation: React.FC<WithRouterProps> = props => {
         </div>
         <Notice>
           <p className='leading-8'>
-            Your EHPR registration ID: <b>{id}</b>
+            Your EHPR registration ID: <b>{dashedId || id}</b>
           </p>
         </Notice>
         <section className='px-5 mb-5'>
