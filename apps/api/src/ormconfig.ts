@@ -5,7 +5,6 @@ dotenv.config();
 // Check typeORM documentation for more information.
 
 const nodeEnv = process.env.NODE_ENV || 'development';
-const entitiesPath = nodeEnv === 'production' ? './**/*.entity.js' : 'dist/**/*.entity.js';
 
 const config: PostgresConnectionOptions = {
   host: process.env.POSTGRES_HOST,
@@ -15,7 +14,6 @@ const config: PostgresConnectionOptions = {
   username: process.env.POSTGRES_USERNAME,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DATABASE,
-  entities: [entitiesPath],
   cli: {
     migrationsDir: 'src/migration',
     entitiesDir: 'src/**/entity/*.entity.ts',
@@ -23,7 +21,7 @@ const config: PostgresConnectionOptions = {
   synchronize: false,
   migrationsRun: true,
   namingStrategy: new DatabaseNamingStrategy(),
-  logging: ['error', 'warn', 'migration'],
+  logging: true,
 };
 
 export default config;
