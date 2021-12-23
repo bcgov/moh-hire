@@ -1,10 +1,14 @@
 import { Field, FormStepHeader } from '@components';
 import { useFormikContext } from 'formik';
+import { useEffect } from 'react';
 import { FormStepProps } from '.';
 import { SubmissionType } from '../validation';
 
 export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
-  const { values } = useFormikContext<SubmissionType>();
+  const {
+    values: { contactInformation },
+    setFieldValue,
+  } = useFormikContext<SubmissionType>();
   const fieldNames = {
     primaryPhone: `${formKey}.primaryPhone`,
     primaryPhoneExt: `${formKey}.primaryPhoneExt`,
@@ -12,6 +16,19 @@ export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
     secondaryPhoneExt: `${formKey}.secondaryPhoneExt`,
     email: `${formKey}.email`,
   };
+
+  useEffect(() => {
+    if (!contactInformation.secondaryPhone) {
+      setFieldValue('contactInformation.secondaryPhoneExt', '');
+    }
+  }, [contactInformation.secondaryPhone, setFieldValue]);
+
+  useEffect(() => {
+    if (!contactInformation.primaryPhone) {
+      setFieldValue('contactInformation.primaryPhoneExt', '');
+    }
+  }, [contactInformation.primaryPhone, setFieldValue]);
+
   return (
     <>
       <FormStepHeader>2. Contact Information</FormStepHeader>
@@ -30,7 +47,7 @@ export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
               name={fieldNames.primaryPhoneExt}
               label='Ext. (optional)'
               type='text'
-              disabled={!Boolean(values?.contactInformation?.primaryPhone?.length)}
+              disabled={!contactInformation.primaryPhone}
             />
           </div>
         </div>
@@ -48,7 +65,7 @@ export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
               name={fieldNames.secondaryPhoneExt}
               label='Ext. (optional)'
               type='text'
-              disabled={!Boolean(values?.contactInformation?.secondaryPhone?.length)}
+              disabled={!contactInformation.secondaryPhone}
             />
           </div>
         </div>
