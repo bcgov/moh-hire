@@ -9,6 +9,7 @@ export class DatabaseService {
     @InjectConnection() public connection: Connection,
   ) {
     this.logger.log(`DatabaseService created`);
+    this.logger.log({ migrations: connection.migrations });
   }
 
   async runMigrations() {
