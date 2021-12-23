@@ -104,8 +104,8 @@ export const employmentOptions: OptionType[] = [
 
 export const healthAuthorityOptions = [
   {
-    value: HealthAuthorities.FIRST_NATION_HA,
-    label: 'First Nation Health Authority',
+    value: HealthAuthorities.FIRST_NATIONS_HA,
+    label: 'First Nations Health Authority',
   },
   {
     value: HealthAuthorities.PROVIDENCE,
@@ -124,16 +124,20 @@ export const healthAuthorityOptions = [
     label: 'Interior Health',
   },
   {
+    value: HealthAuthorities.VANCOUVER_ISLAND,
+    label: 'Island Health (Vancouver Island Health)',
+  },
+  {
     value: HealthAuthorities.NORTHEREN,
     label: 'Northern Health',
   },
   {
     value: HealthAuthorities.VANCOUVER_COASTAL,
-    label: 'Vancouver Costal Health',
+    label: 'Vancouver Coastal Health',
   },
   {
-    value: HealthAuthorities.VANCOUVER_ISLAND,
-    label: 'Vancouver Island Health',
+    value: HealthAuthorities.PRIVATE_EMPLOYER,
+    label: 'Private employer',
   },
 ];
 
