@@ -12,7 +12,7 @@ export NODE_ENV ?= development
 export ENV_NAME ?= test
 export POSTGRES_USERNAME = freshworks
 export CHES_CLIENT_ID ?= EHPR_SERVICE_CLIENT
-export MAIL_FROM ?= noreply@gov.bc.ca
+export MAIL_FROM ?= EHPRDoNotReply@gov.bc.ca
 
 # Git
 export COMMIT_SHA:=$(shell git rev-parse --short=7 HEAD)
