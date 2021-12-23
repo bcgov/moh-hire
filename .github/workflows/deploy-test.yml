@@ -11,7 +11,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    concurrency: ci-${github.ref}
+    concurrency: ci-${github.ref}-test
     environment:
       name: test
     env:
