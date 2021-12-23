@@ -44,18 +44,13 @@ const Confirmation: React.FC<WithRouterProps> = props => {
             You will receive an email confirmation shortly at the email address provided on the form
           </p>
           <p>
-            Save a PDF copy of your complete form by clicking the Download PDF button below. For any
-            further inquiries, please contact&nbsp;
+            For any further inquiries, please contact&nbsp;
             <ExternalLink href='mailto:EHPRQuestions@gov.bc.ca'>
               EHPRQuestions@gov.bc.ca
             </ExternalLink>
             .
           </p>
         </section>
-        <Button variant='secondary'>
-          <span className='inline-block mr-4 text-bcBluePrimary font-bold'>Download PDF</span>
-          <img src='/assets/img/download.svg' height='17' width='14' alt='download' />
-        </Button>
       </div>
     </div>
   );
