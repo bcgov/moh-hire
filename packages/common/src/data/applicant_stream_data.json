@@ -53,12 +53,12 @@
           "SelfEmployed"
         ]
       },
-      "Midwife": { "id": "Midwife", "name": "Midwife", "specialties": ["SelfEmployed"] },
-      "Naturopath": { "id": "Naturopath", "name": "Naturopath", "specialties": ["SelfEmployed"] },
+      "Midwife": { "id": "Midwife", "name": "Midwife", "specialties": [] },
+      "Naturopath": { "id": "Naturopath", "name": "Naturopath", "specialties": [] },
       "Nonclinical": {
         "id": "Nonclinical",
         "name": "Non-clinical ",
-        "specialties": ["SelfEmployed"]
+        "specialties": []
       },
       "Nurse": {
         "id": "Nurse",
@@ -112,7 +112,7 @@
           "Urology"
         ]
       },
-      "Podiatrist": { "id": "Podiatrist", "name": "Podiatrist", "specialties": ["Urology"] },
+      "Podiatrist": { "id": "Podiatrist", "name": "Podiatrist", "specialties": [] },
       "Student": {
         "id": "Student",
         "name": "Student",
