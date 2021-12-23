@@ -12294,6 +12294,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"scripts@workspace:packages/scripts":
+  version: 0.0.0-use.local
+  resolution: "scripts@workspace:packages/scripts"
+  languageName: unknown
+  linkType: soft
+
 "semver-diff@npm:^3.1.1":
   version: 3.1.1
   resolution: "semver-diff@npm:3.1.1"
