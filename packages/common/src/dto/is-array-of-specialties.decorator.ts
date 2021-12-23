@@ -94,7 +94,7 @@ export class IsArrayOfSpecialties implements ValidatorConstraintInterface {
       }
 
       // don't validate subspecialties if they haven't been selected and aren't required by the specialty
-      const formSubspecialties = getSubSpecialtiesBySpecialtyId(specialty.name);
+      const formSubspecialties = getSubSpecialtiesBySpecialtyId(specialty.id);
       if (!formSubspecialties || formSubspecialties.length === 0) continue;
 
       // check existance and length of subspecialties
