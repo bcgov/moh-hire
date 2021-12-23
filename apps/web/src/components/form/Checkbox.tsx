@@ -20,9 +20,9 @@ export const Checkbox: React.FC<CheckboxProps> = ({ name, label, value }) => {
         id={identifier}
         value={value}
         type='checkbox'
-        className='mr-2 h-5 w-5'
+        className='mr-3 h-5 w-5 min-w-5'
       />
-      <label htmlFor={identifier} className='cursor-pointer leading-none'>
+      <label htmlFor={identifier} className='cursor-pointer'>
         {label}
       </label>
     </div>

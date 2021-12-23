@@ -12,6 +12,7 @@ import {
   DeepPartial,
   credentialSchema,
   preferencesSchema,
+  reviewSchema,
 } from './validation';
 import { Ret } from 'class-validator-formik/dist/convertError';
 
@@ -51,7 +52,7 @@ const steps: StepType[] = [
   },
   {
     component: <Review />,
-    validationSchema: () => ({}),
+    validationSchema: reviewSchema,
   },
 ];
 
@@ -60,7 +61,7 @@ const handleValidate = (
   values?: DeepPartial<SubmissionType>,
   key?: keyof DeepPartial<SubmissionType>,
 ) => {
-  if (!key) return {};
+  if (!key) return validator(values);
   if (!values) return {};
 
   const errors = validator(values[key]);
