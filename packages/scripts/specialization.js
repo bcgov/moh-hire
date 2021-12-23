@@ -36,10 +36,18 @@ function main() {
     if (currentRow[0]) {
       currentStream = alphaNumeric(currentRow[0]);
       currentStreamName = currentRow[0];
+      // reset specialty and subspecialty
+      currentSpecialty = '';
+      currentSpecialtyName = '';
+      currentSubspecialty = '';
+      currentSubspecialtyName = '';
     }
     if (currentRow[1]) {
       currentSpecialty = alphaNumeric(currentRow[1]);
       currentSpecialtyName = currentRow[1];
+      // reset subspecialty
+      currentSubspecialty = '';
+      currentSubspecialtyName = '';
     }
     if (currentRow[2]) {
       currentSubspecialty = alphaNumeric(currentRow[2]);

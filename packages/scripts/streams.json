@@ -53,13 +53,9 @@
           "SelfEmployed"
         ]
       },
-      "Midwife": { "id": "Midwife", "name": "Midwife", "specialties": ["SelfEmployed"] },
-      "Naturopath": { "id": "Naturopath", "name": "Naturopath", "specialties": ["SelfEmployed"] },
-      "Nonclinical": {
-        "id": "Nonclinical",
-        "name": "Non-clinical ",
-        "specialties": ["SelfEmployed"]
-      },
+      "Midwife": { "id": "Midwife", "name": "Midwife", "specialties": [] },
+      "Naturopath": { "id": "Naturopath", "name": "Naturopath", "specialties": [] },
+      "Nonclinical": { "id": "Nonclinical", "name": "Non-clinical ", "specialties": [] },
       "Nurse": {
         "id": "Nurse",
         "name": "Nurse",
@@ -112,7 +108,7 @@
           "Urology"
         ]
       },
-      "Podiatrist": { "id": "Podiatrist", "name": "Podiatrist", "specialties": ["Urology"] },
+      "Podiatrist": { "id": "Podiatrist", "name": "Podiatrist", "specialties": [] },
       "Student": {
         "id": "Student",
         "name": "Student",
@@ -479,69 +475,65 @@
           "Wound"
         ]
       },
-      "Pharmacist": { "id": "Pharmacist", "name": "Pharmacist", "subspecialties": ["Wound"] },
-      "PharmacyTech": {
-        "id": "PharmacyTech",
-        "name": "Pharmacy Tech",
-        "subspecialties": ["Wound"]
-      },
+      "Pharmacist": { "id": "Pharmacist", "name": "Pharmacist", "subspecialties": [] },
+      "PharmacyTech": { "id": "PharmacyTech", "name": "Pharmacy Tech", "subspecialties": [] },
       "Anaesthesiology": {
         "id": "Anaesthesiology",
         "name": "Anaesthesiology",
-        "subspecialties": ["Wound"]
+        "subspecialties": []
       },
-      "Cardiology": { "id": "Cardiology", "name": "Cardiology", "subspecialties": ["Wound"] },
+      "Cardiology": { "id": "Cardiology", "name": "Cardiology", "subspecialties": [] },
       "ClinicalImmunologyAllergy": {
         "id": "ClinicalImmunologyAllergy",
         "name": "Clinical Immunology & Allergy",
-        "subspecialties": ["Wound"]
+        "subspecialties": []
       },
       "ClinicalPharmacologyToxicology": {
         "id": "ClinicalPharmacologyToxicology",
         "name": "Clinical Pharmacology & Toxicology",
-        "subspecialties": ["Wound"]
+        "subspecialties": []
       },
       "ClinicianInvestigatorProgram": {
         "id": "ClinicianInvestigatorProgram",
         "name": "Clinician Investigator Program",
-        "subspecialties": ["Wound"]
+        "subspecialties": []
       },
-      "Dermatology": { "id": "Dermatology", "name": "Dermatology", "subspecialties": ["Wound"] },
+      "Dermatology": { "id": "Dermatology", "name": "Dermatology", "subspecialties": [] },
       "EligibleInternationalMedicalGraduate": {
         "id": "EligibleInternationalMedicalGraduate",
         "name": "Eligible International Medical Graduate",
-        "subspecialties": ["Wound"]
+        "subspecialties": []
       },
       "EndocrinologyMetabolism": {
         "id": "EndocrinologyMetabolism",
         "name": "Endocrinology & Metabolism",
-        "subspecialties": ["Wound"]
+        "subspecialties": []
       },
       "FamilyPhysician": {
         "id": "FamilyPhysician",
         "name": "Family Physician",
-        "subspecialties": ["Wound"]
+        "subspecialties": []
       },
       "Gastroenterology": {
         "id": "Gastroenterology",
         "name": "Gastroenterology",
-        "subspecialties": ["Wound"]
+        "subspecialties": []
       },
       "GynecologicReproductiveEndocrinologyInfertility": {
         "id": "GynecologicReproductiveEndocrinologyInfertility",
         "name": "Gynecologic Reproductive Endocrinology & Infertility",
-        "subspecialties": ["Wound"]
+        "subspecialties": []
       },
       "GynecologyObstetrics": {
         "id": "GynecologyObstetrics",
         "name": "Gynecology & Obstetrics",
-        "subspecialties": ["Wound"]
+        "subspecialties": []
       },
-      "Hematology": { "id": "Hematology", "name": "Hematology", "subspecialties": ["Wound"] },
+      "Hematology": { "id": "Hematology", "name": "Hematology", "subspecialties": [] },
       "InfectiousDiseases": {
         "id": "InfectiousDiseases",
         "name": "Infectious Diseases",
-        "subspecialties": ["Wound"]
+        "subspecialties": []
       },
       "Medicine": {
         "id": "Medicine",
@@ -566,25 +558,17 @@
           "Respiratory"
         ]
       },
-      "Microbiology": {
-        "id": "Microbiology",
-        "name": "Microbiology",
-        "subspecialties": ["Respiratory"]
-      },
-      "Nephrology": { "id": "Nephrology", "name": "Nephrology", "subspecialties": ["Respiratory"] },
-      "Neurology": { "id": "Neurology", "name": "Neurology", "subspecialties": ["Respiratory"] },
-      "Oncology": { "id": "Oncology", "name": "Oncology", "subspecialties": ["Respiratory"] },
-      "Ophthalmology": {
-        "id": "Ophthalmology",
-        "name": "Ophthalmology",
-        "subspecialties": ["Respiratory"]
-      },
+      "Microbiology": { "id": "Microbiology", "name": "Microbiology", "subspecialties": [] },
+      "Nephrology": { "id": "Nephrology", "name": "Nephrology", "subspecialties": [] },
+      "Neurology": { "id": "Neurology", "name": "Neurology", "subspecialties": [] },
+      "Oncology": { "id": "Oncology", "name": "Oncology", "subspecialties": [] },
+      "Ophthalmology": { "id": "Ophthalmology", "name": "Ophthalmology", "subspecialties": [] },
       "Pathology": {
         "id": "Pathology",
         "name": "Pathology",
         "subspecialties": ["Anatomical", "Forensic", "General", "Hematological", "Neuro"]
       },
-      "Pediatric": { "id": "Pediatric", "name": "Pediatric", "subspecialties": ["Neuro"] },
+      "Pediatric": { "id": "Pediatric", "name": "Pediatric", "subspecialties": [] },
       "Psychiatry": {
         "id": "Psychiatry",
         "name": "Psychiatry",
@@ -601,17 +585,9 @@
           "RadiationOncology"
         ]
       },
-      "Resident": { "id": "Resident", "name": "Resident", "subspecialties": ["RadiationOncology"] },
-      "Respirology": {
-        "id": "Respirology",
-        "name": "Respirology",
-        "subspecialties": ["RadiationOncology"]
-      },
-      "Rheumatology": {
-        "id": "Rheumatology",
-        "name": "Rheumatology",
-        "subspecialties": ["RadiationOncology"]
-      },
+      "Resident": { "id": "Resident", "name": "Resident", "subspecialties": [] },
+      "Respirology": { "id": "Respirology", "name": "Respirology", "subspecialties": [] },
+      "Rheumatology": { "id": "Rheumatology", "name": "Rheumatology", "subspecialties": [] },
       "Surgery": {
         "id": "Surgery",
         "name": "Surgery",
@@ -633,43 +609,39 @@
       "SurgicalFoundations": {
         "id": "SurgicalFoundations",
         "name": "Surgical Foundations",
-        "subspecialties": ["Vascular"]
+        "subspecialties": []
       },
-      "Urology": { "id": "Urology", "name": "Urology", "subspecialties": ["Vascular"] },
+      "Urology": { "id": "Urology", "name": "Urology", "subspecialties": [] },
       "EmployedStudentNurse": {
         "id": "EmployedStudentNurse",
         "name": "Employed Student Nurse",
-        "subspecialties": ["Vascular"]
+        "subspecialties": []
       },
       "LicensedPracticalNursestudent": {
         "id": "LicensedPracticalNursestudent",
         "name": "Licensed Practical Nurse student",
-        "subspecialties": ["Vascular"]
+        "subspecialties": []
       },
-      "Medicalstudent": {
-        "id": "Medicalstudent",
-        "name": "Medical student",
-        "subspecialties": ["Vascular"]
-      },
+      "Medicalstudent": { "id": "Medicalstudent", "name": "Medical student", "subspecialties": [] },
       "Midwiferystudent": {
         "id": "Midwiferystudent",
         "name": "Midwifery student",
-        "subspecialties": ["Vascular"]
+        "subspecialties": []
       },
       "Pharmacystudent": {
         "id": "Pharmacystudent",
         "name": "Pharmacy student",
-        "subspecialties": ["Vascular"]
+        "subspecialties": []
       },
       "RegisteredNursestudent": {
         "id": "RegisteredNursestudent",
         "name": "Registered Nurse student",
-        "subspecialties": ["Vascular"]
+        "subspecialties": []
       },
       "RegisteredPsychiatricNursestudent": {
         "id": "RegisteredPsychiatricNursestudent",
         "name": "Registered Psychiatric Nurse student",
-        "subspecialties": ["Vascular"]
+        "subspecialties": []
       }
     },
     "allIds": [
