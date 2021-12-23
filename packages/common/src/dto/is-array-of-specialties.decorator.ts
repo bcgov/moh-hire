@@ -47,7 +47,9 @@ export class IsArrayOfSpecialties implements ValidatorConstraintInterface {
     const skillInformationState = context.object as SkillInformationDTO;
     // currently selected stream's specialties
     const formSpecialties = getSpecialtiesByStreamId(skillInformationState.stream);
-
+    if (!formSpecialties.length) {
+      return true;
+    }
     for (const specialty of value) {
       // validate specialty.id is correct type
       if (!isValidString(specialty.id)) return false;

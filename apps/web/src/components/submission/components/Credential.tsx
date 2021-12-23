@@ -34,9 +34,9 @@ import { defaultSpecialtyValue } from '../validation/credential';
 
 export const Credential: React.FC = () => {
   const { values, setFieldValue } = useFormikContext<SubmissionType>();
+
   const { stream, specialties, currentEmployment, registrationStatus }: SkillInformationDTO =
     values.skillInformation;
-
   const selectedSpecialties = specialties.map(specialty => specialty.id);
 
   const specialtyOptions = stream ? getSpecialtyOptions(stream) : null;
@@ -96,7 +96,7 @@ export const Credential: React.FC = () => {
                   {specialties?.map((_, index) => (
                     <SpecialtySelector
                       key={index}
-                      disabled={!specialtyOptions}
+                      disabled={!Boolean(specialtyOptions && specialtyOptions?.length > 1)}
                       index={index}
                       specialties={specialtyOptions}
                       subspecialties={subspecialties?.[index]}
@@ -180,7 +180,6 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
 
   const specialtyOptionIsDisabled = (specialtyId: string): boolean =>
     !!formSpecialties.find(specialty => specialty.id === specialtyId);
-
   return (
     <div className='grid md:grid-cols-2 gap-2 w-full ring-gray-200 ring-1 ring-offset-10 rounded-sm'>
       <div className='col-span-1'>
