@@ -25,10 +25,15 @@ export class SubmissionService {
       confirmationId,
     } as Partial<SubmissionEntity>);
 
-    const savedSubmission = await this.submissionRepository.save(newSubmission);
-    this.logger.log(`Saved submission: ${savedSubmission.id}`);
+    try {
+      const savedSubmission = await this.submissionRepository.save(newSubmission);
+      this.logger.log(`Saved submission: ${savedSubmission.id}`);
 
-    return this.sendSubmissionConfirmation(savedSubmission);
+      return this.sendSubmissionConfirmation(savedSubmission);
+    } catch (e) {
+      this.logger.error(`Error saving submission: ${e}`);
+      throw e;
+    }
   }
 
   private async sendSubmissionConfirmation(submission: SubmissionEntity) {
