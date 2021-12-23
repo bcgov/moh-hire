@@ -180,7 +180,7 @@ const HsdaLocationSelector: React.FC<LocationListProps> = ({ region, lhaOptions 
   return (
     <fieldset>
       <legend className='font-bold text-black mb-2 text-base'>{region}</legend>
-      <div className='grid grid-cols-2 gap-4 p-5 border border-gray-400 rounded text-black bg-white'>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-4 p-5 border border-gray-400 rounded text-black bg-white'>
         {lhaOptions.map(location => (
           <Checkbox
             key={location.value}
