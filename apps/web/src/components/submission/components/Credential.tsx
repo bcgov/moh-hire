@@ -200,7 +200,7 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
       </div>
       <div className='col-span-1'>
         <MultiSelect
-          label={`Subspecialty/Training #${index + 1}`}
+          label={`Subspecialty #${index + 1}`}
           name={`skillInformation.specialties[${index}].subspecialties`}
           disabled={!subspecialties || subspecialties.length === 0}
           options={subspecialties || []}
