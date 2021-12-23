@@ -38,7 +38,7 @@ export const Radio: RadioType = ({ legend, name, options, horizontal }) => {
               type='radio'
               name={name}
               value={option.value}
-              className='mr-2 h-5 w-5 cursor-pointer'
+              className='mr-2 h-5 w-5 min-w-5 cursor-pointer'
             />
             {option.label}
           </label>
