@@ -224,7 +224,7 @@ const SecondaryEmploymentQuestion: React.FC<{ employmentStatus: EmploymentTypes 
       return (
         <CheckboxArray
           name='skillInformation.healthAuthorities'
-          legend='Please indicate which Health Authority (select all the apply):'
+          legend='Indicate which Health Authority (select all the apply):'
           options={healthAuthorityOptions}
         />
       );
