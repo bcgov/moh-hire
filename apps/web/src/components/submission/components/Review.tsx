@@ -229,6 +229,7 @@ interface ReviewSpecialtyProps {
   specialty: SpecialtyDTO;
 }
 const ReviewSpecialty: React.FC<ReviewSpecialtyProps> = ({ specialty }) => {
+  if (!specialty.id) return null;
   return (
     <div className='grid grid-cols-2 rounded border border-gray-300 p-2'>
       <ReviewItem label='Main Speciality' value={getSpecialtyLabelById(specialty.id)} />
