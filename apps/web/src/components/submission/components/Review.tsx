@@ -1,4 +1,4 @@
-import { Checkbox, Error, FormStepHeader, Link, Notice } from '@components';
+import { Checkbox, Error, FormStepHeader, Link, Notice, Alert } from '@components';
 import {
   booleanToYesNo,
   EmploymentTypes,
@@ -23,7 +23,6 @@ import {
   deploymentDurationOptions,
   placementOptions as allPlacementOptions,
 } from '../validation/preferences';
-import { Alert } from '../../Alert';
 
 export const Review: React.FC = () => {
   const { values } = useFormikContext<SubmissionType>();
