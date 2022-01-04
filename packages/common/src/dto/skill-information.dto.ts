@@ -29,6 +29,7 @@ export class SkillInformationDTO {
       this.registrationStatus = base.registrationStatus;
       this.specialties = base.specialties?.map(specialty => new SpecialtyDTO(specialty));
       this.currentEmployment = base.currentEmployment;
+      this.healthAuthorities = base.healthAuthorities;
       this.employmentCircumstance = base.employmentCircumstance;
       this.nonClinicalJobTitle = base.nonClinicalJobTitle;
     }
