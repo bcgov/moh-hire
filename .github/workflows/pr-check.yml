@@ -4,6 +4,7 @@ on:
     paths:
       - 'apps/**'
       - 'packages/**'
+      - '**' # for testing purposes
 
 jobs:
   pr-checks:
