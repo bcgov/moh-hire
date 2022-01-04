@@ -45,6 +45,3 @@ jobs:
 
       - name: Test packages
         run: yarn turbo run test
-
-      - name: Build packages
-        run: yarn turbo run build

@@ -37,6 +37,9 @@
         ]
       },
       "test": {
+        "dependsOn": [
+          "build"
+        ],
         "outputs": []
       },
       "lint": {
