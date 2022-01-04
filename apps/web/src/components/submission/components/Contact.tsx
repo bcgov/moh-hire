@@ -70,7 +70,7 @@ export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
           </div>
         </div>
 
-        <Field name={fieldNames.email} label='Email' type='email' />
+        <Field name={fieldNames.email} label='Email Address' type='email' />
       </div>
     </>
   );
