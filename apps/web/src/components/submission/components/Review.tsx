@@ -1,11 +1,12 @@
-import { Checkbox, Error, FormStepHeader, Link, Notice } from '@components';
+import { Checkbox, Error, FormStepHeader, Link, Notice, Alert } from '@components';
 import {
   booleanToYesNo,
   EmploymentTypes,
   SpecialtyDTO,
-  rebuildHaStructure,
   Lha,
+  rebuildHaStructure,
 } from '@ehpr/common';
+
 import { useFormikContext } from 'formik';
 import {
   employmentCircumstanceOptions,
@@ -153,6 +154,7 @@ export const Review: React.FC = () => {
             />
           </Notice>
           <Error name='confirm' />
+          <Alert>Please print and save this page for your own records.</Alert>
         </div>
       </div>
     </>

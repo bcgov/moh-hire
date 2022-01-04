@@ -8,6 +8,7 @@ export * from './Button';
 export * from './Link';
 export * from './Notice';
 export * from './Disclosure';
+export * from './Alert';
 
 // Form Controls
 export * from './form';
