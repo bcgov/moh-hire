@@ -156,7 +156,7 @@ export const Form: React.FC = () => {
                 onClick={goToPreviousStep}
                 type='button'
               >
-                Go Back
+                Back
               </Button>
               <Button
                 variant='primary'
@@ -164,7 +164,7 @@ export const Form: React.FC = () => {
                 loading={isSubmitting}
                 type='submit'
               >
-                {isLastStep ? 'Submit' : 'Continue'}
+                {isLastStep ? 'Submit' : 'Next'}
               </Button>
             </div>
           </div>
