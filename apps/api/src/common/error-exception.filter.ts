@@ -30,12 +30,12 @@ export class ErrorExceptionFilter implements ExceptionFilter {
     return {
       errorType:
         exceptionMessage.error ||
-        (exception as any).response.error ||
+        (exception as any).response?.error ||
         CommonError.INTERNAL_ERROR.errorType,
 
       errorMessage:
         exceptionMessage.message ||
-        (exception as any).response.message ||
+        (exception as any).response?.message ||
         CommonError.INTERNAL_ERROR.errorMessage,
 
       /** If local, return the full error message body */
@@ -63,18 +63,9 @@ export class ErrorExceptionFilter implements ExceptionFilter {
         delete body[key];
       }
     });
-    this.logger.error(
-      `${new Date()}: error thrown with message ${exception.message}`,
-      exception.stack,
-      typeof body === 'object' ? JSON.stringify(body) : body,
-    );
 
-    /** If failed with a server error, logs the problems */
-    if ((status >= 500 && status < 600) || !(exception instanceof GenericException)) {
-      /** Log entire exception */
-      /** If there's an stack, log it */
-      this.logger.error(exception);
-    }
+    // Log errors
+    this.logger.error({ status, stack: exception.stack, body }, null, 'ExceptionFilter');
 
     if (ClassValidationParser.isClassValidatorException(flattenedException)) {
       response
