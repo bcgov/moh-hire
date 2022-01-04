@@ -1,5 +1,4 @@
 import { Checkbox, Error, FormStepHeader, Link, Notice } from '@components';
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import {
   booleanToYesNo,
   EmploymentTypes,
@@ -24,7 +23,6 @@ import {
   deploymentDurationOptions,
   placementOptions as allPlacementOptions,
 } from '../validation/preferences';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Advisory } from 'src/components/Advisory';
 
 export const Review: React.FC = () => {
