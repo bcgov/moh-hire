@@ -162,7 +162,7 @@ export const Review: React.FC = () => {
             <FontAwesomeIcon icon={faExclamationCircle}></FontAwesomeIcon>
           </div>
           <div className='text-bcBluePrimary'>
-            Please print and save this page for your own recrods.
+            Please print and save this page for your own records.
           </div>
         </div>
       </div>
