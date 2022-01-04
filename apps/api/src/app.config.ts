@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import * as winston from 'winston';
 import { WinstonModule, utilities as nestWinstonModuleUtilities } from 'nest-winston';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
 import express from 'express';
 
@@ -62,12 +62,12 @@ export async function createNestApp(): Promise<{
   // Validation pipe
   app.useGlobalPipes(
     new TrimPipe(),
-    // new ValidationPipe({
-    //   transform: true,
-    //   whitelist: true,
-    //   forbidNonWhitelisted: false,
-    //   enableDebugMessages: true,
-    // }),
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: false,
+      enableDebugMessages: true,
+    }),
   );
 
   // Global Error Filter
