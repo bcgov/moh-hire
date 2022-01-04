@@ -164,7 +164,7 @@ export const Form: React.FC = () => {
                 loading={isSubmitting}
                 type='submit'
               >
-                Continue
+                {isLastStep ? 'Submit' : 'Continue'}
               </Button>
             </div>
           </div>
