@@ -37,7 +37,7 @@ describe('Credential', () => {
       </formik.Formik>,
     );
 
-    const headingElement = screen.getByRole('heading', { name: '3. Credential Information' });
+    const headingElement = screen.getByRole('heading', { name: '3. Credentials Information' });
 
     expect(headingElement).toBeInTheDocument();
   });

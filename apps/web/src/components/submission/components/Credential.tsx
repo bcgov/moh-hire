@@ -80,7 +80,7 @@ export const Credential: React.FC = () => {
   const isClinical = stream && !isNonClinical; // stream is selected and is not non-clinical
   return (
     <div className='flex flex-col gap-5'>
-      <FormStepHeader>3. Credential Information</FormStepHeader>
+      <FormStepHeader>3. Credentials Information</FormStepHeader>
       <Select name='skillInformation.stream' label='Stream Type'>
         {streamOptions.map(stream => (
           <Option key={stream.value} label={stream.label} value={stream.value} />
@@ -224,7 +224,7 @@ const SecondaryEmploymentQuestion: React.FC<{ employmentStatus: EmploymentTypes 
       return (
         <CheckboxArray
           name='skillInformation.healthAuthorities'
-          legend='Indicate which Health Authority (select all the apply):'
+          legend='Indicate where you are employed (select all that apply):'
           options={healthAuthorityOptions}
         />
       );

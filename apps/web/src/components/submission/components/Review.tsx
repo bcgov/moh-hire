@@ -75,7 +75,7 @@ export const Review: React.FC = () => {
           <ReviewItem label='Email Address' value={email} />
         </ReviewSection>
 
-        <ReviewSection sectionHeader='Credential Information' step={3} columns={1}>
+        <ReviewSection sectionHeader='Credentials Information' step={3} columns={1}>
           <ReviewItem label='Stream Type' value={getStreamLabelById(stream)} />
           {nonClinicalJobTitle ? (
             <ReviewItem label='Provide your job title' value={nonClinicalJobTitle} />

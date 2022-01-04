@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { ExternalLink, Form, Stepper } from '@components';
 import { useEffect, useRef } from 'react';
 
-const FORM_STEPS = ['Primary', 'Contact', 'Credential', 'Preferences', 'Review and Submit'];
+const FORM_STEPS = ['Primary', 'Contact', 'Credentials', 'Preferences', 'Review and Submit'];
 
 const Submission = () => {
   const router = useRouter();

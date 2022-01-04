@@ -29,7 +29,7 @@ export class PersonalInformationDTO {
 
   @IsString()
   @Matches(postalCodeRegex, {
-    message: 'Postal Code must be in the format A1A1A1',
+    message: 'Postal Code must be in the format A1A 1A1',
   })
   @IsNotEmpty({ message: 'Postal Code is Required' })
   postalCode!: string;
