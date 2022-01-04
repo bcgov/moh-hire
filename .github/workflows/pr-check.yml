@@ -1,0 +1,49 @@
+name: PR Checks
+on:
+  pull_request:
+    paths:
+      - 'apps/**'
+      - 'packages/**'
+
+jobs:
+  pr-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2
+        name: checkout
+      - uses: actions/setup-node@v2
+        with:
+          cache: 'yarn'
+          cache-dependency-path: yarn.lock
+          node-version: '16'
+
+      - name: Turbo Cache
+        id: turbo-cache
+        uses: actions/cache@v2
+        with:
+          path: '**/.turbo'
+          key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ github.job }}-${{ github.ref_name }}-
+
+      - uses: actions/cache@v2
+        name: Cache yarn
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Run formatting check
+        run: yarn format:check
+
+      - name: Lint packages
+        run: yarn turbo run lint
+
+      - name: Test packages
+        run: yarn turbo run test
+
+      - name: Build packages
+        run: yarn turbo run build
