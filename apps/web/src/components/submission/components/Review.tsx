@@ -1,11 +1,13 @@
 import { Checkbox, Error, FormStepHeader, Link, Notice } from '@components';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import {
   booleanToYesNo,
   EmploymentTypes,
   SpecialtyDTO,
-  rebuildHaStructure,
   Lha,
+  rebuildHaStructure,
 } from '@ehpr/common';
+
 import { useFormikContext } from 'formik';
 import {
   employmentCircumstanceOptions,
@@ -22,6 +24,7 @@ import {
   deploymentDurationOptions,
   placementOptions as allPlacementOptions,
 } from '../validation/preferences';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Review: React.FC = () => {
   const { values } = useFormikContext<SubmissionType>();
@@ -153,6 +156,14 @@ export const Review: React.FC = () => {
             />
           </Notice>
           <Error name='confirm' />
+        </div>
+        <div className='bg-bcLightBlueBackground border-l-1 border-bcBluePrimary p-6 pb-5 md:pb-6 mb-5 text-left flex items-center'>
+          <div className='px-7 text-bcBluePrimary'>
+            <FontAwesomeIcon icon={faExclamationCircle}></FontAwesomeIcon>
+          </div>
+          <div className='text-bcBluePrimary'>
+            Please print and save this page for your own recrods.
+          </div>
         </div>
       </div>
     </>
