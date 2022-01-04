@@ -23,7 +23,7 @@ import {
   deploymentDurationOptions,
   placementOptions as allPlacementOptions,
 } from '../validation/preferences';
-import { Advisory } from 'src/components/Advisory';
+import { Alert } from '../../Alert';
 
 export const Review: React.FC = () => {
   const { values } = useFormikContext<SubmissionType>();
@@ -155,8 +155,8 @@ export const Review: React.FC = () => {
             />
           </Notice>
           <Error name='confirm' />
+          <Alert>Please print and save this page for your own records.</Alert>
         </div>
-        <Advisory>Please print and save this page for your own records.</Advisory>
       </div>
     </>
   );
