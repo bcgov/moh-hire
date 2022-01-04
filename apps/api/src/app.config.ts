@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import * as winston from 'winston';
 import { WinstonModule, utilities as nestWinstonModuleUtilities } from 'nest-winston';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, Logger, ValidationPipe } from '@nestjs/common';
 import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
 import express from 'express';
 
@@ -66,7 +66,16 @@ export async function createNestApp(): Promise<{
       transform: true,
       whitelist: true,
       forbidNonWhitelisted: false,
-      enableDebugMessages: true,
+      enableDebugMessages: false,
+      disableErrorMessages: true,
+      exceptionFactory: errors => {
+        const errorMessages = errors.map(error =>
+          error.constraints
+            ? JSON.parse(error.constraints.ValidateNestedObject)
+            : 'Validation Error Not Found',
+        );
+        throw new BadRequestException(errorMessages);
+      },
     }),
   );
 

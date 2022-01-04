@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { GenericException } from './../common/generic-exception';
 import {
   ExceptionFilter,
   Catch,
@@ -65,15 +64,27 @@ export class ErrorExceptionFilter implements ExceptionFilter {
       }
     });
 
+    const failedResponse = this.transformHttpException(flattenedException);
+
     // Log errors
-    this.logger.error({ status, stack: exception.stack, body }, null, 'ExceptionFilter');
+    this.logger.error(
+      {
+        status,
+        ...(failedResponse.errorMessage
+          ? { errorResponseMessage: JSON.stringify(failedResponse.errorMessage) }
+          : {}),
+        body,
+      },
+      exception.stack,
+      'ExceptionFilter',
+    );
 
     if (ClassValidationParser.isClassValidatorException(flattenedException)) {
       response
         .status(status)
         .json(ClassValidationParser.transformClassValidatorException(flattenedException));
     } else {
-      response.status(status).json(this.transformHttpException(flattenedException));
+      response.status(status).json(failedResponse);
     }
   }
 }
