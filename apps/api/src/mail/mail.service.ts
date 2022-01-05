@@ -29,15 +29,6 @@ export class MailService {
       bodyType: 'html',
       body: mailOptions.body,
     };
-    return {
-      txId: '',
-      messages: [
-        {
-          msgId: '',
-          to: mailOptions.to as string[],
-        },
-      ],
-    };
     const token = await this.getChesToken();
 
     try {

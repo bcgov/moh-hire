@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 
 import { DeploymentDurations, PlacementOptions } from '../interfaces';
-import { LhaId, validLhaIds } from '../helper';
+import { getAllLHASIds, LhaId, validLhaIds } from '../helper';
 import { IsArrayOfLhas, ValidateArray } from '../validators';
 
 export class AvailabilityDTO {
@@ -34,7 +34,7 @@ export class AvailabilityDTO {
     message: 'Invalid location selection',
   })
   @Validate(IsArrayOfLhas)
-  // Validate Array needs to go here
+  @ValidateArray({ context: { accepts: getAllLHASIds(), name: 'HealthAuthorities' } })
   deploymentLocations!: LhaId[];
 
   @IsArray({ message: 'Placement options are required' })

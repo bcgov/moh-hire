@@ -54,6 +54,7 @@ export class SkillInformationDTO {
 
   @ValidateIf(o => !!o.stream && o.stream !== streamsById.Nonclinical.id)
   @Validate(IsArrayOfSpecialties)
+  // TODO handle specialties array validation
   specialties!: SpecialtyDTO[];
 
   @ValidateIf(o =>

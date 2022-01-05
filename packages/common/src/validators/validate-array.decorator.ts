@@ -11,12 +11,9 @@ export function ValidateArray(validationOptions?: ValidationOptions) {
       validator: {
         async validate(value: any[]) {
           const acceptedValues: any[] = Object.values(validationOptions?.context.accepts);
-          console.log(value);
-          console.log(acceptedValues);
           const invalidValues = value.filter((val: any) => {
             return !acceptedValues.includes(val);
           });
-          console.log(invalidValues, 'Looks like the array was this long. ');
 
           return invalidValues.length === 0;
         },
