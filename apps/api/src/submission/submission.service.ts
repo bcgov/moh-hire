@@ -31,7 +31,7 @@ export class SubmissionService {
 
       return this.sendSubmissionConfirmation(savedSubmission);
     } catch (e) {
-      this.logger.error(`Error saving submission: ${e}`);
+      this.logger.error(`Error saving submission`, (e as Error).stack, 'SubmissionService');
       throw e;
     }
   }
@@ -52,7 +52,12 @@ export class SubmissionService {
       submission = await this.submissionRepository.save(submission);
       this.logger.log(`Confirmation email sent for submission: ${submission.id}`);
     } catch (e) {
-      this.logger.error(`Error sending confirmation email for submission: ${submission.id}`);
+      this.logger.error(
+        `Error sending confirmation email for submission: ${submission.id}`,
+        (e as Error).stack,
+        'SubmissionService',
+      );
+      throw e;
     }
 
     return submission;
