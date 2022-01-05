@@ -18,8 +18,9 @@ import {
   ValidateIf,
   ValidateNested,
 } from 'class-validator';
-import { IsArrayOfSpecialties } from './is-array-of-specialties.decorator';
+import { IsArrayOfSpecialties } from '../validators/is-array-of-specialties.decorator';
 import { StreamId, streamsById, validStreamIds } from '../helper';
+import { ValidateArray } from '../validators/validate-array.decorator';
 
 export class SkillInformationDTO {
   constructor(base?: SkillInformationDTO) {
@@ -65,6 +66,7 @@ export class SkillInformationDTO {
   @ArrayMaxSize(Object.values(HealthAuthorities).length, {
     message: 'Invalid health authority selection',
   })
+  @ValidateArray({ context: { accepts: HealthAuthorities, name: 'HealthAuthorities' } })
   healthAuthorities!: HealthAuthorities[];
 
   @ValidateIf(o => EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED === o.currentEmployment)

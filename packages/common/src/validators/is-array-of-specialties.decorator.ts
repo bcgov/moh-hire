@@ -10,7 +10,7 @@ import {
   Specialty,
   Subspecialty,
 } from '../helper';
-import { SkillInformationDTO, SubspecialtyDTO } from './skill-information.dto';
+import { SkillInformationDTO, SubspecialtyDTO } from '../dto/skill-information.dto';
 
 enum SpecialtyErrorEnum {
   SPECIALTY_REQUIRED = 'Specialty is required',
