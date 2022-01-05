@@ -7,11 +7,12 @@ import { MailService } from 'src/mail/mail.service';
 import { ConfirmationMailable } from 'src/mail/mailables/confirmation.mailable';
 import { Recipient } from 'src/mail/types/recipient';
 import { generateConfirmationId } from './id-generator';
+import { AppLogger } from 'src/common/logger.service';
 
 @Injectable()
 export class SubmissionService {
   constructor(
-    @Inject(Logger) private readonly logger: LoggerService,
+    @Inject(Logger) private readonly logger: AppLogger,
     @InjectRepository(SubmissionEntity)
     private readonly submissionRepository: Repository<SubmissionEntity>,
     @Inject(MailService)

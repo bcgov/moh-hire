@@ -3,7 +3,7 @@ import { WinstonModule, utilities as nestWinstonModuleUtilities } from 'nest-win
 import winston from 'winston';
 import postToSlack from './slack';
 
-export class Logger implements LoggerService {
+export class AppLogger implements LoggerService {
   private logger;
 
   constructor() {

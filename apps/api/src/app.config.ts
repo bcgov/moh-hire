@@ -4,7 +4,7 @@ import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express
 import express from 'express';
 
 import { AppModule } from './app.module';
-import { Logger } from './common/logger.service';
+import { AppLogger } from './common/logger.service';
 import { Documentation } from './common/documentation';
 import { SuccessResponseInterceptor } from './common/interceptors/success-response.interceptor';
 import { ErrorExceptionFilter } from './common/error-exception.filter';
@@ -21,7 +21,7 @@ export async function createNestApp(): Promise<{
   let app: NestExpressApplication;
   if (process.env.RUNTIME_ENV === 'local') {
     app = await NestFactory.create(AppModule, {
-      logger: new Logger(),
+      logger: new AppLogger(),
     });
   } else {
     app = await NestFactory.create<NestExpressApplication>(
@@ -29,7 +29,7 @@ export async function createNestApp(): Promise<{
       new ExpressAdapter(expressApp),
     );
     // Adding winston logger
-    app.useLogger(new Logger());
+    app.useLogger(new AppLogger());
   }
 
   // Api prefix api/v1/
@@ -64,7 +64,7 @@ export async function createNestApp(): Promise<{
   );
 
   // Global Error Filter
-  app.useGlobalFilters(new ErrorExceptionFilter(app.get(Logger)));
+  app.useGlobalFilters(new ErrorExceptionFilter(app.get(AppLogger)));
 
   // Printing the environment variables
   console.table({
