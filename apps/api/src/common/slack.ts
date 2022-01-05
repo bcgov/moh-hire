@@ -10,6 +10,6 @@ export default async function postToSlack(data: unknown): Promise<void> {
       text: `${'```'}${yaml.dump(data)}${'```'}`,
     });
   } else {
-    Logger.error('SLACK_WEBHOOK_URL not available, Slack alert not sent');
+    Logger.warn('SLACK_WEBHOOK_URL not available, Slack alert not sent', 'postToSlack');
   }
 }
