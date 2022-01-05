@@ -4,6 +4,7 @@ import axios from 'axios';
 import * as fs from 'fs';
 import { stringify } from 'qs';
 import * as handlebars from 'handlebars';
+
 import { Mailable } from './mailables/mail-base.mailable';
 import { MailOptions } from './mail-options.interface';
 import { ChesResponse } from './types/ches-response';
@@ -31,23 +32,18 @@ export class MailService {
     };
     const token = await this.getChesToken();
 
-    try {
-      const { data } = await axios.post<ChesResponse>(
-        `${process.env.CHES_SERVICE_HOST}/api/v1/email`,
-        emailBody,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-            'content-type': 'application/json',
-          },
-          timeout: 20000,
+    const { data } = await axios.post<ChesResponse>(
+      `${process.env.CHES_SERVICE_HOST}/api/v1/email`,
+      emailBody,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+          'content-type': 'application/json',
         },
-      );
-      return data;
-    } catch (e) {
-      this.logger.error(`Error sending email to CHES`);
-      throw e;
-    }
+        timeout: 20000,
+      },
+    );
+    return data;
   }
 
   /**
@@ -55,26 +51,21 @@ export class MailService {
    *
    */
   private async getChesToken() {
-    try {
-      const token = await axios.post(
-        process.env.CHES_AUTH_URL as string,
-        stringify({ grant_type: 'client_credentials' }),
-        {
-          auth: {
-            username: process.env.CHES_CLIENT_ID as string,
-            password: process.env.CHES_CLIENT_SECRET as string,
-          },
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          timeout: 5000,
+    const token = await axios.post(
+      process.env.CHES_AUTH_URL as string,
+      stringify({ grant_type: 'client_credentials' }),
+      {
+        auth: {
+          username: process.env.CHES_CLIENT_ID as string,
+          password: process.env.CHES_CLIENT_SECRET as string,
         },
-      );
-      return token.data.access_token;
-    } catch (e) {
-      this.logger.error(`Error retrieving access token from CHES`);
-      throw e;
-    }
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        timeout: 5000,
+      },
+    );
+    return token.data.access_token;
   }
 
   /**
@@ -93,15 +84,9 @@ export class MailService {
 
     const templatePath = path.resolve(`${__dirname}/templates/${mailable.template}.hbs`);
 
-    let body;
-    try {
-      const templateContent = fs.readFileSync(templatePath, 'utf-8');
-      const template = handlebars.compile(templateContent, { strict: true });
-      body = template(mailable.context);
-    } catch (e) {
-      this.logger.error(`Error compiling template`);
-      throw e;
-    }
+    const templateContent = fs.readFileSync(templatePath, 'utf-8');
+    const template = handlebars.compile(templateContent, { strict: true });
+    const body = template(mailable.context);
 
     return await this.sendMailWithChes({
       ...mailOptions,
