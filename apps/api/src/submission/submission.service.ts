@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { SubmissionEntity } from './entity/submission.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -26,15 +26,10 @@ export class SubmissionService {
       confirmationId,
     } as Partial<SubmissionEntity>);
 
-    try {
-      const savedSubmission = await this.submissionRepository.save(newSubmission);
-      this.logger.log(`Saved submission: ${savedSubmission.id}`);
+    const savedSubmission = await this.submissionRepository.save(newSubmission);
+    this.logger.log(`Saved submission: ${savedSubmission.id}`, SubmissionService.name);
 
-      return this.sendSubmissionConfirmation(savedSubmission);
-    } catch (e) {
-      this.logger.error(`Error saving submission`, (e as Error).stack, 'SubmissionService');
-      throw e;
-    }
+    return this.sendSubmissionConfirmation(savedSubmission);
   }
 
   private async sendSubmissionConfirmation(submission: SubmissionEntity) {
@@ -46,20 +41,17 @@ export class SubmissionService {
       confirmationId: this.convertIdToDashedId(submission.confirmationId),
     });
 
-    try {
-      this.logger.log(`Sending confirmation email for submission: ${submission.id}`);
-      const { txId } = await this.mailService.sendMailable(mailable);
-      submission.chesId = txId;
-      submission = await this.submissionRepository.save(submission);
-      this.logger.log(`Confirmation email sent for submission: ${submission.id}`);
-    } catch (e) {
-      this.logger.error(
-        `Error sending confirmation email for submission: ${submission.id}`,
-        (e as Error).stack,
-        'SubmissionService',
-      );
-      throw e;
-    }
+    this.logger.log(
+      `Sending confirmation email for submission: ${submission.id}`,
+      SubmissionService.name,
+    );
+    const { txId } = await this.mailService.sendMailable(mailable);
+    submission.chesId = txId;
+    submission = await this.submissionRepository.save(submission);
+    this.logger.log(
+      `Confirmation email sent for submission: ${submission.id}`,
+      SubmissionService.name,
+    );
 
     return submission;
   }

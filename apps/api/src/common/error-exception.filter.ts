@@ -37,7 +37,6 @@ export class ErrorExceptionFilter implements ExceptionFilter {
         (exception as any)?.response?.message ||
         CommonError.INTERNAL_ERROR.errorMessage,
 
-      /** If local, return the full error message body */
       errorDetails: {},
     };
   }
@@ -66,15 +65,7 @@ export class ErrorExceptionFilter implements ExceptionFilter {
     const failedResponse = this.transformHttpException(flattenedException);
 
     // Log errors
-    this.logger.error(
-      {
-        status,
-        errorResponseMessage: JSON.stringify(failedResponse.errorMessage),
-        body,
-      },
-      exception.stack,
-      'ExceptionFilter',
-    );
+    this.logger.error(exception, 'ExceptionFilter');
 
     if (ClassValidationParser.isClassValidatorException(flattenedException)) {
       response
