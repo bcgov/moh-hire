@@ -210,6 +210,17 @@ else
 endif
 	@git push --force origin refs/tags/test:refs/tags/test
 
+tag-prod:
+ifndef version
+	@echo "++\n***** ERROR: version not set.\n++"
+	@exit 1
+else
+	@git tag -fa $(version) -m "EHPR release version: $(version)"
+	@git push --force origin refs/tags/$(version):refs/tags/$(version)
+	@git tag -fa prod -m "Deploy prod: $(version)"
+	@git push --force origin refs/tags/prod:refs/tags/prod
+endif
+
 # Typeorm Migrations
 
 migration-generate:
