@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, InternalServerErrorException } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -8,5 +8,10 @@ export class AppController {
   @Get('/version')
   getVersion(): object {
     return this.appService.getVersionInfo();
+  }
+
+  @Get('/error')
+  getError(): object {
+    throw new InternalServerErrorException('This is a sample internal server error');
   }
 }
