@@ -29,11 +29,16 @@ export class AppLogger implements LoggerService {
   }
 
   error(e: unknown, context?: string) {
-    const error = e as Error;
+    const error = e as Error & { response?: Error };
     let message = error.message;
 
     if (axios.isAxiosError(e)) {
       message = (e as AxiosError).response?.data;
+    }
+
+    // For handling manually crafted validation error message arrays, see 'exceptionFactory' in 'app.config.ts'
+    if (error.response?.message) {
+      message = error.response?.message;
     }
 
     postToSlack({ message, stack: error.stack, context });

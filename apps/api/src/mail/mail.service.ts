@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as path from 'path';
 import axios from 'axios';
 import * as fs from 'fs';
@@ -11,7 +11,7 @@ import { ChesResponse } from './types/ches-response';
 
 @Injectable()
 export class MailService {
-  constructor(@Inject(Logger) private readonly logger: LoggerService) {
+  constructor() {
     const templatePath = path.resolve(`${__dirname}/templates/partials/layout.hbs`);
     const templateContent = fs.readFileSync(templatePath, 'utf-8');
     handlebars.registerPartial('layout', templateContent);
