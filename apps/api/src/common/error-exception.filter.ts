@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { GenericException } from './../common/generic-exception';
 import {
   ExceptionFilter,
   Catch,
@@ -30,12 +29,12 @@ export class ErrorExceptionFilter implements ExceptionFilter {
     return {
       errorType:
         exceptionMessage.error ||
-        (exception as any).response.error ||
+        (exception as any).response?.error ||
         CommonError.INTERNAL_ERROR.errorType,
 
       errorMessage:
         exceptionMessage.message ||
-        (exception as any).response.message ||
+        (exception as any).response?.message ||
         CommonError.INTERNAL_ERROR.errorMessage,
 
       /** If local, return the full error message body */
@@ -56,32 +55,36 @@ export class ErrorExceptionFilter implements ExceptionFilter {
         ? exception.message
         : exception;
 
-    const privateKeys: string[] = ['password'];
-    const body = typeof request.body === 'object' ? JSON.stringify(request.body) : request.body;
+    const privateKeys: string[] = ['password', 'payload'];
+    const body = typeof request.body === 'string' ? JSON.parse(request.body) : request.body;
+
     privateKeys.forEach(key => {
       if (body[key]) {
         delete body[key];
       }
     });
-    this.logger.error(
-      `${new Date()}: error thrown with message ${exception.message}`,
-      exception.stack,
-      typeof body === 'object' ? JSON.stringify(body) : body,
-    );
 
-    /** If failed with a server error, logs the problems */
-    if ((status >= 500 && status < 600) || !(exception instanceof GenericException)) {
-      /** Log entire exception */
-      /** If there's an stack, log it */
-      this.logger.error(exception);
-    }
+    const failedResponse = this.transformHttpException(flattenedException);
+
+    // Log errors
+    this.logger.error(
+      {
+        status,
+        ...(failedResponse.errorMessage
+          ? { errorResponseMessage: JSON.stringify(failedResponse.errorMessage) }
+          : {}),
+        body,
+      },
+      exception.stack,
+      'ExceptionFilter',
+    );
 
     if (ClassValidationParser.isClassValidatorException(flattenedException)) {
       response
         .status(status)
         .json(ClassValidationParser.transformClassValidatorException(flattenedException));
     } else {
-      response.status(status).json(this.transformHttpException(flattenedException));
+      response.status(status).json(failedResponse);
     }
   }
 }
