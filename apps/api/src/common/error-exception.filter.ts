@@ -69,9 +69,7 @@ export class ErrorExceptionFilter implements ExceptionFilter {
     this.logger.error(
       {
         status,
-        ...(failedResponse.errorMessage
-          ? { errorResponseMessage: JSON.stringify(failedResponse.errorMessage) }
-          : {}),
+        errorResponseMessage: JSON.stringify(failedResponse.errorMessage),
         body,
       },
       exception.stack,
