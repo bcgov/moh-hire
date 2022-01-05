@@ -34,7 +34,7 @@ export class ErrorExceptionFilter implements ExceptionFilter {
 
       errorMessage:
         exceptionMessage?.message ||
-        (exception as any).response.message ||
+        (exception as any)?.response?.message ||
         CommonError.INTERNAL_ERROR.errorMessage,
 
       /** If local, return the full error message body */
@@ -58,7 +58,6 @@ export class ErrorExceptionFilter implements ExceptionFilter {
 
     const privateKeys: string[] = ['password', 'payload'];
     const body = typeof request.body === 'string' ? JSON.parse(request.body) : request.body;
-
     privateKeys.forEach(key => {
       if (body[key]) {
         delete body[key];
