@@ -68,9 +68,6 @@ const getHaByHsdaId = (hsdaId: HsdaId) => {
 
   return allHas.find(ha => ha.hsdas.includes(hsdaId));
 };
-export const getAllLHASIds = (): string[] => {
-  return data.lhas.allIds;
-};
 
 type FullHsdaType = { id: string; name: string; lhas: Lha[] };
 type FullHaType = { id: string; name: string; hsdas: FullHsdaType[] };
