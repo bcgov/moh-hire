@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { FailedResponse } from '../common/ro/failed-response.ro';
-import { ClassValidationParser } from '../common/parsers/class-validation.parser';
 import { CommonError } from 'src/common/common.errors';
 
 @Catch(Error)
@@ -62,17 +61,9 @@ export class ErrorExceptionFilter implements ExceptionFilter {
       }
     });
 
-    const failedResponse = this.transformHttpException(flattenedException);
-
     // Log errors
-    this.logger.error(exception, 'ExceptionFilter');
+    this.logger.error(flattenedException, 'ExceptionFilter');
 
-    if (ClassValidationParser.isClassValidatorException(flattenedException)) {
-      response
-        .status(status)
-        .json(ClassValidationParser.transformClassValidatorException(flattenedException));
-    } else {
-      response.status(status).json(failedResponse);
-    }
+    response.status(status).json(this.transformHttpException(flattenedException));
   }
 }
