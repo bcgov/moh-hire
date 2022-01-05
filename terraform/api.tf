@@ -71,10 +71,25 @@ EOF
   api_gateway_log_format               = replace(local.api_gateway_log_format_with_newlines, "\n", "")
 }
 
+resource "aws_cloudwatch_log_group" "api_gateway" {
+  name = "api-gw/${local.api_name}/logs"
+
+  lifecycle {
+    ignore_changes = [
+      retention_in_days
+    ]
+  }
+}
+
 resource "aws_apigatewayv2_stage" "api" {
   api_id      = aws_apigatewayv2_api.api.id
   name        = "$default"
   auto_deploy = true
+
+  access_log_settings {
+    destination_arn = aws_cloudwatch_log_group.api_gateway.arn
+    format          = local.api_gateway_log_format
+  }
 }
 
 resource "aws_lambda_permission" "api_allow_gateway" {
