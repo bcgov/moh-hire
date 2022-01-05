@@ -31,6 +31,7 @@ resource "aws_lambda_function" "api" {
       MAIL_FROM          = var.mail_from
       BUILD_ID           = var.build_id
       BUILD_INFO         = var.build_info
+      SLACK_WEBHOOK_URL  = var.slack_webhook_url
     }
   }
 }

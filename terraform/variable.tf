@@ -18,6 +18,8 @@ variable "mail_from" {}
 
 variable "ches_client_id" {}
 
+variable "slack_webhook_url" {}
+
 variable "azs" {
   default = ["ca-central-1a", "ca-central-1b"]
 }
