@@ -4,11 +4,17 @@ import yaml from 'js-yaml';
 
 const webhookUrl = process.env.SLACK_ALERTS_WEBHOOK_URL;
 
-export default async function postToSlack(data: unknown): Promise<void> {
+export default function postToSlack(data: unknown): void {
   if (webhookUrl) {
-    await axios.post(webhookUrl, {
-      text: `${'```'}${yaml.dump(data)}${'```'}`,
-    });
+    axios.post(
+      webhookUrl,
+      {
+        text: `${'```'}${yaml.dump(data)}${'```'}`,
+      },
+      {
+        timeout: 5000,
+      },
+    );
   } else {
     Logger.warn('SLACK_ALERTS_WEBHOOK_URL not available, Slack alert not sent', 'postToSlack');
   }
