@@ -17,7 +17,7 @@ export default function postToSlack(data: unknown): void {
       },
       {
         httpsAgent: httpsAgent,
-        timeout: 8000,
+        timeout: 20000,
       },
     );
   } else {
