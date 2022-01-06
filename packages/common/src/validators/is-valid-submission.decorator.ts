@@ -1,5 +1,5 @@
 import { registerDecorator, ValidationError, ValidationOptions, Validator } from 'class-validator';
-import { SubmissionPayloadDTO } from './submission-payload.dto';
+import { SubmissionPayloadDTO } from '../dto/submission-payload.dto';
 
 const validator = new Validator();
 export function IsValidSubmission(validationOptions?: ValidationOptions) {

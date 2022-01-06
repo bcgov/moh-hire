@@ -1,5 +1,5 @@
 import { IsIn, IsString } from 'class-validator';
-import { IsValidSubmission } from './is-valid-submission.decorator';
+import { IsValidSubmission } from '../validators';
 import { SubmissionPayloadDTO } from './submission-payload.dto';
 
 export class SubmissionDTO {

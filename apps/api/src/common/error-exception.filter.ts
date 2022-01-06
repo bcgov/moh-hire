@@ -28,13 +28,13 @@ export class ErrorExceptionFilter implements ExceptionFilter {
 
     return {
       errorType:
-        exceptionMessage.error ||
+        exceptionMessage?.error ||
         (exception as any).response?.error ||
         CommonError.INTERNAL_ERROR.errorType,
 
       errorMessage:
-        exceptionMessage.message ||
-        (exception as any).response?.message ||
+        exceptionMessage?.message ||
+        (exception as any)?.response?.message ||
         CommonError.INTERNAL_ERROR.errorMessage,
 
       /** If local, return the full error message body */
@@ -50,14 +50,13 @@ export class ErrorExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest();
     /** Flat error if it was wrapped inside another error */
     const flattenedException =
-      typeof exception.message === 'object' &&
-      typeof (exception.message as any).message === 'object'
-        ? exception.message
+      typeof exception?.message === 'object' &&
+      typeof (exception?.message as any)?.message === 'object'
+        ? exception?.message
         : exception;
 
     const privateKeys: string[] = ['password', 'payload'];
     const body = typeof request.body === 'string' ? JSON.parse(request.body) : request.body;
-
     privateKeys.forEach(key => {
       if (body[key]) {
         delete body[key];

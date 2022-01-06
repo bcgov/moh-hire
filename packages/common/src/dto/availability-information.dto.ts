@@ -11,7 +11,7 @@ import {
 
 import { DeploymentDurations, PlacementOptions } from '../interfaces';
 import { LhaId, validLhaIds } from '../helper';
-import { IsArrayOfLhas } from './is-valid-lha.decorator';
+import { IsArrayOfLhas, ValidateArray } from '../validators';
 
 export class AvailabilityDTO {
   constructor(base?: AvailabilityDTO) {
@@ -34,6 +34,7 @@ export class AvailabilityDTO {
     message: 'Invalid location selection',
   })
   @Validate(IsArrayOfLhas)
+  @ValidateArray({ context: { accepts: validLhaIds, name: 'HealthAuthorities' } })
   deploymentLocations!: LhaId[];
 
   @IsArray({ message: 'Placement options are required' })
@@ -41,6 +42,7 @@ export class AvailabilityDTO {
   @ArrayMaxSize(Object.values(PlacementOptions).length, {
     message: 'Invalid placement options',
   })
+  @ValidateArray({ context: { accepts: PlacementOptions, name: 'PlacementOptions' } })
   placementOptions!: PlacementOptions[];
 
   @IsBoolean({ message: 'This field is required' })

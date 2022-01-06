@@ -89,7 +89,6 @@ export async function createNestApp(): Promise<{
     nodeEnv: process.env.NODE_ENV,
     runtimeEnv: process.env.RUNTIME_ENV,
   });
-
   return {
     app,
     expressApp,

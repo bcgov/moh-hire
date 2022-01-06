@@ -29,7 +29,6 @@ export class MailService {
       bodyType: 'html',
       body: mailOptions.body,
     };
-
     const token = await this.getChesToken();
 
     try {
