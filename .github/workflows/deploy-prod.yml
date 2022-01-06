@@ -10,7 +10,7 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     concurrency: ci-${github.ref}-prod
     environment:
       name: prod

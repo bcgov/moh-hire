@@ -7,6 +7,7 @@ export $(shell sed 's/=.*//' ./.env)
 # Project
 export PROJECT := $(or $(PROJECT),ehpr)
 
+
 # Runtime and application Environments specific variable
 export NODE_ENV ?= development
 export ENV_NAME ?= test
@@ -33,13 +34,25 @@ APP_SRC_BUCKET = $(NAMESPACE)-app-dist
 TERRAFORM_DIR = terraform
 export BOOTSTRAP_ENV=terraform/bootstrap
 
+ifeq ($(ENV_NAME), prod)
+DOMAIN=
+endif
+
+ifeq ($(ENV_NAME), dev) 
+DOMAIN=dev.ehpr.freshworks.club
+endif
+
+ifeq ($(ENV_NAME), test) 
+DOMAIN=test.ehpr.freshworks.club
+endif
+
 define TFVARS_DATA
 target_env = "$(ENV_NAME)"
 project_code = "$(PROJECT)"
 api_artifact = "build/api.zip"
 app_sources = "build/app"
 app_sources_bucket = "$(APP_SRC_BUCKET)"
-domain = ""
+domain = "$(DOMAIN)"
 db_username = "$(POSTGRES_USERNAME)"
 ches_client_id = "$(CHES_CLIENT_ID)"
 mail_from = "$(MAIL_FROM)"
