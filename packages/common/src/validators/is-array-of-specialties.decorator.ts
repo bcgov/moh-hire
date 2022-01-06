@@ -106,7 +106,7 @@ export class IsArrayOfSpecialties implements ValidatorConstraintInterface {
         if (!isValidString(subspecialty.id)) {
           return SpecialtyErrorEnum.SUBSPECIALTY_REQUIRED;
         }
-        if (subspecialtyNotListed(subspecialty, formSpecialties)) {
+        if (subspecialtyNotListed(subspecialty, formSubspecialties)) {
           return SpecialtyErrorEnum.INVALID_SUBSPECIALTY;
         }
       }
