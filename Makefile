@@ -43,7 +43,7 @@ DOMAIN=dev.ehpr.freshworks.club
 endif
 
 ifeq ($(ENV_NAME), test) 
-DOMAIN=
+DOMAIN=test.ehpr.freshworks.club
 endif
 
 define TFVARS_DATA
