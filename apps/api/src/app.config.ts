@@ -72,7 +72,7 @@ export async function createNestApp(): Promise<{
     envName: process.env.ENV_NAME,
     nodeEnv: process.env.NODE_ENV,
     runtimeEnv: process.env.RUNTIME_ENV,
-    alertsEnabled: Boolean(process.env.SLACK_WEBHOOK_URL),
+    alertsEnabled: Boolean(process.env.SLACK_ALERTS_WEBHOOK_URL),
   });
   return {
     app,
