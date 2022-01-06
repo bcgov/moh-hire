@@ -31,25 +31,25 @@ resource "aws_cloudfront_origin_access_identity" "app" {
 
 resource "aws_cloudfront_function" "response" {
   provider = aws.us-east-1
-  name    = "${local.namespace}-cf-response"
-  runtime = "cloudfront-js-1.0"
-  comment = "Add security headers"
-  code    = file("${path.module}/cloudfront/response.js")
+  name     = "${local.namespace}-cf-response"
+  runtime  = "cloudfront-js-1.0"
+  comment  = "Add security headers"
+  code     = file("${path.module}/cloudfront/response.js")
 }
 
 resource "aws_cloudfront_function" "request" {
   provider = aws.us-east-1
-  name    = "${local.namespace}-cf-request"
-  runtime = "cloudfront-js-1.0"
-  comment = "Next request handler"
-  code    = file("${path.module}/cloudfront/request.js")
+  name     = "${local.namespace}-cf-request"
+  runtime  = "cloudfront-js-1.0"
+  comment  = "Next request handler"
+  code     = file("${path.module}/cloudfront/request.js")
 }
 
 
 resource "aws_cloudfront_distribution" "app" {
   comment = local.app_name
 
-  aliases = local.has_domain ? [var.domain] : []
+  aliases = local.has_domain ? [var.domain] : [] # TODO
 
   origin {
     domain_name = aws_s3_bucket.app.bucket_regional_domain_name
@@ -126,7 +126,7 @@ resource "aws_cloudfront_distribution" "app" {
     max_ttl     = 0
     compress    = true
   }
-  
+
 
   // Cache img directory
   ordered_cache_behavior {
@@ -153,14 +153,35 @@ resource "aws_cloudfront_distribution" "app" {
     viewer_protocol_policy = "redirect-to-https"
   }
 
-  viewer_certificate {
-    cloudfront_default_certificate = local.has_domain ? false : true
+  # viewer_certificate {
+  #   cloudfront_default_certificate = local.has_domain ? false : true
 
-    acm_certificate_arn      = local.has_domain ? data.aws_acm_certificate.domain[0].arn : null
-    minimum_protocol_version = local.has_domain ? "TLSv1.2_2019" : null
-    ssl_support_method       = local.has_domain ? "sni-only" : null
+  #   acm_certificate_arn      = local.has_domain ? data.aws_acm_certificate.domain[0].arn : null
+  #   minimum_protocol_version = local.has_domain ? "TLSv1.2_2019" : null
+  #   ssl_support_method       = local.has_domain ? "sni-only" : null
+  # }
+
+
+  #   dynamic "viewer_certificate" {
+  #   for_each = local.is_prod
+  #   content {
+  #     acm_certificate_arn      = data.aws_acm_certificate.ets[0].arn
+  #     ssl_support_method       = "sni-only"
+  #     minimum_protocol_version = "TLSv1.2_2019"
+  #   }
+  # }
+
+
+  # CNAME to this CF dist is created in freshworks.club hosted zone in fw AWS
+  dynamic "viewer_certificate" {
+    for_each = local.is_not_prod
+    content {
+      acm_certificate_arn      = aws_acm_certificate.fw_ets[0].arn
+      ssl_support_method       = "sni-only"
+      minimum_protocol_version = "TLSv1.2_2019"
+    }
   }
-
+  
   custom_error_response {
     error_code         = 404
     response_code      = 404
