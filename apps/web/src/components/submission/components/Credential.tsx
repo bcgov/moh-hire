@@ -76,6 +76,8 @@ export const Credential: React.FC = () => {
     registrationStatus,
   );
 
+  const specialtySelectorEnabled = specialtyOptions && specialtyOptions?.length > 1;
+
   const isNonClinical = stream === streamsById.Nonclinical.id;
   const isClinical = stream && !isNonClinical; // stream is selected and is not non-clinical
   return (
@@ -102,7 +104,7 @@ export const Credential: React.FC = () => {
                   {specialties?.map((_, index) => (
                     <SpecialtySelector
                       key={index}
-                      disabled={!Boolean(specialtyOptions && specialtyOptions?.length > 1)}
+                      disabled={!specialtySelectorEnabled}
                       index={index}
                       specialties={specialtyOptions}
                       subspecialties={subspecialties?.[index]}
@@ -115,7 +117,7 @@ export const Credential: React.FC = () => {
                 </div>
 
                 <div className='flex justify-center md:justify-start items-center w-full'>
-                  {specialties.length !== specialtyOptions?.length ? (
+                  {specialties.length !== specialtyOptions?.length && specialtySelectorEnabled ? (
                     <button
                       type='button'
                       className='text-bcBlueLink'
