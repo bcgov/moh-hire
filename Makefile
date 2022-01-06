@@ -36,12 +36,15 @@ export BOOTSTRAP_ENV=terraform/bootstrap
 
 ifeq ($(ENV_NAME), prod)
 DOMAIN=
+endif
 
 ifeq ($(ENV_NAME), dev) 
 DOMAIN=dev.ehpr.freshworks.club
+endif
 
 ifeq ($(ENV_NAME), test) 
 DOMAIN=
+endif
 
 define TFVARS_DATA
 target_env = "$(ENV_NAME)"
