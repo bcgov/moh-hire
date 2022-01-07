@@ -2,7 +2,6 @@ import { Entity, Column, BeforeInsert } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { BaseEntity } from 'src/database/base.entity';
 import { EmploymentTypes, getStreamById, streamsById, SubmissionPayloadDTO } from '@ehpr/common';
-import { stream } from 'winston';
 
 @Entity('submission')
 export class SubmissionEntity extends BaseEntity {
