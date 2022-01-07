@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { FailedResponse } from '../common/ro/failed-response.ro';
-import { ClassValidationParser } from '../common/parsers/class-validation.parser';
 import { CommonError } from 'src/common/common.errors';
 
 @Catch(Error)
@@ -37,11 +36,14 @@ export class ErrorExceptionFilter implements ExceptionFilter {
         (exception as any)?.response?.message ||
         CommonError.INTERNAL_ERROR.errorMessage,
 
-      /** If local, return the full error message body */
       errorDetails: {},
     };
   }
 
+  /**
+   * This method is called when an exception is thrown anywhere in the application
+   * It parses and transforms the exception data and sends it to the logger and to the client
+   */
   catch(exception: Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
@@ -63,27 +65,9 @@ export class ErrorExceptionFilter implements ExceptionFilter {
       }
     });
 
-    const failedResponse = this.transformHttpException(flattenedException);
-
     // Log errors
-    this.logger.error(
-      {
-        status,
-        ...(failedResponse.errorMessage
-          ? { errorResponseMessage: JSON.stringify(failedResponse.errorMessage) }
-          : {}),
-        body,
-      },
-      exception.stack,
-      'ExceptionFilter',
-    );
+    this.logger.error(flattenedException, 'ExceptionFilter');
 
-    if (ClassValidationParser.isClassValidatorException(flattenedException)) {
-      response
-        .status(status)
-        .json(ClassValidationParser.transformClassValidatorException(flattenedException));
-    } else {
-      response.status(status).json(failedResponse);
-    }
+    response.status(status).json(this.transformHttpException(flattenedException));
   }
 }

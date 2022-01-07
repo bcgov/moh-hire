@@ -1,32 +1,16 @@
 import { NestFactory } from '@nestjs/core';
-import * as winston from 'winston';
-import { WinstonModule, utilities as nestWinstonModuleUtilities } from 'nest-winston';
-import { BadRequestException, Logger, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
 import express from 'express';
 
 import { AppModule } from './app.module';
+import { AppLogger } from './common/logger.service';
 import { Documentation } from './common/documentation';
 import { SuccessResponseInterceptor } from './common/interceptors/success-response.interceptor';
 import { ErrorExceptionFilter } from './common/error-exception.filter';
 import { TrimPipe } from './common/trim.pipe';
 import { API_PREFIX } from './config';
 
-const logger = () =>
-  WinstonModule.createLogger({
-    transports: [
-      new winston.transports.Console({
-        level: 'debug',
-        format: winston.format.combine(
-          winston.format.timestamp(),
-          process.env.RUNTIME_ENV === 'local'
-            ? nestWinstonModuleUtilities.format.nestLike('EHPR', { prettyPrint: true })
-            : winston.format.json(),
-        ),
-      }),
-    ],
-    exitOnError: false,
-  });
 export async function createNestApp(): Promise<{
   app: NestExpressApplication;
   expressApp: express.Application;
@@ -37,7 +21,7 @@ export async function createNestApp(): Promise<{
   let app: NestExpressApplication;
   if (process.env.RUNTIME_ENV === 'local') {
     app = await NestFactory.create(AppModule, {
-      logger: logger(),
+      logger: new AppLogger(),
     });
   } else {
     app = await NestFactory.create<NestExpressApplication>(
@@ -45,7 +29,7 @@ export async function createNestApp(): Promise<{
       new ExpressAdapter(expressApp),
     );
     // Adding winston logger
-    app.useLogger(logger());
+    app.useLogger(new AppLogger());
   }
 
   // Api prefix api/v1/
@@ -80,7 +64,7 @@ export async function createNestApp(): Promise<{
   );
 
   // Global Error Filter
-  app.useGlobalFilters(new ErrorExceptionFilter(app.get(Logger)));
+  app.useGlobalFilters(new ErrorExceptionFilter(app.get(AppLogger)));
 
   // Printing the environment variables
   console.table({
@@ -88,6 +72,7 @@ export async function createNestApp(): Promise<{
     envName: process.env.ENV_NAME,
     nodeEnv: process.env.NODE_ENV,
     runtimeEnv: process.env.RUNTIME_ENV,
+    alertsEnabled: Boolean(process.env.SLACK_ALERTS_WEBHOOK_URL),
   });
   return {
     app,
