@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus } from '@nestjs/common';
+import { Controller, Get, HttpStatus, InternalServerErrorException } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AppService } from './app.service';
 
@@ -12,7 +12,15 @@ export class AppController {
   @ApiResponse({ status: HttpStatus.OK })
   @Get('/version')
   getVersion(): object {
-    throw new Error('Breaking uptime');
     return this.appService.getVersionInfo();
+  }
+
+  @ApiOperation({
+    summary: 'Throw an internal server exception',
+  })
+  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR })
+  @Get('/error')
+  getError(): object {
+    throw new InternalServerErrorException('Breaking uptime');
   }
 }
