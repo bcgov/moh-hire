@@ -40,6 +40,10 @@ export class ErrorExceptionFilter implements ExceptionFilter {
     };
   }
 
+  /**
+   * This method is called when an exception is thrown anywhere in the application
+   * It parses and transforms the exception data and sends it to the logger and to the client
+   */
   catch(exception: Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
