@@ -39,7 +39,7 @@ export class SubmissionEntity extends BaseEntity {
 
     // Remove current employment if the user is not currently employed
     if (EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED === skillInformation.currentEmployment) {
-      delete this.payload.skillInformation.employmentCircumstance;
+      this.payload.skillInformation.employmentCircumstance = undefined;
     }
     if (this.payload.skillInformation.stream !== streamsById.Nonclinical.id) {
       delete this.payload.skillInformation.nonClinicalJobTitle;
