@@ -14,13 +14,4 @@ export class AppController {
   getVersion(): object {
     return this.appService.getVersionInfo();
   }
-
-  @ApiOperation({
-    summary: 'Trigger a sample error',
-  })
-  @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR })
-  @Get('/error')
-  getError(): object {
-    throw new InternalServerErrorException('This is a sample internal server error');
-  }
 }
