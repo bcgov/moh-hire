@@ -30,14 +30,17 @@ export class AppLogger implements LoggerService {
 
   error(e: unknown, context?: string) {
     const error = e as Error & { response?: Error };
-    let message = error.message;
+    let message: string | object = error.message;
 
     if (typeof e === 'string') {
       message = e;
     }
 
     if (axios.isAxiosError(e)) {
-      message = (e as AxiosError).response?.data;
+      message = {
+        data: (e as AxiosError).response?.data,
+        url: (e as AxiosError).response?.config.url,
+      };
     }
 
     // For handling manually crafted validation error message arrays, see 'exceptionFactory' in 'app.config.ts'
