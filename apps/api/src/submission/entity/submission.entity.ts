@@ -1,7 +1,8 @@
 import { Entity, Column, BeforeInsert } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { BaseEntity } from 'src/database/base.entity';
-import { EmploymentTypes, streamsById, SubmissionPayloadDTO } from '@ehpr/common';
+import { EmploymentTypes, getStreamById, streamsById, SubmissionPayloadDTO } from '@ehpr/common';
+import { stream } from 'winston';
 
 @Entity('submission')
 export class SubmissionEntity extends BaseEntity {
@@ -21,16 +22,19 @@ export class SubmissionEntity extends BaseEntity {
   version!: string;
   @BeforeInsert()
   beforeInsert() {
-    let { contactInformation, skillInformation, availabilityInformation } = this.payload;
+    let { skillInformation, availabilityInformation } = this.payload;
 
     // Remove specialties if the stream is non clinical
-    if (skillInformation.stream && skillInformation.stream !== streamsById.Nonclinical.id) {
+    if (
+      skillInformation.stream !== streamsById.Nonclinical.id ||
+      getStreamById(skillInformation.stream).specialties.length === 0
+    ) {
       this.payload.skillInformation.specialties = [];
     }
 
     // Remove Health authorities if the user is not a resident or employed
     if (
-      [EmploymentTypes.HEALTH_SECTOR_EMPLOYED, EmploymentTypes.HEALTH_SECTORY_RESIDENCY].includes(
+      ![EmploymentTypes.HEALTH_SECTOR_EMPLOYED, EmploymentTypes.HEALTH_SECTORY_RESIDENCY].includes(
         skillInformation.currentEmployment,
       )
     ) {
@@ -39,7 +43,7 @@ export class SubmissionEntity extends BaseEntity {
 
     // Remove current employment if the user is not currently employed
     if (EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED === skillInformation.currentEmployment) {
-      this.payload.skillInformation.employmentCircumstance = undefined;
+      delete this.payload.skillInformation.employmentCircumstance;
     }
     if (this.payload.skillInformation.stream !== streamsById.Nonclinical.id) {
       delete this.payload.skillInformation.nonClinicalJobTitle;
@@ -48,12 +52,6 @@ export class SubmissionEntity extends BaseEntity {
     // Remove deployment locations if the user agrees to deploy anywhere.
     if (availabilityInformation.deployAnywhere) {
       this.payload.availabilityInformation.deploymentLocations = [];
-    }
-
-    // Remove secondary phone if there is no primary
-    if (!contactInformation.primaryPhone) {
-      this.payload.contactInformation.secondaryPhone = '';
-      this.payload.contactInformation.secondaryPhoneExt = '';
     }
   }
 }
