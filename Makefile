@@ -169,6 +169,7 @@ build-api:
 
 build-web:
 	@echo "++\n***** Building Web for AWS\n++"
+	@NODE_ENV=production && yarn workspace @ehpr/web build
 	@NODE_ENV=production && yarn workspace @ehpr/web export
 	@mv ./apps/web/out ./terraform/build/app
 	@echo "++\n*****"
