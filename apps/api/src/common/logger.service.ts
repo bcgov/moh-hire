@@ -2,7 +2,7 @@ import { LoggerService } from '@nestjs/common';
 import { WinstonModule, utilities as nestWinstonModuleUtilities } from 'nest-winston';
 import winston from 'winston';
 import postToSlack from './slack';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 export class AppLogger implements LoggerService {
   private logger;
@@ -37,9 +37,11 @@ export class AppLogger implements LoggerService {
     }
 
     if (axios.isAxiosError(e)) {
+      const { response, config } = e;
       message = {
-        data: (e as AxiosError).response?.data,
-        url: (e as AxiosError).response?.config.url,
+        url: config.url,
+        method: config.method,
+        ...(response?.data ? { data: response.data } : {}),
       };
     }
 
