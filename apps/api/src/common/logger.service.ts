@@ -32,6 +32,10 @@ export class AppLogger implements LoggerService {
     const error = e as Error & { response?: Error };
     let message = error.message;
 
+    if (typeof e === 'string') {
+      message = e;
+    }
+
     if (axios.isAxiosError(e)) {
       message = (e as AxiosError).response?.data;
     }
