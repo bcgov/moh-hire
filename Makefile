@@ -10,7 +10,7 @@ export PROJECT := $(or $(PROJECT),ehpr)
 
 # Runtime and application Environments specific variable
 export NODE_ENV ?= development
-export ENV_NAME ?= test
+export ENV_NAME ?= dev
 export POSTGRES_USERNAME = freshworks
 export CHES_CLIENT_ID ?= EHPR_SERVICE_CLIENT
 export MAIL_FROM ?= EHPRDoNotReply@gov.bc.ca
@@ -34,16 +34,23 @@ APP_SRC_BUCKET = $(NAMESPACE)-app-dist
 TERRAFORM_DIR = terraform
 export BOOTSTRAP_ENV=terraform/bootstrap
 
+
 ifeq ($(ENV_NAME), prod)
 DOMAIN=
+BASTION_INSTANCE_ID = $(BASTION_INSTANCE_ID_PROD)
+DB_HOST = $(DB_HOST_PROD)
 endif
 
 ifeq ($(ENV_NAME), dev) 
 DOMAIN=dev.ehpr.freshworks.club
+BASTION_INSTANCE_ID = $(BASTION_INSTANCE_ID_DEV)
+DB_HOST = $(DB_HOST_DEV)
 endif
 
 ifeq ($(ENV_NAME), test) 
 DOMAIN=test.ehpr.freshworks.club
+BASTION_INSTANCE_ID = $(BASTION_INSTANCE_ID_TEST)
+DB_HOST = $(DB_HOST_PROD_TEST)
 endif
 
 define TFVARS_DATA
@@ -247,7 +254,9 @@ migration-revert:
 # DB Tunneling
 open-db-tunnel:
 	# Needs exported credentials for a matching LZ2 space
-	@echo "Running for ENV_NAME=$(ENV_NAME)"
+	@echo "Running for ENV_NAME=$(ENV_NAME)\n"
+	@echo "Host Instance Id: $(BASTION_INSTANCE_ID) | $(BASTION_INSTANCE_ID_DEV) | $(DOMAIN)\n"
+	@echo "DB HOST URL: $(DB_HOST)\n"
 	# Checking you have the SSM plugin for the AWS cli installed
 	session-manager-plugin
 	rm ssh-keypair ssh-keypair.pub || true
