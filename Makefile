@@ -9,7 +9,6 @@ export PROJECT := $(or $(PROJECT),ehpr)
 
 
 # Runtime and application Environments specific variable
-export NODE_ENV ?= development
 export ENV_NAME ?= dev
 export POSTGRES_USERNAME = freshworks
 export CHES_CLIENT_ID ?= EHPR_SERVICE_CLIENT
@@ -169,8 +168,8 @@ build-api:
 
 build-web:
 	@echo "++\n***** Building Web for AWS\n++"
-	@NODE_ENV=production && yarn workspace @ehpr/web build
-	@NODE_ENV=production && yarn workspace @ehpr/web export
+	@yarn workspace @ehpr/web build
+	@yarn workspace @ehpr/web export
 	@mv ./apps/web/out ./terraform/build/app
 	@echo "++\n*****"
 
