@@ -73,7 +73,7 @@ export class SkillInformationDTO {
   @ValidateIf(o => EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED === o.currentEmployment)
   @IsIn(Object.values(EmploymentCircumstances), { message: 'Invalid circumstance selection' })
   @IsString({ message: 'Circumstance selection is required' })
-  employmentCircumstance!: EmploymentCircumstances;
+  employmentCircumstance?: EmploymentCircumstances;
 
   @MaxLength(40, { message: 'Job title must be less than 40 characters' })
   @IsString({ message: 'Job title is required' })
