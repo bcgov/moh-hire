@@ -4,8 +4,6 @@ import { DatabaseNamingStrategy } from './database/database.naming-strategy';
 dotenv.config();
 // Check typeORM documentation for more information.
 
-const nodeEnv = process.env.NODE_ENV || 'development';
-
 const config: PostgresConnectionOptions = {
   host: process.env.POSTGRES_HOST,
   type: 'postgres',
