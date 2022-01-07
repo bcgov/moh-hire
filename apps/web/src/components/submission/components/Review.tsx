@@ -113,7 +113,8 @@ export const Review: React.FC = () => {
               )}
             />
           ) : null}
-          {currentEmployment === EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED ? (
+          {currentEmployment === EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED &&
+          employmentCircumstance ? (
             <ReviewItem
               label='Select your circumstance'
               value={getOptionLabelByValue(employmentCircumstanceOptions, employmentCircumstance)}
