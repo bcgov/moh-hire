@@ -27,7 +27,6 @@ export class DatabaseNamingStrategy
     firstTableName: string,
     secondTableName: string,
     firstPropertyName: string,
-    secondPropertyName: string,
   ): string {
     return snakeCase(
       firstTableName + '_' + firstPropertyName.replace(/\./gi, '_') + '_' + secondTableName,

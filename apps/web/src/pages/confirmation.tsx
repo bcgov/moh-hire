@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { withRouter, NextRouter, useRouter } from 'next/router';
-import { ExternalLink, Notice, Button } from '@components';
+import { ExternalLink, Notice } from '@components';
 
 interface WithRouterProps {
   router: NextRouter;

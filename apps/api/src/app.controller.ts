@@ -1,4 +1,4 @@
-import { Controller, Get, HttpStatus, InternalServerErrorException } from '@nestjs/common';
+import { Controller, Get, HttpStatus } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AppService } from './app.service';
 
