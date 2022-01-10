@@ -40,5 +40,5 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.3.0
         with:
-          target: ${{ env.DEV_URL }}
+          target: ${{ secrets.DEV_URL }}
           cmd_options: '-I'
