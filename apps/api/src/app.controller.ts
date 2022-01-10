@@ -12,7 +12,7 @@ export class AppController {
   @ApiResponse({ status: HttpStatus.OK })
   @Get('/version')
   getVersion(): object {
-    throw new Error('Breaking uptime');
+    throw new InternalServerErrorException('Breaking uptime');
     return this.appService.getVersionInfo();
   }
 
