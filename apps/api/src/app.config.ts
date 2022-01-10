@@ -55,11 +55,14 @@ export async function createNestApp(): Promise<{
       enableDebugMessages: false,
       disableErrorMessages: true,
       exceptionFactory: errors => {
-        const errorMessages = errors.map(error =>
-          error.constraints
-            ? JSON.parse(error.constraints.ValidateNestedObject)
-            : 'Validation Error Not Found',
-        );
+        const errorMessages = errors.map(error => {
+          const nestedValidationError = error.constraints?.ValidateNestedObject;
+          if (nestedValidationError) {
+            return JSON.parse(nestedValidationError);
+          }
+
+          return error.constraints;
+        });
         throw new BadRequestException(errorMessages);
       },
     }),
