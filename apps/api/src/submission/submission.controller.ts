@@ -34,6 +34,7 @@ export class SubmissionController {
   @Post()
   async name(@Body() body: SubmissionDTO): Promise<SubmissionEntity> {
     try {
+      this.logger.log('Creating a meaningless change to trigger PR checks');
       return await this.submissionService.saveSubmission(body);
     } catch (e) {
       this.logger.error(e, SubmissionService.name);
