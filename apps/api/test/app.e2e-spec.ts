@@ -22,7 +22,7 @@ describe('AppController (e2e)', () => {
   });
 
   it('/version (GET)', done => {
-    return request(app.getHttpServer())
+    request(app.getHttpServer())
       .get('/version')
       .expect(res => {
         const { body } = res;
