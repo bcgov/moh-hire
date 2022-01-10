@@ -35,9 +35,7 @@ jobs:
         run: yarn workspace @ehpr/api test
 
       - name: Integration test API Package
-        run: make start-local-db \
-          make api-integration-test \
-          make stop-local-db
+        run: make api-integration-test-ci
 
       - name: Build API Package
         run: yarn workspace @ehpr/api build

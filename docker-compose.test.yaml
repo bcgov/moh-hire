@@ -1,8 +1,8 @@
 version: '3.8'
 services:
-  db:
+  test-db:
     image: postgres:13-alpine
-    container_name: ${PROJECT}_db
+    container_name: ${PROJECT}_test_db
     volumes:
       - ./.pgdata:/var/lib/postgresql/data
     ports:

@@ -149,11 +149,13 @@ stop-local-db:
 	NODE_ENV=test docker-compose -f docker-compose.test.yaml down
 
 api-integration-test:
-	@echo "++\n***** Running API unit tests\n++"
+	@echo "++\n***** Running API integration tests\n++"
 	@yarn workspace @ehpr/common build
 	@yarn workspace @ehpr/api build
 	@yarn workspace @ehpr/api test:e2e
 	@echo "++\n*****"
+
+api-integration-test-ci: start-local-db api-integration-test stop-local-db
 
 
 # Build application stack
