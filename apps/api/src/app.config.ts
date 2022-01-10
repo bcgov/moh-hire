@@ -17,6 +17,8 @@ export async function createNestApp(): Promise<{
 }> {
   // Express app
   const expressApp = express();
+  expressApp.disable('x-powered-by');
+
   // Nest Application With Express Adapter
   let app: NestExpressApplication;
   if (process.env.RUNTIME_ENV === 'local') {
