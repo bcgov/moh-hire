@@ -1,6 +1,8 @@
+require('../env');
+import request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
+
 import { AppModule } from '../src/app.module';
 
 describe('AppController (e2e)', () => {
@@ -15,7 +17,20 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer()).get('/').expect(200).expect('Hello World!');
+  afterEach(async () => {
+    await app.close();
+  });
+
+  it('/version (GET)', done => {
+    return request(app.getHttpServer())
+      .get('/version')
+      .expect(res => {
+        const { body } = res;
+        expect(body.buildId).toBeDefined();
+        expect(body.info).toBeDefined();
+        expect(body.env).toBeDefined();
+      })
+      .expect(200)
+      .end(done);
   });
 });

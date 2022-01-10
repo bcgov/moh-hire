@@ -17,6 +17,7 @@ const getEnvironmentSpecificConfig = (env?: string) => {
     case 'test':
       return {
         host: 'localhost',
+        database: 'test-db',
         entitiesPath: 'src/**/*.entity.ts',
         migrationPath: 'src/migration/*.js',
         logging: ['error', 'warn', 'migration'],
