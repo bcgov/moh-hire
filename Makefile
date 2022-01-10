@@ -135,6 +135,26 @@ docker-run:
 	@docker-compose up --build
 	@echo "++\n*****"
 
+api-unit-test:
+	@echo "++\n***** Running API unit tests\n++"
+	@yarn workspace @ehpr/common build
+	@yarn workspace @ehpr/api build
+	@yarn workspace @ehpr/api test
+	@echo "++\n*****"
+
+start-local-db:
+	NODE_ENV=test docker-compose -f docker-compose.test.yaml up --build -d
+
+stop-local-db:
+	NODE_ENV=test docker-compose -f docker-compose.test.yaml down
+
+api-integration-test:
+	@echo "++\n***** Running API unit tests\n++"
+	@yarn workspace @ehpr/common build
+	@yarn workspace @ehpr/api build
+	@yarn workspace @ehpr/api test:e2e
+	@echo "++\n*****"
+
 
 # Build application stack
 

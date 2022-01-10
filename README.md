@@ -13,3 +13,17 @@ ie:
 # apps/web/.env.local
 NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1
 ```
+
+## Tests
+
+Unit and integration tests are run against the API in the CI pipeline on pull request as well as deploy.
+
+### Running Locally
+
+#### API Unit Tests
+
+Run API unit tests with `api-unit-test`
+
+#### API Integration Tests
+
+Run API integration tests with `api-integration-test`
