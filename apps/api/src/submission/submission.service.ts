@@ -45,8 +45,8 @@ export class SubmissionService {
       `Sending confirmation email for submission: ${submission.id}`,
       SubmissionService.name,
     );
-    const { txId } = await this.mailService.sendMailable(mailable);
-    submission.chesId = txId;
+    const mailResponse = await this.mailService.sendMailable(mailable);
+    submission.chesId = mailResponse?.txId;
     submission = await this.submissionRepository.save(submission);
     this.logger.log(
       `Confirmation email sent for submission: ${submission.id}`,

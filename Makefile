@@ -15,11 +15,11 @@ export CHES_CLIENT_ID ?= EHPR_SERVICE_CLIENT
 export MAIL_FROM ?= EHPRDoNotReply@gov.bc.ca
 
 # Integration testing variables
-TEST_POSTGRES_HOST := localhost
-TEST_POSTGRES_USERNAME := freshworks
-TEST_POSTGRES_PASSWORD := password
-TEST_POSTGRES_DATABASE := ehpr_test
-TEST_POSTGRES_PORT := 5433
+export TEST_POSTGRES_HOST := localhost
+export TEST_POSTGRES_USERNAME := freshworks
+export TEST_POSTGRES_PASSWORD := password
+export TEST_POSTGRES_DATABASE := ehpr_test
+export TEST_POSTGRES_PORT := 5433
 
 # Git
 export COMMIT_SHA:=$(shell git rev-parse --short=7 HEAD)

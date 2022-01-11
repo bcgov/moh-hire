@@ -22,7 +22,10 @@ export class MailService {
    * @param mailOptions - Email to be sent
    * @returns A promise for the result of sending the email
    */
-  public async sendMailWithChes(mailOptions: MailOptions): Promise<ChesResponse> {
+  public async sendMailWithChes(mailOptions: MailOptions): Promise<ChesResponse | void> {
+    const chesHost = process.env.CHES_SERVICE_HOST;
+    if (!chesHost) return;
+
     const emailBody = {
       from: mailOptions.from,
       to: mailOptions.to,
@@ -75,7 +78,7 @@ export class MailService {
    * @returns A promise for the result of sending the email
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public async sendMailable(mailable: Mailable<any>): Promise<ChesResponse> {
+  public async sendMailable(mailable: Mailable<any>): Promise<ChesResponse | void> {
     const mailOptions: Partial<MailOptions> = {
       from: process.env.MAIL_FROM,
       to: [mailable.recipient.email],
