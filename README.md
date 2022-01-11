@@ -22,8 +22,10 @@ Unit and integration tests are run against the API in the CI pipeline on pull re
 
 #### API Unit Tests
 
-Run API unit tests with `api-unit-test`
+Run API unit tests with `make api-unit-test`
 
 #### API Integration Tests
 
-Run API integration tests with `api-integration-test`
+Run API integration tests with `make api-integration-test`
+
+This command will spin up a postgres container, run the API integration tests, then close the created container.

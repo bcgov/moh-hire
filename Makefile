@@ -154,13 +154,13 @@ start-test-db:
 stop-test-db:
 	NODE_ENV=test docker-compose -f docker-compose.test.yaml down
 
-api-integration-test:
+api-integration-test: 
+	@make start-test-db 
 	@echo "++\n***** Running API integration tests\n++"
 	@yarn workspace @ehpr/api build
 	@yarn workspace @ehpr/api test:e2e
 	@echo "++\n*****"
-
-api-integration-test-ci: start-test-db api-integration-test stop-test-db
+	@make stop-test-db
 
 
 # Build application stack
