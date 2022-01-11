@@ -12,12 +12,13 @@ interface MultiSelectProps extends FieldProps {
  * aria-describedby is not supported by react-select
  */
 export const MultiSelect: React.FC<MultiSelectProps> = props => {
-  const { label, name, options, disabled } = props;
+  const { label, name, options, disabled, cyData } = props;
 
   return (
     <Field
       name={name}
       label={label}
+      cyData={cyData}
       component={({ field, form }: FormikFieldProps) => (
         <ReactSelect
           inputId={name}

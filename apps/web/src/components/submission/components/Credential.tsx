@@ -83,7 +83,7 @@ export const Credential: React.FC = () => {
   return (
     <div className='flex flex-col gap-5'>
       <FormStepHeader>3. Credentials Information</FormStepHeader>
-      <Select name='skillInformation.stream' label='Stream Type'>
+      <Select name='skillInformation.stream' label='Stream Type' cyData={'stream'}>
         {streamOptions.map(stream => (
           <Option key={stream.value} label={stream.label} value={stream.value} />
         ))}
@@ -108,6 +108,7 @@ export const Credential: React.FC = () => {
                       index={index}
                       specialties={specialtyOptions}
                       subspecialties={subspecialties?.[index]}
+                      cyData={'specialty'}
                     />
                   ))}
                 </fieldset>
@@ -145,6 +146,7 @@ export const Credential: React.FC = () => {
                 </div>
               </>
             )}
+            data-cy={'specialty'}
           />
         </div>
       ) : null}
@@ -163,6 +165,7 @@ export const Credential: React.FC = () => {
         name='skillInformation.currentEmployment'
         legend='Select which best applies to your current employment status'
         options={employmentOptions}
+        cy-data={'skillinformation'}
       />
 
       <SecondaryEmploymentQuestion employmentStatus={currentEmployment} />
@@ -175,6 +178,7 @@ interface SpecialtySelectorProps {
   index: number;
   specialties: OptionType[] | null;
   subspecialties?: OptionType[] | null;
+  cyData?: string;
 }
 
 const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
@@ -182,6 +186,7 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
   index,
   specialties,
   subspecialties,
+  cyData,
 }) => {
   const { values } = useFormikContext<SubmissionType>();
   const { specialties: formSpecialties }: SkillInformationDTO = values.skillInformation;
@@ -195,6 +200,7 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
           name={`skillInformation.specialties[${index}].id`}
           label={`Main Speciality #${index + 1}`}
           disabled={disabled}
+          cyData={cyData}
         >
           {specialties?.map((specialty, index) => (
             <Option
@@ -212,6 +218,7 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
           name={`skillInformation.specialties[${index}].subspecialties`}
           disabled={!subspecialties || subspecialties.length === 0}
           options={subspecialties || []}
+          cyData={'subspecialty'}
         />
       </div>
     </div>

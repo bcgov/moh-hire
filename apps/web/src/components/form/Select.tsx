@@ -7,10 +7,17 @@ export interface OptionType {
 }
 
 export const Select: React.FC<FieldProps> = props => {
-  const { name, label, disabled, description, children } = props;
+  const { name, label, disabled, description, children, cyData } = props;
 
   return (
-    <Field name={name} label={label} description={description} disabled={disabled} as='select'>
+    <Field
+      name={name}
+      label={label}
+      description={description}
+      disabled={disabled}
+      as='select'
+      cyData={cyData}
+    >
       <option value={''} key={''} className='hidden'></option>
       {children}
     </Field>
