@@ -1,6 +1,7 @@
 import { Module, Logger } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { SubmissionEntity } from 'src/submission/entity/submission.entity';
 import { LoggerOptions } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
@@ -10,23 +11,26 @@ const getEnvironmentSpecificConfig = (env?: string) => {
   switch (env) {
     case 'production':
       return {
-        entitiesPath: join(__dirname, '../**/*.entity.js'),
-        migrationPath: join(__dirname, '../migration/*.js'),
-        logging: ['migration'],
+        entities: [join(__dirname, '../**/*.entity.js')],
+        migrations: [join(__dirname, '../migration/*.js')],
+        logging: ['migration'] as LoggerOptions,
       };
     case 'test':
       return {
-        host: 'localhost',
-        database: 'test-db',
-        entitiesPath: 'src/**/*.entity.ts',
-        migrationPath: 'src/migration/*.js',
-        logging: ['error', 'warn', 'migration'],
+        port: parseInt(process.env.TEST_POSTGRES_PORT || '5432'),
+        host: process.env.TEST_POSTGRES_HOST,
+        username: process.env.TEST_POSTGRES_USERNAME,
+        password: process.env.TEST_POSTGRES_PASSWORD,
+        database: process.env.TEST_POSTGRES_DATABASE,
+        entities: [SubmissionEntity],
+        migrations: ['dist/migration/*.js'],
+        logging: ['error', 'warn', 'migration'] as LoggerOptions,
       };
     default:
       return {
-        entitiesPath: 'dist/**/*.entity.js',
-        migrationPath: 'dist/migration/*.js',
-        logging: ['error', 'warn', 'migration'],
+        entities: ['dist/**/*.entity.js'],
+        migrations: ['dist/migration/*.js'],
+        logging: ['error', 'warn', 'migration'] as LoggerOptions,
       };
   }
 };
@@ -36,12 +40,9 @@ const environmentSpecificConfig = getEnvironmentSpecificConfig(nodeEnv);
 
 const appOrmConfig: PostgresConnectionOptions = {
   ...config,
-  host: environmentSpecificConfig.host ? environmentSpecificConfig.host : config.host,
-  migrations: [environmentSpecificConfig.migrationPath],
-  entities: [environmentSpecificConfig.entitiesPath],
+  ...environmentSpecificConfig,
   synchronize: false,
   migrationsRun: true,
-  logging: environmentSpecificConfig.logging as LoggerOptions,
 };
 @Module({
   imports: [TypeOrmModule.forRoot(appOrmConfig)],
