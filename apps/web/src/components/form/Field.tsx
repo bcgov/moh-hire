@@ -9,6 +9,7 @@ export interface FieldProps extends FieldConfig {
   disabled?: boolean;
   className?: string;
   maxLength?: number;
+  cyData?: string;
 }
 
 export const Field: React.FC<FieldProps> = props => {
@@ -23,6 +24,7 @@ export const Field: React.FC<FieldProps> = props => {
     className,
     maxLength,
     children,
+    cyData,
   } = props;
   const [field, meta] = useField(name);
 
@@ -37,6 +39,7 @@ export const Field: React.FC<FieldProps> = props => {
       <FormikField
         id={name}
         aria-describedby={description ? `${name}-description` : null}
+        data-cy={`${cyData}`}
         className={
           className ??
           classnames(

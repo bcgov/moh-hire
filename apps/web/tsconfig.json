@@ -21,6 +21,11 @@
       "@assets/*": ["public/assets/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "cypress/integration/1-getting-started/partone.spec.js"
+  ],
   "exclude": ["node_modules"]
 }

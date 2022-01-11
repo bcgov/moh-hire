@@ -40,6 +40,7 @@ export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
               label='Primary Phone Number'
               type='text'
               description='(xxx xxx xxxx)'
+              cyData='primaryphone'
             />
           </div>
           <div className='md:col-span-1'>
@@ -48,6 +49,7 @@ export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
               label='Ext. (optional)'
               type='text'
               disabled={!contactInformation.primaryPhone}
+              cyData='primaryphoneext'
             />
           </div>
         </div>
@@ -58,6 +60,7 @@ export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
               label='Secondary Phone Number (optional)'
               type='text'
               description='(xxx xxx xxxx)'
+              cyData='secondaryphone'
             />
           </div>
           <div className='md:col-span-1'>
@@ -66,11 +69,12 @@ export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
               label='Ext. (optional)'
               type='text'
               disabled={!contactInformation.secondaryPhone}
+              cyData='secondaryphoneext'
             />
           </div>
         </div>
 
-        <Field name={fieldNames.email} label='Email Address' type='email' />
+        <Field name={fieldNames.email} label='Email Address' type='email' cyData='email' />
       </div>
     </>
   );
