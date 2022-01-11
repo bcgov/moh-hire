@@ -5,7 +5,7 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
 
 import config from '../ormconfig';
 
-const nodeEnv = process.env.NODE_ENV || 'development';
+const nodeEnv = process.env.NODE_ENV;
 const entitiesPath =
   nodeEnv === 'production' ? join(__dirname, '../**/*.entity.js') : 'dist/**/*.entity.js';
 const migrationPath =
