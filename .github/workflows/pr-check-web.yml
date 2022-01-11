@@ -36,9 +36,3 @@ jobs:
 
       - name: Build web package
         run: yarn workspace @ehpr/web build
-
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          build: npm run build
-          start: npm start
