@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { BadRequestException, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, ValidationPipe, ValidationPipeOptions } from '@nestjs/common';
 import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
 import express from 'express';
 
@@ -10,6 +10,25 @@ import { SuccessResponseInterceptor } from './common/interceptors/success-respon
 import { ErrorExceptionFilter } from './common/error-exception.filter';
 import { TrimPipe } from './common/trim.pipe';
 import { API_PREFIX } from './config';
+
+export const validationPipeConfig: ValidationPipeOptions = {
+  transform: true,
+  whitelist: true,
+  forbidNonWhitelisted: false,
+  enableDebugMessages: false,
+  disableErrorMessages: true,
+  exceptionFactory: errors => {
+    const errorMessages = errors.map(error => {
+      const nestedValidationError = error.constraints?.ValidateNestedObject;
+      if (nestedValidationError) {
+        return JSON.parse(nestedValidationError);
+      }
+
+      return error.constraints;
+    });
+    throw new BadRequestException(errorMessages);
+  },
+};
 
 export async function createNestApp(): Promise<{
   app: NestExpressApplication;
@@ -46,24 +65,7 @@ export async function createNestApp(): Promise<{
   app.useGlobalInterceptors(new SuccessResponseInterceptor());
 
   // Validation pipe
-  app.useGlobalPipes(
-    new TrimPipe(),
-    new ValidationPipe({
-      transform: true,
-      whitelist: true,
-      forbidNonWhitelisted: false,
-      enableDebugMessages: false,
-      disableErrorMessages: true,
-      exceptionFactory: errors => {
-        const errorMessages = errors.map(error =>
-          error.constraints
-            ? JSON.parse(error.constraints.ValidateNestedObject)
-            : 'Validation Error Not Found',
-        );
-        throw new BadRequestException(errorMessages);
-      },
-    }),
-  );
+  app.useGlobalPipes(new TrimPipe(), new ValidationPipe(validationPipeConfig));
 
   // Global Error Filter
   app.useGlobalFilters(new ErrorExceptionFilter(app.get(AppLogger)));

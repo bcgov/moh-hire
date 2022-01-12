@@ -31,8 +31,11 @@ jobs:
       - name: Lint API Package
         run: yarn workspace @ehpr/api lint
 
-      - name: Test API Package
+      - name: Unit test API Package
         run: yarn workspace @ehpr/api test
+
+      - name: Integration test API Package
+        run: make api-integration-test
 
       - name: Build API Package
         run: yarn workspace @ehpr/api build

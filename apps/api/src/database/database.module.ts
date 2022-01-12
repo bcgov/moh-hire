@@ -1,23 +1,48 @@
 import { Module, Logger } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { SubmissionEntity } from 'src/submission/entity/submission.entity';
+import { LoggerOptions } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 import config from '../ormconfig';
 
+const getEnvironmentSpecificConfig = (env?: string) => {
+  switch (env) {
+    case 'production':
+      return {
+        entities: [join(__dirname, '../**/*.entity.js')],
+        migrations: [join(__dirname, '../migration/*.js')],
+        logging: ['migration'] as LoggerOptions,
+      };
+    case 'test':
+      return {
+        port: parseInt(process.env.TEST_POSTGRES_PORT || '5432'),
+        host: process.env.TEST_POSTGRES_HOST,
+        username: process.env.TEST_POSTGRES_USERNAME,
+        password: process.env.TEST_POSTGRES_PASSWORD,
+        database: process.env.TEST_POSTGRES_DATABASE,
+        entities: [SubmissionEntity],
+        migrations: ['dist/migration/*.js'],
+        logging: ['error', 'warn', 'migration'] as LoggerOptions,
+      };
+    default:
+      return {
+        entities: ['dist/**/*.entity.js'],
+        migrations: ['dist/migration/*.js'],
+        logging: ['error', 'warn', 'migration'] as LoggerOptions,
+      };
+  }
+};
+
 const nodeEnv = process.env.NODE_ENV;
-const entitiesPath =
-  nodeEnv === 'production' ? join(__dirname, '../**/*.entity.js') : 'dist/**/*.entity.js';
-const migrationPath =
-  nodeEnv === 'production' ? join(__dirname, '../migration/*.js') : 'dist/migration/*.js';
+const environmentSpecificConfig = getEnvironmentSpecificConfig(nodeEnv);
 
 const appOrmConfig: PostgresConnectionOptions = {
   ...config,
-  migrations: [migrationPath],
-  entities: [entitiesPath],
+  ...environmentSpecificConfig,
   synchronize: false,
   migrationsRun: true,
-  logging: process.env.TARGET_ENV === 'prod' ? ['migration'] : ['error', 'warn', 'migration'],
 };
 @Module({
   imports: [TypeOrmModule.forRoot(appOrmConfig)],

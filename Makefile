@@ -14,6 +14,13 @@ export POSTGRES_USERNAME = freshworks
 export CHES_CLIENT_ID ?= EHPR_SERVICE_CLIENT
 export MAIL_FROM ?= EHPRDoNotReply@gov.bc.ca
 
+# Integration testing variables
+export TEST_POSTGRES_HOST := localhost
+export TEST_POSTGRES_USERNAME := freshworks
+export TEST_POSTGRES_PASSWORD := password
+export TEST_POSTGRES_DATABASE := ehpr_test
+export TEST_POSTGRES_PORT := 5433
+
 # Git
 export COMMIT_SHA:=$(shell git rev-parse --short=7 HEAD)
 export LAST_COMMIT_MESSAGE:=$(shell git log -1 --oneline --decorate=full --no-color --format="%h, %cn, %f, %D" | sed 's/->/:/')
@@ -134,6 +141,26 @@ docker-run:
 	@yarn
 	@docker-compose up --build
 	@echo "++\n*****"
+
+api-unit-test:
+	@echo "++\n***** Running API unit tests\n++"
+	@yarn workspace @ehpr/api build
+	@yarn workspace @ehpr/api test
+	@echo "++\n*****"
+
+start-test-db:
+	NODE_ENV=test docker-compose -f docker-compose.test.yaml up --build -d
+
+stop-test-db:
+	NODE_ENV=test docker-compose -f docker-compose.test.yaml down
+
+api-integration-test: 
+	@make start-test-db 
+	@echo "++\n***** Running API integration tests\n++"
+	@yarn workspace @ehpr/api build
+	@yarn workspace @ehpr/api test:e2e
+	@echo "++\n*****"
+	@make stop-test-db
 
 
 # Build application stack
