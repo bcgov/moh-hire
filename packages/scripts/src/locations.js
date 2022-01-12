@@ -1,11 +1,11 @@
-const fs = require('fs');
+import fs from 'fs';
 
 const alphaNumeric = str => {
   return str.replace(/([^a-zA-Z0-9])/g, '');
 };
 
 function main() {
-  const file = fs.readFileSync('./data/locations.csv').toString();
+  const file = fs.readFileSync('./in/locations.csv').toString();
   // Remove col names;
   let rows = file.split('\n').slice(1);
   let heirarchy = {

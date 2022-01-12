@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "transform-locations": "node src/locations.js",
-    "transform-specializations": "node src/specialization.js",
-    "transform-export": "node src/export.js"
+    "transform-streams": "node src/streams.js",
+    "transform-submission_export": "node src/submission_export.js"
   },
   "dependencies": {
     "csv-parser": "3.0.0",

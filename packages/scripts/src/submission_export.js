@@ -136,10 +136,10 @@ function readData(fileName) {
 }
 
 async function main() {
-  const rows = await readData('./data/export.csv');
+  const rows = await readData('./in/submission_export.csv');
   const createCsvWriter = csvWriter.createObjectCsvWriter;
   const writer = createCsvWriter({
-    path: './out/export.csv',
+    path: './out/submission_export.csv',
     header: formExportColumnHeaders,
     encoding: 'utf-8',
   });

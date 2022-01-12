@@ -20,7 +20,7 @@ function readData(fileName) {
 }
 
 async function main() {
-  const rows = await readData('./data/specialties.csv');
+  const rows = await readData('./in/streams.csv');
   // remove headers
   rows.shift();
 
