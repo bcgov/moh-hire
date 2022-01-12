@@ -22,7 +22,6 @@ export class SubmissionEntity extends BaseEntity {
   @BeforeInsert()
   beforeInsert() {
     let { skillInformation, availabilityInformation } = this.payload;
-    console.log(JSON.stringify(this));
 
     // Remove specialties if the stream is non clinical or if selected stream has no specialties
     if (
@@ -53,6 +52,5 @@ export class SubmissionEntity extends BaseEntity {
     if (availabilityInformation.deployAnywhere) {
       this.payload.availabilityInformation.deploymentLocations = [];
     }
-    console.log(JSON.stringify(this));
   }
 }
