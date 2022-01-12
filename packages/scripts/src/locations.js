@@ -5,7 +5,7 @@ const alphaNumeric = str => {
 };
 
 function main() {
-  const file = fs.readFileSync('./locations.csv').toString();
+  const file = fs.readFileSync('./data/locations.csv').toString();
   // Remove col names;
   let rows = file.split('\n').slice(1);
   let heirarchy = {
@@ -95,7 +95,7 @@ function main() {
 
     rows = rows.splice(1);
   }
-  fs.writeFileSync('./locations.json', JSON.stringify(heirarchy), 'utf-8');
+  fs.writeFileSync('./out/locations.json', JSON.stringify(heirarchy), 'utf-8');
 }
 
 main();

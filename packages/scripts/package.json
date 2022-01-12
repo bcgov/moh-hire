@@ -1,6 +1,11 @@
 {
-  "name": "scripts",
+  "name": "@ehpr/scripts",
   "packageManager": "yarn@3.1.0",
+  "type": "module",
+  "scripts": {
+    "transform-locations": "node src/locations.js",
+    "transform-specializations": "node src/specialization.js"
+  },
   "dependencies": {
     "csv-parser": "3.0.0"
   }

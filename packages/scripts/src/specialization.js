@@ -1,5 +1,5 @@
-const fs = require('fs');
-const csv = require('csv-parser');
+import fs from 'fs';
+import csv from 'csv-parser';
 
 const alphaNumeric = str => {
   return str.replace(/([^a-zA-Z0-9])/g, '');
@@ -20,7 +20,7 @@ function readData(fileName) {
 }
 
 async function main() {
-  const rows = await readData('./specialties.csv');
+  const rows = await readData('./data/specialties.csv');
   // remove headers
   rows.shift();
 
@@ -116,7 +116,7 @@ async function main() {
     }
   }
 
-  fs.writeFileSync('./streams.json', JSON.stringify(heirarchy), 'utf-8');
+  fs.writeFileSync('./out/streams.json', JSON.stringify(heirarchy), 'utf-8');
 }
 
 main();
