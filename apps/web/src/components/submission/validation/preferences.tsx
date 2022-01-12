@@ -3,6 +3,7 @@ import {
   PlacementOptions,
   DeploymentDurations,
   DeploymentTypes,
+  PreviousDeploymentOptions,
 } from '@ehpr/common';
 import { OptionType } from '@components';
 import { getHas, getHsdasByHaId, getLhasByHsdaId, HaId } from '@ehpr/common';
@@ -86,4 +87,14 @@ export const deploymentDurationOptions = [
 export const deploymentTypeOptions = [
   { label: 'Full-Time', value: DeploymentTypes.FULL_TIME },
   { label: 'Part-Time', value: DeploymentTypes.PART_TIME },
+];
+export const previousDeploymentOptions = [
+  {
+    label: 'Yes',
+    value: PreviousDeploymentOptions.YES,
+  },
+  {
+    label: 'No/Unsure',
+    value: PreviousDeploymentOptions.NO_OR_UNSURE,
+  },
 ];

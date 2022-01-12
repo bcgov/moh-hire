@@ -19,6 +19,7 @@ export class SubmissionEntity extends BaseEntity {
   @Exclude()
   @Column('varchar', { nullable: false })
   version!: string;
+
   @BeforeInsert()
   beforeInsert() {
     const { skillInformation, availabilityInformation } = this.payload;

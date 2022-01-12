@@ -64,3 +64,8 @@ export enum DeploymentTypes {
   FULL_TIME = 'fullTime',
   PART_TIME = 'partTime',
 }
+
+export enum PreviousDeploymentOptions {
+  YES = 'yes',
+  NO_OR_UNSURE = 'noOrUnsure',
+}
