@@ -20,12 +20,12 @@ export class SubmissionService {
   ) {}
   async saveSubmission(dto: SubmissionDTO): Promise<SubmissionEntity> {
     const confirmationId = generateConfirmationId();
-
+    console.log(confirmationId);
     const newSubmission = this.submissionRepository.create({
       ...dto,
       confirmationId,
     } as Partial<SubmissionEntity>);
-
+    console.log(newSubmission);
     const savedSubmission = await this.submissionRepository.save(newSubmission);
     this.logger.log(`Saved submission: ${savedSubmission.id}`, SubmissionService.name);
 

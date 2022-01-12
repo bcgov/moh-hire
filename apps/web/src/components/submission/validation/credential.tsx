@@ -128,7 +128,7 @@ export const healthAuthorityOptions = [
   },
   {
     value: HealthAuthorities.VANCOUVER_ISLAND,
-    label: 'Island Health (Vancouver Island Health)',
+    label: 'Island Health',
   },
   {
     value: HealthAuthorities.NORTHEREN,

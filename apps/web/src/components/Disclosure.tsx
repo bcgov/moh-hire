@@ -15,10 +15,12 @@ export const Disclosure: React.FC<DisclosureProps> = ({ buttonText, content }) =
         <>
           <HeadlessDisclosure.Button className={'flex justify-between items-center w-full'}>
             {buttonText}
-            <FontAwesomeIcon
-              icon={faChevronDown}
-              className={classnames('text-gray-500 mr-5', { 'transform rotate-180': open })}
-            />
+            <div style={{ width: '50px' }}>
+              <FontAwesomeIcon
+                icon={faChevronDown}
+                className={classnames('text-gray-500 mr-5', { 'transform rotate-180': open })}
+              />
+            </div>
           </HeadlessDisclosure.Button>
           <HeadlessDisclosure.Panel className='text-gray-500'>{content}</HeadlessDisclosure.Panel>
         </>
