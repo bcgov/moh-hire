@@ -69,8 +69,36 @@ const getHaByHsdaId = (hsdaId: HsdaId) => {
   return allHas.find(ha => ha.hsdas.includes(hsdaId));
 };
 
+const getHaByLhaId = (lhaId: LhaId) => {
+  const hsda = getHsdabyLhaId(lhaId);
+  if (!hsda) return;
+  const ha = getHaByHsdaId(hsda.id);
+  return ha;
+};
+
 type FullHsdaType = { id: string; name: string; lhas: Lha[] };
 type FullHaType = { id: string; name: string; hsdas: FullHsdaType[] };
+
+/**
+ * Splits a list of Lhas into separate lists according to their HA
+ *
+ * @param lhas list of LHA ids
+ * @returns Structure of HAs with LHAs assigned to them
+ */
+export const splitLhasByHa = (lhas: LhaId[]): Record<HaId, { ha: HaId; lhas: LhaId[] }> => {
+  const healthAuthorities: Record<HaId, { ha: HaId; lhas: LhaId[] }> = {};
+  validHaIds.forEach(haId => {
+    healthAuthorities[haId] = { ha: haId, lhas: [] };
+  });
+
+  lhas.forEach(lha => {
+    const ha = getHaByLhaId(lha);
+    if (!ha) return;
+    healthAuthorities[ha.id].lhas.push(lha);
+  });
+
+  return healthAuthorities;
+};
 
 /**
  * Takes a list of LHA ids and reconstructs the HSDAs and HAS as a single object
