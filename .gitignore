@@ -18,6 +18,3 @@ node_modules
 .build
 yarn.build.json
 ssh-keypair*
-
-packages/scripts/in
-packages/scripts/out
