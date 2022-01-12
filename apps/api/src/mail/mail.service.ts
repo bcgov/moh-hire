@@ -77,7 +77,7 @@ export class MailService {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public async sendMailable(mailable: Mailable<any>): Promise<ChesResponse> {
     const mailOptions: Partial<MailOptions> = {
-      from: process.env.MAIL_FROM || 'EHPRDoNotReply@gov.bc.ca',
+      from: process.env.MAIL_FROM,
       to: [mailable.recipient.email],
       subject: mailable.subject,
     };
