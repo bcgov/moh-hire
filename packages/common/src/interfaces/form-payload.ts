@@ -58,3 +58,8 @@ export enum DeploymentDurations {
   FOUR_TO_EIGHT = 'fourToEight',
   EIGHT_PLUS = 'eightPlus',
 }
+
+export enum DeploymentTypes {
+  FULL_TIME = 'fullTime',
+  PART_TIME = 'partTime',
+}

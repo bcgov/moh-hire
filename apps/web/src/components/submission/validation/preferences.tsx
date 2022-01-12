@@ -1,4 +1,9 @@
-import { AvailabilityDTO, PlacementOptions, DeploymentDurations } from '@ehpr/common';
+import {
+  AvailabilityDTO,
+  PlacementOptions,
+  DeploymentDurations,
+  DeploymentTypes,
+} from '@ehpr/common';
 import { OptionType } from '@components';
 import { getHas, getHsdasByHaId, getLhasByHsdaId, HaId } from '@ehpr/common';
 
@@ -10,6 +15,7 @@ export const preferencesDefaultValues: Partial<AvailabilityDTO> = {
   placementOptions: [],
   hasImmunizationTraining: undefined,
   deploymentDuration: undefined,
+  deploymentType: [],
 };
 
 export const haOptions = getHas().map(({ id, name }) => ({
@@ -75,4 +81,9 @@ export const deploymentDurationOptions = [
   { label: '2 - 4 weeks', value: DeploymentDurations.TWO_TO_FOUR_WEEKS },
   { label: '4 - 8 weeks', value: DeploymentDurations.FOUR_TO_EIGHT },
   { label: '8+ weeks', value: DeploymentDurations.EIGHT_PLUS },
+];
+
+export const deploymentTypeOptions = [
+  { label: 'Full-Time', value: DeploymentTypes.FULL_TIME },
+  { label: 'Part-Time', value: DeploymentTypes.PART_TIME },
 ];
