@@ -25,7 +25,7 @@ export class SubmissionEntity extends BaseEntity {
 
     // Remove specialties if the stream is non clinical or if selected stream has no specialties
     if (
-      skillInformation.stream !== streamsById.Nonclinical.id ||
+      skillInformation.stream === streamsById.Nonclinical.id ||
       getStreamById(skillInformation.stream).specialties.length === 0
     ) {
       this.payload.skillInformation.specialties = [];

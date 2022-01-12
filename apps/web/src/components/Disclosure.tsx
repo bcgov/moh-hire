@@ -17,7 +17,7 @@ export const Disclosure: React.FC<DisclosureProps> = ({ buttonText, content }) =
             {buttonText}
             <FontAwesomeIcon
               icon={faChevronDown}
-              className={classnames('text-gray-500 mr-5', { 'transform rotate-180': open })}
+              className={classnames('text-gray-500 mr-5 h-5', { 'transform rotate-180': open })}
             />
           </HeadlessDisclosure.Button>
           <HeadlessDisclosure.Panel className='text-gray-500'>{content}</HeadlessDisclosure.Panel>
