@@ -9,7 +9,13 @@ import {
   ValidateIf,
 } from 'class-validator';
 
-import { DeploymentDurations, PlacementOptions, DeploymentTypes } from '../interfaces';
+import {
+  DeploymentDurations,
+  PlacementOptions,
+  DeploymentTypes,
+  PreviousDeploymentOptions,
+} from '../interfaces';
+
 import { LhaId, validLhaIds } from '../helper';
 import { IsArrayOfLhas, ValidateArray } from '../validators';
 
@@ -22,6 +28,7 @@ export class AvailabilityDTO {
       this.hasImmunizationTraining = base.hasImmunizationTraining;
       this.deploymentDuration = base.deploymentDuration;
       this.deploymentType = base.deploymentType;
+      this.hasPreviousDeployment = base.hasPreviousDeployment;
     }
   }
 
@@ -60,4 +67,9 @@ export class AvailabilityDTO {
   })
   @ValidateArray({ context: { accepts: DeploymentTypes, name: 'DeploymentTypes' } })
   deploymentType!: DeploymentTypes[];
+  @IsIn(Object.values(PreviousDeploymentOptions), {
+    message: 'Previous deployment question is invalid',
+  })
+  @IsString({ message: 'Previous deployment question is required' })
+  hasPreviousDeployment!: PreviousDeploymentOptions;
 }

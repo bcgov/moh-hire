@@ -43,7 +43,8 @@
       "placementOptions": ["other", "anywhere"],
       "hasImmunizationTraining": true,
       "deploymentDuration": "twoToFour",
-      "deploymentType": ["fullTime"]
+      "deploymentType": ["fullTime"],
+      "hasPreviousDeployment": "noOrUnsure"
     },
     "confirm": true
   },

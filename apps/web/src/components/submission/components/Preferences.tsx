@@ -20,6 +20,7 @@ import {
   HaPdfSizeMap,
   placementOptions,
   deploymentTypeOptions,
+  previousDeploymentOptions,
 } from '../validation/preferences';
 
 export const Preferences: React.FC<FormStepProps> = () => {
@@ -74,6 +75,11 @@ export const Preferences: React.FC<FormStepProps> = () => {
         name='availabilityInformation.deploymentType'
         options={deploymentTypeOptions}
       />
+      <Radio
+        name='availabilityInformation.hasPreviousDeployment'
+        legend='Have you previously been deployed from the EHPR?'
+        options={previousDeploymentOptions}
+      />
     </div>
   );
 };
@@ -109,7 +115,7 @@ const DeploymentLocationSelector: React.FC = () => {
     const newDeploymentLocations = [...selectedDeploymentLocations];
     const lhas = getLhasbyHaId(haId);
     // add current locations if they aren't already selected
-    lhas.forEach(lha => {
+    lhas.forEach((lha: { id: string }) => {
       if (!newDeploymentLocations.find(loc => loc === lha.id)) {
         newDeploymentLocations.push(lha.id);
       }
