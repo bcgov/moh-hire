@@ -121,7 +121,7 @@ const DeploymentLocationSelector: React.FC = () => {
               <span className='font-bold text-black p-5'>
                 {label} (
                 <a
-                  href={HaPdfSizeMap[value].url}
+                  href={HaPdfSizeMap[value]?.url}
                   target='_blank'
                   rel='noreferrer'
                   className='font-bold text-bcBlueLink'

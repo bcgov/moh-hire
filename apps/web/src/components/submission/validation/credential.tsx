@@ -146,6 +146,10 @@ export const healthAuthorityOptions = [
     value: HealthAuthorities.OUTSIDE_BC,
     label: 'Outside of BC',
   },
+  {
+    value: HealthAuthorities.PRACTICUM_OR_RESIDENCY,
+    label: 'Practicum/residency in the health sector',
+  },
 ];
 
 export const employmentCircumstanceOptions = [

@@ -1,7 +1,7 @@
 {
   "has": {
     "byId": {
-      "VancouverCostal": {
+      "VancouverCoastal": {
         "id": "VancouverCoastal",
         "name": "Vancouver/Coastal",
         "hsdas": ["Richmond", "Vancouver", "NorthShoreCoastGaribaldi"]
