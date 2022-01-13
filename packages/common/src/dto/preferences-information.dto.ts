@@ -19,8 +19,8 @@ import {
 import { LhaId, validLhaIds } from '../helper';
 import { IsArrayOfLhas, ValidateArray } from '../validators';
 
-export class AvailabilityDTO {
-  constructor(base?: AvailabilityDTO) {
+export class PreferencesInformationDTO {
+  constructor(base?: PreferencesInformationDTO) {
     if (base) {
       this.deployAnywhere = base.deployAnywhere;
       this.deploymentLocations = base.deploymentLocations;

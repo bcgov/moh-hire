@@ -10,7 +10,7 @@ import {
   Specialty,
   Subspecialty,
 } from '../helper';
-import { SkillInformationDTO, SubspecialtyDTO } from '../dto/skill-information.dto';
+import { CredentialInformationDTO, SubspecialtyDTO } from '../dto/credential-information.dto';
 
 enum SpecialtyErrorEnum {
   SPECIALTY_REQUIRED = 'Specialty is required',
@@ -44,9 +44,9 @@ export class IsArrayOfSpecialties implements ValidatorConstraintInterface {
   validate(value: SpecialtyDTO[], context: ValidationArguments) {
     if (value.length === 0) return false;
 
-    const skillInformationState = context.object as SkillInformationDTO;
+    const credentialInformationState = context.object as CredentialInformationDTO;
     // currently selected stream's specialties
-    const formSpecialties = getSpecialtiesByStreamId(skillInformationState.stream);
+    const formSpecialties = getSpecialtiesByStreamId(credentialInformationState.stream);
     if (!formSpecialties.length) {
       return true;
     }
@@ -81,9 +81,9 @@ export class IsArrayOfSpecialties implements ValidatorConstraintInterface {
 
     if (value.length === 0) return SpecialtyErrorEnum.SPECIALTY_REQUIRED;
 
-    const skillInformationState = args.object as SkillInformationDTO;
+    const credentialInformationState = args.object as CredentialInformationDTO;
     // currently selected stream's specialties
-    const formSpecialties = getSpecialtiesByStreamId(skillInformationState.stream);
+    const formSpecialties = getSpecialtiesByStreamId(credentialInformationState.stream);
 
     for (const specialty of value) {
       if (!isValidString(specialty.id)) {

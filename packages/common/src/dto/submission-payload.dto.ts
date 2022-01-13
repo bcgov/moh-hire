@@ -1,8 +1,8 @@
 import {
   PersonalInformationDTO,
   ContactInformationDTO,
-  SkillInformationDTO,
-  AvailabilityDTO,
+  CredentialInformationDTO,
+  PreferencesInformationDTO,
 } from '.';
 import { IsNotEmpty, ValidateNested } from 'class-validator';
 
@@ -10,9 +10,9 @@ export class SubmissionPayloadDTO {
   constructor(base?: SubmissionPayloadDTO) {
     if (base) {
       this.personalInformation = new PersonalInformationDTO(base.personalInformation);
-      this.availabilityInformation = new AvailabilityDTO(base.availabilityInformation);
-      this.skillInformation = new SkillInformationDTO(base.skillInformation);
       this.contactInformation = new ContactInformationDTO(base.contactInformation);
+      this.credentialInformation = new CredentialInformationDTO(base.credentialInformation);
+      this.preferencesInformation = new PreferencesInformationDTO(base.preferencesInformation);
     }
   }
   @ValidateNested()
@@ -25,9 +25,9 @@ export class SubmissionPayloadDTO {
 
   @ValidateNested()
   @IsNotEmpty()
-  skillInformation!: SkillInformationDTO;
+  credentialInformation!: CredentialInformationDTO;
 
   @ValidateNested()
   @IsNotEmpty()
-  availabilityInformation!: AvailabilityDTO;
+  preferencesInformation!: PreferencesInformationDTO;
 }

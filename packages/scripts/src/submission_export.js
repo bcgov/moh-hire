@@ -51,10 +51,14 @@ const flattenAndTransformFormData = submissions => {
       payloadObject: JSON.parse(payload),
     }))
     .forEach(({ id, payloadObject }) => {
-      const { personalInformation, contactInformation, skillInformation, availabilityInformation } =
-        payloadObject;
+      const {
+        personalInformation,
+        contactInformation,
+        credentialInformation,
+        preferencesInformation,
+      } = payloadObject;
 
-      const deploymentLocations = availabilityInformation.deploymentLocations;
+      const deploymentLocations = preferencesInformation.deploymentLocations;
       const healthAuthorities = splitLhasByHa(deploymentLocations);
 
       const payloadData = {
@@ -70,32 +74,32 @@ const flattenAndTransformFormData = submissions => {
         secondaryPhoneExt: contactInformation.secondaryPhoneExt,
         email: contactInformation.email,
 
-        stream: skillInformation.stream,
-        registrationStatus: skillInformation.registrationStatus,
-        registrationNumber: skillInformation.registrationNumber,
-        currentEmployment: skillInformation.currentEmployment,
+        stream: credentialInformation.stream,
+        registrationStatus: credentialInformation.registrationStatus,
+        registrationNumber: credentialInformation.registrationNumber,
+        currentEmployment: credentialInformation.currentEmployment,
         specialty: '',
         subspecialties: '',
-        healthAuthorities: skillInformation.healthAuthorities,
-        employmentCircumstance: skillInformation.employmentCircumstance,
-        nonClinicalJobTitle: skillInformation.nonClinicalJobTitle,
+        healthAuthorities: credentialInformation.healthAuthorities,
+        employmentCircumstance: credentialInformation.employmentCircumstance,
+        nonClinicalJobTitle: credentialInformation.nonClinicalJobTitle,
 
-        deployAnywhere: booleanToYesNo(availabilityInformation.deployAnywhere),
-        VancouverCoastal: healthAuthorities.VancouverCoastal.lhas.join(', '),
+        deployAnywhere: booleanToYesNo(preferencesInformation.deployAnywhere),
+        VancouverRegion: healthAuthorities.VancouverRegion.lhas.join(', '),
         FraserRegion: healthAuthorities.FraserRegion.lhas.join(', '),
         VancouverIslandRegion: healthAuthorities.VancouverIslandRegion.lhas.join(', '),
         InteriorRegion: healthAuthorities.InteriorRegion.lhas.join(', '),
         NorthernRegion: healthAuthorities.NorthernRegion.lhas.join(', '),
-        deploymentLocations: availabilityInformation.deploymentLocations,
-        placementOptions: availabilityInformation.placementOptions,
-        hasImmunizationTraining: booleanToYesNo(availabilityInformation.hasImmunizationTraining),
-        deploymentDuration: availabilityInformation.deploymentDuration,
+        deploymentLocations: preferencesInformation.deploymentLocations,
+        placementOptions: preferencesInformation.placementOptions,
+        hasImmunizationTraining: booleanToYesNo(preferencesInformation.hasImmunizationTraining),
+        deploymentDuration: preferencesInformation.deploymentDuration,
       };
 
-      if (skillInformation.specialties.length === 0) {
+      if (credentialInformation.specialties.length === 0) {
         flatNormalizedSubmissions.push({ ...payloadData });
       } else {
-        skillInformation.specialties.forEach(specialty => {
+        credentialInformation.specialties.forEach(specialty => {
           flatNormalizedSubmissions.push({
             ...payloadData,
             specialty: specialty.id,

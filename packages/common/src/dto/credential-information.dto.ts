@@ -22,8 +22,8 @@ import { IsArrayOfSpecialties } from '../validators/is-array-of-specialties.deco
 import { StreamId, streamsById, validStreamIds } from '../helper';
 import { ValidateArray } from '../validators/validate-array.decorator';
 
-export class SkillInformationDTO {
-  constructor(base?: SkillInformationDTO) {
+export class CredentialInformationDTO {
+  constructor(base?: CredentialInformationDTO) {
     if (base) {
       this.stream = base.stream;
       this.registrationNumber = base.registrationNumber;

@@ -1,15 +1,15 @@
 import {
-  AvailabilityDTO,
+  PreferencesInformationDTO,
   ContactInformationDTO,
   PersonalInformationDTO,
-  SkillInformationDTO,
+  CredentialInformationDTO,
 } from 'src';
 
 export interface SubmissionPayload {
   personalInformation: PersonalInformationDTO;
   contactInformation: ContactInformationDTO;
-  skillInformation: SkillInformationDTO;
-  availabilityInformation: AvailabilityDTO;
+  credentialInformation: CredentialInformationDTO;
+  preferencesInformation: PreferencesInformationDTO;
 }
 
 export enum RegistrationStatus {

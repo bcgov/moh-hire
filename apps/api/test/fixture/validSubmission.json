@@ -9,7 +9,7 @@
       "primaryPhone": "5284561234",
       "email": "test@test.io"
     },
-    "skillInformation": {
+    "credentialInformation": {
       "stream": "Midwife",
       "registrationStatus": "notRegistered",
       "registrationNumber": "321321",
@@ -23,7 +23,7 @@
       "healthAuthorities": ["firstNationsHa"],
       "employmentCircumstance": null
     },
-    "availabilityInformation": {
+    "preferencesInformation": {
       "deployAnywhere": false,
       "deploymentLocations": [
         "Hope",

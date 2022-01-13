@@ -22,36 +22,36 @@ export class SubmissionEntity extends BaseEntity {
 
   @BeforeInsert()
   beforeInsert() {
-    const { skillInformation, availabilityInformation } = this.payload;
+    const { credentialInformation, preferencesInformation } = this.payload;
 
     // Remove specialties if the stream is non clinical or if selected stream has no specialties
     if (
-      skillInformation.stream === streamsById.Nonclinical.id ||
-      getStreamById(skillInformation.stream).specialties.length === 0
+      credentialInformation.stream === streamsById.Nonclinical.id ||
+      getStreamById(credentialInformation.stream).specialties.length === 0
     ) {
-      this.payload.skillInformation.specialties = [];
+      this.payload.credentialInformation.specialties = [];
     }
 
     // Remove Health authorities if the user is not a resident or employed
     if (
       ![EmploymentTypes.HEALTH_SECTOR_EMPLOYED, EmploymentTypes.HEALTH_SECTORY_RESIDENCY].includes(
-        skillInformation.currentEmployment,
+        credentialInformation.currentEmployment,
       )
     ) {
-      this.payload.skillInformation.healthAuthorities = [];
+      this.payload.credentialInformation.healthAuthorities = [];
     }
 
     // Remove current employment if the user is not currently employed
-    if (EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED === skillInformation.currentEmployment) {
-      delete this.payload.skillInformation.employmentCircumstance;
+    if (EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED === credentialInformation.currentEmployment) {
+      delete this.payload.credentialInformation.employmentCircumstance;
     }
-    if (this.payload.skillInformation.stream !== streamsById.Nonclinical.id) {
-      delete this.payload.skillInformation.nonClinicalJobTitle;
+    if (this.payload.credentialInformation.stream !== streamsById.Nonclinical.id) {
+      delete this.payload.credentialInformation.nonClinicalJobTitle;
     }
 
     // Remove deployment locations if the user agrees to deploy anywhere.
-    if (availabilityInformation.deployAnywhere) {
-      this.payload.availabilityInformation.deploymentLocations = [];
+    if (preferencesInformation.deployAnywhere) {
+      this.payload.preferencesInformation.deploymentLocations = [];
     }
   }
 }
