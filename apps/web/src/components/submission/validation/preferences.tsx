@@ -17,6 +17,7 @@ export const preferencesDefaultValues: Partial<AvailabilityDTO> = {
   hasImmunizationTraining: undefined,
   deploymentDuration: undefined,
   deploymentType: [],
+  hasPreviousDeployment: undefined,
 };
 
 export const haOptions = getHas().map(({ id, name }) => ({
