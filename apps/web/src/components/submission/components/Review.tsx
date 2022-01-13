@@ -22,6 +22,7 @@ import {
 import {
   deploymentDurationOptions,
   placementOptions as allPlacementOptions,
+  deploymentTypeOptions,
 } from '../validation/preferences';
 
 export const Review: React.FC = () => {
@@ -47,6 +48,7 @@ export const Review: React.FC = () => {
     placementOptions,
     hasImmunizationTraining,
     deploymentDuration,
+    deploymentType,
   } = availabilityInformation;
 
   if (!stream) {
@@ -144,6 +146,12 @@ export const Review: React.FC = () => {
           <ReviewItem
             label='Indicate the maximum duration of deployment you are willing to support'
             value={getOptionLabelByValue(deploymentDurationOptions, deploymentDuration)}
+          />
+          <ReviewItemList
+            label='Indicate the type of deployment you are willing to support'
+            values={deploymentType.map(deployment =>
+              getOptionLabelByValue(deploymentTypeOptions, deployment),
+            )}
           />
         </ReviewSection>
 

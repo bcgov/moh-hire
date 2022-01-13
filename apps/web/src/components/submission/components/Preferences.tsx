@@ -19,6 +19,7 @@ import {
   haOptions,
   HaPdfSizeMap,
   placementOptions,
+  deploymentTypeOptions,
 } from '../validation/preferences';
 
 export const Preferences: React.FC<FormStepProps> = () => {
@@ -67,6 +68,11 @@ export const Preferences: React.FC<FormStepProps> = () => {
         name='availabilityInformation.deploymentDuration'
         legend='Indicate the maximum duration of deployment you are willing to support'
         options={deploymentDurationOptions}
+      />
+      <CheckboxArray
+        legend='Indicate the type of deployment you are willing to support'
+        name='availabilityInformation.deploymentType'
+        options={deploymentTypeOptions}
       />
     </div>
   );

@@ -21,7 +21,7 @@ export class SubmissionEntity extends BaseEntity {
   version!: string;
   @BeforeInsert()
   beforeInsert() {
-    let { skillInformation, availabilityInformation } = this.payload;
+    const { skillInformation, availabilityInformation } = this.payload;
 
     // Remove specialties if the stream is non clinical or if selected stream has no specialties
     if (

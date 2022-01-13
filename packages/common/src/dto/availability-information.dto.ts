@@ -9,7 +9,7 @@ import {
   ValidateIf,
 } from 'class-validator';
 
-import { DeploymentDurations, PlacementOptions } from '../interfaces';
+import { DeploymentDurations, PlacementOptions, DeploymentTypes } from '../interfaces';
 import { LhaId, validLhaIds } from '../helper';
 import { IsArrayOfLhas, ValidateArray } from '../validators';
 
@@ -21,6 +21,7 @@ export class AvailabilityDTO {
       this.placementOptions = base.placementOptions;
       this.hasImmunizationTraining = base.hasImmunizationTraining;
       this.deploymentDuration = base.deploymentDuration;
+      this.deploymentType = base.deploymentType;
     }
   }
 
@@ -51,4 +52,12 @@ export class AvailabilityDTO {
   @IsIn(Object.values(DeploymentDurations), { message: 'Invalid deployment duration selection' })
   @IsString({ message: 'Deployment duration is required' })
   deploymentDuration!: DeploymentDurations;
+
+  @IsArray({ message: 'Deployment type is required' })
+  @ArrayMinSize(1, { message: 'Deployment type is required' })
+  @ArrayMaxSize(Object.values(DeploymentTypes).length, {
+    message: 'Invalid deployment type selection',
+  })
+  @ValidateArray({ context: { accepts: DeploymentTypes, name: 'DeploymentTypes' } })
+  deploymentType!: DeploymentTypes[];
 }
