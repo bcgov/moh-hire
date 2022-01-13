@@ -9,9 +9,10 @@ export function ValidateArray(validationOptions?: ValidationOptions) {
       propertyName: propertyName,
       options: validationOptions,
       validator: {
-        async validate(value: any[]) {
-          const acceptedValues: any[] = Object.values(validationOptions?.context.accepts);
-          const invalidValues = value.filter((val: any) => {
+        async validate(value: unknown[]) {
+          const acceptedValues: unknown[] = Object.values(validationOptions?.context.accepts);
+          if (!value) return false;
+          const invalidValues = value.filter((val: unknown) => {
             return !acceptedValues.includes(val);
           });
 
@@ -20,10 +21,15 @@ export function ValidateArray(validationOptions?: ValidationOptions) {
         defaultMessage: (args: ValidationArguments) => {
           const { value } = args;
           const { accepts, name } = validationOptions?.context;
-          const acceptedValues: any[] = Object.values(accepts);
-          const invalidValues = value.filter((val: any) => {
+
+          if (!value) return `Error validating ${name} array. Value is undefined.`;
+
+          const acceptedValues: unknown[] = Object.values(accepts);
+
+          const invalidValues = value.filter((val: unknown) => {
             return !acceptedValues.includes(val);
           });
+
           return `Error validating ${name} array. Invalid values: ${JSON.stringify(invalidValues)}`;
         },
       },

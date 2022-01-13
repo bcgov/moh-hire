@@ -32,12 +32,12 @@ describe('AppController (e2e)', () => {
     request(app.getHttpServer())
       .post(`/submission`)
       .send(validSubmissionData)
+      .expect(201)
       .expect(res => {
         const { body } = res;
         expect(body.confirmationId).toBeDefined();
         expect(body.id).toBeDefined();
       })
-      .expect(201)
       .end(done);
   });
 
@@ -45,10 +45,10 @@ describe('AppController (e2e)', () => {
     request(app.getHttpServer())
       .post(`/submission`)
       .send(invalidSubmissionDataFirstname)
+      .expect(400)
       .expect(res => {
         const { body } = res;
 
-        expect(body.statusCode).toBe(400);
         expect(body.error).toBe('Bad Request');
 
         const errorObject = body.message[0][0][0];
@@ -59,7 +59,6 @@ describe('AppController (e2e)', () => {
           'First Name must be between 1 and 255 characters',
         );
       })
-      .expect(400)
       .end(done);
   });
 });
