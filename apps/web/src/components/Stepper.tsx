@@ -16,7 +16,9 @@ const Check: React.FC<CheckProps> = ({ number, step }) => {
       ${step >= number && 'bg-bcBlueNav'}`}
     >
       {number >= step ? (
-        <span className='text-sm'>{number}</span>
+        number > step ? null : (
+          <span className='text-sm'>{number}</span>
+        )
       ) : (
         <FontAwesomeIcon icon={faCheck} className='h-3' />
       )}

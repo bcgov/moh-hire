@@ -8,6 +8,7 @@
     "format:write": "yarn prettier --write .",
     "lint": "echo 'Linting all packages' && wsrun --parallel --exclude-missing lint",
     "test": "echo 'Running tests' && wsrun --parallel --exclude-missing test",
+    "test-a11y": "echo 'Running accessiblity tests' && yarn workspace @ehpr/accessibility test-submission",
     "build-common": "echo 'Building all common packages packages' && wsrun --stages --exclude @ehpr/api --exclude @ehpr/web --exclude-missing build",
     "build": "echo 'Building packages' && wsrun --stages --exclude-missing build",
     "check": "run-p 'lint' 'format:check'",
