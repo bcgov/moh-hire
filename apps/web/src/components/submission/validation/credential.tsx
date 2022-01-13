@@ -142,6 +142,10 @@ export const healthAuthorityOptions = [
     value: HealthAuthorities.PRIVATE_EMPLOYER,
     label: 'Private employer',
   },
+  {
+    value: HealthAuthorities.OUTSIDE_BC,
+    label: 'Outside of BC',
+  },
 ];
 
 export const employmentCircumstanceOptions = [
