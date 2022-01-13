@@ -35,6 +35,7 @@ export enum HealthAuthorities {
   NORTHEREN = 'northern',
   VANCOUVER_COASTAL = 'vancouverCoastal',
   PRIVATE_EMPLOYER = 'privateEmployer',
+  OUTSIDE_BC = 'outsideBC',
 }
 
 export enum EmploymentCircumstances {

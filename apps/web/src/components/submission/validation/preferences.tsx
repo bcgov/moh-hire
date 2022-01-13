@@ -42,7 +42,7 @@ export const getLhaOptions = (hsdaSelection: string): OptionType[] => {
 };
 
 export const HaPdfSizeMap: Record<HaId, { size: number; url: string }> = {
-  VancouverRegion: {
+  VancouverCoastal: {
     size: 1.4,
     url: 'https://www2.gov.bc.ca/assets/gov/data/geographic/land-use/administrative-boundaries/health-boundaries/3_vancouver_coastal_health_authority.pdf',
   },

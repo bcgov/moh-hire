@@ -33,7 +33,7 @@ export const formExportColumnHeaders = [
 
   // Preferences
   { id: 'deployAnywhere', title: 'Deploy Anywhere' },
-  { id: 'VancouverRegion', title: 'Vancouver Region' },
+  { id: 'VancouverCoastal', title: 'Vancouver/Coastal' },
   { id: 'FraserRegion', title: 'Fraser Region' },
   { id: 'VancouverIslandRegion', title: 'Vancouver Island Region' },
   { id: 'InteriorRegion', title: 'Interior Region' },
@@ -81,7 +81,7 @@ const flattenAndTransformFormData = submissions => {
         nonClinicalJobTitle: skillInformation.nonClinicalJobTitle,
 
         deployAnywhere: booleanToYesNo(availabilityInformation.deployAnywhere),
-        VancouverRegion: healthAuthorities.VancouverRegion.lhas.join(', '),
+        VancouverCoastal: healthAuthorities.VancouverCoastal.lhas.join(', '),
         FraserRegion: healthAuthorities.FraserRegion.lhas.join(', '),
         VancouverIslandRegion: healthAuthorities.VancouverIslandRegion.lhas.join(', '),
         InteriorRegion: healthAuthorities.InteriorRegion.lhas.join(', '),
