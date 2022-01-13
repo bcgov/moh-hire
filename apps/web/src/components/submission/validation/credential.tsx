@@ -4,7 +4,7 @@ import {
   HealthAuthorities,
   EmploymentCircumstances,
   RegistrationStatus,
-  SkillInformationDTO,
+  CredentialInformationDTO,
   getStreams,
   getSpecialtiesByStreamId,
   getSubSpecialtiesBySpecialtyId,
@@ -16,14 +16,14 @@ import {
   getSubSpecialtyById,
 } from '@ehpr/common';
 
-export { SkillInformationDTO } from '@ehpr/common';
+export { CredentialInformationDTO } from '@ehpr/common';
 
 export const defaultSpecialtyValue = {
   id: '',
   subspecialties: [],
 };
 
-export const credentialDefaultValues: Partial<SkillInformationDTO> = {
+export const credentialDefaultValues: Partial<CredentialInformationDTO> = {
   stream: undefined,
   registrationStatus: undefined,
   registrationNumber: undefined,

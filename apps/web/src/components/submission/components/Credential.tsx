@@ -4,7 +4,7 @@ import {
   EmploymentTypes,
   RegistrationStatus,
   streamsById,
-  SkillInformationDTO,
+  CredentialInformationDTO,
 } from '@ehpr/common';
 
 import {
@@ -35,8 +35,8 @@ import { defaultSpecialtyValue } from '../validation/credential';
 export const Credential: React.FC = () => {
   const { values, setFieldValue } = useFormikContext<SubmissionType>();
 
-  const { stream, specialties, currentEmployment, registrationStatus }: SkillInformationDTO =
-    values.skillInformation;
+  const { stream, specialties, currentEmployment, registrationStatus }: CredentialInformationDTO =
+    values.credentialInformation;
   const selectedSpecialties = specialties.map(specialty => specialty.id);
 
   const specialtyOptions = stream ? getSpecialtyOptions(stream) : null;
@@ -48,10 +48,10 @@ export const Credential: React.FC = () => {
   // reset specialties if stream changes
   useEffect(() => {
     if (stream !== previousStream.current) {
-      setFieldValue('skillInformation.specialties', [defaultSpecialtyValue]);
-      setFieldValue('skillInformation.nonClinicalJobTitle', undefined);
+      setFieldValue('credentialInformation.specialties', [defaultSpecialtyValue]);
+      setFieldValue('credentialInformation.nonClinicalJobTitle', undefined);
       if (stream === streamsById.Nonclinical.id) {
-        setFieldValue('skillInformation.specialties', []);
+        setFieldValue('credentialInformation.specialties', []);
       }
     }
   }, [setFieldValue, stream]);
@@ -59,16 +59,16 @@ export const Credential: React.FC = () => {
   // reset health authority/employment circumstance if employment status changes
   useEffect(() => {
     if (currentEmployment !== previousCurrentEmployment.current) {
-      setFieldValue('skillInformation.healthAuthorities', []);
+      setFieldValue('credentialInformation.healthAuthorities', []);
 
-      setFieldValue('skillInformation.employmentCircumstance', null);
+      setFieldValue('credentialInformation.employmentCircumstance', null);
     }
   }, [setFieldValue, currentEmployment]);
 
   // reset registraion number if registation status changes to unregistered
   useEffect(() => {
     if (![RegistrationStatus.REGISTERED, RegistrationStatus.TEMP].includes(registrationStatus)) {
-      setFieldValue('skillInformation.registrationNumber', undefined);
+      setFieldValue('credentialInformation.registrationNumber', undefined);
     }
   }, [setFieldValue, registrationStatus]);
 
@@ -83,20 +83,20 @@ export const Credential: React.FC = () => {
   return (
     <div className='flex flex-col gap-5'>
       <FormStepHeader>3. Credentials Information</FormStepHeader>
-      <Select name='skillInformation.stream' label='Stream Type'>
+      <Select name='credentialInformation.stream' label='Stream Type'>
         {streamOptions.map(stream => (
           <Option key={stream.value} label={stream.label} value={stream.value} />
         ))}
       </Select>
 
       {isNonClinical ? (
-        <Field name='skillInformation.nonClinicalJobTitle' label={`Provide your job title`} />
+        <Field name='credentialInformation.nonClinicalJobTitle' label={`Provide your job title`} />
       ) : null}
 
       {isClinical ? (
         <div className='flex flex-col items-start'>
           <FieldArray
-            name='skillInformation.specialties'
+            name='credentialInformation.specialties'
             render={arrayHelpers => (
               <>
                 <fieldset className='flex flex-col w-full gap-8 mb-4'>
@@ -113,7 +113,7 @@ export const Credential: React.FC = () => {
                 </fieldset>
 
                 <div className='mb-2'>
-                  <Error name='skillInformation.specialties' />
+                  <Error name='credentialInformation.specialties' />
                 </div>
 
                 <div className='flex justify-center md:justify-start items-center w-full'>
@@ -149,18 +149,18 @@ export const Credential: React.FC = () => {
         </div>
       ) : null}
       <Radio
-        name='skillInformation.registrationStatus'
+        name='credentialInformation.registrationStatus'
         legend='Select which best applies to your current registration status'
         options={registrationStatusOptions}
       />
       {isRegistered ? (
         <Field
-          name='skillInformation.registrationNumber'
+          name='credentialInformation.registrationNumber'
           label='Indicate your registration number from your credentialing body (optional)'
         />
       ) : null}
       <Radio
-        name='skillInformation.currentEmployment'
+        name='credentialInformation.currentEmployment'
         legend='Select which best applies to your current employment status'
         options={employmentOptions}
       />
@@ -184,7 +184,7 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
   subspecialties,
 }) => {
   const { values } = useFormikContext<SubmissionType>();
-  const { specialties: formSpecialties }: SkillInformationDTO = values.skillInformation;
+  const { specialties: formSpecialties }: CredentialInformationDTO = values.credentialInformation;
 
   const specialtyOptionIsDisabled = (specialtyId: string): boolean =>
     !!formSpecialties.find(specialty => specialty.id === specialtyId);
@@ -192,7 +192,7 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
     <div className='grid md:grid-cols-2 gap-2 w-full ring-gray-200 ring-1 ring-offset-10 rounded-sm'>
       <div className='col-span-1'>
         <Select
-          name={`skillInformation.specialties[${index}].id`}
+          name={`credentialInformation.specialties[${index}].id`}
           label={`Main Speciality #${index + 1}`}
           disabled={disabled}
         >
@@ -209,7 +209,7 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
       <div className='col-span-1'>
         <MultiSelect
           label={`Subspecialty #${index + 1}`}
-          name={`skillInformation.specialties[${index}].subspecialties`}
+          name={`credentialInformation.specialties[${index}].subspecialties`}
           disabled={!subspecialties || subspecialties.length === 0}
           options={subspecialties || []}
         />
@@ -225,7 +225,7 @@ const SecondaryEmploymentQuestion: React.FC<{ employmentStatus: EmploymentTypes 
     case EmploymentTypes.HEALTH_SECTOR_EMPLOYED:
       return (
         <CheckboxArray
-          name='skillInformation.healthAuthorities'
+          name='credentialInformation.healthAuthorities'
           legend='Indicate where you are employed (select all that apply):'
           options={healthAuthorityOptions}
         />
@@ -233,7 +233,7 @@ const SecondaryEmploymentQuestion: React.FC<{ employmentStatus: EmploymentTypes 
     case EmploymentTypes.HEALTH_SECTORY_RESIDENCY:
       return (
         <CheckboxArray
-          name='skillInformation.healthAuthorities'
+          name='credentialInformation.healthAuthorities'
           legend='Indicate where you are doing your practicum/residency (select all that apply):'
           options={healthAuthorityOptions}
         />
@@ -241,7 +241,7 @@ const SecondaryEmploymentQuestion: React.FC<{ employmentStatus: EmploymentTypes 
     case EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED:
       return (
         <Radio
-          name='skillInformation.employmentCircumstance'
+          name='credentialInformation.employmentCircumstance'
           legend='Select your circumstance:'
           options={employmentCircumstanceOptions}
         />

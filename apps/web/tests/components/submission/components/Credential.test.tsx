@@ -24,7 +24,7 @@ describe('Credential', () => {
   it('should render', () => {
     const mock = jest.fn();
     const initialValues = {
-      skillInformation: {
+      credentialInformation: {
         stream: undefined,
         specialties: [defaultSpecialtyValue],
         currentEmployment: undefined,
@@ -45,7 +45,7 @@ describe('Credential', () => {
   it('should render the expected fields ', async () => {
     const mockSubmit = jest.fn();
     const initialValues = {
-      skillInformation: {
+      credentialInformation: {
         stream: undefined,
         specialties: [defaultSpecialtyValue],
         currentEmployment: undefined,
@@ -80,7 +80,7 @@ describe('Credential', () => {
   it('should render health authority checkboxes when health authority employment is selected ', async () => {
     const mockSubmit = jest.fn();
     const initialValues = {
-      skillInformation: {
+      credentialInformation: {
         stream: undefined,
         specialties: [defaultSpecialtyValue],
         currentEmployment: 'healthSectorEmployed',

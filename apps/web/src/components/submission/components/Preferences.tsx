@@ -25,7 +25,7 @@ import {
 
 export const Preferences: React.FC<FormStepProps> = () => {
   const { values, setFieldValue } = useFormikContext<SubmissionType>();
-  const { deployAnywhere } = values.availabilityInformation;
+  const { deployAnywhere } = values.preferencesInformation;
 
   const previousDeployAnywhere = useRef(deployAnywhere);
 
@@ -33,7 +33,7 @@ export const Preferences: React.FC<FormStepProps> = () => {
     // only reset locations when deploy anywhere is changed (i.e. changed from true to false)
     // prevents resetting locations on component mount
     if (deployAnywhere !== previousDeployAnywhere.current) {
-      setFieldValue('availabilityInformation.deploymentLocations', []);
+      setFieldValue('preferencesInformation.deploymentLocations', []);
     }
     previousDeployAnywhere.current = deployAnywhere;
   }, [deployAnywhere, setFieldValue]);
@@ -42,7 +42,7 @@ export const Preferences: React.FC<FormStepProps> = () => {
     <div className='flex flex-col gap-4'>
       <FormStepHeader>4. Employment Preferences</FormStepHeader>
       <Radio.Boolean
-        name='availabilityInformation.deployAnywhere'
+        name='preferencesInformation.deployAnywhere'
         legend='Are you willing to deploy anywhere in BC?'
         horizontal
       />
@@ -53,26 +53,26 @@ export const Preferences: React.FC<FormStepProps> = () => {
             and select the locations)
           </legend>
           <DeploymentLocationSelector />
-          <Error name='availabilityInformation.deploymentLocations' />
+          <Error name='preferencesInformation.deploymentLocations' />
         </fieldset>
       ) : null}
       <CheckboxArray
         legend='Indicate the placement option(s) you are willing to support'
-        name='availabilityInformation.placementOptions'
+        name='preferencesInformation.placementOptions'
         options={placementOptions}
       />
       <Radio.Boolean
         legend='Have you received immunization training in the past five years?'
-        name='availabilityInformation.hasImmunizationTraining'
+        name='preferencesInformation.hasImmunizationTraining'
       />
       <Radio
-        name='availabilityInformation.deploymentDuration'
+        name='preferencesInformation.deploymentDuration'
         legend='Indicate the maximum duration of deployment you are willing to support'
         options={deploymentDurationOptions}
       />
       <CheckboxArray
         legend='Indicate the type of deployment you are willing to support'
-        name='availabilityInformation.deploymentType'
+        name='preferencesInformation.deploymentType'
         options={deploymentTypeOptions}
       />
       <Radio
@@ -87,14 +87,12 @@ export const Preferences: React.FC<FormStepProps> = () => {
 const DeploymentLocationSelector: React.FC = () => {
   const { values, setFieldValue } = useFormikContext<SubmissionType>();
 
-  const selectedDeploymentLocations = values.availabilityInformation.deploymentLocations ?? [];
+  const selectedDeploymentLocations = values.preferencesInformation.deploymentLocations ?? [];
 
   const currentlySelected = (haId: HaId) => {
     const lhas = getLhasbyHaId(haId);
 
-    return lhas.filter(lha =>
-      values.availabilityInformation?.deploymentLocations?.includes(lha.id),
-    );
+    return lhas.filter(lha => values.preferencesInformation?.deploymentLocations?.includes(lha.id));
   };
 
   const allSelected = (haId: HaId) => {
@@ -108,7 +106,7 @@ const DeploymentLocationSelector: React.FC = () => {
     const filtereredDeploymentLocations = selectedDeploymentLocations.filter(
       location => !lhas.find(lha => lha.id === location),
     );
-    setFieldValue('availabilityInformation.deploymentLocations', filtereredDeploymentLocations);
+    setFieldValue('preferencesInformation.deploymentLocations', filtereredDeploymentLocations);
   };
 
   const selectAll = (haId: HaId) => {
@@ -121,7 +119,7 @@ const DeploymentLocationSelector: React.FC = () => {
       }
     });
 
-    setFieldValue('availabilityInformation.deploymentLocations', newDeploymentLocations);
+    setFieldValue('preferencesInformation.deploymentLocations', newDeploymentLocations);
   };
 
   return (
@@ -196,7 +194,7 @@ const HsdaLocationSelector: React.FC<LocationListProps> = ({ region, lhaOptions 
         {lhaOptions.map(location => (
           <Checkbox
             key={location.value}
-            name={`availabilityInformation.deploymentLocations`}
+            name={`preferencesInformation.deploymentLocations`}
             value={location.value}
             label={location.label}
           />

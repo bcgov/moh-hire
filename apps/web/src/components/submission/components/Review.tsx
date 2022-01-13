@@ -27,7 +27,7 @@ import {
 
 export const Review: React.FC = () => {
   const { values } = useFormikContext<SubmissionType>();
-  const { personalInformation, contactInformation, skillInformation, availabilityInformation } =
+  const { personalInformation, contactInformation, credentialInformation, preferencesInformation } =
     values;
   const { firstName, lastName, postalCode } = personalInformation;
   const { primaryPhone, primaryPhoneExt, secondaryPhone, secondaryPhoneExt, email } =
@@ -41,7 +41,7 @@ export const Review: React.FC = () => {
     employmentCircumstance,
     healthAuthorities,
     nonClinicalJobTitle,
-  } = skillInformation;
+  } = credentialInformation;
   const {
     deployAnywhere,
     deploymentLocations,
@@ -49,7 +49,7 @@ export const Review: React.FC = () => {
     hasImmunizationTraining,
     deploymentDuration,
     deploymentType,
-  } = availabilityInformation;
+  } = preferencesInformation;
 
   if (!stream) {
     return null;

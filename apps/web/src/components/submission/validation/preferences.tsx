@@ -1,5 +1,5 @@
 import {
-  AvailabilityDTO,
+  PreferencesInformationDTO,
   PlacementOptions,
   DeploymentDurations,
   DeploymentTypes,
@@ -10,7 +10,7 @@ import { getHas, getHsdasByHaId, getLhasByHsdaId, HaId } from '@ehpr/common';
 
 export { PersonalInformationDTO } from '@ehpr/common';
 
-export const preferencesDefaultValues: Partial<AvailabilityDTO> = {
+export const preferencesDefaultValues: Partial<PreferencesInformationDTO> = {
   deployAnywhere: undefined,
   deploymentLocations: [],
   placementOptions: [],
@@ -89,6 +89,7 @@ export const deploymentTypeOptions = [
   { label: 'Full-Time', value: DeploymentTypes.FULL_TIME },
   { label: 'Part-Time', value: DeploymentTypes.PART_TIME },
 ];
+
 export const previousDeploymentOptions = [
   {
     label: 'Yes',

@@ -25,8 +25,8 @@ interface StepType {
 enum FormKeys {
   PERSONAL_INFORMATION = 'personalInformation',
   CONTACT_INFORMATION = 'contactInformation',
-  SKILL_INFORMATION = 'skillInformation',
-  AVAILABILITY_INFORMATION = 'availabilityInformation',
+  CREDENTIAL_INFORMATION = 'credentialInformation',
+  PREFERENCES_INFORMATION = 'preferencesInformation',
 }
 
 const steps: StepType[] = [
@@ -43,12 +43,12 @@ const steps: StepType[] = [
   {
     component: <Credential />,
     validationSchema: credentialSchema,
-    key: FormKeys.SKILL_INFORMATION,
+    key: FormKeys.CREDENTIAL_INFORMATION,
   },
   {
-    component: <Preferences formKey={FormKeys.AVAILABILITY_INFORMATION} />,
+    component: <Preferences formKey={FormKeys.PREFERENCES_INFORMATION} />,
     validationSchema: preferencesSchema,
-    key: FormKeys.AVAILABILITY_INFORMATION,
+    key: FormKeys.PREFERENCES_INFORMATION,
   },
   {
     component: <Review />,
