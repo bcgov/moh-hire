@@ -1,9 +1,9 @@
 {
   "has": {
     "byId": {
-      "VancouverCoastal": {
+      "VancouverCostal": {
         "id": "VancouverCoastal",
-        "name": "Vancouver Coastal",
+        "name": "Vancouver/Coastal",
         "hsdas": ["Richmond", "Vancouver", "NorthShoreCoastGaribaldi"]
       },
       "FraserRegion": {
