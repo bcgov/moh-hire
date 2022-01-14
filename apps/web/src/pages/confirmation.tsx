@@ -1,20 +1,15 @@
 import { useEffect } from 'react';
-import { withRouter, NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { ExternalLink, Notice } from '@components';
 
-interface WithRouterProps {
-  router: NextRouter;
-}
-
-const Confirmation: React.FC<WithRouterProps> = props => {
-  const nextRouter = useRouter();
-  const { router } = props;
-  const id: string = router.query?.id as string;
+const Confirmation: React.FC = () => {
+  const { push, query, isReady } = useRouter();
+  const id: string = query.id as string;
 
   useEffect(() => {
-    // if the page is accessed directly, redirect to the home page
-    if (!id) {
-      nextRouter.push('/');
+    // redirect to the home page if the id is not present
+    if (isReady && !id) {
+      push('/');
     }
   });
 
@@ -56,4 +51,4 @@ const Confirmation: React.FC<WithRouterProps> = props => {
   );
 };
 
-export default withRouter(Confirmation);
+export default Confirmation;

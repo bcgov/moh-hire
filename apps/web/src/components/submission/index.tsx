@@ -13,6 +13,7 @@ import {
   credentialSchema,
   preferencesSchema,
   reviewSchema,
+  prefilledSubmissionValues,
 } from './validation';
 import { Ret } from 'class-validator-formik/dist/convertError';
 
@@ -140,7 +141,9 @@ export const Form: React.FC = () => {
   return (
     <Formik
       innerRef={formikRef}
-      initialValues={initialSubmissionValues}
+      initialValues={
+        process.env.NEXT_PUBLIC_PREFILLED_FORM ? prefilledSubmissionValues : initialSubmissionValues
+      }
       validate={values => handleValidate(currentStepValidation, values, currentStepKey)}
       onSubmit={handleSubmit}
     >

@@ -15,11 +15,16 @@ const Check: React.FC<CheckProps> = ({ number, step }) => {
       flex flex-row items-center justify-center
       ${step >= number && 'bg-bcBlueNav'}`}
     >
-      {number >= step ? (
-        <span className='text-sm'>{number}</span>
-      ) : (
-        <FontAwesomeIcon icon={faCheck} className='h-3' />
-      )}
+      {(() => {
+        switch (true) {
+          case number === step:
+            return <span className='text-sm'>{number}</span>;
+          case number > step:
+            return null;
+          default:
+            return <FontAwesomeIcon icon={faCheck} className='h-3' />;
+        }
+      })()}
     </div>
   );
 };
@@ -48,19 +53,21 @@ const Step: React.FC<StepProps> = ({ index, step, label, isLast }) => {
 export const Stepper: React.FC<{ formSteps: string[]; step: number }> = ({ formSteps, step }) => {
   const stepCount = formSteps.length;
   return (
-    <div
-      aria-label={step <= stepCount ? `Form step ${step} of ${stepCount}` : 'Form Complete'}
-      className='w-full flex justify-center print:hidden'
-    >
-      {formSteps.map((formStep, index) => (
-        <Step
-          key={index}
-          index={index}
-          step={step}
-          label={formStep}
-          isLast={stepCount === index + 1}
-        />
-      ))}
-    </div>
+    <>
+      <p className='sr-only'>
+        {step <= stepCount ? `Form step ${step} of ${stepCount}` : 'Form Complete'}
+      </p>
+      <div className='w-full flex justify-center print:hidden' aria-hidden>
+        {formSteps.map((formStep, index) => (
+          <Step
+            key={index}
+            index={index}
+            step={step}
+            label={formStep}
+            isLast={stepCount === index + 1}
+          />
+        ))}
+      </div>
+    </>
   );
 };

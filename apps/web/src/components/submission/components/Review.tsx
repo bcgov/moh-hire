@@ -70,10 +70,12 @@ export const Review: React.FC = () => {
             label='Primary Phone Number'
             value={phoneNumberWithExtension(primaryPhone, primaryPhoneExt)}
           />
-          <ReviewItem
-            label='Secondary Phone Number'
-            value={phoneNumberWithExtension(secondaryPhone, secondaryPhoneExt)}
-          />
+          {secondaryPhone ? (
+            <ReviewItem
+              label='Secondary Phone Number'
+              value={phoneNumberWithExtension(secondaryPhone, secondaryPhoneExt)}
+            />
+          ) : null}
           <ReviewItem label='Email Address' value={email} />
         </ReviewSection>
 

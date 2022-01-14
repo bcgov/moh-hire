@@ -8,7 +8,7 @@ import { Footer, Header } from '@components';
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
@@ -25,4 +25,5 @@ function MyApp({ Component, pageProps }: AppProps) {
     </>
   );
 }
-export default MyApp;
+
+export default App;

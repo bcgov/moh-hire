@@ -31,21 +31,21 @@ export class ContactInformationDTO {
   @Length(0, 255, {
     message: '255 character limit',
   })
-  primaryPhoneExt!: string;
+  primaryPhoneExt?: string;
 
   @ValidateIf(o => !!o.secondaryPhone)
   @IsString()
   @Matches(TEN_DIGIT_PHONE_REGEX, {
     message: 'Phone number must be a 10 digit number',
   })
-  secondaryPhone!: string;
+  secondaryPhone?: string;
 
   @IsString()
   @IsOptional()
   @Length(0, 255, {
     message: '255 character limit',
   })
-  secondaryPhoneExt!: string;
+  secondaryPhoneExt?: string;
 
   @IsString()
   @IsEmail()

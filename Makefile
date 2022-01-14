@@ -162,6 +162,15 @@ api-integration-test:
 	@echo "++\n*****"
 	@make stop-test-db
 
+accessibility-test:
+	@echo "++\n***** Running front end accessibility tests\n++"
+	@yarn workspace @ehpr/accessibility accessibility-test
+	@echo "++\n*****"
+
+generate-accessibility-results:
+	@echo "++\n***** Generating Github Comment from Test Results\n++"
+	@yarn workspace @ehpr/accessibility generate-accessibility-results
+	@echo "++\n*****"
 
 # Build application stack
 
@@ -199,6 +208,8 @@ build-web:
 	@yarn workspace @ehpr/web export
 	@mv ./apps/web/out ./terraform/build/app
 	@echo "++\n*****"
+
+	
 
 # AWS / Terraform commands
 
