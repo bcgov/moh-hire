@@ -3,53 +3,35 @@ const defaults = {
   standard: 'WCAG2AA',
   viewport: {
     width: 1300,
-    height: 2000,
+    height: 2400,
   },
 };
 
-const navActions = {
-  personal: [
-    'set field [name="personalInformation.firstName"] to John',
-    'set field [name="personalInformation.lastName"] to Doe',
-    'set field [name="personalInformation.postalCode"] to A1A1A1',
-    'click button[type=submit]',
-    'wait for path to be /submission/2',
-  ],
-  contact: [
-    'set field [name="contactInformation.primaryPhone"] to 5874561234',
-    'set field [name="contactInformation.email"] to test@test.io',
-    'click button[type=submit]',
-    'wait for path to be /submission/3',
-  ],
-  credential: ['click element #skillInformation.stream'],
-};
-
-const submitPage = 'click button[type=submit]';
 const screenCap = fileName => `screen capture screenCaptures/${fileName}.png`;
 const urls = [
   {
     url: 'http://localhost:3000/submission/1',
-    actions: [
-      submitPage, // trigger errors,
-      screenCap('screencap_personal'),
-    ],
+    actions: [screenCap('screencap_personal')],
   },
   {
-    url: 'http://localhost:3000/submission/1',
-    actions: [
-      ...navActions.personal,
-      submitPage, // trigger errors
-      screenCap('screencap_contact'),
-    ],
+    url: 'http://localhost:3000/submission/2',
+    actions: [screenCap('screencap_contact')],
   },
   {
-    url: 'http://localhost:3000/submission/1',
-    actions: [
-      ...navActions.personal,
-      ...navActions.contact,
-      submitPage, // trigger errors
-      screenCap('screencap_credential'),
-    ],
+    url: 'http://localhost:3000/submission/3',
+    actions: [screenCap('screencap_credential')],
+  },
+  {
+    url: 'http://localhost:3000/submission/4',
+    actions: [screenCap('screencap_preferences')],
+  },
+  {
+    url: 'http://localhost:3000/submission/5',
+    actions: [screenCap('screencap_preferences')],
+  },
+  {
+    url: 'http://localhost:3000/confirmation?id=12345678910',
+    actions: [screenCap('screencap_confirmation')],
   },
 ];
 

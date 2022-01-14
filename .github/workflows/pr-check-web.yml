@@ -35,7 +35,7 @@ jobs:
         run: yarn workspace @ehpr/web test
 
       - name: Start web app
-        run: yarn workspace @ehpr/web dev &
+        run: PREFILLED_FORM=true yarn workspace @ehpr/web dev &
 
       - name: sleep until webapp is up
         run: |

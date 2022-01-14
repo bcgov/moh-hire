@@ -46,7 +46,7 @@ export class CredentialInformationDTO {
 
   @IsString({ message: 'Invalid value' })
   @IsOptional()
-  registrationNumber!: string;
+  registrationNumber?: string;
 
   @IsIn(Object.values(EmploymentTypes), { message: 'Invalid employment type selection' })
   @IsString({ message: 'Current employment selection is required' })
@@ -68,7 +68,7 @@ export class CredentialInformationDTO {
     message: 'Invalid health authority selection',
   })
   @ValidateArray({ context: { accepts: HealthAuthorities, name: 'HealthAuthorities' } })
-  healthAuthorities!: HealthAuthorities[];
+  healthAuthorities?: HealthAuthorities[];
 
   @ValidateIf(o => EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED === o.currentEmployment)
   @IsIn(Object.values(EmploymentCircumstances), { message: 'Invalid circumstance selection' })
