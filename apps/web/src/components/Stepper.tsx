@@ -15,13 +15,16 @@ const Check: React.FC<CheckProps> = ({ number, step }) => {
       flex flex-row items-center justify-center
       ${step >= number && 'bg-bcBlueNav'}`}
     >
-      {number >= step ? (
-        number > step ? null : (
-          <span className='text-sm'>{number}</span>
-        )
-      ) : (
-        <FontAwesomeIcon icon={faCheck} className='h-3' />
-      )}
+      {(() => {
+        switch (true) {
+          case number === step:
+            return <span className='text-sm'>{number}</span>;
+          case number > step:
+            return null;
+          default:
+            return <FontAwesomeIcon icon={faCheck} className='h-3' />;
+        }
+      })()}
     </div>
   );
 };
