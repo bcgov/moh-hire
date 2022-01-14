@@ -1,7 +1,7 @@
 const defaults = {
   timeout: 30000,
   standard: 'WCAG2AA',
-  runners: ['axe', 'htmlcs'],
+  runners: ['axe'],
   viewport: {
     width: 1300,
     height: 2400,

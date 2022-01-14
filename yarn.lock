@@ -832,7 +832,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@ehpr/accessibility@workspace:packages/accessibility"
   dependencies:
-    npm-run-all: ^4.1.5
+    npm-run-all: 4.1.5
     pa11y-ci: 3.0.1
   languageName: unknown
   linkType: soft
@@ -11634,7 +11634,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"npm-run-all@npm:4.1.5, npm-run-all@npm:^4.1.5":
+"npm-run-all@npm:4.1.5":
   version: 4.1.5
   resolution: "npm-run-all@npm:4.1.5"
   dependencies:
