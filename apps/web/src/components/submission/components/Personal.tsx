@@ -13,6 +13,7 @@ export const Personal: React.FC<FormStepProps> = ({ formKey }) => {
       <div className='flex flex-col gap-3'>
         <Field name={fieldNames.firstName} label='First Name' type='text' />
         <Field name={fieldNames.lastName} label='Last Name' type='text' />
+        <input name='no-label' />
         <Field
           name={fieldNames.postalCode}
           label='Postal Code'

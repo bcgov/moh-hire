@@ -45,6 +45,9 @@ const Confirmation: React.FC = () => {
             </ExternalLink>
             .
           </p>
+          <div className='bg-whit'>
+            <p className='text-white'>No contrast</p>
+          </div>
         </section>
       </div>
     </div>
