@@ -36,7 +36,7 @@ jobs:
         run: make accessibility-test
 
       - name: generate markdown from test results
-        run: touch a11y-results.md && node generate-a11y-markdown.js packages/accessibility/output.json
+        run: make generate-accessibility-results
         if: ${{ failure() }}
 
       - uses: actions/github-script@v3
