@@ -42,6 +42,7 @@ export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
               description='(xxx xxx xxxx)'
             />
           </div>
+          <input name='no-label' />
           <div className='md:col-span-1'>
             <Field
               name={fieldNames.primaryPhoneExt}

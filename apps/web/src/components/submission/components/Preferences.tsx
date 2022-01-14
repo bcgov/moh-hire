@@ -46,6 +46,9 @@ export const Preferences: React.FC<FormStepProps> = () => {
         legend='Are you willing to deploy anywhere in BC?'
         horizontal
       />
+      <div className='bg-white'>
+        <p className='text-white'>no contrast</p>
+      </div>
       {deployAnywhere === false ? (
         <fieldset>
           <legend className='text-gray-500 font-bold mb-2 text-base'>
