@@ -53,19 +53,21 @@ const Step: React.FC<StepProps> = ({ index, step, label, isLast }) => {
 export const Stepper: React.FC<{ formSteps: string[]; step: number }> = ({ formSteps, step }) => {
   const stepCount = formSteps.length;
   return (
-    <div
-      aria-label={step <= stepCount ? `Form step ${step} of ${stepCount}` : 'Form Complete'}
-      className='w-full flex justify-center print:hidden'
-    >
-      {formSteps.map((formStep, index) => (
-        <Step
-          key={index}
-          index={index}
-          step={step}
-          label={formStep}
-          isLast={stepCount === index + 1}
-        />
-      ))}
-    </div>
+    <>
+      <p className='sr-only'>
+        {step <= stepCount ? `Form step ${step} of ${stepCount}` : 'Form Complete'}
+      </p>
+      <div className='w-full flex justify-center print:hidden' aria-hidden>
+        {formSteps.map((formStep, index) => (
+          <Step
+            key={index}
+            index={index}
+            step={step}
+            label={formStep}
+            isLast={stepCount === index + 1}
+          />
+        ))}
+      </div>
+    </>
   );
 };

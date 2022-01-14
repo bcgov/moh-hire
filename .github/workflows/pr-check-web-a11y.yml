@@ -19,14 +19,17 @@ jobs:
           restore-keys: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn workspace @ehpr/web install
+        run: yarn
+
+      - name: Build dependencies
+        run: yarn build-common
 
       - name: Start web app
-        run: PREFILLED_FORM=true yarn workspace @ehpr/web dev &
+        run: NEXT_PUBLIC_PREFILLED_FORM=true yarn workspace @ehpr/web dev &
 
       - name: sleep until webapp is up
         run: |
-          until $(curl --silent --fail http://localhost:3000); do
+          until $(curl --output /dev/null --silent --fail http://localhost:3000); do
               echo '.'
               ((c++)) && ((c==10)) && c=0 && break # don't run more than 10 times
               sleep 5

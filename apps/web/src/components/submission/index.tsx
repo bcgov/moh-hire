@@ -142,7 +142,7 @@ export const Form: React.FC = () => {
     <Formik
       innerRef={formikRef}
       initialValues={
-        process.env.PREFILLED_FORM ? prefilledSubmissionValues : initialSubmissionValues
+        process.env.NEXT_PUBLIC_PREFILLED_FORM ? prefilledSubmissionValues : initialSubmissionValues
       }
       validate={values => handleValidate(currentStepValidation, values, currentStepKey)}
       onSubmit={handleSubmit}
