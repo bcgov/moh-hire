@@ -76,7 +76,7 @@ export const Preferences: React.FC<FormStepProps> = () => {
         options={deploymentTypeOptions}
       />
       <Radio
-        name='availabilityInformation.hasPreviousDeployment'
+        name='preferencesInformation.hasPreviousDeployment'
         legend='Have you previously been deployed from the EHPR?'
         options={previousDeploymentOptions}
       />
