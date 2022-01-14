@@ -47,7 +47,7 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const fs = require('fs');
-            const comment = fs.readFileSync('./packages/accessibility/accessibility_results.md', 'utf8');
+            const comment = fs.readFileSync('./packages/accessibility/out/accessibility_results.md', 'utf8');
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
