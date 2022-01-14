@@ -164,7 +164,12 @@ api-integration-test:
 
 accessibility-test:
 	@echo "++\n***** Running front end accessibility tests\n++"
-	@yarn test-a11y
+	@yarn workspace @ehpr/accessibility accessibility-test
+	@echo "++\n*****"
+
+generate-accessibility-results:
+	@echo "++\n***** Generating Github Comment from Test Results\n++"
+	@yarn workspace @ehpr/accessibility generate-accessibility-results
 	@echo "++\n*****"
 
 # Build application stack

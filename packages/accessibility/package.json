@@ -2,7 +2,8 @@
   "name": "@ehpr/accessibility",
   "packageManager": "yarn@3.1.0",
   "scripts": {
-    "test-submission": "echo 'Accesibility testing coverage: 3/5 pages' && pa11y-ci --config=./src/submission.pa11y-ci.js"
+    "accessibility-test": "echo 'Running accessiblity tests...' && pa11y-ci --config=./src/submission.pa11y-ci.js --json > out/submission_accessibility_results.json",
+    "generate-accessibility-results": "echo 'Running accessiblity tests' && node src/generate-a11y-markdown out/submission_accessibility_results.json"
   },
   "dependencies": {
     "npm-run-all": "^4.1.5",

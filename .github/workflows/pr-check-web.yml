@@ -45,8 +45,26 @@ jobs:
               sleep 5
           done
 
+      - name: Build web package
+        run: yarn workspace @ehpr/web build
+
       - name: Accessibility Test web package
         run: make accessibility-test
 
-      - name: Build web package
-        run: yarn workspace @ehpr/web build
+      - name: generate markdown from test results
+        run: touch a11y-results.md && node generate-a11y-markdown.js packages/accessibility/output.json
+        if: ${{ failure() }}
+
+      - uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const fs = require('fs');
+            const comment = fs.readFileSync('./packages/accessibility/accessibility_results.md', 'utf8');
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            })
+        if: ${{ failure() }}
