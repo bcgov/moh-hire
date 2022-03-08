@@ -99,7 +99,7 @@ export class SpecialtyDTO {
   @IsArray({ message: 'Health authority selection is required' })
   @ArrayMinSize(1, { message: 'Health authority selection is required' })
   @ArrayMaxSize(5, {
-    message: 'Invalid subspecialty selection',
+    message: 'Max number of subspecialty is 5',
   })
   @ValidateNested()
   subspecialties?: SubspecialtyDTO[];
