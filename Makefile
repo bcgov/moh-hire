@@ -278,6 +278,10 @@ else
 	@git push --force origin refs/tags/prod:refs/tags/prod
 endif
 
+tag-security:
+	@git tag -fa security -m "EHPR security test"
+	@git push --force origin refs/tags/security:refs/tags/security
+
 # Typeorm Migrations
 
 migration-generate:
