@@ -45,11 +45,14 @@ export class IsArrayOfSpecialties implements ValidatorConstraintInterface {
     const credentialInformationState = context.object as CredentialInformationDTO;
     // currently selected stream's specialties
     const formSpecialties = getSpecialtiesByStreamId(credentialInformationState.stream);
+
     if (formSpecialties.length === 0) {
-      if (value.length > 0) {
+      // specialty will be cleared before saving into database
+      const hasSpecialty = value.some(v => v.id);
+      if (hasSpecialty) {
         this.message = SpecialtyErrorEnum.INVALID_SPECIALTY;
       }
-      return value.length === 0;
+      return !hasSpecialty;
     }
     if (formSpecialties.length > 0 && value.length === 0) {
       this.message = SpecialtyErrorEnum.SPECIALTY_REQUIRED;
