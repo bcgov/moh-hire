@@ -3,7 +3,7 @@
     "byId": {
       "VancouverCoastal": {
         "id": "VancouverCoastal",
-        "name": "Vancouver/Coastal",
+        "name": "Vancouver Coastal Region",
         "hsdas": ["Richmond", "Vancouver", "NorthShoreCoastGaribaldi"]
       },
       "FraserRegion": {
