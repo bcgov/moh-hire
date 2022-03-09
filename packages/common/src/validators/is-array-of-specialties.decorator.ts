@@ -10,9 +10,9 @@ import {
   Specialty,
   Subspecialty,
 } from '../helper';
-import { CredentialInformationDTO, SubspecialtyDTO } from '../dto/credential-information.dto';
+import { CredentialInformationDTO, SubspecialtyDTO } from '../dto';
 
-enum SpecialtyErrorEnum {
+export enum SpecialtyErrorEnum {
   SPECIALTY_REQUIRED = 'Specialty is required',
   INVALID_SPECIALTY = 'Invalid specialty selection',
   SUBSPECIALTY_REQUIRED = 'Subspecialty is required',
@@ -20,10 +20,7 @@ enum SpecialtyErrorEnum {
 }
 
 const isValidString = (string: string) => {
-  if (typeof string === 'string' && string.length > 0) {
-    return true;
-  }
-  return false;
+  return typeof string === 'string' && string.length > 0;
 };
 
 const specialtyNotListed = (specialty: SpecialtyDTO, formSpecialties: Specialty[]) => {
@@ -33,10 +30,11 @@ const specialtyNotListed = (specialty: SpecialtyDTO, formSpecialties: Specialty[
   }
 };
 
-const subspecialtyNotListed = (subspecialty: SubspecialtyDTO, formSpecialties: Subspecialty[]) => {
-  if (!formSpecialties.find(formSpecialty => formSpecialty.id === subspecialty.id)) {
-    return true;
-  }
+export const subspecialtyNotListed = (
+  subspecialty: SubspecialtyDTO,
+  formSpecialties: Subspecialty[] = [],
+) => {
+  return !formSpecialties.some(formSpecialty => formSpecialty.id === subspecialty.id);
 };
 
 @ValidatorConstraint({ name: 'specialties', async: false })

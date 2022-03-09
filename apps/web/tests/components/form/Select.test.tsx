@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { render, screen } from '@testing-library/react';
-import { Select, Option } from '../../../src/components/form/Select';
+import { Select, Option } from '@components';
 
 describe('Select', () => {
   it('renders a select', () => {
@@ -79,7 +79,7 @@ describe('Select', () => {
       const testValue = 'input-id';
       const testLabel = 'Select text';
 
-      render(<Option value={testValue} label={testLabel} disabled={true} />);
+      render(<Option value={testValue} label={testLabel} disabled hidden />);
 
       const optionElement = screen.getByText('Select text');
 

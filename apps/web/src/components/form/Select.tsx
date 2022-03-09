@@ -4,6 +4,7 @@ export interface OptionType {
   label: string;
   value: string;
   disabled?: boolean;
+  hidden?: boolean;
 }
 
 export const Select: React.FC<FieldProps> = props => {
@@ -17,9 +18,9 @@ export const Select: React.FC<FieldProps> = props => {
   );
 };
 
-export const Option: React.FC<OptionType> = ({ label, value, disabled }) => {
+export const Option: React.FC<OptionType> = ({ label, value, disabled, hidden }) => {
   return (
-    <option value={value} key={value} disabled={disabled} hidden={disabled}>
+    <option value={value} key={value} disabled={disabled} hidden={hidden}>
       {label}
     </option>
   );

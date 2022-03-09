@@ -5,6 +5,7 @@ import {
   RegistrationStatus,
   streamsById,
   CredentialInformationDTO,
+  getSubSpecialtiesBySpecialtyId,
 } from '@ehpr/common';
 
 import {
@@ -23,17 +24,17 @@ import {
   SubmissionType,
   registrationStatusOptions,
   healthAuthorityOptions,
+  defaultSpecialtyValue,
   employmentCircumstanceOptions,
   employmentOptions,
   streamOptions,
   getSpecialtyOptions,
   getSubspecialtyOptions,
 } from '../validation';
-
-import { defaultSpecialtyValue } from '../validation/credential';
+import { SpecialtyErrorEnum, subspecialtyNotListed } from '@ehpr/common/dist/validators';
 
 export const Credential: React.FC = () => {
-  const { values, setFieldValue } = useFormikContext<SubmissionType>();
+  const { values, errors, setFieldValue } = useFormikContext<SubmissionType>();
 
   const { stream, specialties, currentEmployment, registrationStatus }: CredentialInformationDTO =
     values.credentialInformation;
@@ -65,12 +66,27 @@ export const Credential: React.FC = () => {
     }
   }, [setFieldValue, currentEmployment]);
 
-  // reset registraion number if registation status changes to unregistered
+  // reset registration number if registration status changes to unregistered
   useEffect(() => {
     if (![RegistrationStatus.REGISTERED, RegistrationStatus.TEMP].includes(registrationStatus)) {
       setFieldValue('credentialInformation.registrationNumber', undefined);
     }
   }, [setFieldValue, registrationStatus]);
+
+  useEffect(() => {
+    // remove invalid subSpecialties
+    if (errors.credentialInformation?.specialties === SpecialtyErrorEnum.INVALID_SUBSPECIALTY) {
+      values.credentialInformation.specialties.forEach((specialty, index) => {
+        const subSpecialties = getSubSpecialtiesBySpecialtyId(specialty.id);
+        const invalid = specialty.subspecialties?.some(sub =>
+          subspecialtyNotListed(sub, subSpecialties || []),
+        );
+        if (invalid) {
+          setFieldValue(`credentialInformation.specialties[${index}].subspecialties`, []);
+        }
+      });
+    }
+  }, [setFieldValue, values, errors]);
 
   const isRegistered = [RegistrationStatus.REGISTERED, RegistrationStatus.TEMP].includes(
     registrationStatus,
