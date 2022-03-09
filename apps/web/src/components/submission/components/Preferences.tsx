@@ -71,7 +71,7 @@ export const Preferences: React.FC<FormStepProps> = () => {
         options={deploymentDurationOptions}
       />
       <CheckboxArray
-        legend='Indicate the type of deployment you are willing to support'
+        legend='Indicate the type of deployment you are willing to support (select all that apply)'
         name='preferencesInformation.deploymentType'
         options={deploymentTypeOptions}
       />
