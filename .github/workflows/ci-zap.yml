@@ -29,3 +29,4 @@ jobs:
         with:
           target: ${{ secrets.DEV_URL }}
           cmd_options: "-I"
+          rules_file_name: ".zap/rules.tsv"
