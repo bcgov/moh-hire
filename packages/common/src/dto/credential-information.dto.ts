@@ -54,7 +54,6 @@ export class CredentialInformationDTO {
 
   @ValidateIf(o => !!o.stream && o.stream !== streamsById.Nonclinical.id)
   @Validate(IsArrayOfSpecialties)
-  // TODO Verify specialties are validated on the backend
   specialties!: SpecialtyDTO[];
 
   @ValidateIf(o =>
