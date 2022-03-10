@@ -6,8 +6,7 @@ function handler(event) {
   // Since JavaScript doesn't allow for hyphens in variable names, we use the dict["key"] notation
   headers['strict-transport-security'] = { value: 'max-age=63072000; includeSubdomains; preload' };
   headers['content-security-policy'] = {
-    value:
-      "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline';",
+    value: "default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self';",
   };
   headers['x-content-type-options'] = { value: 'nosniff' };
   headers['x-frame-options'] = { value: 'DENY' };
