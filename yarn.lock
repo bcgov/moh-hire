@@ -936,6 +936,7 @@ __metadata:
     identity-obj-proxy: 3.0.0
     jest: 27.4.2
     next: 12.0.4
+    next-secure-headers: 2.2.0
     postcss: 8.4.3
     react: 17.0.2
     react-dom: 17.0.2
@@ -11312,6 +11313,13 @@ __metadata:
     "@nestjs/common": ^5.0.0 || ^6.6.0 || ^7.0.0 || ^8.0.0
     winston: ^3.0.0
   checksum: 59fbf53b79ee2a962acb8e3c6f8eb1685d05f4798d109188c002d2ac37611388d535657a4ea58206c959a087dee3d2c6e6a49bd831cc336d66d45b4391ad4078
+  languageName: node
+  linkType: hard
+
+"next-secure-headers@npm:2.2.0":
+  version: 2.2.0
+  resolution: "next-secure-headers@npm:2.2.0"
+  checksum: 17eefce9ecd3e77a2a81b7b2377f352e3725eda61aec07381eb5101215f0577d7fc093af168121689c42099d7ca6441032b93dd6f372ae27bf98a2417c15378e
   languageName: node
   linkType: hard
 
