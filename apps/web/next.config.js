@@ -27,8 +27,9 @@ module.exports = {
             directives: {
               defaultSrc: ["'self'"],
               imgSrc: ["'self'"],
-              styleSrc: ["'self'"],
+              styleSrc: ["'self'", "'unsafe-inline'"],
               scriptSrc: ["'self'", "'unsafe-eval'"],
+              connectSrc: ["'self'", 'http://localhost:4000'],
               formAction: "'self'",
               frameAncestors: ["'self'"],
             },
