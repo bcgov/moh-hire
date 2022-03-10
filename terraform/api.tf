@@ -14,24 +14,34 @@ resource "aws_lambda_function" "api" {
     subnet_ids         = data.aws_subnet_ids.app.ids
   }
 
+  lifecycle {
+    ignore_changes = [
+      # Ignore changes to tags, e.g. because a management agent
+      # updates these based on some ruleset managed elsewhere.
+      filename,
+      source_code_hash,
+      source_code_size,
+      last_modified,
+    ]
+  }
   environment {
     variables = {
-      TARGET_ENV         = var.target_env
-      NODE_ENV           = "production"
-      AWS_S3_REGION      = var.region
-      RUNTIME_ENV        = "hosted"
-      POSTGRES_HOST      = aws_rds_cluster.pgsql.endpoint
-      POSTGRES_DATABASE  = aws_rds_cluster.pgsql.database_name
-      POSTGRES_PASSWORD  = data.aws_ssm_parameter.postgres_password.value
-      POSTGRES_USERNAME  = var.db_username
-      CHES_CLIENT_ID     = var.ches_client_id
-      CHES_CLIENT_SECRET = data.aws_ssm_parameter.ches_client_secret.value
-      CHES_SERVICE_HOST  = data.aws_ssm_parameter.ches_service_host.value
-      CHES_AUTH_URL      = data.aws_ssm_parameter.ches_auth_url.value
-      MAIL_FROM          = var.mail_from
-      BUILD_ID           = var.build_id
-      BUILD_INFO         = var.build_info
-      SLACK_ALERTS_WEBHOOK_URL  = data.aws_ssm_parameter.slack_alerts_webhook_url.value
+      TARGET_ENV               = var.target_env
+      NODE_ENV                 = "production"
+      AWS_S3_REGION            = var.region
+      RUNTIME_ENV              = "hosted"
+      POSTGRES_HOST            = aws_rds_cluster.pgsql.endpoint
+      POSTGRES_DATABASE        = aws_rds_cluster.pgsql.database_name
+      POSTGRES_PASSWORD        = data.aws_ssm_parameter.postgres_password.value
+      POSTGRES_USERNAME        = var.db_username
+      CHES_CLIENT_ID           = var.ches_client_id
+      CHES_CLIENT_SECRET       = data.aws_ssm_parameter.ches_client_secret.value
+      CHES_SERVICE_HOST        = data.aws_ssm_parameter.ches_service_host.value
+      CHES_AUTH_URL            = data.aws_ssm_parameter.ches_auth_url.value
+      MAIL_FROM                = var.mail_from
+      BUILD_ID                 = var.build_id
+      BUILD_INFO               = var.build_info
+      SLACK_ALERTS_WEBHOOK_URL = data.aws_ssm_parameter.slack_alerts_webhook_url.value
     }
   }
 }
