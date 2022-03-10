@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-const { createSecureHeaders } = require("next-secure-headers");
+const { createSecureHeaders } = require('next-secure-headers');
 
 module.exports = {
   experimental: {
@@ -13,7 +13,7 @@ module.exports = {
       {
         source: '/',
         destination: '/submission/1',
-        permanent: true
+        permanent: true,
       },
     ];
   },
@@ -21,7 +21,7 @@ module.exports = {
   async headers() {
     return [
       {
-        source:'/(.*)',
+        source: '/(.*)',
         headers: createSecureHeaders({
           contentSecurityPolicy: {
             directives: {
@@ -31,19 +31,16 @@ module.exports = {
               scriptSrc: ["'self'", "'unsafe-eval'"],
               formAction: "'self'",
               frameAncestors: ["'self'"],
-            }
+            },
           },
-          frameGuard: "deny",
-          noopen: "noopen",
-          nosniff: "nosniff",
-          xssProtection: "block-rendering",
-          forceHTTPSRedirect: [
-            true,
-            { maxAge: 60 * 60 * 24 * 360, includeSubDomains: true },
-          ],
-          referrerPolicy: "same-origin",
-        })
-      }
-    ]
-  }
+          frameGuard: 'deny',
+          noopen: 'noopen',
+          nosniff: 'nosniff',
+          xssProtection: 'block-rendering',
+          forceHTTPSRedirect: [true, { maxAge: 60 * 60 * 24 * 360, includeSubDomains: true }],
+          referrerPolicy: 'same-origin',
+        }),
+      },
+    ];
+  },
 };
