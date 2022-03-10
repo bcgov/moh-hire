@@ -39,33 +39,57 @@ export const subspecialtyNotListed = (
 
 @ValidatorConstraint({ name: 'specialties', async: false })
 export class IsArrayOfSpecialties implements ValidatorConstraintInterface {
-  validate(value: SpecialtyDTO[], context: ValidationArguments) {
-    if (value.length === 0) return false;
+  private message = '';
 
+  validate(value: SpecialtyDTO[], context: ValidationArguments) {
     const credentialInformationState = context.object as CredentialInformationDTO;
     // currently selected stream's specialties
     const formSpecialties = getSpecialtiesByStreamId(credentialInformationState.stream);
-    if (!formSpecialties.length) {
-      return true;
+
+    if (formSpecialties.length === 0) {
+      // specialty will be cleared before saving into database
+      const hasSpecialty = value.some(v => v.id);
+      if (hasSpecialty) {
+        this.message = SpecialtyErrorEnum.INVALID_SPECIALTY;
+      }
+      return !hasSpecialty;
     }
+    if (formSpecialties.length > 0 && value.length === 0) {
+      this.message = SpecialtyErrorEnum.SPECIALTY_REQUIRED;
+      return false;
+    }
+
     for (const specialty of value) {
       // validate specialty.id is correct type
-      if (!isValidString(specialty.id)) return false;
+      if (!isValidString(specialty.id)) {
+        this.message = SpecialtyErrorEnum.SPECIALTY_REQUIRED;
+        return false;
+      }
       // validate specialty is valid selection
-      if (specialtyNotListed(specialty, formSpecialties)) return false;
+      if (specialtyNotListed(specialty, formSpecialties)) {
+        this.message = SpecialtyErrorEnum.INVALID_SPECIALTY;
+        return false;
+      }
 
       // don't validate subspecialties if they haven't been selected and aren't required by the specialty
       const formSubspecialties = getSubSpecialtiesBySpecialtyId(specialty.id);
-      if (!formSubspecialties || formSubspecialties.length === 0) continue;
+      if (!formSubspecialties?.length) continue;
 
       // return false if specialty has subspecialties but none are selected
-      if (!specialty.subspecialties || specialty.subspecialties?.length === 0) return false;
+      if (!specialty.subspecialties?.length) {
+        this.message = SpecialtyErrorEnum.SUBSPECIALTY_REQUIRED;
+        return false;
+      }
 
       for (const subspecialty of specialty.subspecialties) {
         // return false if subspecialties are not in the list of specialty's subspecialties
-        if (subspecialtyNotListed(subspecialty, formSubspecialties)) return false;
+        if (subspecialtyNotListed(subspecialty, formSubspecialties)) {
+          this.message = SpecialtyErrorEnum.INVALID_SUBSPECIALTY;
+          return false;
+        }
         // return false if the value is not a string
         if (!isValidString(subspecialty.id)) {
+          this.message = SpecialtyErrorEnum.SUBSPECIALTY_REQUIRED;
           return false;
         }
       }
@@ -74,42 +98,7 @@ export class IsArrayOfSpecialties implements ValidatorConstraintInterface {
     return true;
   }
 
-  defaultMessage(args: ValidationArguments) {
-    const { value } = args;
-
-    if (value.length === 0) return SpecialtyErrorEnum.SPECIALTY_REQUIRED;
-
-    const credentialInformationState = args.object as CredentialInformationDTO;
-    // currently selected stream's specialties
-    const formSpecialties = getSpecialtiesByStreamId(credentialInformationState.stream);
-
-    for (const specialty of value) {
-      if (!isValidString(specialty.id)) {
-        return SpecialtyErrorEnum.SPECIALTY_REQUIRED;
-      }
-      if (specialtyNotListed(specialty, formSpecialties)) {
-        return SpecialtyErrorEnum.INVALID_SPECIALTY;
-      }
-
-      // don't validate subspecialties if they haven't been selected and aren't required by the specialty
-      const formSubspecialties = getSubSpecialtiesBySpecialtyId(specialty.id);
-      if (!formSubspecialties || formSubspecialties.length === 0) continue;
-
-      // check existance and length of subspecialties
-      if (!specialty.subspecialties || specialty.subspecialties?.length === 0) {
-        return SpecialtyErrorEnum.SUBSPECIALTY_REQUIRED;
-      }
-
-      for (const subspecialty of specialty.subspecialties) {
-        if (!isValidString(subspecialty.id)) {
-          return SpecialtyErrorEnum.SUBSPECIALTY_REQUIRED;
-        }
-        if (subspecialtyNotListed(subspecialty, formSubspecialties)) {
-          return SpecialtyErrorEnum.INVALID_SUBSPECIALTY;
-        }
-      }
-    }
-
-    return 'Invalid specialty selection';
+  defaultMessage() {
+    return this.message;
   }
 }
