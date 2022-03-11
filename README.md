@@ -1,5 +1,7 @@
 # EHPR Hiring Portal
 
+[![Lifecycle:Stable](https://img.shields.io/badge/Lifecycle-Stable-97ca00)](https://ehpr.gov.bc.ca/)
+
 ## Front End
 
 ### Local API communication

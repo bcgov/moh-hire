@@ -14,7 +14,7 @@ function handler(event) {
   headers['x-xss-protection'] = { value: '1; mode=block' };
   headers['x-download-options'] = { value: 'noopen' };
   headers['server'] = { value: '*' };
-  headers['cache-control'] = { value: 'no-cache, no-store, must-revalidate' };
+  headers['cache-control'] = { value: 'no-store' };
   // Return the response to viewers
   return response;
 }
