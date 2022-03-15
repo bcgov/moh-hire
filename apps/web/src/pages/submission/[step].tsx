@@ -65,8 +65,8 @@ const Submission = () => {
               Your personal information is being collected in compliance with BC privacy legislation
               under sections 26(c) and (e) of the{' '}
               <i>Freedom of Information and Protection of Privacy Act.</i> Your information will be
-              be shared with the Ministry of Health, Health Match BC and health authorities, to
-              support B.C.’s health emergency response.
+              shared with the Ministry of Health, Health Match BC and health authorities, to support
+              B.C.’s health emergency response.
             </p>
 
             <p className='font-bold'>
