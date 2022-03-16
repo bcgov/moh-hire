@@ -9,8 +9,9 @@ import {
   Inject,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { FailedResponse } from '../common/ro/failed-response.ro';
+import { FailedResponse } from './ro/failed-response.ro';
 import { CommonError } from 'src/common/common.errors';
+import postToSlack from './slack';
 
 @Catch(Error)
 export class ErrorExceptionFilter implements ExceptionFilter {
@@ -44,7 +45,7 @@ export class ErrorExceptionFilter implements ExceptionFilter {
    * This method is called when an exception is thrown anywhere in the application
    * It parses and transforms the exception data and sends it to the logger and to the client
    */
-  catch(exception: Error, host: ArgumentsHost) {
+  async catch(exception: Error, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const status =
@@ -68,6 +69,13 @@ export class ErrorExceptionFilter implements ExceptionFilter {
     // Log errors
     this.logger.error(flattenedException, 'ExceptionFilter');
 
-    response.status(status).json(this.transformHttpException(flattenedException));
+    const responseJson = this.transformHttpException(flattenedException);
+    await postToSlack({
+      message: responseJson.errorMessage,
+      stack: exception.stack,
+      context: 'ExceptionFilter',
+    });
+
+    response.status(status).json(responseJson);
   }
 }
