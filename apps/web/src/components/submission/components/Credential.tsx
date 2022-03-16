@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { FieldArray, useFormikContext } from 'formik';
+import { FieldArray, FieldProps, useFormikContext } from 'formik';
+import ReactSelect from 'react-select';
+
 import {
   EmploymentTypes,
   RegistrationStatus,
@@ -18,6 +20,7 @@ import {
   Field,
   OptionType,
   Error,
+  selectStyleOverride,
 } from '@components';
 
 import {
@@ -207,20 +210,26 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
   return (
     <div className='grid md:grid-cols-2 gap-2 w-full ring-gray-200 ring-1 ring-offset-10 rounded-sm'>
       <div className='col-span-1'>
-        <Select
+        <Field
           name={`credentialInformation.specialties[${index}].id`}
           label={`Main Speciality #${index + 1}`}
-          disabled={disabled}
-        >
-          {specialties?.map((specialty, index) => (
-            <Option
-              key={`${specialty.value}${index}`}
-              label={specialty.label}
-              value={specialty.value}
-              disabled={specialtyOptionIsDisabled(specialty.value)}
+          component={({ field, form }: FieldProps) => (
+            <ReactSelect<OptionType>
+              inputId={field.name}
+              value={(specialties || []).find(s => s.value === field.value)}
+              isDisabled={disabled}
+              getOptionValue={value => value.value}
+              getOptionLabel={value => value.label}
+              onBlur={field.onBlur}
+              onChange={value => form.setFieldValue(field.name, value?.value)}
+              options={(specialties || []).map(s => ({
+                ...s,
+                isDisabled: specialtyOptionIsDisabled(s.value),
+              }))}
+              styles={selectStyleOverride}
             />
-          ))}
-        </Select>
+          )}
+        />
       </div>
       <div className='col-span-1'>
         <MultiSelect
