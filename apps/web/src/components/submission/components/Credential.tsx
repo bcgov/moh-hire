@@ -178,7 +178,7 @@ interface SpecialtySelectorProps {
   index: number;
   specialties: OptionType[] | null;
   subspecialties?: OptionType[] | null;
-  deleteFunction: Function;
+  deleteFunction: () => void;
   enableDelete: boolean;
 }
 
