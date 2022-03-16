@@ -61,8 +61,8 @@ export const selectStyleOverride: StylesConfig<OptionType, boolean> = {
   option: (styles, { isDisabled }) => ({
     ...styles,
     padding: '10px 20px',
-    background: isDisabled ? '#F5F5F5' : 'white',
-    color: isDisabled ? 'gray' : 'black',
+    background: isDisabled ? 'rgb(215, 215, 215)' : 'white',
+    color: 'black',
   }),
   menuList: styles => ({ ...styles, maxHeight: '380px' }),
   menu: styles => ({

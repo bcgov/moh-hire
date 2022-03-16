@@ -209,8 +209,6 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
               inputId={field.name}
               value={(specialties || []).find(s => s.value === field.value)}
               isDisabled={disabled}
-              getOptionValue={value => value.value}
-              getOptionLabel={value => value.label}
               onBlur={field.onBlur}
               onChange={value => form.setFieldValue(field.name, value?.value)}
               options={(specialties || []).map(s => ({
