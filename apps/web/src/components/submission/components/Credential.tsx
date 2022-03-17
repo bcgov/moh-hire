@@ -13,8 +13,6 @@ import {
 import {
   FormStepHeader,
   MultiSelect,
-  Option,
-  Select,
   CheckboxArray,
   Radio,
   Field,
@@ -102,11 +100,20 @@ export const Credential: React.FC = () => {
   return (
     <div className='flex flex-col gap-5'>
       <FormStepHeader>3. Credentials Information</FormStepHeader>
-      <Select name='credentialInformation.stream' label='Stream Type'>
-        {streamOptions.map(stream => (
-          <Option key={stream.value} label={stream.label} value={stream.value} />
-        ))}
-      </Select>
+      <Field
+        name='credentialInformation.stream'
+        label='Stream Type'
+        component={({ field, form }: FieldProps) => (
+          <ReactSelect<OptionType>
+            inputId={field.name}
+            value={streamOptions.find(s => s.value === field.value)}
+            onBlur={field.onBlur}
+            onChange={value => form.setFieldValue(field.name, value?.value)}
+            options={streamOptions}
+            styles={selectStyleOverride}
+          />
+        )}
+      />
 
       {isNonClinical ? (
         <Field name='credentialInformation.nonClinicalJobTitle' label={`Provide your job title`} />
