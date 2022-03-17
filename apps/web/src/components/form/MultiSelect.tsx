@@ -48,7 +48,7 @@ export const selectStyleOverride: StylesConfig<OptionType, boolean> = {
     color: 'black',
     transform: 'scale(0.8, 0.85)',
   }),
-  input: styles => ({ ...styles }),
+  input: styles => ({ ...styles, visibility: 'hidden' }),
   control: (styles, { isDisabled }) => ({
     ...styles,
     display: 'flex',
