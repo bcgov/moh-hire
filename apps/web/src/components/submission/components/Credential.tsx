@@ -124,6 +124,8 @@ export const Credential: React.FC = () => {
                       index={index}
                       specialties={specialtyOptions}
                       subspecialties={subspecialties?.[index]}
+                      deleteFunction={() => arrayHelpers.remove(index)}
+                      enableDelete={specialties.length > 1}
                     />
                   ))}
                 </fieldset>
@@ -141,21 +143,6 @@ export const Credential: React.FC = () => {
                       onClick={() => arrayHelpers.push({ ...defaultSpecialtyValue })}
                     >
                       Add
-                    </button>
-                  ) : null}
-                  {specialties.length > 1 && specialties.length !== specialtyOptions?.length ? (
-                    <span aria-hidden className='text-sm mx-1'>
-                      |
-                    </span>
-                  ) : null}
-                  {specialties.length > 1 ? (
-                    <button
-                      type='button'
-                      className='text-bcRedError'
-                      aria-label='delete the last specialty'
-                      onClick={() => arrayHelpers.pop()}
-                    >
-                      Delete
                     </button>
                   ) : null}
                 </div>
@@ -191,6 +178,8 @@ interface SpecialtySelectorProps {
   index: number;
   specialties: OptionType[] | null;
   subspecialties?: OptionType[] | null;
+  deleteFunction: () => void;
+  enableDelete: boolean;
 }
 
 const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
@@ -198,6 +187,8 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
   index,
   specialties,
   subspecialties,
+  deleteFunction,
+  enableDelete,
 }) => {
   const { values } = useFormikContext<SubmissionType>();
   const { specialties: formSpecialties }: CredentialInformationDTO = values.credentialInformation;
@@ -221,6 +212,16 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
             />
           ))}
         </Select>
+        {enableDelete ? (
+          <button
+            type='button'
+            className='text-bcRedError'
+            aria-label='delete this specialty'
+            onClick={() => deleteFunction()}
+          >
+            Delete
+          </button>
+        ) : null}
       </div>
       <div className='col-span-1'>
         <MultiSelect
