@@ -216,7 +216,7 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
           <button
             type='button'
             className='text-bcRedError'
-            aria-label='delete the last specialty'
+            aria-label='delete this specialty'
             onClick={() => deleteFunction()}
           >
             Delete
