@@ -109,7 +109,7 @@ export const Credential: React.FC = () => {
             value={streamOptions.find(s => s.value === field.value)}
             onBlur={field.onBlur}
             onChange={value => form.setFieldValue(field.name, value?.value)}
-            options={streamOptions}
+            options={streamOptions.map(s => ({ ...s, isDisabled: s.value === field.value }))}
             styles={selectStyleOverride}
           />
         )}
