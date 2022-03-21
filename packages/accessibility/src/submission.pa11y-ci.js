@@ -22,6 +22,7 @@ const urls = [
   {
     url: 'http://localhost:3000/submission/3',
     actions: [screenCap('screencap_credential')],
+    hideElements: 'div[class*="singleValue"]',
   },
   {
     url: 'http://localhost:3000/submission/4',

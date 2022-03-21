@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { FieldArray, useFormikContext } from 'formik';
+import { FieldArray, FieldProps, useFormikContext } from 'formik';
+import ReactSelect from 'react-select';
+
 import {
   EmploymentTypes,
   RegistrationStatus,
@@ -11,13 +13,12 @@ import {
 import {
   FormStepHeader,
   MultiSelect,
-  Option,
-  Select,
   CheckboxArray,
   Radio,
   Field,
   OptionType,
   Error,
+  selectStyleOverride,
 } from '@components';
 
 import {
@@ -99,11 +100,20 @@ export const Credential: React.FC = () => {
   return (
     <div className='flex flex-col gap-5'>
       <FormStepHeader>3. Credentials Information</FormStepHeader>
-      <Select name='credentialInformation.stream' label='Stream Type'>
-        {streamOptions.map(stream => (
-          <Option key={stream.value} label={stream.label} value={stream.value} />
-        ))}
-      </Select>
+      <Field
+        name='credentialInformation.stream'
+        label='Stream Type'
+        component={({ field, form }: FieldProps) => (
+          <ReactSelect<OptionType>
+            inputId={field.name}
+            value={streamOptions.find(s => s.value === field.value)}
+            onBlur={field.onBlur}
+            onChange={value => form.setFieldValue(field.name, value?.value)}
+            options={streamOptions}
+            styles={selectStyleOverride}
+          />
+        )}
+      />
 
       {isNonClinical ? (
         <Field name='credentialInformation.nonClinicalJobTitle' label={`Provide your job title`} />
@@ -198,20 +208,24 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
   return (
     <div className='grid md:grid-cols-2 gap-2 w-full ring-gray-200 ring-1 ring-offset-10 rounded-sm'>
       <div className='col-span-1'>
-        <Select
+        <Field
           name={`credentialInformation.specialties[${index}].id`}
           label={`Main Speciality #${index + 1}`}
-          disabled={disabled}
-        >
-          {specialties?.map((specialty, index) => (
-            <Option
-              key={`${specialty.value}${index}`}
-              label={specialty.label}
-              value={specialty.value}
-              disabled={specialtyOptionIsDisabled(specialty.value)}
+          component={({ field, form }: FieldProps) => (
+            <ReactSelect<OptionType>
+              inputId={field.name}
+              value={(specialties || []).find(s => s.value === field.value)}
+              isDisabled={disabled}
+              onBlur={field.onBlur}
+              onChange={value => form.setFieldValue(field.name, value?.value)}
+              options={(specialties || []).map(s => ({
+                ...s,
+                isDisabled: specialtyOptionIsDisabled(s.value),
+              }))}
+              styles={selectStyleOverride}
             />
-          ))}
-        </Select>
+          )}
+        />
         {enableDelete ? (
           <button
             type='button'
