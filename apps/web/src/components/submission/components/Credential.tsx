@@ -224,7 +224,8 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
               }))}
               styles={selectStyleOverride}
             />
-          )} />
+          )}
+        />
         {enableDelete ? (
           <button
             type='button'
