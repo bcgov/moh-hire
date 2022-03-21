@@ -8,6 +8,7 @@ export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
   const {
     values: { contactInformation },
     setFieldValue,
+    errors,
   } = useFormikContext<SubmissionType>();
   const fieldNames = {
     primaryPhone: `${formKey}.primaryPhone`,
@@ -33,7 +34,7 @@ export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
     <>
       <FormStepHeader>2. Contact Information</FormStepHeader>
       <div className='flex flex-col gap-5'>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-3 items-end'>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
           <div className='md:col-span-2'>
             <Field
               name={fieldNames.primaryPhone}
@@ -42,16 +43,18 @@ export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
               description='(xxx xxx xxxx)'
             />
           </div>
-          <div className='md:col-span-1'>
+          <div className='md:col-span-1 mt-6'>
             <Field
               name={fieldNames.primaryPhoneExt}
               label='Ext. (optional)'
               type='text'
-              disabled={!contactInformation.primaryPhone}
+              disabled={
+                !contactInformation.primaryPhone || !!errors.contactInformation?.primaryPhone
+              }
             />
           </div>
         </div>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-3 items-end'>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
           <div className='md:col-span-2'>
             <Field
               name={fieldNames.secondaryPhone}
@@ -60,12 +63,14 @@ export const Contact: React.FC<FormStepProps> = ({ formKey }) => {
               description='(xxx xxx xxxx)'
             />
           </div>
-          <div className='md:col-span-1'>
+          <div className='md:col-span-1 mt-6'>
             <Field
               name={fieldNames.secondaryPhoneExt}
               label='Ext. (optional)'
               type='text'
-              disabled={!contactInformation.secondaryPhone}
+              disabled={
+                !contactInformation.secondaryPhone || !!errors.contactInformation?.secondaryPhone
+              }
             />
           </div>
         </div>
