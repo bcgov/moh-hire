@@ -42,7 +42,7 @@ export BOOTSTRAP_ENV=terraform/bootstrap
 
 
 ifeq ($(ENV_NAME), prod)
-DOMAIN=
+DOMAIN=ehpr.gov.bc.ca
 BASTION_INSTANCE_ID = $(BASTION_INSTANCE_ID_PROD)
 DB_HOST = $(DB_HOST_PROD)
 endif
