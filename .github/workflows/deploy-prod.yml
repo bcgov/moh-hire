@@ -15,7 +15,7 @@ jobs:
     environment:
       name: prod
     env:
-      CLOUDFRONT_ID: '${{ secrets.CLOUDFRONT_ID }}'
+      CLOUDFRONT_ID: "${{ secrets.CLOUDFRONT_ID }}"
     steps:
       - uses: actions/checkout@v2
         name: checkout
@@ -63,3 +63,4 @@ jobs:
           make plan
           make deploy-infra
           make deploy-app
+          make deploy-api
