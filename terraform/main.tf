@@ -28,11 +28,12 @@ provider "aws" {
 }
 
 locals {
-  namespace        = "${var.project_code}-${var.target_env}"
-  app_name         = "${local.namespace}-app"
-  api_name         = "${local.namespace}-api"
+  namespace = "${var.project_code}-${var.target_env}"
+  app_name  = "${local.namespace}-app"
+  api_name  = "${local.namespace}-api"
 
-  db_name          = "${local.namespace}-db"
+  db_name = "${local.namespace}-db"
 
   has_domain = var.domain != ""
+  fw_domain  = length(regexall("freshworks", var.domain)) > 0
 }

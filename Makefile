@@ -250,6 +250,9 @@ deploy-app:
 deploy-app-manual: deploy-app
 	aws --region $(AWS_REGION) cloudfront create-invalidation --distribution-id $(CLOUDFRONT_ID) --paths "/*"
 
+deploy-api:
+	aws lambda update-function-code --function-name ehpr-$(ENV_NAME)-api --zip-file fileb://./terraform/build/api.zip --region $(AWS_REGION)
+
 # Deployment CMD
 tag-dev:
 ifdef comment
