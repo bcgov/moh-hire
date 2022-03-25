@@ -10,7 +10,7 @@ export PROJECT := $(or $(PROJECT),ehpr)
 
 # Runtime and application Environments specific variable
 export ENV_NAME ?= dev
-export POSTGRES_USERNAME = freshworks
+export POSTGRES_USERNAME ?= freshworks
 export CHES_CLIENT_ID ?= EHPR_SERVICE_CLIENT
 export MAIL_FROM ?= EHPRDoNotReply@gov.bc.ca
 
@@ -87,7 +87,7 @@ endef
 export TF_BACKEND_CFG
 
 
-.PHONY: app-local print-env start-local-services bootstrap bootstrap-terraform
+.PHONY: app-local print-env start-local-db bootstrap bootstrap-terraform
 
 # Aliases 
 bootstrap-terraform: print-env bootstrap
@@ -112,18 +112,19 @@ print-env:
 	@echo "$$TF_BACKEND_CFG"
 	@echo "\n*********************\n"
 
-app-local: print-env start-local-services
+app-local: print-env start-local-db
 	@echo "++\n***** Running api + web in local Node server\n++"
 	@yarn 
 	@yarn start:local
-start-local-services:
-	@echo "++\n***** Starting local services\n++"
+
+start-local-db:
+	@echo "++\n***** Starting local database\n++"
 	@docker-compose up -d db 
 	@echo "++\n*****"
 
-stop-local-services:
-	@echo "++\n***** Stopping local services\n++"
-	@docker-compose down db
+stop-local-db:
+	@echo "++\n***** Stopping local database\n++"
+	@docker-compose stop db
 	@echo "++\n*****"
 
 docker-down:
