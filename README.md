@@ -1,20 +1,129 @@
-# EHPR Hiring Portal
+# EHPR: Emergency Health Provider Registry
 
 [![Lifecycle:Stable](https://img.shields.io/badge/Lifecycle-Stable-97ca00)](https://ehpr.gov.bc.ca/)
 
-## Front End
+## Background
+The EHPR is an online registry which was first developed to support deployment of Health Authority-employed health care providers during the 2017-2018 wildfire season and was later updated for use during the COVID-19 pandemic. Activation of the EHPR is a proactive step towards ensuring BC’s health care system is best prepared to respond to emergencies of a varied nature, including pandemics, wildfires and floods. It is an online registry of health care professionals who are willing and able to be deployed or hired to support B.C.’s health system response.
 
-### Local API communication
+## Users
 
-In order to make successful requests from the web application to the APi you'll need to an appropriate value to
-the `NEXT_PUBLIC_API_URL` environment variable. This is filled by default when using docker but if you're running
-the application on it's own you can supply this value by creating a file named `.env.local` placed in `apps/web`.
+All health care providers or health care staff are invited to register. This includes:
 
-ie: 
+- Health authority (HA) employees – both clinical and non-clinical (i.e., trades,
+administrative, etc.);
+- Health care providers in good standing (meet fitness to practice requirements) with their health profession regulatory college or credentialing body, who usually work in private practice and would like to be deployed to work in a HA setting;
+- Students, including medical residents and employed student nurses;
+- Retired health care providers who are:
+  - registered on a temporary emergency basis with their health profession regulatory college or credentialing body and are willing to work in a HA; or,
+  - unregistered but are able to support an emergency response by providing
+  non-clinical care; or,
+  - unregistered but who meet the requirements outlined in the [Provincial Health
+  Officer (PHO) Order](https://www2.gov.bc.ca/gov/content/health/about-bc-s-health-care-system/office-of-the-provincial-health-officer/current-health-topics/covid-19-novel-coronavirus#orders) to provide or support COVID-19 immunization services – provided the declared public health emergency is in effect.
+- Health care providers without a regulatory college or credentialling body (e.g.,
+Respiratory Therapists, Medical Laboratory Assistants, Medical Laboratory Technicians), who have retained membership with their society.
+
+## How to run the apps
+
+### Preparation
+
+- Install NodeJS 16+ as a runtime environment by [nvm](https://github.com/nvm-sh/nvm)
+- Install [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) as a package manager
+- Install and run [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- Check out the repository
+  ```bash
+  $ git clone https://github.com/bcgov/ehpr2
+  $ cd ehpr2
+  ```
+- Install dependencies
+  ```bash
+  $ yarn
+  ```
+- Define environment variables in .env
+
+  Copy [.env.example](.config/.env-example) to .env
+
+  ```bash
+  $ cp .config/.env.example .env
+  ```
+
+  Define variables for database connection.  
+  ```
+  PROJECT=ehpr
+  RUNTIME_ENV=local
+  POSTGRES_HOST=db
+  POSTGRES_USERNAME=
+  POSTGRES_PASSWORD=
+  POSTGRES_DATABASE=
+  ```
+  > **Database Initialization**
+  > 
+  > The local `.pgdata` folder is mapped to a volume in db container, and it is initialized at the initial launch. If you change env variables to authenticate a db connection, delete `.pgdata` so that database could be reinitialized.
+
+  > **Slack Integration**
+  > 
+  >`SLACK_ALERTS_WEBHOOK_URL=`
+  > 
+  > If SLACK_ALERTS_WEBHOOK_URL is defined and a submission fails with an exception, the error message will be sent to the Slack channel.
+
+### Run as docker containers
+
+The `Make` command `docker-run` to build and launch containers is defined in [Makefile](Makefile).
+
+```bash
+$ make docker-run
 ```
-# apps/web/.env.local
-NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1
+
+Containers:
+- ehpr_db
+- ehpr_common
+- ehpr_web
+- ehpr_api
+
+Containers are configured by [Dockerfile](Dockerfile) and [docker-compose.yml](docker-compose.yml)
+
+> If you get a **DockerException**, make sure Docker Desktop is running.
+ 
 ```
+docker.errors.DockerException: Error while fetching server API version: ('Connection aborted.', ConnectionRefusedError(61, 'Connection refused'))
+[80774] Failed to execute script docker-compose
+```
+
+### Run as local NodeJS instances
+
+It is recommended to run database as a container in any case. On the other hand, you can run common, api, and web as NodeJS instances. 
+
+#### Start database as a container.
+
+```bash
+$ make start-local-db
+```
+
+#### Make apps connect to each other.
+
+> **Database Hostname Resolution**
+> 
+> `POSTGRES_HOST` env is defined as `db`, which is used as a service name in [docker-compose.yml](docker-compose.yml). As `api` uses it to connect to the database and a service name is resolved as an address only in Docker environment, you need to redefine it to resolve it on your local machine. You can set it to `localhost` if you persistently run the app in this way. Otherwise, add `127.0.0.1 db` to `/etc/hosts`.
+
+> **API Calls**
+> 
+> `NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1`
+> 
+> To make successful requests from `web` to `api`, you need to set `NEXT_PUBLIC_API_URL` environment variable. It is set by default when using Docker, but if you run the application on its own, you should supply this value by creating a file named `.env.local` placed in `apps/web`.
+
+#### Start the apps.
+
+```bash
+$ yarn build
+$ yarn start:local
+```
+
+or if you want `hot reloading` or want to debug, run apps in `watch` mode.
+
+```bash
+$ yarn watch
+```
+
+> In order to make breakpoints work in `watch` mode, set `sourceMap` to `true` in [tsconfig.json](tsconfig.json) and restart the apps.
 
 ## Tests
 
