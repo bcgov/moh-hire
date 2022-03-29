@@ -194,4 +194,6 @@ More details on STRA [here](https://www2.gov.bc.ca/gov/content/governments/servi
 
 Regular review of ZAP Scan and Sonar Qube results must be performed. Especially before release to production. 
 
-Portal should be SSl, process for certificate renewal - [Refer](./cert/readme.md)
+Current STRA and SoAR [here](https://freshworks.atlassian.net/browse/EHPR-251)
+
+> Portal should be SSl, process for certificate renewal - [Refer](./cert/readme.md)
