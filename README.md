@@ -140,3 +140,58 @@ Run API unit tests with `make api-unit-test`
 Run API integration tests with `make api-integration-test`
 
 This command will spin up a postgres container, run the API integration tests, then close the created container.
+
+## Deployments: 
+
+The application is hosted in the OCIO Cloud platform - AWS LZ2. 
+
+In order to access the AWS Accounts for each environment, your IDIRs would have to be onboarded on to LZ2 for the project code `bcbwlp` -  EHPR
+
+All Deployments to AWS environments are managed through github actions. 
+
+The following actions trigger deployments as follows: 
+
+`make tag-dev` / Merge to main - Deploy to dev
+`make tag-test` - Deploy to test
+`make tag-prod` - Deploy to prod after approval. 
+
+
+#### Infrastructure and Deployments: 
+
+The AWS infrastructure is created and updated using Terraform and Terraform Cloud as the backend. 
+
+The TFC keys required to run terraform can be found in SSM store in AWS. 
+
+Make commands are listed under `terraform commands` in make file for initialization, plan and deployment of resources. 
+
+Service accounts are created with IAM permissions to deploy cloud resources such as - S3 static file uploads, update lambda function, cloudfront invalidation etc. 
+
+### Promotion process: 
+
+Use `make tag-dev` to deploy your changes directly in dev environment without a pr if required. 
+
+Raise a PR to `main` . Once merged, the dev environment will be updated. 
+
+For QA testing, run `make tag-test` only in the main branch once the code is merged into main branch.
+
+#### Production Release: 
+
+All changes in main are released to production by tagging `make tag-prod` along with the version number of the release. 
+
+This creates a release tag and also a production tag, deploying to production, once approved by the Leads / DevOps team members. 
+
+
+As a part of the production release approval:
+
+1. Validate the latest ZAP scan results to ensure no new vulnerabilites are introduced. 
+1. Review the latest code quality analysis results in Sonar Cloud to ensure no new vulnerabilities are introduced. 
+
+## Security Requirements: 
+
+All BC gov projects must pass the STRA (Security Threat and Risk Assessment Standard) and maintain the approved SoAR
+
+More details on STRA [here](https://www2.gov.bc.ca/gov/content/governments/services-for-government/information-management-technology/information-security/security-threat-and-risk-assessment)
+
+Regular review of ZAP Scan and Sonar Qube results must be performed. Especially before release to production. 
+
+Portal should be SSl, process for certificate renewal - [Refer](./cert/readme.md)
