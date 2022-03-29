@@ -22,6 +22,49 @@ administrative, etc.);
 - Health care providers without a regulatory college or credentialling body (e.g.,
 Respiratory Therapists, Medical Laboratory Assistants, Medical Laboratory Technicians), who have retained membership with their society.
 
+## Project structure
+
+### Tech stack
+
+- Runtime environment - NodeJS
+- Programming language - Typescript
+- Backend API server - NestJS
+  - Express
+  - TypeORM
+  - Swagger
+  - CHES
+- Database - PostgreSQL 
+- Frontend React framework - NextJS
+  - Formik
+  - Tailwind CSS
+  - class-validator
+- Deployment
+  - GitHub Actions
+  - Terraform
+  - AWS CloudFront/S3/Lambda/RDS
+
+### Yarn workspaces
+
+| Workspace or Package   | Description                   | README                                     |
+|------------------------|-------------------------------|--------------------------------------------|
+| apps/api               | Backend **NestJS** API server | [README](apps/api/README.md)               |
+| apps/web               | Frontend **NextJS** React app | [README](apps/web/README.md)               |
+| packages/common        | Shared library                | [README](packages/common/README.md)        |
+| packages/accessibility | Test **Accessibility**        | [README](packages/accessibility/README.md) |
+| packages/scripts       | Maintenance utilities         | [README](packages/scripts/README.md)       |
+
+
+## Check pull request
+
+When you create a pull request, be aware that a GitHub action for each project will be executed to check its validity.
+
+- [pr-check-api](.github/workflows/pr-check-api.yml)
+- [pr-check-web](.github/workflows/pr-check-web.yml)
+- [pr-check-common](.github/workflows/pr-check-common.yml)
+- [pr-check-web](.github/workflows/pr-check-web.yml)
+- [pr-check-web-a11y](.github/workflows/pr-check-web-a11y.yml)
+- [pr-check-terraform](.github/workflows/pr-check-terraform.yml)
+
 ## How to run the apps
 
 ### Preparation
