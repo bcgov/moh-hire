@@ -17,7 +17,7 @@ jobs:
     environment:
       name: dev
     env:
-      CLOUDFRONT_ID: "${{ secrets.CLOUDFRONT_ID }}"
+      CLOUDFRONT_ID: '${{ secrets.CLOUDFRONT_ID }}'
     steps:
       - uses: actions/checkout@v2
         name: checkout
@@ -71,4 +71,4 @@ jobs:
         uses: zaproxy/action-full-scan@v0.3.0
         with:
           target: ${{ secrets.DEV_URL }}
-          cmd_options: "-I"
+          cmd_options: '-I'
