@@ -28,6 +28,29 @@ resource "aws_lambda_function" "background_task" {
       AUTH_REALM    = var.keycloak_auth_realm
       AUTH_CLIENTID = var.keycloak_auth_clientid
       AUTH_API_KEY  = data.aws_ssm_parameter.api_key.value
+      
+      EXPORT_EMAIL = var.export_email 
+      XLSX_PASSWORD = random_password.password.result
+
+      
     }
+  }
+}
+
+
+resource "random_password" "password" {
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+}
+
+resource "aws_ssm_parameter" "secret" {
+  name        = "/production/database/password/master"
+  description = "The parameter description"
+  type        = "SecureString"
+  value       = random_password.password.result
+
+  tags = {
+    environment = "production"
   }
 }

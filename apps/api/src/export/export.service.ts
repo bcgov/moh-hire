@@ -2,44 +2,52 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { SubmissionEntity } from 'src/submission/entity/submission.entity';
 import { Repository } from 'typeorm';
 import { booleanToYesNo, getSubSpecialtyById, splitLhasByHa } from '@ehpr/common';
-import exceljs, { Protection } from 'exceljs';
-// No types exist for Xlsx populate
-const XlsxPopulate = require('xlsx-populate');
+import xlsx from 'xlsx';
+import { randomUUID } from 'crypto';
+import { MailService } from 'src/mail/mail.service';
+import { readFileSync } from 'fs';
 
+const XlsxPopulate = require('xlsx-populate');
 export class ExportService {
   constructor(
     @InjectRepository(SubmissionEntity)
     private readonly submissionRepository: Repository<SubmissionEntity>,
+    private readonly mailService: MailService,
   ) {}
-
   async exportSubmissions() {
+    // Get all submissions
     const submissions = await this.submissionRepository?.find();
-    const topRow =
-      'Id,First Name,Last Name,Postal Code,Primary Phone,Primary Phone Ext,Secondary Phone,Secondary Phone Ext,Email,Stream,Specialty,Subspecialties,All Specialties,Registration Status,Registration Number,Current Employment,Employment Health Authorities,Employment Circumstance,Non-Clinical Job Title,Deploy Anywhere,Vancouver/Coastal,Fraser Region,Vancouver Island Region,Interior Region,Northern Region,Placement Options,Has Immunization Training,Deployment Duration\n';
+    // fortmat all rows
     const output = this.flattenAndTransformFormData(submissions);
-    //const data = topRow + output.map((row: any) => this.formatRow(row)).join('/n');
-    let workbook = new exceljs.Workbook();
-    const worksheet = workbook.addWorksheet('Sheet1');
 
-    output.forEach((out: any, index: number) => {
-      let row = worksheet.insertRow(
-        index + 1,
-        Object.keys(out).map(key => {
-          return JSON.stringify(out[key]);
-        }),
-      );
-      row.eachCell(cell => {
-        cell.protection = {
-          locked: true,
-          hidden: true,
-        } as any;
+    let workbook = xlsx.utils.book_new();
+    const sheet = xlsx.utils.json_to_sheet(output);
+    xlsx.utils.book_append_sheet(workbook, sheet);
+    // Create unprotected
+    await xlsx.writeFileXLSX(workbook, 'unencrypted.xlsx');
+    await XlsxPopulate.fromFileAsync('./unencrypted.xlsx').then((workbook: any) => {
+      // Either use ENV for the password or make the file inaccessible.
+      workbook.toFileAsync('./encrypted.xlsx', {
+        password: process.env.XLSX_PASSWORD || randomUUID(),
       });
     });
-    worksheet.insertRow(1, topRow.split(','));
-    await workbook.xlsx.writeFile('unencrypted.xlsx');
-    await XlsxPopulate.fromFileAsync('./unencrypted.xlsx').then((workbook: any) => {
-      workbook.toFileAsync('./out.xlsx', { password: 'S3cret!' });
-    });
+    const buff = readFileSync('./encrypted.xlsx', { encoding: 'base64' });
+    if (process.env.EXPORT_EMAIL) {
+      await this.mailService.sendMailWithChes({
+        to: [process.env.EXPORT_EMAIL || ''],
+        from: 'EHPRDoNotReply@gov.bc.ca',
+        subject: 'EHPR export for today',
+        body: 'Test Export',
+        attachments: [
+          {
+            contentType: 'xlsx',
+            encoding: 'base64',
+            filename: './encrypted.xlsx',
+            content: buff,
+          },
+        ],
+      });
+    }
   }
   flattenAndTransformFormData = (submissions: Array<SubmissionEntity>): any => {
     const flatNormalizedSubmissions: Array<any> = [];
