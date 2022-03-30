@@ -27,3 +27,8 @@ export const handler: Handler = async (
   const cachedServer = await bootstrap();
   return cachedServer(event, context, callback);
 };
+
+export const taskHandler: Handler = async (): Promise<any> => {
+  const cachedServer = await bootstrap();
+  //cachedServer().
+};
