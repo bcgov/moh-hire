@@ -1,6 +1,6 @@
 # common
 
-This is a common project shared by api and web project. Shared components are mostly data models and validators.
+This is a common package shared by api and web. Shared components are mostly data models and validators.
 
 `Yarn` creates a link to each workspace in the root `node_modules` folder so that other workspaces can import it.
 
