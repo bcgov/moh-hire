@@ -85,7 +85,7 @@ const flattenAndTransformFormData = submissions => {
         nonClinicalJobTitle: credentialInformation.nonClinicalJobTitle,
 
         deployAnywhere: booleanToYesNo(preferencesInformation.deployAnywhere),
-        VancouverRegion: healthAuthorities.VancouverRegion.lhas.join(', '),
+        VancouverRegion: healthAuthorities.VancouverRegion?.lhas.join(', '),
         FraserRegion: healthAuthorities.FraserRegion.lhas.join(', '),
         VancouverIslandRegion: healthAuthorities.VancouverIslandRegion.lhas.join(', '),
         InteriorRegion: healthAuthorities.InteriorRegion.lhas.join(', '),
@@ -141,6 +141,7 @@ function readData(fileName) {
 
 async function main() {
   const rows = await readData('./in/submission_export.csv');
+  //console.log(rows);
   const createCsvWriter = csvWriter.createObjectCsvWriter;
   const writer = createCsvWriter({
     path: './out/submission_export.csv',

@@ -6,21 +6,89 @@ import xlsx from 'xlsx';
 import { randomUUID } from 'crypto';
 import { MailService } from 'src/mail/mail.service';
 import { readFileSync } from 'fs';
-
+import { parse } from 'csv-parse';
+// eslint-disable-next-line
 const XlsxPopulate = require('xlsx-populate');
+
+const formExportColumnHeaders = [
+  { id: 'id', title: 'Id' },
+
+  // Primary Information
+  { id: 'firstName', title: 'First Name' },
+  { id: 'lastName', title: 'Last Name' },
+  { id: 'postalCode', title: 'Postal Code' },
+
+  // Contact Information
+  { id: 'primaryPhone', title: 'Primary Phone' },
+  { id: 'primaryPhoneExt', title: 'Primary Phone Ext' },
+  { id: 'secondaryPhone', title: 'Secondary Phone' },
+  { id: 'secondaryPhoneExt', title: 'Secondary Phone Ext' },
+  { id: 'email', title: 'Email' },
+
+  // Credential Information
+  { id: 'stream', title: 'Stream' },
+  { id: 'specialty', title: 'Specialty' },
+  { id: 'subspecialties', title: 'Subspecialties' },
+  { id: 'allSpecialties', title: 'All Specialties' },
+  { id: 'registrationStatus', title: 'Registration Status' },
+  { id: 'registrationNumber', title: 'Registration Number' },
+  { id: 'currentEmployment', title: 'Current Employment' },
+  { id: 'healthAuthorities', title: 'Employment Health Authorities' },
+  { id: 'employmentCircumstance', title: 'Employment Circumstance' },
+  { id: 'nonClinicalJobTitle', title: 'Non-Clinical Job Title' },
+
+  // Preferences
+  { id: 'deployAnywhere', title: 'Deploy Anywhere' },
+  { id: 'VancouverCoastal', title: 'Vancouver/Coastal' },
+  { id: 'FraserRegion', title: 'Fraser Region' },
+  { id: 'VancouverIslandRegion', title: 'Vancouver Island Region' },
+  { id: 'InteriorRegion', title: 'Interior Region' },
+  { id: 'NorthernRegion', title: 'Northern Region' },
+  { id: 'placementOptions', title: 'Placement Options' },
+  { id: 'hasImmunizationTraining', title: 'Has Immunization Training' },
+  { id: 'deploymentDuration', title: 'Deployment Duration' },
+];
+
 export class ExportService {
   constructor(
     @InjectRepository(SubmissionEntity)
     private readonly submissionRepository: Repository<SubmissionEntity>,
     private readonly mailService: MailService,
   ) {}
+  async formatSubmission() {
+    const fileContent = readFileSync('./submission_export.csv', { encoding: 'utf-8' });
+    parse(
+      fileContent,
+      {
+        delimiter: ',',
+        columns: formExportColumnHeaders.map(column => column.title),
+      },
+      async (err, result) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        const workbook = xlsx.utils.book_new();
+        result = result.slice(1);
+        const sheet = xlsx.utils.json_to_sheet(result);
+        xlsx.utils.book_append_sheet(workbook, sheet);
+        // Create unprotected csv
+        await xlsx.writeFileXLSX(workbook, 'unencrypted.xlsx');
+        await XlsxPopulate.fromFileAsync('./unencrypted.xlsx').then((workbook: any) => {
+          // Either use ENV for the password or make the file inaccessible.
+          workbook.toFileAsync('./encrypted.xlsx', {
+            password: 'QQATEHALVZONSXM' || randomUUID(),
+          });
+        });
+      },
+    );
+  }
   async exportSubmissions() {
     // Get all submissions
     const submissions = await this.submissionRepository?.find();
     // fortmat all rows
     const output = this.flattenAndTransformFormData(submissions);
-
-    let workbook = xlsx.utils.book_new();
+    const workbook = xlsx.utils.book_new();
     const sheet = xlsx.utils.json_to_sheet(output);
     xlsx.utils.book_append_sheet(workbook, sheet);
     // Create unprotected
