@@ -8,11 +8,19 @@ import { ExportService } from './export.service';
 export class ExportController {
   constructor(private readonly exportService: ExportService) {}
   @ApiOperation({
-    summary: 'Create a new record',
+    summary: '',
   })
   @Post()
   async exportSubmissions(@Res() res: any) {
     await this.exportService.formatSubmission();
+    return res.status(HttpStatus.CREATED).send({});
+  }
+  @ApiOperation({
+    summary: 'Decrypt an encrypted xlsx',
+  })
+  @Post('/decrypt')
+  async decryptXLSXFile(@Res() res: any) {
+    await this.exportService.decryptFile();
     return res.status(HttpStatus.CREATED).send({});
   }
 }

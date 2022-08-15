@@ -77,7 +77,7 @@ export class ExportService {
         await XlsxPopulate.fromFileAsync('./unencrypted.xlsx').then((workbook: any) => {
           // Either use ENV for the password or make the file inaccessible.
           workbook.toFileAsync('./encrypted.xlsx', {
-            password: 'QQATEHALVZONSXM' || randomUUID(),
+            password: randomUUID(),
           });
         });
       },
@@ -191,4 +191,11 @@ export class ExportService {
 
     return flatNormalizedSubmissions;
   };
+  async decryptFile() {
+    await XlsxPopulate.fromFileAsync('./encrypted_email_list.xlsx', { password: 'Flower' }).then(
+      (workbook: any) => {
+        workbook.toFileAsync('./unencrypted_email_list.xlsx');
+      },
+    );
+  }
 }

@@ -9,7 +9,7 @@ const config: PostgresConnectionOptions = {
   type: 'postgres',
   port: 5432,
   connectTimeoutMS: 5000,
-  username: process.env.POSTGRES_USERNAME,
+  username: 'ehpr-admin',
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DATABASE,
   cli: {
