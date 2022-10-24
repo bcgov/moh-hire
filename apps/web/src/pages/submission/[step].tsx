@@ -35,16 +35,16 @@ const Submission = () => {
               online registry of health care professionals and health authority staff who are able
               and willing to be deployed or hired to support B.C.’s health system response. For more
               information about the EHPR, please refer to the&nbsp;
-              <ExternalLink href='/assets/FAQ EHPR_17March2020.pdf'>FAQs</ExternalLink>.
+              <ExternalLink href='/assets/EHPR-FAQs-October-2022.pdf'>FAQs</ExternalLink>.
             </p>
             <p className='mb-4'>
               All&nbsp;
-              <ExternalLink href='/assets/FAQ EHPR_17March2020.pdf'>
+              <ExternalLink href='/assets/EHPR-FAQs-October-2022.pdf'>
                 eligible health care providers or health care staff
               </ExternalLink>
-              &nbsp;are invited to register using the form below. Health authorities, the Ministry
-              of Health or HealthMatch BC may use the EHPR to initiate contact if/when assistance is
-              required.
+              &nbsp;are invited to register using the form below. You must be fully immunized
+              against COVID-19 to register. Health authorities, the Ministry of Health or
+              HealthMatch BC may use the EHPR to initiate contact if/when assistance is required.
             </p>
             <p className='mb-4'>
               The form takes about 10 minutes to complete - if you are in a career stream with
