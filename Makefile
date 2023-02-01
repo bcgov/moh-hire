@@ -12,7 +12,6 @@ export PROJECT := $(or $(PROJECT),ehpr)
 export ENV_NAME ?= dev
 export POSTGRES_USERNAME = freshworks
 export CHES_CLIENT_ID ?= CDACC9DF-CDF62AA2355
-export MAIL_FROM ?= EHPRDoNotReply@gov.bc.ca
 
 # Integration testing variables
 export TEST_POSTGRES_HOST := localhost
@@ -61,6 +60,8 @@ BASTION_INSTANCE_ID = $(BASTION_INSTANCE_ID_TEST)
 DB_HOST = $(DB_HOST_PROD_TEST)
 CHES_CLIENT_ID = 09C5071A-CDF62AA2355
 endif
+
+export MAIL_FROM = EHPRDoNotReply@$(DOMAIN)
 
 define TFVARS_DATA
 target_env = "$(ENV_NAME)"
@@ -119,6 +120,11 @@ app-local: print-env start-local-db
 	@echo "++\n***** Running api + web in local Node server\n++"
 	@yarn 
 	@yarn start:local
+
+debug: print-env start-local-db
+	@echo "++\n***** Debugging api + web in local Node server\n++"
+	@yarn
+	@yarn debug
 
 start-local-db:
 	@echo "++\n***** Starting local database\n++"
