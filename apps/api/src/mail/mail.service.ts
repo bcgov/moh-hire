@@ -1,9 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { SendEmailRequest } from 'aws-sdk/clients/ses';
 import * as path from 'path';
 import axios from 'axios';
 import * as fs from 'fs';
 import { stringify } from 'qs';
 import * as handlebars from 'handlebars';
+import aws from 'aws-sdk';
+import { AppLogger } from '../common/logger.service';
 
 import { Mailable } from './mailables/mail-base.mailable';
 import { MailOptions } from './mail-options.interface';
@@ -11,7 +14,9 @@ import { ChesResponse } from './types/ches-response';
 
 @Injectable()
 export class MailService {
-  constructor() {
+  ses = process.env.AWS_S3_REGION ? new aws.SES({ region: process.env.AWS_S3_REGION }) : null;
+
+  constructor(@Inject(Logger) private readonly logger: AppLogger) {
     const templatePath = path.resolve(`${__dirname}/templates/partials/layout.hbs`);
     const templateContent = fs.readFileSync(templatePath, 'utf-8');
     handlebars.registerPartial('layout', templateContent);
@@ -91,9 +96,37 @@ export class MailService {
     const template = handlebars.compile(templateContent, { strict: true });
     const body = template(mailable.context);
 
-    return await this.sendMailWithChes({
-      ...mailOptions,
-      body,
-    } as MailOptions);
+    const result = await this.sendMailWithSES({ ...mailOptions, body } as MailOptions);
+    if (!result || result.$response.error) {
+      return this.sendMailWithChes({ ...mailOptions, body } as MailOptions);
+    }
+    return { txId: result.MessageId } as ChesResponse;
+  }
+
+  public async sendMailWithSES(mailOptions: MailOptions) {
+    if (!this.ses) return;
+    const params: SendEmailRequest = {
+      Destination: {
+        ToAddresses: [...mailOptions.to],
+      },
+      Message: {
+        Body: {
+          Html: {
+            Charset: 'UTF-8',
+            Data: mailOptions.body,
+          },
+        },
+        Subject: {
+          Charset: 'UTF-8',
+          Data: mailOptions.subject,
+        },
+      },
+      Source: process.env.MAIL_FROM || 'EHPRDoNotReply@dev.ehpr.freshworks.club',
+    };
+    try {
+      return this.ses.sendEmail(params).promise();
+    } catch (e) {
+      this.logger.log(e.message);
+    }
   }
 }
