@@ -124,7 +124,7 @@ export class MailService {
       Source: process.env.MAIL_FROM || 'EHPRDoNotReply@dev.ehpr.freshworks.club',
     };
     try {
-      return this.ses.sendEmail(params).promise();
+      return await this.ses.sendEmail(params).promise();
     } catch (e) {
       this.logger.log(e.message);
     }
