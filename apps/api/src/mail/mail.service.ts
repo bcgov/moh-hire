@@ -32,7 +32,7 @@ export class MailService {
     if (!chesHost) return;
 
     const emailBody = {
-      from: mailOptions.from,
+      from: 'EHPRDoNotReply@gov.bc.ca',
       to: mailOptions.to,
       subject: mailOptions.subject,
       bodyType: 'html',
