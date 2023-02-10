@@ -22,3 +22,7 @@ data "aws_ssm_parameter" "ches_auth_url" {
 data "aws_ssm_parameter" "slack_alerts_webhook_url" {
   name = "/${var.project_code}/${var.target_env}/slack/alerts_webhook_url"
 }
+
+data "aws_ssm_parameter" "ses_ip" {
+  name = "/${var.project_code}/${var.target_env}/ses_ip"
+}
