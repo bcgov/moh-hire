@@ -31,48 +31,42 @@ locals {
 data "aws_vpc" "main" {
 	filter {
 		name = "tag:Name"
-		values = [
-			local.vpc_name]
+		values = [local.vpc_name]
 	}
 }
 
-data "aws_subnet_ids" "web" {
-	vpc_id = data.aws_vpc.main.id
+data "aws_subnets" "web" {
+	filter {
+		name = "vpc-id"
+		values = [data.aws_vpc.main.id]
+	}
 	filter {
 		name = "tag:Name"
 		values = local.web_subnet_names
 	}
 }
 
-data "aws_subnet_ids" "app" {
-	vpc_id = data.aws_vpc.main.id
+
+data "aws_subnets" "app" {
+	filter {
+		name = "vpc-id"
+		values = [data.aws_vpc.main.id]
+	}
 	filter {
 		name = "tag:Name"
 		values = local.app_subnet_names
 	}
 }
 
-data "aws_subnet_ids" "data" {
-	vpc_id = data.aws_vpc.main.id
+data "aws_subnets" "data" {
+	filter {
+		name = "vpc-id"
+		values = [data.aws_vpc.main.id]
+	}
 	filter {
 		name = "tag:Name"
 		values = local.data_subnet_names
 	}
-}
-
-data "aws_subnet" "web" {
-	for_each = data.aws_subnet_ids.web.ids
-	id = each.value
-}
-
-data "aws_subnet" "app" {
-	for_each = data.aws_subnet_ids.app.ids
-	id = each.value
-}
-
-data "aws_subnet" "data" {
-	for_each = data.aws_subnet_ids.data.ids
-	id = each.value
 }
 
 data "aws_security_group" "web" {

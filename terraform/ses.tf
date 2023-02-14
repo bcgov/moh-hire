@@ -10,3 +10,4 @@ resource "aws_ses_domain_mail_from" "mail_from" {
 resource "aws_ses_domain_dkim" "dkim" {
   domain = aws_ses_domain_identity.ses_domain.domain
 }
+
