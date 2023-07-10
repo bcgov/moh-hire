@@ -1,5 +1,5 @@
 import { registerDecorator, ValidationError, ValidationOptions, Validator } from 'class-validator';
-import { SubmissionPayloadDTO } from '../dto/submission-payload.dto';
+import { SubmissionPayloadDTO } from '../dto';
 
 const validator = new Validator();
 export function IsValidSubmission(validationOptions?: ValidationOptions) {
@@ -27,7 +27,7 @@ export function IsValidSubmission(validationOptions?: ValidationOptions) {
 }
 
 // Recursive functions return any: https://github.com/microsoft/TypeScript/issues/21952#issue-297220945
-const getNestedError = (error: ValidationError): unknown => {
+export const getNestedError = (error: ValidationError): unknown => {
   if (error.children && !error.constraints) {
     return error.children.map(child => getNestedError(child));
   }

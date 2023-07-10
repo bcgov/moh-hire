@@ -7,8 +7,7 @@ import {
   Matches,
   ValidateIf,
 } from 'class-validator';
-
-const TEN_DIGIT_PHONE_REGEX = /^\(?([0-9]{3})\)?[ -.●]?([0-9]{3})[ -.●]?([0-9]{4})$/;
+import { TEN_DIGIT_PHONE_REGEX } from '../helper';
 
 export class ContactInformationDTO {
   constructor(base?: ContactInformationDTO) {

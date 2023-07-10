@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Description } from '../../../src/components/form/Description';
+import { Description } from '@components';
 
 describe('FormLabelDescription', () => {
   it('renders an element with the correct text', () => {

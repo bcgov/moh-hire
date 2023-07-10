@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Textarea } from '../../../src/components/form/Textarea';
 import { Formik } from 'formik';
+import { Textarea } from '@components';
 
 describe('Textarea', () => {
   it('should render', () => {

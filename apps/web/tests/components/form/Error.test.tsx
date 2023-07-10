@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Error } from '../../../src/components/form/Error';
 import { Field, Formik } from 'formik';
+import { Error } from '@components';
 
 describe('FormError', () => {
   it('renders an empty alert when no associated error exists', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik'; // package will be auto mocked
 import { render, screen } from '@testing-library/react';
-import { Field } from '../../../src/components/form/Field';
+import { Field } from '@components';
 
 describe('FormError', () => {
   it('renders a text input element', () => {

@@ -1,0 +1,163 @@
+import { createValidator } from 'class-validator-formik';
+import { Formik, FormikProps, Form as FormikForm } from 'formik';
+import { useRouter } from 'next/router';
+import { useRef } from 'react';
+import {
+  ContactInformationDTO,
+  PersonalInformationDTO,
+  StatusUpdateDTO,
+  SubmissionRO,
+  UpdateSubmissionDTO,
+} from '@ehpr/common';
+import { updateSubmission } from '@services';
+import { Button, Field, Radio } from '@components';
+import { DatePickerField } from '../../form/DatePickerField';
+
+interface UpdateSubmissionFormProps {
+  submission: SubmissionRO;
+}
+
+export const UpdateSubmissionForm = ({ submission }: UpdateSubmissionFormProps) => {
+  const { push } = useRouter();
+
+  const formikRef = useRef<FormikProps<UpdateSubmissionDTO>>(null);
+  const {
+    payload: { contactInformation, personalInformation },
+  } = submission;
+
+  const initialValues: UpdateSubmissionDTO = {
+    personalInformation: new PersonalInformationDTO(personalInformation),
+    contactInformation: new ContactInformationDTO(contactInformation),
+    status: new StatusUpdateDTO(),
+  };
+
+  const validator = createValidator(UpdateSubmissionDTO);
+
+  const submit = async (values: UpdateSubmissionDTO) => {
+    if (!values.status.deployed) {
+      values.status.startDate = undefined;
+      values.status.endDate = undefined;
+    }
+    updateSubmission(submission.confirmationId, values).then(result => {
+      push({
+        pathname: '/confirmation',
+        query: { id: result.confirmationId },
+      });
+    });
+  };
+
+  return (
+    <div className=''>
+      <div className='w-full text-center pt-10 text-3xl text-bcBluePrimary'>
+        Update Your EHPR Registration
+      </div>
+      <Formik
+        innerRef={formikRef}
+        initialValues={initialValues}
+        validate={validator}
+        onSubmit={submit}
+      >
+        {({ isSubmitting, values, errors, isValid }) => (
+          <FormikForm>
+            <div className='pt-10 pb-5'>
+              Registration ID: <b>{submission.confirmationId}</b>
+            </div>
+            <div className='py-3'>
+              <Field name='contactInformation.email' label='Email Address' type='email' />
+            </div>
+            <div className='flex flex-col gap-5 py-3'>
+              <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+                <div className='md:col-span-1'>
+                  <Field name='personalInformation.firstName' label='First Name' type='text' />
+                </div>
+                <div className='md:col-span-1'>
+                  <Field name='personalInformation.lastName' label='Last Name' type='text' />
+                </div>
+              </div>
+            </div>
+            <div className='py-3'>
+              <Field
+                name='personalInformation.postalCode'
+                label='Postal Code'
+                description='Format: A1A 1A1'
+                type='text'
+              />
+            </div>
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-3 py-3'>
+              <div className='md:col-span-2'>
+                <Field
+                  name='contactInformation.primaryPhone'
+                  label='Primary Phone Number'
+                  type='text'
+                  description='(xxx xxx xxxx)'
+                />
+              </div>
+              <div className='md:col-span-1 mt-6'>
+                <Field
+                  name='contactInformation.primaryPhoneExt'
+                  label='Ext. (optional)'
+                  type='text'
+                  disabled={
+                    !values.contactInformation.primaryPhone ||
+                    !!errors.contactInformation?.primaryPhone
+                  }
+                />
+              </div>
+            </div>
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-3 py-3'>
+              <div className='md:col-span-2'>
+                <Field
+                  name='contactInformation.secondaryPhone'
+                  label='Secondary Phone Number (optional)'
+                  type='text'
+                  description='(xxx xxx xxxx)'
+                />
+              </div>
+              <div className='md:col-span-1 mt-6'>
+                <Field
+                  name='scontactInformation.econdaryPhoneExt'
+                  label='Ext. (optional)'
+                  type='text'
+                  disabled={
+                    !values.contactInformation.secondaryPhone ||
+                    !!errors.contactInformation?.secondaryPhone
+                  }
+                />
+              </div>
+            </div>
+            <div className='mt-2 pt-3'>
+              <Radio.Boolean name='status.interested' legend='Are you still interested in EHPR?' />
+            </div>
+            <div className='py-3'>
+              <Radio.Boolean name='status.deployed' legend='Are you currently deployed?' />
+            </div>
+            {values.status.deployed && (
+              <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+                <div className='md:col-span-1'>
+                  <DatePickerField name='status.startDate' label='Start Date' format='yyyy-mm-dd' />
+                </div>
+                <div className='md:col-span-1'>
+                  <DatePickerField
+                    name='status.endDate'
+                    label='End Date(optional)'
+                    format='yyyy-mm-dd'
+                  />
+                </div>
+              </div>
+            )}
+            <div className='flex justify-center my-12'>
+              <Button
+                variant='primary'
+                disabled={isSubmitting || !isValid}
+                loading={isSubmitting}
+                type='submit'
+              >
+                Submit
+              </Button>
+            </div>
+          </FormikForm>
+        )}
+      </Formik>
+    </div>
+  );
+};

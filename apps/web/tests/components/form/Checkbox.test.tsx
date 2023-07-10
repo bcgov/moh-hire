@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Checkbox, CheckboxArray } from '../../../src/components/form/Checkbox';
 import { Formik } from 'formik';
+import { Checkbox, CheckboxArray } from '@components';
 
 describe('Checkbox', () => {
   it('should render', () => {

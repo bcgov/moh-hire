@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Credential } from '../../../../src/components/submission/components/Credential';
+import { Credential } from '../../../../src/components/submission/components';
 import {
   defaultSpecialtyValue,
   registrationStatusOptions,
   healthAuthorityOptions,
   employmentOptions,
-} from '../../../../src/components/submission/validation/credential';
+} from '../../../../src/components/submission/validation';
 import * as formik from 'formik';
 
 const mockSetFieldValue = jest.fn();
