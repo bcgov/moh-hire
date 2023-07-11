@@ -5,7 +5,8 @@
   "scripts": {
     "transform-locations": "node src/locations.js",
     "transform-streams": "node src/streams.js",
-    "transform-submission_export": "node src/submission_export.js"
+    "transform-submission_export": "node src/submission_export.js",
+    "send-email-blast": "node src/send-email-blast.js"
   },
   "dependencies": {
     "csv-parser": "3.0.0",
