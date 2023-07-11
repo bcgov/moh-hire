@@ -2,7 +2,7 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 import { readFileSync } from 'fs';
 import aws from 'aws-sdk';
-import * as handlebars from 'handlebars';
+import { PromisePool } from '@supercharge/promise-pool';
 
 import { subjectOne, templateOne } from './constants.js';
 dotenv.config({ path: '../../.env' });
@@ -12,6 +12,7 @@ let retryCount = 0;
 let errors = [];
 let sent = 0;
 
+// authenticate aws ses
 const credentials = new aws.Credentials({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -20,11 +21,7 @@ const credentials = new aws.Credentials({
 aws.config.credentials = credentials;
 aws.config.region = process.env.AWS_S3_REGION;
 
-// authenticate aws ses
 const ses = new aws.SES();
-
-// Five requests per second
-const targetRate = 10;
 
 // genereates csv file for any email NOT sent
 function generateEmailCSV(array, outputFilePath) {
@@ -37,9 +34,6 @@ function generateEmailCSV(array, outputFilePath) {
 
 // get emails from csv file
 async function getEmails() {
-  // await new Promise(resolve => {
-  //   setTimeout(resolve(), 1000);
-  // });
   const file = readFileSync('./in/emails.csv').toString();
   // Split the string into rows, discard the columns row
   return file
@@ -56,12 +50,6 @@ async function getEmails() {
     });
 }
 
-function printProgress(progress) {
-  process.stdout.clearLine();
-  process.stdout.cursorTo(0);
-  process.stdout.write(progress);
-}
-
 // remove duplicate email entries
 function findDuplicates(emails) {
   let unique = [];
@@ -76,16 +64,6 @@ function findDuplicates(emails) {
   });
   return result;
 }
-
-// get handlebar template
-// function getTemplate() {
-//   const templatePath = path.resolve(`${__dirname}/templates/email-blast-template.hbs`);
-
-//   const templateContent = fs.readFileSync(templatePath, 'utf-8');
-//   const template = handlebars.compile(templateContent, { strict: true });
-//   const body = template(mailable.context);
-//   return body;
-// }
 
 // send individual emails using AWS SES
 async function sendEmail(user) {
@@ -118,11 +96,10 @@ async function sendEmail(user) {
     },
     //TO-DO: testing purposes, need to remove and replace with prod
     Source: 'EHPRDoNotReply@dev.ehpr.freshworks.club',
-    // Source: process.env.MAIL_FROM || 'EHPRDoNotReply@dev.ehpr.freshworks.club',
   };
 
   try {
-    console.log('Trying to Send Email');
+    console.log(`Trying to Send Email to ${email}`);
     const mail = await ses.sendEmail(params).promise();
     sent++;
     return mail;
@@ -151,36 +128,23 @@ async function sendEmails(max) {
     emails = emails.slice(0, max);
   }
 
-  emails = findDuplicates(emails);
-  let start = new Date();
+  //emails = findDuplicates(emails);
 
-  // Set up interval function to run multiple sends at a set rate.
-  const interval = setInterval(() => {
-    if (emails.length) {
-      const now = new Date();
-      const duration = (now - start) / 1000;
-      const currentRate = sent / duration;
-      printProgress(
-        `Current ${currentRate.toPrecision(3)}  Errors: ${errors.length} Completed: ${sent}`,
-      );
-      // Only send email if we are under the targeted rate
-      if (currentRate <= targetRate) {
-        new Promise(async resolve => {
-          const current = emails.pop();
-          await sendEmail(current);
-          resolve();
-        });
-      }
-    } else {
-      // When the email queue is empty, clear the interval and store failed sends in a csv
-      clearInterval(interval);
-      console.log(`\x1b[32mCompleted Count\x1b[0m: ${sent}`);
-      console.log(`\x1b[31mFailed Count\x1b[0m: ${errors.length}`);
-      if (errors.length > 0) {
-        generateEmailCSV(errors, './out/errors.csv');
-      }
+  if (emails.length > 0) {
+    // Set up promise pool to allow 10 emails to be processed concurrently at one time
+    await PromisePool.for(emails)
+      .withConcurrency(10)
+      .process(async e => {
+        await sendEmail(e);
+        retryCount = 0;
+      });
+
+    console.log(`\x1b[32mCompleted Count\x1b[0m: ${sent}`);
+    console.log(`\x1b[31mFailed Count\x1b[0m: ${errors.length}`);
+    if (errors.length > 0) {
+      generateEmailCSV(errors, './out/errors.csv');
     }
-  }, 10);
+  }
 }
 
 async function main() {
