@@ -128,7 +128,7 @@ async function sendEmails(max) {
     emails = emails.slice(0, max);
   }
 
-  //emails = findDuplicates(emails);
+  emails = findDuplicates(emails);
 
   if (emails.length > 0) {
     // Set up promise pool to allow 10 emails to be processed concurrently at one time
