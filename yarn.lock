@@ -904,6 +904,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@ehpr/scripts@workspace:packages/scripts"
   dependencies:
+    "@supercharge/promise-pool": 3.0.0
     csv-parser: 3.0.0
     csv-writer: 1.6.0
   languageName: unknown
@@ -2260,7 +2261,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@supercharge/promise-pool@npm:^3.0.0":
+"@supercharge/promise-pool@npm:3.0.0":
   version: 3.0.0
   resolution: "@supercharge/promise-pool@npm:3.0.0"
   checksum: 761e7269e54b101c971f8436183c44def24f16a2a9928cfd3f937178fecceb259d4c752287e94dcb547237d9de1e52f1d15db14cb9c83148265cb67c38489a97
@@ -6008,7 +6009,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ehpr@workspace:."
   dependencies:
-    "@supercharge/promise-pool": ^3.0.0
     "@tsconfig/node14": 1.0.1
     "@typescript-eslint/eslint-plugin": 5.0.0
     "@typescript-eslint/parser": 5.0.0

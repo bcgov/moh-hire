@@ -8,7 +8,6 @@ import { subjectOne, templateOne } from './constants.js';
 dotenv.config({ path: '../../.env' });
 
 const MAX_RETRY = 5;
-let retryCount = 0;
 let errors = [];
 let sent = 0;
 
@@ -36,10 +35,10 @@ function generateEmailCSV(array, outputFilePath) {
 async function getEmails() {
   const file = readFileSync('./in/emails.csv').toString();
   // Split the string into rows, discard the columns row
-  return file
+  const emailObjs = file
     .split('\n')
     .slice(1)
-    .map((rowString, index) => {
+    .map(rowString => {
       // Split each row into it's variables
       let row = rowString.split(',');
       return {
@@ -48,6 +47,9 @@ async function getEmails() {
         confirmation_id: row[2].trim(),
       };
     });
+
+  const emails = findDuplicates(emailObjs);
+  return emails;
 }
 
 // remove duplicate email entries
@@ -66,7 +68,7 @@ function findDuplicates(emails) {
 }
 
 // send individual emails using AWS SES
-async function sendEmail(user) {
+async function sendEmail(user, retryCount = 0) {
   const { name, email, confirmation_id } = user;
   // unsure of actual template body, using hardcoded html string for now
   const mailOptions = {
@@ -100,15 +102,21 @@ async function sendEmail(user) {
 
   try {
     console.log(`Trying to Send Email to ${email}`);
+
     const mail = await ses.sendEmail(params).promise();
     sent++;
+    console.log(`\x1b[32mSuccess\x1b[0m: Email sent to ${email}`);
     return mail;
   } catch (e) {
-    // set max retry count for failed emails
+    // set max retry count for failed emails, each email should have 5 attempts
     if (MAX_RETRY > retryCount) {
-      console.log(`Will try sending to ${user.email} ${MAX_RETRY - retryCount} more time(s)`);
+      console.log(
+        `\x1b[31mError\x1b[0m: Will try sending to ${user.email} ${
+          MAX_RETRY - retryCount
+        } more time(s)`,
+      );
       retryCount++;
-      await sendEmail(user);
+      await sendEmail(user, retryCount);
     } else {
       errors.push(user);
       console.error(e.message);
@@ -128,15 +136,12 @@ async function sendEmails(max) {
     emails = emails.slice(0, max);
   }
 
-  emails = findDuplicates(emails);
-
   if (emails.length > 0) {
     // Set up promise pool to allow 10 emails to be processed concurrently at one time
     await PromisePool.for(emails)
       .withConcurrency(10)
       .process(async e => {
         await sendEmail(e);
-        retryCount = 0;
       });
 
     console.log(`\x1b[32mCompleted Count\x1b[0m: ${sent}`);

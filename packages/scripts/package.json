@@ -9,6 +9,7 @@
     "send-email-blast": "node src/send-email-blast.js"
   },
   "dependencies": {
+    "@supercharge/promise-pool": "3.0.0",
     "csv-parser": "3.0.0",
     "csv-writer": "1.6.0"
   }
