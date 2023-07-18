@@ -42,13 +42,9 @@ const Submission = () => {
               <ExternalLink href='/assets/EHPR-FAQs-October-2022.pdf'>
                 eligible health care providers or health care staff
               </ExternalLink>
-              &nbsp;are invited to register using the form below.{' '}
-              <b className='font-black text-lg'>
-                {' '}
-                You must be fully immunized against COVID-19 to register.
-              </b>{' '}
-              Health authorities, the Ministry of Health or HealthMatch BC may use the EHPR to
-              initiate contact if/when assistance is required.
+              &nbsp;are invited to register using the form below. Health authorities, the Ministry
+              of Health or HealthMatch BC may use the EHPR to initiate contact if/when assistance is
+              required.
             </p>
             <p className='mb-4'>
               The form takes about 10 minutes to complete - if you are in a career stream with
