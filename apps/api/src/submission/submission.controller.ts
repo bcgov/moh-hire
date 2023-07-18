@@ -2,7 +2,6 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
-  Get,
   HttpCode,
   HttpStatus,
   Inject,
@@ -16,7 +15,6 @@ import {
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SubmissionDTO, SubmissionRO, UpdateSubmissionDTO } from '@ehpr/common';
 import { SubmissionService } from './submission.service';
-import { SubmissionEntity } from './entity/submission.entity';
 import { AppLogger } from 'src/common/logger.service';
 
 @Controller('submission')
@@ -34,23 +32,14 @@ export class SubmissionController {
   @ApiResponse({ status: HttpStatus.CREATED, type: SubmissionRO })
   @HttpCode(HttpStatus.CREATED)
   @Post()
-  async name(@Body() body: SubmissionDTO): Promise<SubmissionEntity> {
+  async name(@Body() body: SubmissionDTO): Promise<SubmissionRO> {
     try {
-      return await this.submissionService.saveSubmission(body);
+      const { id, confirmationId } = await this.submissionService.saveSubmission(body);
+      return { id, confirmationId };
     } catch (e) {
       this.logger.error(e, SubmissionService.name);
       throw new InternalServerErrorException('An unknown error occurred while saving a submission');
     }
-  }
-
-  @ApiOperation({
-    summary: 'Get a submission record',
-  })
-  @ApiResponse({ status: HttpStatus.OK, type: SubmissionRO })
-  @HttpCode(HttpStatus.OK)
-  @Get(':confirmationId')
-  async getSubmission(@Param('confirmationId') confirmationId: string) {
-    return await this.submissionService.getSubmission(confirmationId);
   }
 
   @ApiOperation({
@@ -63,7 +52,7 @@ export class SubmissionController {
   async updateSubmission(
     @Param('confirmationId') confirmationId: string,
     @Body() body: UpdateSubmissionDTO,
-  ): Promise<SubmissionEntity> {
-    return await this.submissionService.updateSubmission(confirmationId, body);
+  ): Promise<SubmissionRO> {
+    return this.submissionService.updateSubmission(confirmationId, body);
   }
 }

@@ -6,7 +6,6 @@ import {
   ContactInformationDTO,
   PersonalInformationDTO,
   StatusUpdateDTO,
-  SubmissionRO,
   UpdateSubmissionDTO,
 } from '@ehpr/common';
 import { updateSubmission } from '@services';
@@ -14,22 +13,21 @@ import { Button, Field, Radio } from '@components';
 import { DatePickerField } from '../../form/DatePickerField';
 
 interface UpdateSubmissionFormProps {
-  submission: SubmissionRO;
+  email: string;
+  code: string;
 }
 
-export const UpdateSubmissionForm = ({ submission }: UpdateSubmissionFormProps) => {
+export const UpdateSubmissionForm = ({ email, code }: UpdateSubmissionFormProps) => {
   const { push } = useRouter();
 
   const formikRef = useRef<FormikProps<UpdateSubmissionDTO>>(null);
-  const {
-    payload: { contactInformation, personalInformation },
-  } = submission;
 
   const initialValues: UpdateSubmissionDTO = {
-    personalInformation: new PersonalInformationDTO(personalInformation),
-    contactInformation: new ContactInformationDTO(contactInformation),
+    personalInformation: new PersonalInformationDTO(),
+    contactInformation: new ContactInformationDTO(),
     status: new StatusUpdateDTO(),
   };
+  initialValues.contactInformation.email = email;
 
   const validator = createValidator(UpdateSubmissionDTO);
 
@@ -38,7 +36,7 @@ export const UpdateSubmissionForm = ({ submission }: UpdateSubmissionFormProps) 
       values.status.startDate = undefined;
       values.status.endDate = undefined;
     }
-    updateSubmission(submission.confirmationId, values).then(result => {
+    updateSubmission(code, values).then(result => {
       push({
         pathname: '/confirmation',
         query: { id: result.confirmationId },
@@ -60,7 +58,7 @@ export const UpdateSubmissionForm = ({ submission }: UpdateSubmissionFormProps) 
         {({ isSubmitting, values, errors, isValid }) => (
           <FormikForm>
             <div className='pt-10 pb-5'>
-              Registration ID: <b>{submission.confirmationId}</b>
+              Registration ID: <b>{code}</b>
             </div>
             <div className='py-3'>
               <Field name='contactInformation.email' label='Email Address' type='email' />
@@ -148,7 +146,7 @@ export const UpdateSubmissionForm = ({ submission }: UpdateSubmissionFormProps) 
             <div className='flex justify-center my-12'>
               <Button
                 variant='primary'
-                disabled={isSubmitting || !isValid}
+                disabled={isSubmitting || !isValid || !values.personalInformation.firstName}
                 loading={isSubmitting}
                 type='submit'
               >
