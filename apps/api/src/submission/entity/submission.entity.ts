@@ -20,6 +20,10 @@ export class SubmissionEntity extends BaseEntity {
   @Column('varchar', { nullable: false })
   version!: string;
 
+  @Exclude()
+  @Column('bool')
+  withdrawn!: boolean;
+
   @BeforeInsert()
   beforeInsert() {
     const { credentialInformation, preferencesInformation } = this.payload;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Label } from '../../../src/components/form/Label';
+import { Label } from '@components';
 
 describe('FormLabel', () => {
   it('renders an element with the correct text', () => {

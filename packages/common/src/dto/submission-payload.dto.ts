@@ -4,7 +4,8 @@ import {
   CredentialInformationDTO,
   PreferencesInformationDTO,
 } from '.';
-import { IsNotEmpty, ValidateNested } from 'class-validator';
+import { IsNotEmpty, IsOptional, ValidateNested } from 'class-validator';
+import { StatusUpdateDTO } from './status-update.dto';
 
 export class SubmissionPayloadDTO {
   constructor(base?: SubmissionPayloadDTO) {
@@ -13,6 +14,7 @@ export class SubmissionPayloadDTO {
       this.contactInformation = new ContactInformationDTO(base.contactInformation);
       this.credentialInformation = new CredentialInformationDTO(base.credentialInformation);
       this.preferencesInformation = new PreferencesInformationDTO(base.preferencesInformation);
+      this.status = new StatusUpdateDTO(base.status);
     }
   }
   @ValidateNested()
@@ -30,4 +32,7 @@ export class SubmissionPayloadDTO {
   @ValidateNested()
   @IsNotEmpty()
   preferencesInformation!: PreferencesInformationDTO;
+
+  @IsOptional()
+  status?: StatusUpdateDTO;
 }

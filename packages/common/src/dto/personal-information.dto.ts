@@ -1,11 +1,5 @@
 import { IsNotEmpty, IsString, Length, Matches } from 'class-validator';
-
-/**
- * Canadian postal codes only allow certain sets of characters
- * This regex helps to validate only those characters are used in the correct position
- * Also allows a space, dash, or nothing in the middle
- */
-const postalCodeRegex = /^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJ-NPRSTV-Z][\s-]?\d[ABCEGHJ-NPRSTV-Z]\d$/i;
+import { POSTAL_CODE_REGEX } from '../helper';
 
 export class PersonalInformationDTO {
   constructor(base?: PersonalInformationDTO) {
@@ -28,7 +22,7 @@ export class PersonalInformationDTO {
   lastName!: string;
 
   @IsString()
-  @Matches(postalCodeRegex, {
+  @Matches(POSTAL_CODE_REGEX, {
     message: 'Postal Code must be in the format A1A 1A1',
   })
   @IsNotEmpty({ message: 'Postal Code is Required' })

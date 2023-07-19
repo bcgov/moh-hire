@@ -1,4 +1,5 @@
 require('../env');
+import { UpdateSubmissionDTO } from '@ehpr/common';
 import request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
@@ -11,6 +12,8 @@ import { validationPipeConfig } from 'src/app.config';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
+  let confirmationId: string;
+  let updateSubmissionData: UpdateSubmissionDTO;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -37,6 +40,7 @@ describe('AppController (e2e)', () => {
         const { body } = res;
         expect(body.confirmationId).toBeDefined();
         expect(body.id).toBeDefined();
+        confirmationId = body.confirmationId;
       })
       .end(done);
   });
@@ -58,6 +62,39 @@ describe('AppController (e2e)', () => {
         expect(errorObject.firstName.isLength).toBe(
           'First Name must be between 1 and 255 characters',
         );
+      })
+      .end(done);
+  });
+
+  it('validates the submission update', done => {
+    const { contactInformation, personalInformation } = validSubmissionData.payload;
+    updateSubmissionData = {
+      contactInformation,
+      personalInformation,
+      status: { interested: true, deployed: true },
+    };
+
+    request(app.getHttpServer())
+      .patch(`/submission/${confirmationId}`)
+      .send(updateSubmissionData)
+      .expect(400)
+      .expect(({ body }) => {
+        const error = body.message[0][0];
+        const message = error.startDate.isDateString;
+        expect(body.error).toBe('Bad Request');
+        expect(message).toBe('startDate must be a valid ISO 8601 date string');
+      })
+      .end(done);
+  });
+
+  it('updates the submission', done => {
+    updateSubmissionData.status.startDate = '2022-12-31';
+    request(app.getHttpServer())
+      .patch(`/submission/${confirmationId}`)
+      .send(updateSubmissionData)
+      .expect(200)
+      .expect(({ body }) => {
+        expect(body.confirmationId).toBe(confirmationId);
       })
       .end(done);
   });

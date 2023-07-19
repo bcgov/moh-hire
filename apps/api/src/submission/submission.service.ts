@@ -1,8 +1,13 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { SubmissionEntity } from './entity/submission.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SubmissionDTO, PersonalInformationDTO } from '@ehpr/common';
+import {
+  SubmissionDTO,
+  PersonalInformationDTO,
+  UpdateSubmissionDTO,
+  SubmissionRO,
+} from '@ehpr/common';
 import { MailService } from 'src/mail/mail.service';
 import { ConfirmationMailable } from 'src/mail/mailables/confirmation.mailable';
 import { Recipient } from 'src/mail/types/recipient';
@@ -64,5 +69,28 @@ export class SubmissionService {
       '-' +
       id.substring(9)
     );
+  }
+
+  async getSubmission(confirmationId: string) {
+    return this.submissionRepository.findOne({ confirmationId });
+  }
+
+  async updateSubmission(
+    confirmationId: string,
+    payload: UpdateSubmissionDTO,
+  ): Promise<SubmissionRO> {
+    const record = await this.submissionRepository.findOne({ confirmationId });
+    if (!record) {
+      throw new NotFoundException(`No submission record for ${confirmationId}`);
+    }
+
+    const update: Partial<SubmissionEntity> = {
+      payload: { ...record.payload, ...payload },
+      withdrawn: !payload.status.interested,
+    };
+
+    await this.submissionRepository.update(record.id, update);
+
+    return { id: record.id, confirmationId };
   }
 }

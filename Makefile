@@ -25,7 +25,7 @@ export COMMIT_SHA:=$(shell git rev-parse --short=7 HEAD)
 export LAST_COMMIT_MESSAGE:=$(shell git log -1 --oneline --decorate=full --no-color --format="%h, %cn, %f, %D" | sed 's/->/:/')
 
 # FE Env Vars
-export NEXT_PUBLIC_API_URL = /api/v1
+export NEXT_PUBLIC_API_URL ?= /api/v1
 
 # Docker container names
 LOCAL_API_CONTAINER_NAME = $(PROJECT)_api

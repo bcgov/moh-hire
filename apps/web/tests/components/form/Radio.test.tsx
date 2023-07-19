@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Radio } from '../../../src/components/form/Radio';
 import { Formik } from 'formik';
+import { Radio } from '@components';
 
 describe('Radio', () => {
   it('should render a fieldset and legend', () => {

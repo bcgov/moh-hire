@@ -3,6 +3,7 @@ import { BadRequestException, ValidationPipe, ValidationPipeOptions } from '@nes
 import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
 import express from 'express';
 
+import { getNestedError } from '@ehpr/common';
 import { AppModule } from './app.module';
 import { AppLogger } from './common/logger.service';
 import { Documentation } from './common/documentation';
@@ -24,7 +25,7 @@ export const validationPipeConfig: ValidationPipeOptions = {
         return JSON.parse(nestedValidationError);
       }
 
-      return error.constraints;
+      return getNestedError(error);
     });
     throw new BadRequestException(errorMessages);
   },
