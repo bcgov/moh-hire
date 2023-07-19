@@ -85,13 +85,13 @@ type FullHaType = { id: string; name: string; hsdas: FullHsdaType[] };
  * @param lhas list of LHA ids
  * @returns Structure of HAs with LHAs assigned to them
  */
-export const splitLhasByHa = (lhas: LhaId[]): Record<HaId, { ha: HaId; lhas: LhaId[] }> => {
+export const splitLhasByHa = (lhas?: LhaId[]): Record<HaId, { ha: HaId; lhas: LhaId[] }> => {
   const healthAuthorities: Record<HaId, { ha: HaId; lhas: LhaId[] }> = {};
   validHaIds.forEach(haId => {
     healthAuthorities[haId] = { ha: haId, lhas: [] };
   });
 
-  lhas.forEach(lha => {
+  lhas?.forEach(lha => {
     const ha = getHaByLhaId(lha);
     if (!ha) return;
     healthAuthorities[ha.id].lhas.push(lha);

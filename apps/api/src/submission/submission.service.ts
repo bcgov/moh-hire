@@ -72,8 +72,8 @@ export class SubmissionService {
     );
   }
 
-  async getSubmission(confirmationId: string) {
-    return this.submissionRepository.findOne({ confirmationId });
+  async getSubmissions() {
+    return this.submissionRepository.find();
   }
 
   async updateSubmission(
