@@ -12,17 +12,6 @@ const Confirmation: React.FC = () => {
       push('/');
     }
   });
-
-  if (!id) return null;
-
-  const dashedId =
-    id.substring(0, 3) +
-    '-' +
-    id.substring(3, 6) +
-    '-' +
-    id.substring(6, 9) +
-    '-' +
-    id.substring(9);
   return (
     <div className='md:pt-40 pt-12 px-5 md:px-4'>
       <div className='max-w-xl'>
