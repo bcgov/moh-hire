@@ -11,7 +11,7 @@ import {
 import { updateSubmission } from '@services';
 import { Button, Field, Radio } from '@components';
 import { DatePickerField } from '../../form/DatePickerField';
-import UpdateSubmissionHeader from 'src/components/update/UpdateSubmissionHeader';
+import UpdateSubmissionHeader from '../../update/UpdateSubmissionHeader';
 
 interface UpdateSubmissionFormProps {
   email: string;
