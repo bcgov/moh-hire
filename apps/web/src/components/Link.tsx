@@ -5,10 +5,11 @@ export interface LinkProps extends NextLinkProps {
   href: string;
   variant: keyof typeof buttonColor;
   disabled?: boolean;
+  color?: 'text-bcBluePrimary' | 'text-black';
 }
 
 export const Link: React.FC<LinkProps> = props => {
-  const { href, variant, disabled, shallow, replace, children } = props;
+  const { href, variant, disabled, shallow, replace, children, color } = props;
 
   if (disabled) {
     return (
@@ -20,7 +21,11 @@ export const Link: React.FC<LinkProps> = props => {
 
   return (
     <NextLink href={href} shallow={shallow} replace={replace}>
-      <a className={`${buttonColor[variant]} ${variant !== 'link' ? buttonBase : ''}`}>
+      <a
+        className={`${buttonColor[variant]} ${
+          !variant.includes('link') ? buttonBase : ''
+        } ${color}`}
+      >
         {children}
       </a>
     </NextLink>

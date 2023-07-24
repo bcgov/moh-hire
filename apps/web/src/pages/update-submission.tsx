@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { UpdateSubmissionForm } from '../components/submission/components';
+import UpdateSubmissionHeader from 'src/components/update/UpdateSubmissionHeader';
 
 const UpdateSubmission = () => {
   const { push, query, isReady } = useRouter();
@@ -13,9 +14,17 @@ const UpdateSubmission = () => {
   }, [code, isReady, push]);
 
   return (
-    <div className='flex flex-col justify-center'>
-      {email && code && <UpdateSubmissionForm email={email as string} code={code as string} />}
-    </div>
+    <>
+      <div className='flex-grow bg-bcLightBackground flex justify-center md:pt-11 pt-5'>
+        <div className='h-min w-full xl:w-layout mx-2 mb-12'>
+          <div className='bg-white rounded p-4 border-b mb-5'>
+            {email && code && (
+              <UpdateSubmissionForm email={email as string} code={code as string} />
+            )}
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

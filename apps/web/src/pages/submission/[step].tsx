@@ -30,33 +30,27 @@ const Submission = () => {
           <section className='mb-7'>
             <p className='mb-4'>
               The <b>Emergency Health Provider Registry (EHPR)</b> is an online registry to support
-              the proactive deployment of health care providers to ensure BC’s health care system is
-              best prepared to respond to emergencies (e.g., wildfires, floods, pandemics). It is an
-              online registry of health care professionals and health authority staff who are able
-              and willing to be deployed or hired to support B.C.’s health system response. For more
-              information about the EHPR, please refer to the&nbsp;
+              the proactive and voluntary deployment of health sector workers to communities across
+              B.C. during emergency events including wildfires, floods, and pandemics.
+            </p>
+            <p className='mb-4'>
+              <b>For more information about the EHPR, please refer to the&nbsp;</b>
               <ExternalLink href='/assets/EHPR-FAQs-October-2022.pdf'>FAQs</ExternalLink>.
             </p>
             <p className='mb-4'>
-              All&nbsp;
-              <ExternalLink href='/assets/EHPR-FAQs-October-2022.pdf'>
-                eligible health care providers or health care staff
-              </ExternalLink>
-              &nbsp;are invited to register using the form below. Health authorities, the Ministry
-              of Health or HealthMatch BC may use the EHPR to initiate contact if/when assistance is
-              required.
+              Health sector workers and students (including resident physicians and employed student
+              nurses) are invited to register using the form below.
             </p>
             <p className='mb-4'>
-              The form takes about 10 minutes to complete - if you are in a career stream with
-              oversight from a regulatory or credentialing body (e.g., BC College of Nursing
-              Professionals), please have your registration number available.
+              Completing this form does not create an obligation for you to respond to emergency
+              events, and participation in any deployment is always voluntary. Employees of BC
+              health authorities are encouraged to discuss registration with your supervisor, as all
+              deployments will require supervisor sign-off.
             </p>
             <p className='mb-4'>
-              <b>If you encounter problems completing this form, please email </b>
-              <ExternalLink href='mailto:EHPRQuestions@gov.bc.ca'>
-                EHPRQuestions@gov.bc.ca
-              </ExternalLink>
-              .
+              Health authorities, Providence Health Care, Health Match B.C., and the Ministry of
+              Health may use the EHPR to initiate contact if/when assistance is required.
+              Registration in the EHPR does not guarantee that you will be contacted for deployment.
             </p>
             <p className='mb-4'>
               Your personal information is being collected in compliance with BC privacy legislation
@@ -67,8 +61,10 @@ const Submission = () => {
             </p>
 
             <p className='font-bold'>
-              If you have any questions about our collection or use of personal information, please
-              email your inquiries to&nbsp;
+              <b>
+                If you encounter problems completing this form or if you have any questions about
+                our collection or use of personal information, please email your inquiries to &nbsp;{' '}
+              </b>
               <ExternalLink href='mailto:EHPRQuestions@gov.bc.ca'>
                 EHPRQuestions@gov.bc.ca
               </ExternalLink>
