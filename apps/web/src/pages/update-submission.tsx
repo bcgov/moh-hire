@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { UpdateSubmissionForm } from '../components/submission/components';
-import UpdateSubmissionHeader from 'src/components/update/UpdateSubmissionHeader';
 
 const UpdateSubmission = () => {
   const { push, query, isReady } = useRouter();

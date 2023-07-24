@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { ExternalLink, Link, Notice } from '@components';
+import { Link } from '@components';
 
 const Confirmation: React.FC = () => {
   const { push, query, isReady } = useRouter();
