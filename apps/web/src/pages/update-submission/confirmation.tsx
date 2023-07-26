@@ -1,17 +1,5 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { Link } from '@components';
-
 const Confirmation: React.FC = () => {
-  const { push, query, isReady } = useRouter();
-  const id: string = query.id as string;
-
-  useEffect(() => {
-    // redirect to the home page if the id is not present
-    if (isReady && !id) {
-      push('/');
-    }
-  });
   return (
     <div className='md:pt-40 pt-12 px-5 md:px-4'>
       <div className='max-w-xl'>

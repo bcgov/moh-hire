@@ -61,10 +61,8 @@ const Submission = () => {
             </p>
 
             <p className='font-bold'>
-              <b>
-                If you encounter problems completing this form or if you have any questions about
-                our collection or use of personal information, please email your inquiries to &nbsp;{' '}
-              </b>
+              If you encounter problems completing this form or if you have any questions about our
+              collection or use of personal information, please email your inquiries to &nbsp;
               <ExternalLink href='mailto:EHPRQuestions@gov.bc.ca'>
                 EHPRQuestions@gov.bc.ca
               </ExternalLink>
