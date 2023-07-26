@@ -79,6 +79,7 @@ export class SubmissionService {
     confirmationId: string,
     payload: UpdateSubmissionDTO,
   ): Promise<SubmissionRO> {
+    confirmationId = confirmationId.replace(/-/gm, '').toUpperCase();
     const record = await this.submissionRepository.findOne({ confirmationId });
     if (!record) {
       throw new NotFoundException(`No submission record for ${confirmationId}`);

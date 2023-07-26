@@ -11,6 +11,7 @@ import {
 import { updateSubmission } from '@services';
 import { Button, Field, Radio } from '@components';
 import { DatePickerField } from '../../form/DatePickerField';
+import UpdateSubmissionHeader from '../../update/UpdateSubmissionHeader';
 
 interface UpdateSubmissionFormProps {
   email: string;
@@ -38,7 +39,7 @@ export const UpdateSubmissionForm = ({ email, code }: UpdateSubmissionFormProps)
     }
     updateSubmission(code, values).then(result => {
       push({
-        pathname: '/confirmation',
+        pathname: 'update-submission/confirmation',
         query: { id: result.confirmationId },
       });
     });
@@ -49,6 +50,7 @@ export const UpdateSubmissionForm = ({ email, code }: UpdateSubmissionFormProps)
       <div className='w-full text-center pt-10 text-3xl text-bcBluePrimary'>
         Update Your EHPR Registration
       </div>
+      <UpdateSubmissionHeader />
       <Formik
         innerRef={formikRef}
         initialValues={initialValues}
