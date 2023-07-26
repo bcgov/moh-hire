@@ -134,13 +134,13 @@ export const UpdateSubmissionForm = ({ email, code }: UpdateSubmissionFormProps)
             {values.status.deployed && (
               <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
                 <div className='md:col-span-1'>
-                  <DatePickerField name='status.startDate' label='Start Date' format='yyyy-mm-dd' />
+                  <DatePickerField name='status.startDate' label='Start Date' format='yyyy-MM-dd' />
                 </div>
                 <div className='md:col-span-1'>
                   <DatePickerField
                     name='status.endDate'
                     label='End Date(optional)'
-                    format='yyyy-mm-dd'
+                    format='yyyy-MM-dd'
                   />
                 </div>
               </div>
