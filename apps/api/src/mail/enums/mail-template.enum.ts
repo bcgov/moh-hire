@@ -5,4 +5,5 @@
 
 export enum MailTemplate {
   CONFIRMATION = 'confirmation',
+  UPDATE_CONFIRMATION = 'update-confirmation',
 }

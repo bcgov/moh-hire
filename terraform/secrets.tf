@@ -22,3 +22,7 @@ data "aws_ssm_parameter" "ches_auth_url" {
 data "aws_ssm_parameter" "slack_alerts_webhook_url" {
   name = "/${var.project_code}/${var.target_env}/slack/alerts_webhook_url"
 }
+
+data "aws_ssm_parameter" "enable_update_confirmation" {
+  name = "/${var.project_code}/${var.target_env}/mail/enable_update_confirmation"
+}
