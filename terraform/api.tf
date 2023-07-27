@@ -42,6 +42,7 @@ resource "aws_lambda_function" "api" {
       BUILD_ID                 = var.build_id
       BUILD_INFO               = var.build_info
       SLACK_ALERTS_WEBHOOK_URL = data.aws_ssm_parameter.slack_alerts_webhook_url.value
+      ENABLE_UPDATE_CONFIRMATION = data.aws_ssm_parameter.enable_update_confirmation.value
     }
   }
 }

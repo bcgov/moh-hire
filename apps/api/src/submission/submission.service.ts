@@ -92,16 +92,17 @@ export class SubmissionService {
     };
 
     await this.submissionRepository.update(record.id, update);
-
-    let updateConformationMailable = new UpdateConfirmationMailable(
-      { email: payload.contactInformation.email } as Recipient,
-      {
-        firstName: (payload.personalInformation as PersonalInformationDTO).firstName,
-        confirmationId: this.convertIdToDashedId(confirmationId),
-      },
-    );
-
-    await this.mailService.sendMailable(updateConformationMailable);
+    console.log(process.env.ENABLE_UPDATE_CONFIRMATION);
+    if (process.env.ENABLE_UPDATE_CONFIRMATION === 'true') {
+      let updateConformationMailable = new UpdateConfirmationMailable(
+        { email: payload.contactInformation.email } as Recipient,
+        {
+          firstName: (payload.personalInformation as PersonalInformationDTO).firstName,
+          confirmationId: this.convertIdToDashedId(confirmationId),
+        },
+      );
+      await this.mailService.sendMailable(updateConformationMailable);
+    }
 
     return { id: record.id, confirmationId };
   }
