@@ -26,6 +26,13 @@ const getEnvironmentSpecificConfig = (env?: string) => {
         migrations: ['dist/migration/*.js'],
         logging: ['error', 'warn', 'migration'] as LoggerOptions,
       };
+    case 'script':
+      // when running function for lambda locally using ts-node
+      return {
+        entities: ['src/**/*.entity.ts'],
+        migrations: ['src/migration/*.ts'],
+        logging: ['error', 'warn', 'migration'] as LoggerOptions,
+      };
     default:
       return {
         entities: ['dist/**/*.entity.js'],

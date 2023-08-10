@@ -863,11 +863,14 @@ __metadata:
     "@types/express": 4.17.13
     "@types/js-yaml": 4.0.5
     "@types/node": 16.0.0
+    "@types/nodemailer": 6.4.8
     "@types/supertest": 2.0.11
     "@vendia/serverless-express": 4.3.11
     aws-sdk: 2.1017.0
     class-transformer: 0.5.1
     csv-stringify: 6.0.4
+    csv-writer: 1.6.0
+    dayjs: 1.11.9
     dotenv: 10.0.0
     eslint: 8.0.1
     express: 4.17.1
@@ -876,6 +879,7 @@ __metadata:
     js-yaml: 4.1.0
     nanoid: 3.1.30
     nest-winston: 1.6.2
+    nodemailer: 6.9.4
     pg: 8.7.1
     reflect-metadata: 0.1.13
     rimraf: 3.0.2
@@ -2673,6 +2677,15 @@ __metadata:
   version: 16.11.7
   resolution: "@types/node@npm:16.11.7"
   checksum: 2706403e6efc4aa40fdce8f0b5d9884d5600c3c8610aedc7fa5e7e298d30366f7e8b7296028d52898dca3edef4c3e827b03bf20952c4780f13fa4e79864f7a86
+  languageName: node
+  linkType: hard
+
+"@types/nodemailer@npm:6.4.8":
+  version: 6.4.8
+  resolution: "@types/nodemailer@npm:6.4.8"
+  dependencies:
+    "@types/node": "*"
+  checksum: 3cc9b6a0e54f25a1b36124df413964ff5a69e8dc4558c5dfc06818917313a50f4dbfe31fc9190e4270d07a0f8678474da24a2eae42f907933ea81d983b4772d4
   languageName: node
   linkType: hard
 
@@ -11609,6 +11622,13 @@ __metadata:
     has: ^1.0.3
     is: ^3.2.1
   checksum: 1fe3a1ca7fc35392f169c8a46d889d07deb201bba3a20d17df23efab509698c9639737b0c235c9be772a34035e749bae5d477f74c9e26a1b67c78bd7d6dce8e4
+  languageName: node
+  linkType: hard
+
+"nodemailer@npm:6.9.4":
+  version: 6.9.4
+  resolution: "nodemailer@npm:6.9.4"
+  checksum: 1a61039c9c6041ee9ed423c7fa3685cb300679f1ef8dcfd912fc58d9b8c429c34ac1187eebd4d86baf7158222f6e3a1ea2b4fd2a29630fb9ef0027cef46e90bb
   languageName: node
   linkType: hard
 

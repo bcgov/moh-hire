@@ -72,8 +72,8 @@ export class SubmissionService {
     );
   }
 
-  async getSubmission(confirmationId: string) {
-    return this.submissionRepository.findOne({ confirmationId });
+  async getSubmissions() {
+    return this.submissionRepository.find();
   }
 
   async updateSubmission(
@@ -92,9 +92,8 @@ export class SubmissionService {
     };
 
     await this.submissionRepository.update(record.id, update);
-    console.log(process.env.ENABLE_UPDATE_CONFIRMATION);
     if (process.env.ENABLE_UPDATE_CONFIRMATION === 'true') {
-      let updateConformationMailable = new UpdateConfirmationMailable(
+      const updateConformationMailable = new UpdateConfirmationMailable(
         { email: payload.contactInformation.email } as Recipient,
         {
           firstName: (payload.personalInformation as PersonalInformationDTO).firstName,
