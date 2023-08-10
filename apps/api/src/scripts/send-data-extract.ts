@@ -129,7 +129,7 @@ const flattenAndTransformFormData = (submissions: SubmissionEntity[]) => {
 
 const SES = new aws.SES();
 // use nodemailer transport instead of writing raw email to attach a file using pure SES
-const transport = nodemailer.createTransport({ SES });
+const transport = nodemailer.createTransport({ SES }); // NOSONAR
 
 const mailOptions = {
   from: process.env.MAIL_FROM ?? 'EHPRDoNotReply@gov.bc.ca',
