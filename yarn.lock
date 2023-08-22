@@ -952,10 +952,12 @@ __metadata:
     jest: 27.4.2
     next: 12.0.4
     next-secure-headers: 2.2.0
+    oidc-client-ts: 2.2.5
     postcss: 8.4.3
     react: 17.0.2
     react-datepicker: 4.15.0
     react-dom: 17.0.2
+    react-oidc-context: 2.2.2
     react-select: 5.2.1
     react-test-renderer: 17.0.2
     tailwindcss: 2.2.19
@@ -5444,6 +5446,13 @@ __metadata:
     randombytes: ^2.0.0
     randomfill: ^1.0.3
   checksum: c1609af82605474262f3eaa07daa0b2140026bd264ab316d4bf1170272570dbe02f0c49e29407fe0d3634f96c507c27a19a6765fb856fed854a625f9d15618e2
+  languageName: node
+  linkType: hard
+
+"crypto-js@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "crypto-js@npm:4.1.1"
+  checksum: b3747c12ee3a7632fab3b3e171ea50f78b182545f0714f6d3e7e2858385f0f4101a15f2517e033802ce9d12ba50a391575ff4638c9de3dd9b2c4bc47768d5425
   languageName: node
   linkType: hard
 
@@ -10478,6 +10487,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jwt-decode@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "jwt-decode@npm:3.1.2"
+  checksum: 20a4b072d44ce3479f42d0d2c8d3dabeb353081ba4982e40b83a779f2459a70be26441be6c160bfc8c3c6eadf9f6380a036fbb06ac5406b5674e35d8c4205eeb
+  languageName: node
+  linkType: hard
+
 "keyv@npm:^3.0.0":
   version: 3.1.0
   resolution: "keyv@npm:3.1.0"
@@ -11905,6 +11921,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"oidc-client-ts@npm:2.2.5":
+  version: 2.2.5
+  resolution: "oidc-client-ts@npm:2.2.5"
+  dependencies:
+    crypto-js: ^4.1.1
+    jwt-decode: ^3.1.2
+  checksum: 2b7055bddbc2b06390b364c52214d9169ee7c90a2b4e40bef907d0ab43bdc8f736805356f0fac3e422e5dfe973f6e666ecb2ee9f8a2ac031b8032ea8eb898704
+  languageName: node
+  linkType: hard
+
 "on-finished@npm:^2.3.0, on-finished@npm:~2.3.0":
   version: 2.3.0
   resolution: "on-finished@npm:2.3.0"
@@ -13144,6 +13170,16 @@ __metadata:
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: f7a19ac3496de32ca9ae12aa030f00f14a3d45374f1ceca0af707c831b2a6098ef0d6bdae51bd437b0a306d7f01d4677fcc8de7c0d331eb47ad0f46130e53c5f
+  languageName: node
+  linkType: hard
+
+"react-oidc-context@npm:2.2.2":
+  version: 2.2.2
+  resolution: "react-oidc-context@npm:2.2.2"
+  peerDependencies:
+    oidc-client-ts: ^2.2.1
+    react: ">=16.8.0"
+  checksum: aad079623c95e372711e8d0e07d44be76ef9ce357d0ea2dcc73b71d59bb34762b31461a8fc864a17159b742d8e33f8466f5e914445aaccaeb4f1aea7e06102a1
   languageName: node
   linkType: hard
 
