@@ -9,7 +9,7 @@ export const Logout = () => {
   }
 
   const logout = async () => {
-    await auth.signoutRedirect({ post_logout_redirect_uri: `${window.location.origin}/login` });
+    await auth.signoutRedirect({ post_logout_redirect_uri: `${location.origin}/login` });
   };
 
   return (

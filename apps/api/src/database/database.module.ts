@@ -6,6 +6,7 @@ import { LoggerOptions } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 import config from '../ormconfig';
+import { UserEntity } from '../user/entity/user.entity';
 
 const getEnvironmentSpecificConfig = (env?: string) => {
   switch (env) {
@@ -22,7 +23,7 @@ const getEnvironmentSpecificConfig = (env?: string) => {
         username: process.env.TEST_POSTGRES_USERNAME,
         password: process.env.TEST_POSTGRES_PASSWORD,
         database: process.env.TEST_POSTGRES_DATABASE,
-        entities: [SubmissionEntity],
+        entities: [SubmissionEntity, UserEntity],
         migrations: ['dist/migration/*.js'],
         logging: ['error', 'warn', 'migration'] as LoggerOptions,
       };
