@@ -37,3 +37,15 @@ data "aws_ssm_parameter" "keycloak_realm" {
 data "aws_ssm_parameter" "keycloak_client_id" {
   name = "/${var.project_code}/${var.target_env}/keycloak_client_id"
 }
+
+data "aws_ssm_parameter" "keycloak_auth_url" {
+  name = "/${var.project_code}/${var.target_env}/keycloak_auth_url"
+}
+
+data "aws_ssm_parameter" "keycloak_realm" {
+  name = "/${var.project_code}/${var.target_env}/keycloak_realm"
+}
+
+data "aws_ssm_parameter" "keycloak_client_id" {
+  name = "/${var.project_code}/${var.target_env}/keycloak_client_id"
+}
