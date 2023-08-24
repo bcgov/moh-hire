@@ -29,7 +29,12 @@ module.exports = {
               imgSrc: ["'self'"],
               styleSrc: ["'self'", "'unsafe-inline'"],
               scriptSrc: ["'self'", "'unsafe-eval'"],
-              connectSrc: ["'self'", 'http://localhost:4000', 'http://localhost:8080'],
+              connectSrc: [
+                "'self'",
+                'http://localhost:4000',
+                'http://localhost:8080',
+                'https://keycloak.freshworks.club',
+              ],
               formAction: "'self'",
               frameAncestors: ["'self'"],
             },

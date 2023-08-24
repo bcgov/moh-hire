@@ -1,6 +1,8 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { SubmissionModule } from 'src/submission/submission.module';
+import { AdminModule } from '../admin/admin.module';
+import { UserModule } from '../user/user.module';
 
 export const Documentation = (app: INestApplication) => {
   const options = new DocumentBuilder()
@@ -10,7 +12,7 @@ export const Documentation = (app: INestApplication) => {
     .build();
 
   const baseDocument = SwaggerModule.createDocument(app, options, {
-    include: [SubmissionModule],
+    include: [SubmissionModule, AdminModule, UserModule],
   });
 
   SwaggerModule.setup('api', app, baseDocument, {

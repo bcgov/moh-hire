@@ -4,8 +4,10 @@ import { useEffect, useRef } from 'react';
 
 import logo from '@assets/img/bc_logo.png';
 import { Logout } from './Logout';
+import { useAuthContext } from './AuthProvider';
 
 export const Header: React.FC = () => {
+  const { user } = useAuthContext();
   const router = useRouter();
   const headerRef = useRef<HTMLHeadingElement>(null);
 
@@ -32,7 +34,10 @@ export const Header: React.FC = () => {
             </h1>
           </div>
         </div>
-        <Logout />
+        <div className='flex flex-row align-middle'>
+          {user && <span className='text-white m-auto mr-4'>{user.name}</span>}
+          <Logout />
+        </div>
       </div>
     </header>
   );

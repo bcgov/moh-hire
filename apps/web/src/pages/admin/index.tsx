@@ -1,20 +1,28 @@
-import { useAuth } from 'react-oidc-context';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { Role } from '@ehpr/common';
+import { useAuthContext } from '../../components/AuthProvider';
+import { UserTable } from '../../components/admin/UserTable';
 
 const AdminPage = () => {
-  const auth = useAuth();
-  const router = useRouter();
+  const { user } = useAuthContext();
 
-  useEffect(() => {
-    if (!auth?.isAuthenticated && !auth.isLoading) {
-      router.replace('/login');
-    }
-  }, [auth, router]);
+  if (user?.role === Role.Pending) {
+    return (
+      <div className='grid h-full place-items-center'>
+        <div className='text-xl'>
+          You have not been authorized for the features of administration.
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className='grid f-ull place-items-center'>
-      <h1 className='text-4xl'>Admin Page</h1>
+    <div className='f-ull pt-12'>
+      {user?.role === Role.Admin && (
+        <div>
+          <h1 className='text-2xl mb-4'>User Management</h1>
+          <UserTable />
+        </div>
+      )}
     </div>
   );
 };
