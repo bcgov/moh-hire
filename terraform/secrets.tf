@@ -37,4 +37,3 @@ data "aws_ssm_parameter" "keycloak_realm" {
 data "aws_ssm_parameter" "keycloak_client_id" {
   name = "/${var.project_code}/${var.target_env}/keycloak_client_id"
 }
-
