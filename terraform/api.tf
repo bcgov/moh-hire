@@ -43,6 +43,9 @@ resource "aws_lambda_function" "api" {
       BUILD_INFO               = var.build_info
       SLACK_ALERTS_WEBHOOK_URL = data.aws_ssm_parameter.slack_alerts_webhook_url.value
       ENABLE_UPDATE_CONFIRMATION = data.aws_ssm_parameter.enable_update_confirmation.value
+      KC_URL                   = data.aws_ssm_parameter.keycloak_auth_url.value
+      KC_REALM                 = data.aws_ssm_parameter.keycloak_realm.value
+      KC_CLIENT_ID             = data.aws_ssm_parameter.keycloak_client_id.value
     }
   }
 }
