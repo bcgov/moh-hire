@@ -1,10 +1,9 @@
 import axios from 'axios';
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
-import '../styles/globals.css';
-import { Footer, Header } from '@components';
 import { AuthProvider as OidcAuthProvider, AuthProviderProps } from 'react-oidc-context';
-import { AuthProvider } from '../components/AuthProvider';
+import '../styles/globals.css';
+import { AuthProvider, Footer, Header } from '@components';
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -15,7 +14,7 @@ function App({ Component, pageProps }: AppProps) {
     redirect_uri: `${process.env.NEXT_PUBLIC_KC_REDIRECT_URI}`,
     onSigninCallback: async kcUser => {
       if (kcUser) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${kcUser.id_token}`;
+        axios.defaults.headers.common['Authorization'] = `Bearer ${kcUser.access_token}`;
       }
     },
   };

@@ -15,11 +15,13 @@ export const UserTable = () => {
 
   const toggleApproval = async ({ id, role }: User) => {
     const user = role === Role.Pending ? await approveUser(id) : await revokeUser(id);
-    setUsers(_.map(users, u => (u.id === id ? user : u)));
+    if (user) {
+      setUsers(_.map(users, u => (u.id === id ? user : u)));
+    }
   };
 
   return (
-    <div className='overflow-x-auto container'>
+    <div className='overflow-x-auto'>
       <table className='w-full table-fixed'>
         <thead className='whitespace-nowrap bg-bcLightGray text-bcDeepBlack'>
           <tr className='border-b-2 border-yellow-300 text-sm'>

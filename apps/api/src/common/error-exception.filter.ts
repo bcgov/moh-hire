@@ -20,7 +20,7 @@ export class ErrorExceptionFilter implements ExceptionFilter {
   /**
    * Transform a generic thrown exception to a `FailedResponse`
    *
-   * @param exception: An exception caught by the handler
+   * @param exception caught by the handler
    * @returns A failed response object
    */
   transformHttpException(exception: Error): FailedResponse {
