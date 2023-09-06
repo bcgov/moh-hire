@@ -25,7 +25,3 @@ data "aws_ssm_parameter" "slack_alerts_webhook_url" {
 data "aws_ssm_parameter" "enable_update_confirmation" {
   name = "/${var.project_code}/${var.target_env}/mail/enable_update_confirmation"
 }
-
-data "aws_ssm_parameter" "mail_recipients" {
-  name = "/${var.project_code}/${var.target_env}/mail_recipients"
-}
