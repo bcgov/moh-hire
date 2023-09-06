@@ -1,5 +1,11 @@
 import { Role } from '@ehpr/common';
-import { AdminSection, ExtractSubmissions, useAuthContext, UserTable } from '@components';
+import {
+  AdminSection,
+  ExtractSubmissions,
+  InviteUser,
+  useAuthContext,
+  UserTable,
+} from '@components';
 
 const AdminPage = () => {
   const { user } = useAuthContext();
@@ -21,6 +27,7 @@ const AdminPage = () => {
       </AdminSection>
       {user?.role === Role.Admin && (
         <AdminSection title='Users'>
+          <InviteUser />
           <UserTable />
         </AdminSection>
       )}
