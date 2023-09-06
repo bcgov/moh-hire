@@ -269,7 +269,6 @@ deploy-app-manual: deploy-app
 
 deploy-api:
 	aws lambda update-function-code --function-name ehpr-$(ENV_NAME)-api --zip-file fileb://./terraform/build/api.zip --region $(AWS_REGION)
-	aws lambda update-function-code --function-name ehpr-$(ENV_NAME)-cron --zip-file fileb://./terraform/build/api.zip --region $(AWS_REGION)
 
 # Deployment CMD
 tag-dev:

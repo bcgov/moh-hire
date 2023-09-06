@@ -31,9 +31,6 @@ locals {
   namespace = "${var.project_code}-${var.target_env}"
   app_name  = "${local.namespace}-app"
   api_name  = "${local.namespace}-api"
-  cron_name = "${local.namespace}-cron"
-  extract_scheduler = "${local.namespace}-extract-scheduler"
-
   db_name = "${local.namespace}-db"
 
   has_domain = var.domain != ""
