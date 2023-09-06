@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 
 import logo from '@assets/img/bc_logo.png';
+import { Logout } from './Logout';
 
 export const Header: React.FC = () => {
   const router = useRouter();
@@ -31,6 +32,7 @@ export const Header: React.FC = () => {
             </h1>
           </div>
         </div>
+        <Logout />
       </div>
     </header>
   );
