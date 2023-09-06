@@ -164,6 +164,12 @@ start-test-db:
 stop-test-db:
 	NODE_ENV=test docker-compose -f docker-compose.test.yaml down
 
+start-keycloak:
+	docker-compose up -d keycloak
+
+stop-keycloak:
+	docker-compose down keycloak
+
 api-integration-test: 
 	@make start-test-db 
 	@echo "++\n***** Running API integration tests\n++"
