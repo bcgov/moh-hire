@@ -12,7 +12,7 @@ import { SubmissionService } from '../submission/submission.service';
 dayjs.extend(weekOfYear);
 
 export const formExportColumnHeaders = [
-  { id: 'id', title: 'Id' },
+  { id: 'id', title: 'ID' },
 
   // Primary Information
   { id: 'firstName', title: 'First Name' },
@@ -56,7 +56,7 @@ export const formExportColumnHeaders = [
   { id: 'deploymentEnd', title: 'Deployment End' },
 ];
 
-const flattenAndTransformFormData = (submissions: SubmissionEntity[]) => {
+export const flattenAndTransformFormData = (submissions: SubmissionEntity[]) => {
   const flatNormalizedSubmissions: any[] = [];
   submissions.forEach(({ id, payload, withdrawn }) => {
     const {

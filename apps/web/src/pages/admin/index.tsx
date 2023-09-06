@@ -1,6 +1,5 @@
 import { Role } from '@ehpr/common';
-import { useAuthContext } from '../../components/AuthProvider';
-import { UserTable } from '../../components/admin/UserTable';
+import { AdminSection, ExtractSubmissions, useAuthContext, UserTable } from '@components';
 
 const AdminPage = () => {
   const { user } = useAuthContext();
@@ -16,12 +15,14 @@ const AdminPage = () => {
   }
 
   return (
-    <div className='f-ull pt-12'>
+    <div className='container pt-12'>
+      <AdminSection title='Downloads'>
+        <ExtractSubmissions />
+      </AdminSection>
       {user?.role === Role.Admin && (
-        <div>
-          <h1 className='text-2xl mb-4'>User Management</h1>
+        <AdminSection title='Users'>
           <UserTable />
-        </div>
+        </AdminSection>
       )}
     </div>
   );

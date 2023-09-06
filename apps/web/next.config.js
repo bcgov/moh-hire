@@ -35,6 +35,7 @@ module.exports = {
                 'http://localhost:8080',
                 'https://keycloak.freshworks.club',
               ],
+              frameSrc: ["'self'", 'http://localhost:8080'],
               formAction: "'self'",
               frameAncestors: ["'self'"],
             },
