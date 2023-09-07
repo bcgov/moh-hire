@@ -33,10 +33,11 @@ export class AuthService {
         throw new HttpException('Authentication token does not match', HttpStatus.FORBIDDEN);
       }
 
-      const { sub, given_name, family_name } = decoded.payload as JwtPayload;
+      const { sub, given_name, family_name, email } = decoded.payload as JwtPayload;
       return {
         id: sub as string,
         name: `${family_name} ${given_name}`,
+        email,
       };
     } catch (e) {
       if (e instanceof TokenExpiredError) {

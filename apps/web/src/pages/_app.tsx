@@ -2,6 +2,8 @@ import axios from 'axios';
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import { AuthProvider as OidcAuthProvider, AuthProviderProps } from 'react-oidc-context';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/globals.css';
 import { AuthProvider, Footer, Header } from '@components';
 
@@ -34,6 +36,7 @@ function App({ Component, pageProps }: AppProps) {
           <Footer />
         </div>
       </AuthProvider>
+      <ToastContainer theme='colored' />
     </OidcAuthProvider>
   );
 }

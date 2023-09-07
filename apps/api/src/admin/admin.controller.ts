@@ -1,13 +1,14 @@
-import { Controller, Get, Inject, Param, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import * as csvWriter from 'csv-writer';
-import { Role } from '@ehpr/common';
+import { InviteUserDTO, Role } from '@ehpr/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { UserService } from '../user/user.service';
 import { Roles } from '../common/decorators';
 import { RoleGuard } from '../auth/role.guard';
 import { SubmissionService } from '../submission/submission.service';
 import { flattenAndTransformFormData, formExportColumnHeaders } from '../scripts/send-data-extract';
+import { AdminService } from './admin.service';
 
 @Controller('admin')
 @UseGuards(AuthGuard)
@@ -15,6 +16,7 @@ import { flattenAndTransformFormData, formExportColumnHeaders } from '../scripts
 export class AdminController {
   constructor(
     @Inject(UserService) private readonly userService: UserService,
+    @Inject(AdminService) private readonly adminService: AdminService,
     @Inject(SubmissionService) private readonly submissionService: SubmissionService,
   ) {}
 
@@ -22,14 +24,14 @@ export class AdminController {
   @UseGuards(RoleGuard)
   @Patch(':id/approve')
   async approve(@Param() id: string) {
-    return this.userService.changeRole(id, Role.User);
+    return this.userService.approve(id);
   }
 
   @Roles(Role.Admin)
   @UseGuards(RoleGuard)
   @Patch(':id/revoke')
   async revoke(@Param() id: string) {
-    return this.userService.changeRole(id, Role.Pending);
+    return this.userService.revoke(id);
   }
 
   @Get('/extract-submissions')
@@ -41,5 +43,12 @@ export class AdminController {
       header: formExportColumnHeaders,
     });
     return stringifier.getHeaderString() + stringifier.stringifyRecords(flatSubmissions);
+  }
+
+  @Roles(Role.Admin)
+  @UseGuards(RoleGuard)
+  @Post('/invite')
+  async invite(@Body() payload: InviteUserDTO) {
+    return this.adminService.invite(payload);
   }
 }

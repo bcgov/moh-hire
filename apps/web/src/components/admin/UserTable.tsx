@@ -1,22 +1,31 @@
-import { useEffect, useState } from 'react';
 import _ from 'lodash';
+import dayjs from 'dayjs';
 import { Role, User } from '@ehpr/common';
-import { Button } from '@components';
+import { Button, useAdminContext } from '@components';
 import { useAuthContext } from '../AuthProvider';
-import { approveUser, getUsers, revokeUser } from '@services';
 
 export const UserTable = () => {
   const { user: loggedUser } = useAuthContext();
-  const [users, setUsers] = useState<User[]>([]);
+  const { users, approve, revoke } = useAdminContext();
 
-  useEffect(() => {
-    getUsers().then(setUsers).catch();
-  }, []);
-
-  const toggleApproval = async ({ id, role }: User) => {
-    const user = role === Role.Pending ? await approveUser(id) : await revokeUser(id);
-    if (user) {
-      setUsers(_.map(users, u => (u.id === id ? user : u)));
+  const getButton = (user: User) => {
+    if (user.id === loggedUser?.id) {
+      return null;
+    }
+    if (user.role === Role.Pending || user.revokedDate) {
+      return (
+        <Button variant='outline' onClick={() => approve(user.id)}>
+          Approve
+        </Button>
+      );
+    } else if (user.active) {
+      return (
+        <Button variant='outline' onClick={() => revoke(user.id)}>
+          <span className='text-bcRedError'>Revoke</span>
+        </Button>
+      );
+    } else {
+      return 'Invited';
     }
   };
 
@@ -32,7 +41,13 @@ export const UserTable = () => {
               Name
             </th>
             <th className='w-24' scope='col'>
+              Email
+            </th>
+            <th className='w-24' scope='col'>
               Role
+            </th>
+            <th className='w-24' scope='col'>
+              Created/<span className='text-bcRedError'>Revoked</span>
             </th>
             <th className='py-4 w-24' scope='col'>
               Action
@@ -43,17 +58,13 @@ export const UserTable = () => {
           {users.map(user => (
             <tr key={user.id} className='text-center'>
               <td className='py-4'>{user.id.substring(0, 8)}</td>
-              <td>{user.name}</td>
+              <td>{_.startCase(user.name)}</td>
+              <td>{user.email}</td>
               <td>{_.capitalize(user.role)}</td>
-              <td>
-                {user.id !== loggedUser?.id && (
-                  <Button variant='outline' onClick={() => toggleApproval(user)}>
-                    <span className={user.role !== Role.Pending ? 'text-bcRedError' : ''}>
-                      {user.role === Role.Pending ? 'Approve' : 'Revoke'}
-                    </span>
-                  </Button>
-                )}
+              <td className={user.revokedDate ? 'text-bcRedError' : ''}>
+                {dayjs(user.revokedDate ?? user.createdDate).format('YYYY-MM-DD')}
               </td>
+              <td>{getButton(user)}</td>
             </tr>
           ))}
         </tbody>

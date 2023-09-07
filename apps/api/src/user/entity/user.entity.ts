@@ -9,4 +9,13 @@ export class UserEntity extends BaseEntity implements User {
 
   @Column({ type: 'enum', enum: Role, default: Role.Pending })
   role!: Role;
+
+  @Column({ type: 'varchar', nullable: true })
+  email!: string;
+
+  @Column({ type: 'bool', default: false })
+  active!: boolean;
+
+  @Column({ type: 'timestamp', default: null })
+  revokedDate!: Date | null;
 }

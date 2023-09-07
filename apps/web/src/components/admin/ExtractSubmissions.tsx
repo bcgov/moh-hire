@@ -1,4 +1,6 @@
 import dayjs from 'dayjs';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileDownload } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@components';
 import { extractSubmissions } from '@services';
 
@@ -21,7 +23,8 @@ export const ExtractSubmissions = () => {
         Extract and download all submission data in <b>CSV</b> format.
       </p>
       <Button variant='outline' onClick={downSubmissions}>
-        Extract Submissions
+        <FontAwesomeIcon icon={faFileDownload} size='1x' className='mr-2' />
+        <span>Extract Submissions</span>
       </Button>
     </div>
   );
