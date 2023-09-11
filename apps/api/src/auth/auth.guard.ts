@@ -21,9 +21,12 @@ export class AuthGuard implements CanActivate {
     }
 
     const kcUser = await this.authService.getUserFromToken(token);
-    let user = await this.userService.findUser(kcUser.id);
+    let user = await this.userService.findUser(kcUser.id, kcUser.email);
     if (!user) {
       user = await this.userService.createUser(kcUser);
+    } else if (!user.revokedDate && (!user.email || !user.name)) {
+      const { email, name } = kcUser;
+      user = await this.userService.updateUser(user, { email, name, active: true });
     }
     request.user = user;
 

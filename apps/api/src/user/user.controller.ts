@@ -20,8 +20,8 @@ export class UserController {
   }
 
   @Get(':id')
-  async getUser(@Param() id: string, @Req() req: UserRequest) {
-    if (req.user?.id === id) {
+  async getUser(@Param('id') id: string, @Req() req: UserRequest) {
+    if (id === 'me') {
       return req.user;
     }
     return this.service.findUser(id);

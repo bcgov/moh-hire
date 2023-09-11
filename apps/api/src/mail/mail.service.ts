@@ -9,7 +9,7 @@ import aws from 'aws-sdk';
 import { AppLogger } from '../common/logger.service';
 
 import { Mailable } from './mailables/mail-base.mailable';
-import { MailOptions } from './mail-options.interface';
+import { MailOptions } from './types/mail-options';
 import { ChesResponse } from './types/ches-response';
 
 @Injectable()
@@ -121,12 +121,8 @@ export class MailService {
           Data: mailOptions.subject,
         },
       },
-      Source: process.env.MAIL_FROM || 'EHPRDoNotReply@dev.ehpr.freshworks.club',
+      Source: process.env.MAIL_FROM ?? 'EHPRDoNotReply@dev.ehpr.freshworks.club',
     };
-    try {
-      return await this.ses.sendEmail(params).promise();
-    } catch (e) {
-      this.logger.log(e.message);
-    }
+    return await this.ses.sendEmail(params).promise();
   }
 }

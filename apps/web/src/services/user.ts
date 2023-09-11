@@ -10,6 +10,8 @@ export const getUser = async (id: string) => {
   }
 };
 
+export const getLoggedUser = () => getUser('me');
+
 export const getUsers = async () => {
   try {
     const response = await axios.get<{ data: User[] }>('/users');

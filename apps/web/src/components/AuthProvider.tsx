@@ -10,8 +10,9 @@ import {
   useState,
 } from 'react';
 import { useAuth } from 'react-oidc-context';
+import { toast } from 'react-toastify';
 import { User } from '@ehpr/common';
-import { getUser } from '@services';
+import { getLoggedUser } from '@services';
 import { Spinner } from './Spinner';
 import { getErrorMessage } from '../util';
 
@@ -50,7 +51,7 @@ export const AuthProvider = ({ children }: PropsWithChildren<ReactNode>) => {
     }
     if (!user && kcUser) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${kcUser.access_token}`;
-      getUser(kcUser.profile.sub).then(user => {
+      getLoggedUser().then(user => {
         setUser(user);
         setInitialized(true);
       });
@@ -66,6 +67,8 @@ export const AuthProvider = ({ children }: PropsWithChildren<ReactNode>) => {
         if (message?.includes('Authentication token')) {
           signoutSilent();
           location.replace(`${location.origin}/login`);
+        } else {
+          toast.error(message);
         }
       },
     );
@@ -82,7 +85,7 @@ export const AuthProvider = ({ children }: PropsWithChildren<ReactNode>) => {
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuthContext must be use within a AuthProvider');
+    throw new Error('useAuthContext must be used within AuthProvider');
   }
   return context;
 };

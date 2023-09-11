@@ -8,6 +8,7 @@ export * from './Footer';
 export * from './FormStepHeader';
 export * from './Header';
 export * from './Link';
+export * from './Modal';
 export * from './Notice';
 export * from './Stepper';
 
