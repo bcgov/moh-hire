@@ -28,7 +28,6 @@ export const AuthProvider = ({ children }: PropsWithChildren<ReactNode>) => {
   const router = useRouter();
   const { isAuthenticated, isLoading, user: kcUser, signinSilent, signoutSilent } = useAuth();
   const [user, setUser] = useState<User | null>(null);
-  const [initialized, setInitialized] = useState(false);
   const contextValue = useMemo(
     () => ({
       user,
@@ -36,28 +35,22 @@ export const AuthProvider = ({ children }: PropsWithChildren<ReactNode>) => {
     [user],
   );
 
-  useEffect(() => {
-    const requiresAdminAccess = PROTECTED_ROUTES.includes(router.pathname.split('?')[0]);
-    if (!requiresAdminAccess) {
-      setInitialized(true);
-      return;
-    }
+  const isProtected = !router || PROTECTED_ROUTES.includes(router.pathname.split('?')[0]);
 
-    if (!isAuthenticated) {
+  useEffect(() => {
+    if (!isAuthenticated && isProtected) {
       signinSilent().catch(() => {
         router.replace('/login');
-        setInitialized(true);
       });
     }
     if (!user && kcUser) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${kcUser.access_token}`;
       getLoggedUser().then(user => {
         setUser(user);
-        setInitialized(true);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, kcUser]);
+  }, [isAuthenticated, isLoading, kcUser]);
 
   useEffect(() => {
     axios.interceptors.response.use(
@@ -75,7 +68,12 @@ export const AuthProvider = ({ children }: PropsWithChildren<ReactNode>) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (isLoading || !initialized) {
+  if (
+    isLoading ||
+    (!user &&
+      (isProtected || // during redirecting to /login
+        (kcUser && router?.pathname.startsWith('/login')))) // during redirecting to /admin
+  ) {
     return <Spinner size='2x' />;
   }
 
