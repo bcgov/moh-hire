@@ -29,7 +29,7 @@ export class AuthService {
       const jwks = await this.jwksClient.getSigningKey(kid);
       const signingKey = jwks.getPublicKey();
       const verified = jwt.verify(token, signingKey);
-      if (typeof verified !== 'string' && verified.azp !== 'ehpr-app') {
+      if (typeof verified !== 'string' && verified.azp !== process.env.KC_CLIENT_ID) {
         throw new HttpException('Authentication token does not match', HttpStatus.FORBIDDEN);
       }
 
