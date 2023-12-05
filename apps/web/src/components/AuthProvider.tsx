@@ -57,7 +57,8 @@ export const AuthProvider = ({ children }: PropsWithChildren<ReactNode>) => {
       res => res,
       e => {
         const message = getErrorMessage(e);
-        if (message?.includes('Authentication token')) {
+        const status = e.response?.status;
+        if ([401, 403].includes(status) || message?.includes('Authentication token')) {
           signoutSilent();
           location.replace(`${location.origin}/login`);
         } else {
