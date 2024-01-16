@@ -57,7 +57,7 @@ export const UserTable = () => {
         <tbody>
           {users.map(user => (
             <tr key={user.id} className='text-center'>
-              <td className='py-4'>{user.id.substring(0, 8)}</td>
+              <td className='py-3'>{user.id.substring(0, 8)}</td>
               <td>{_.startCase(user.name)}</td>
               <td>{user.email}</td>
               <td>{_.capitalize(user.role)}</td>
