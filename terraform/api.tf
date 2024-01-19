@@ -39,6 +39,7 @@ resource "aws_lambda_function" "api" {
       CHES_SERVICE_HOST        = data.aws_ssm_parameter.ches_service_host.value
       CHES_AUTH_URL            = data.aws_ssm_parameter.ches_auth_url.value
       MAIL_FROM                = var.mail_from
+      DOMAIN                   = var.domain
       BUILD_ID                 = var.build_id
       BUILD_INFO               = var.build_info
       SLACK_ALERTS_WEBHOOK_URL = data.aws_ssm_parameter.slack_alerts_webhook_url.value
