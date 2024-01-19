@@ -4,7 +4,7 @@ import { SubmissionEntity } from './entity/submission.entity';
 export const formatRegistrants = (submissions: SubmissionEntity[]): RegistrantRO[] => {
   const flatNormalizedRegistrants: RegistrantRO[] = [];
 
-  submissions.forEach(({ payload }) => {
+  submissions.forEach(({ id, payload }) => {
     const {
       personalInformation,
       credentialInformation,
@@ -13,6 +13,7 @@ export const formatRegistrants = (submissions: SubmissionEntity[]): RegistrantRO
     } = payload;
 
     const payloadData = {
+      id,
       firstName: personalInformation?.firstName,
       lastName: personalInformation?.lastName,
       email: contactInformation?.email,

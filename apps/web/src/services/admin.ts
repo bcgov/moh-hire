@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { InviteUserDTO, RegistrantFilterDTO, RegistrantRO, User } from '@ehpr/common';
-import { convertToParams } from 'src/util';
+import { convertToParams } from '../util';
 
 export const inviteUser = async (payload: InviteUserDTO) => {
   const { data } = await axios.post<{ data: User }>('/admin/invite', payload);

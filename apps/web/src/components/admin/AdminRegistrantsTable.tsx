@@ -117,9 +117,9 @@ export const AdminRegistrantsTable = () => {
           </thead>
           <tbody className='text-bcBlack'>
             {registrants && registrants.length > 0 ? (
-              registrants.map((reg: RegistrantRO, index: number) => (
+              registrants.map((reg: RegistrantRO) => (
                 <tr
-                  key={index}
+                  key={reg.id}
                   className='text-left shadow-xs whitespace-nowrap text-sm border border-bcLightGray'
                 >
                   <th className='py-4 px-6' scope='col'>

@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RegistrantFilterDTO } from '@ehpr/common';
 import { SearchInput } from '../SearchInput';
 import { DEFAULT_PAGE_SIZE } from './AdminRegistrantsTable';

@@ -59,8 +59,8 @@ export const Pagination = (props: PaginationProps) => {
           onChange={e => changePageSize(+e.target.value)}
           value={currentPageSize}
         >
-          {pageSizeOptions.map((o: { value: number }, index: number) => (
-            <Option key={index} label={String(o.value)} value={String(o.value)} />
+          {pageSizeOptions.map((o: { value: number }) => (
+            <Option key={o.value} label={String(o.value)} value={String(o.value)} />
           ))}
         </select>
       </div>
@@ -72,8 +72,8 @@ export const Pagination = (props: PaginationProps) => {
       <div className='flex flex-row flex-grow justify-end'>
         <div className='px-3 pt-4 border-l border-r h-100 text-sm'>
           <select name='page-list' onChange={e => goToPage(+e.target.value)} value={currentPage}>
-            {pageListOptions.map((o: { value: number }, index: number) => (
-              <Option key={index} label={String(o.value)} value={String(o.value)} />
+            {pageListOptions.map((o: { value: number }) => (
+              <Option key={o.value} label={String(o.value)} value={String(o.value)} />
             ))}
           </select>
         </div>
