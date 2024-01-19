@@ -18,6 +18,7 @@
     "paths": {
       "@components": ["src/components/index.tsx"],
       "@services": ["src/services/index.ts"],
+      "@constants": ["src/constants/index.ts"],
       "@assets/*": ["public/assets/*"]
     }
   },

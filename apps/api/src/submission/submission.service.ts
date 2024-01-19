@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Repository, getRepository } from 'typeorm';
 import { SubmissionEntity } from './entity/submission.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -7,6 +7,8 @@ import {
   PersonalInformationDTO,
   UpdateSubmissionDTO,
   SubmissionRO,
+  RegistrantRO,
+  RegistrantFilterDTO,
 } from '@ehpr/common';
 import { MailService } from 'src/mail/mail.service';
 import { ConfirmationMailable } from 'src/mail/mailables/confirmation.mailable';
@@ -14,6 +16,7 @@ import { Recipient } from 'src/mail/types/recipient';
 import { generateConfirmationId } from './id-generator';
 import { AppLogger } from 'src/common/logger.service';
 import { UpdateConfirmationMailable } from 'src/mail/mailables/update-confirmation.mailable';
+import { formatRegistrants } from './submission.util';
 
 @Injectable()
 export class SubmissionService {
@@ -74,6 +77,46 @@ export class SubmissionService {
 
   async getSubmissions() {
     return this.submissionRepository.find();
+  }
+
+  async getRegistrants(
+    filter: RegistrantFilterDTO,
+  ): Promise<[data: RegistrantRO[], count: number]> {
+    const [data, count] = await this.getSubmissionsFilterQuery(filter);
+
+    const registrants = formatRegistrants(data);
+    return [registrants, count];
+  }
+
+  async getSubmissionsFilterQuery(filter: RegistrantFilterDTO) {
+    const queryBuilder = getRepository(SubmissionEntity).createQueryBuilder('submission');
+    const { firstName, lastName, email, skip, limit } = filter;
+
+    if (firstName) {
+      queryBuilder.andWhere(
+        "submission.payload->'personalInformation'->>'firstName' ILIKE :firstName",
+        {
+          firstName: `%${firstName}%`,
+        },
+      );
+    }
+
+    if (lastName) {
+      queryBuilder.andWhere(
+        "submission.payload->'personalInformation'->>'lastName' ILIKE :lastName",
+        {
+          lastName: `%${lastName}%`,
+        },
+      );
+    }
+
+    if (email) {
+      queryBuilder.andWhere("submission.payload->'contactInformation'->>'email' ILIKE :email", {
+        email: `%${email}%`,
+      });
+    }
+
+    return queryBuilder.skip(skip).take(limit).getManyAndCount();
   }
 
   async updateSubmission(

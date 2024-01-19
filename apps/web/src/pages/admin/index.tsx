@@ -1,15 +1,27 @@
+import { useState } from 'react';
 import { Role } from '@ehpr/common';
 import {
   AdminProvider,
+  AdminRegistrantsTable,
   AdminSection,
+  AdminTabs,
   ExtractSubmissions,
   InviteUser,
   useAuthContext,
   UserTable,
 } from '@components';
+import { AdminTab, adminTabs } from '@constants';
 
 const AdminPage = () => {
   const { user } = useAuthContext();
+
+  const [selectedTab, setSelectedTab] = useState(AdminTab.DOWNLOADS);
+
+  // determine which tabs to show
+  const tabs =
+    user?.role === Role.Admin
+      ? [{ title: 'Users', value: AdminTab.USERS }, ...adminTabs]
+      : adminTabs;
 
   if (user?.role === Role.Pending || user?.revokedDate) {
     return (
@@ -24,10 +36,16 @@ const AdminPage = () => {
   return (
     <div className='container pt-12'>
       <AdminProvider>
-        <AdminSection title='Downloads'>
-          <ExtractSubmissions />
-        </AdminSection>
-        {user?.role === Role.Admin && (
+        <AdminTabs tabs={tabs} categoryIndex={selectedTab} onTabChange={setSelectedTab} />
+        {selectedTab === AdminTab.DOWNLOADS && (
+          <AdminSection title='Downloads'>
+            <ExtractSubmissions />
+          </AdminSection>
+        )}
+
+        {selectedTab === AdminTab.REGISTRANTS && <AdminRegistrantsTable />}
+
+        {selectedTab === AdminTab.USERS && user?.role === Role.Admin && (
           <AdminSection title='Users'>
             <InviteUser />
             <UserTable />
