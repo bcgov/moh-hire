@@ -1,7 +1,17 @@
-import { Body, Controller, Get, Inject, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import * as csvWriter from 'csv-writer';
-import { InviteUserDTO, Role } from '@ehpr/common';
+import { InviteUserDTO, RegistrantFilterDTO, RegistrantRO, Role } from '@ehpr/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { UserService } from '../user/user.service';
 import { Roles } from '../common/decorators';
@@ -32,6 +42,14 @@ export class AdminController {
   @Patch(':id/revoke')
   async revoke(@Param() id: string) {
     return this.userService.revoke(id);
+  }
+
+  @Get('/')
+  async getRegistrants(
+    @Query() filter: RegistrantFilterDTO,
+  ): Promise<[data: RegistrantRO[], count: number]> {
+    const registrants = await this.submissionService.getRegistrants(filter);
+    return registrants;
   }
 
   @Get('/extract-submissions')
