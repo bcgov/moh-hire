@@ -148,7 +148,7 @@ export const AdminRegistrantsTable = () => {
       checked,
     }));
 
-    setRegistrants(updatedRegistrants || []);
+    setRegistrants(updatedRegistrants ?? []);
   };
 
   return (
