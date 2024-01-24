@@ -56,11 +56,8 @@ export const AdminRegistrantsTable = () => {
           // to save state between pagination changes and add checked field to object
           // if in email state, the item will already be 'checked'
           const isChecked = emails.some(email => email === item.email);
-          if (isChecked) {
-            return { ...item, checked: true };
-          } else {
-            return { ...item, checked: false };
-          }
+
+          return { ...item, checked: isChecked };
         });
 
         setRegistrants(updatedData);
