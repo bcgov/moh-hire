@@ -13,3 +13,8 @@ export const getRegistrants = async (filter: RegistrantFilterDTO) => {
   }
   return { data: [], count: 0 };
 };
+
+export const getAllRegistrantsEmails = async () => {
+  const response = await axios.get<{ data: string[] }>(`/admin/registrant-emails`);
+  return response?.data?.data;
+};
