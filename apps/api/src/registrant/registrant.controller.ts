@@ -21,7 +21,7 @@ export class RegistrantController {
     return registrants;
   }
 
-  @Get('/registrant-emails')
+  @Get('/emails')
   async getAllRegistrantsEmails(): Promise<string[]> {
     const submissions = await this.submissionService.getSubmissions();
     const registrantEmailArray = submissions.map(({ payload }) => payload.contactInformation.email);

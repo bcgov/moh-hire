@@ -15,6 +15,6 @@ export const getRegistrants = async (filter: RegistrantFilterDTO) => {
 };
 
 export const getAllRegistrantsEmails = async () => {
-  const response = await axios.get<{ data: string[] }>(`/admin/registrant-emails`);
+  const response = await axios.get<{ data: string[] }>(`/registrants/emails`);
   return response?.data?.data;
 };
