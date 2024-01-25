@@ -99,8 +99,17 @@ export const AdminRegistrantsTable = () => {
     }
   };
 
+  // check for checkbox changes
+  const handleCheckboxChange = (checked: boolean, value: string) => {
+    if (value === 'all') {
+      handleSelectAllCheckbox(checked);
+    } else {
+      handleSingleCheckBoxSelect(checked, value);
+    }
+  };
+
   // function for selecting individual rows
-  const handleCheckBoxSelect = (checked: boolean, email?: string) => {
+  const handleSingleCheckBoxSelect = (checked: boolean, email?: string) => {
     let updatedEmailsList: string[] = [];
     if (email) {
       const registrantIndex = registrants?.findIndex(e => e.email === email);
@@ -128,7 +137,7 @@ export const AdminRegistrantsTable = () => {
 
   // function for Select All rows
   // includes items not shown through pagination
-  const handleSelectAll = (checked: boolean) => {
+  const handleSelectAllCheckbox = (checked: boolean) => {
     let updatedRegistrants: RegistrantRO[] | undefined = [];
 
     if (checked) {
@@ -172,9 +181,9 @@ export const AdminRegistrantsTable = () => {
               <th className='py-4 pl-6' scope='col'>
                 <GeneralCheckbox
                   label='Select All'
-                  name='selectAll'
-                  value='selectAll'
-                  onChange={handleSelectAll}
+                  name='all'
+                  value='all'
+                  onChange={handleCheckboxChange}
                 />
               </th>
               <th className='px-6' scope='col'>
@@ -205,7 +214,7 @@ export const AdminRegistrantsTable = () => {
                     <GeneralCheckbox
                       name={reg.email}
                       value={reg.email}
-                      onChange={handleCheckBoxSelect}
+                      onChange={handleCheckboxChange}
                       checked={reg.checked}
                     />
                   </th>

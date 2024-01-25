@@ -2,7 +2,7 @@ interface GeneralCheckboxProps {
   name: string;
   label?: string;
   value: string;
-  onChange: ((checked: boolean, email?: string) => void) | ((checked: boolean) => void);
+  onChange: (checked: boolean, email: string) => void;
   checked?: boolean;
 }
 // generalized checkbox
@@ -10,12 +10,8 @@ interface GeneralCheckboxProps {
 export const GeneralCheckbox = (props: GeneralCheckboxProps) => {
   const { name, label, value, onChange, checked } = props;
 
-  const handleChange = (checked: boolean, email?: string) => {
-    if (email) {
-      onChange(checked, email);
-    } else {
-      onChange(checked);
-    }
+  const handleChange = (checked: boolean, email: string) => {
+    onChange(checked, email);
   };
 
   return (
