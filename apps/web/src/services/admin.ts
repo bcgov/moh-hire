@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { InviteUserDTO, RegistrantFilterDTO, RegistrantRO, User } from '@ehpr/common';
-import { convertToParams } from '../util';
+import { InviteUserDTO, User } from '@ehpr/common';
 
 export const inviteUser = async (payload: InviteUserDTO) => {
   const { data } = await axios.post<{ data: User }>('/admin/invite', payload);
@@ -20,16 +19,4 @@ export const revokeUser = async (id: string) => {
 export const extractSubmissions = async () => {
   const response = await axios.get<{ data: string }>('/admin/extract-submissions');
   return response?.data?.data;
-};
-
-export const getRegistrants = async (filter: RegistrantFilterDTO) => {
-  const response = await axios.get<{ data: [RegistrantRO[], number] }>(
-    `/admin?${convertToParams(filter)}`,
-  );
-
-  if (Array.isArray(response?.data?.data)) {
-    const [data, count] = response.data.data;
-    return { data, count };
-  }
-  return { data: [], count: 0 };
 };
