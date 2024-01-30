@@ -1,12 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Specialty } from '@constants';
 import { RegistrantFilterDTO, RegistrantRO } from '@ehpr/common';
-import { getAllRegistrantsEmails, getRegistrants } from '@services';
+import { getRegistrants } from '@services';
 import { Spinner } from '../Spinner';
 import { AdminSearch } from './AdminSearch';
 import { Pagination } from '../Pagination';
 import { GeneralCheckbox } from '../general';
 import { Button } from '../Button';
+
+interface SelectedPages {
+  page: number;
+  selected: boolean;
+  emails: string[];
+}
 
 interface FilterOptions {
   firstName?: string;
@@ -25,7 +31,7 @@ interface PageOptions {
 export const DEFAULT_PAGE_SIZE = 10;
 
 export const AdminRegistrantsTable = () => {
-  const [registrants, setRegistrants] = useState<RegistrantRO[] | undefined>();
+  const [registrants, setRegistrants] = useState<RegistrantRO[]>([]);
   const [emails, setEmails] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [filters, setFilters] = useState<RegistrantFilterDTO | undefined>();
@@ -34,6 +40,9 @@ export const AdminRegistrantsTable = () => {
   const [limit, setLimit] = useState<number>(DEFAULT_PAGE_SIZE);
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [total, setTotal] = useState<number>(0);
+  // save data between pages, determines which pages were checked for 'Select Page'
+  const [selectedPages, setSelectedPages] = useState<SelectedPages[]>([]);
+  const totalPages = Math.ceil(total / limit);
 
   // used for page refreshes
   useEffect(() => {
@@ -43,7 +52,8 @@ export const AdminRegistrantsTable = () => {
       skip,
       ...filters,
     };
-
+    // remove any selected page entries that no longer exist due to page size/ limit changes, to prevent duplicate entries
+    setSelectedPages(prev => prev.filter(p => p.page <= totalPages));
     searchRegistrants(options).then(data => data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, pageIndex]);
@@ -56,7 +66,6 @@ export const AdminRegistrantsTable = () => {
           // to save state between pagination changes and add checked field to object
           // if in email state, the item will already be 'checked'
           const isChecked = emails.some(email => email === item.email);
-
           return { ...item, checked: isChecked };
         });
 
@@ -113,10 +122,12 @@ export const AdminRegistrantsTable = () => {
     let updatedEmailsList: string[] = [];
     if (email) {
       const registrantIndex = registrants?.findIndex(e => e.email === email);
+      const registrantsCopy = [...registrants];
 
       // update registrants checked value
-      if (registrants && registrantIndex !== -1 && registrantIndex !== undefined) {
-        registrants[registrantIndex].checked = checked;
+      if (registrantsCopy && registrantIndex !== -1 && registrantIndex !== undefined) {
+        registrantsCopy[registrantIndex] = { ...registrantsCopy[registrantIndex], checked };
+        setRegistrants(registrantsCopy);
       }
 
       const emailExists = emails.some(e => e === email);
@@ -141,12 +152,35 @@ export const AdminRegistrantsTable = () => {
     let updatedRegistrants: RegistrantRO[] | undefined = [];
 
     if (checked) {
-      // get all the emails since pagination contains a 'skip' and 'limit' query
-      // allows pagination to save checked value between pages
-      // returns just the registrants email
-      getAllRegistrantsEmails().then(data => setEmails(data));
+      const emails = registrants.map(({ email }) => email);
+
+      // save state of 'Select Page' checkbox between pagination changes, create an entry for each page
+      setSelectedPages(prev => {
+        const pageIndexExists = prev.some(p => p.page === pageIndex);
+        // check if current page exists, which means 'Select Page' was selected, updated current entry
+        // determines whether to update existing entry or create new one
+        if (pageIndexExists) {
+          return prev.map(p => {
+            if (p.page === pageIndex) {
+              return { ...p, emails };
+            }
+            return p;
+          });
+        } else {
+          return [...prev, { page: pageIndex, selected: true, emails }];
+        }
+      });
+      // avoid duplicate emails
+      setEmails(prev => [...prev, ...emails.filter(email => !prev.includes(email))]);
     } else {
-      setEmails([]);
+      // handles select page checkbox
+      // remove selected page entry and emails from selected page
+      setSelectedPages(prev => prev.filter(p => p.page !== pageIndex));
+      setEmails(prev =>
+        prev.filter(
+          email => !selectedPages.find(p => p.page === pageIndex)?.emails.includes(email),
+        ),
+      );
     }
 
     updatedRegistrants = registrants?.map(registrant => ({
@@ -180,10 +214,11 @@ export const AdminRegistrantsTable = () => {
             <tr className='border-b-2 bg-bcLightGray border-yellow-300 text-sm'>
               <th className='py-4 pl-6' scope='col'>
                 <GeneralCheckbox
-                  label='Select All'
+                  label='Select Page'
                   name='all'
                   value='all'
                   onChange={handleCheckboxChange}
+                  checked={selectedPages.some(p => p.page === pageIndex && p.selected)}
                 />
               </th>
               <th className='px-6' scope='col'>
