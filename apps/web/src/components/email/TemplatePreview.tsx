@@ -49,7 +49,7 @@ export const TemplatePreview = ({ template, open, onClose }: TemplatePreviewProp
   return (
     <FullScreenModal open={open} handleClose={onClose}>
       <FullScreenModal.Title className='flex flex-row text-lg font-bold leading-6 text-bcBlueLink border-b p-4'>
-        Template Preview
+        <div>Template Preview</div>
         <button className='ml-auto' onClick={onClose}>
           <FontAwesomeIcon icon={faWindowClose} size='2x' />
         </button>
