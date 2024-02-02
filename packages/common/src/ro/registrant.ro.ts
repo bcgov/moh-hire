@@ -5,4 +5,5 @@ export interface RegistrantRO {
   email: string;
   specialty: string | string[];
   deploymentLocations: string[];
+  checked?: boolean;
 }

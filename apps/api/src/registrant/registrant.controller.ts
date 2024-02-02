@@ -9,7 +9,6 @@ import { RegistrantService } from './registrant.service';
 @ApiTags('Registrants')
 export class RegistrantController {
   constructor(@Inject(RegistrantService) private readonly registrantService: RegistrantService) {}
-
   @Get('/')
   async getRegistrants(
     @Query() filter: RegistrantFilterDTO,
