@@ -4,9 +4,10 @@ import { SubmissionModule } from '../submission/submission.module';
 import { RegistrantService } from './registrant.service';
 import { RegistrantController } from './registrant.controller';
 import { UserModule } from 'src/user/user.module';
+import { MailModule } from 'src/mail/mail.module';
 
 @Module({
-  imports: [AuthModule, SubmissionModule, UserModule],
+  imports: [AuthModule, SubmissionModule, UserModule, MailModule],
   controllers: [RegistrantController],
   providers: [RegistrantService, Logger],
 })

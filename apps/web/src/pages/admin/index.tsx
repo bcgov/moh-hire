@@ -5,6 +5,7 @@ import {
   AdminRegistrantsTable,
   AdminSection,
   AdminTabs,
+  EmailProvider,
   ExtractSubmissions,
   InviteUser,
   useAuthContext,
@@ -43,7 +44,13 @@ const AdminPage = () => {
           </AdminSection>
         )}
 
-        {selectedTab === AdminTab.REGISTRANTS && <AdminRegistrantsTable />}
+        {selectedTab === AdminTab.REGISTRANTS && (
+          <AdminSection title='Registrants'>
+            <EmailProvider>
+              <AdminRegistrantsTable />
+            </EmailProvider>
+          </AdminSection>
+        )}
 
         {selectedTab === AdminTab.USERS && user?.role === Role.Admin && (
           <AdminSection title='Users'>
