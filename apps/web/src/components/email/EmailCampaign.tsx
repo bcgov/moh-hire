@@ -5,15 +5,16 @@ import { FullScreenModal, FullScreenModalFooter } from '../FullScreenModal';
 import { CreateTemplate } from './CreateTemplate';
 import { Button } from '../Button';
 import { TemplatePreview } from './TemplatePreview';
-import { EmailTemplate } from '@constants';
+import { EmailData, EmailTemplate } from '@constants';
 
 interface EmailCampaignProps {
+  emails: EmailData[];
   open: boolean;
   close: (value: boolean) => void;
 }
 
 export const EmailCampaign = (props: EmailCampaignProps) => {
-  const { open, close } = props;
+  const { emails, open, close } = props;
 
   const [openTemplatePreview, setOpenTemplatePreview] = useState<boolean>(false);
   const [template, setTemplate] = useState<EmailTemplate>({ subject: '', body: '' });
@@ -46,7 +47,7 @@ export const EmailCampaign = (props: EmailCampaignProps) => {
         <CreateTemplate template={template} setTemplate={setTemplate} />
         {/* template preview */}
         {openTemplatePreview && template.body && (
-          <TemplatePreview open={open} onClose={closePreview} template={template} />
+          <TemplatePreview emails={emails} open={open} onClose={closePreview} template={template} />
         )}
       </div>
       <FullScreenModalFooter>

@@ -7,7 +7,7 @@ import { AdminSearch } from './AdminSearch';
 import { Pagination } from '../Pagination';
 import { GeneralCheckbox } from '../general';
 import { Button } from '../Button';
-import { EmailCampaign, useEmailContext } from '../email';
+import { EmailCampaign } from '../email';
 
 interface SelectedPages {
   page: number;
@@ -31,7 +31,7 @@ interface PageOptions {
 export const DEFAULT_PAGE_SIZE = 10;
 
 export const AdminRegistrantsTable = () => {
-  const { emails, setEmails } = useEmailContext();
+  const [emails, setEmails] = useState<EmailData[]>([]);
   const [registrants, setRegistrants] = useState<RegistrantRO[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [filters, setFilters] = useState<RegistrantFilterDTO | undefined>();
@@ -313,7 +313,9 @@ export const AdminRegistrantsTable = () => {
         </div>
       )}
 
-      {showTemplateModal && <EmailCampaign open={showTemplateModal} close={setShowTemplateModal} />}
+      {showTemplateModal && (
+        <EmailCampaign emails={emails} open={showTemplateModal} close={setShowTemplateModal} />
+      )}
     </>
   );
 };

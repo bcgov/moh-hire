@@ -2,15 +2,9 @@ import { useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  Button,
-  FullScreenModal,
-  FullScreenModalFooter,
-  useAuthContext,
-  useEmailContext,
-} from '@components';
+import { Button, FullScreenModal, FullScreenModalFooter, useAuthContext } from '@components';
 import { sendMassEmail } from '@services';
-import { EmailTemplate } from '@constants';
+import { EmailData, EmailTemplate } from '@constants';
 
 // module options for react quill
 const modules = {
@@ -18,13 +12,13 @@ const modules = {
 };
 
 interface TemplatePreviewProps {
+  emails: EmailData[];
   template: EmailTemplate;
   open: boolean;
   onClose: () => void;
 }
 
-export const TemplatePreview = ({ template, open, onClose }: TemplatePreviewProps) => {
-  const { emails } = useEmailContext();
+export const TemplatePreview = ({ emails, template, open, onClose }: TemplatePreviewProps) => {
   const { user } = useAuthContext();
   const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
