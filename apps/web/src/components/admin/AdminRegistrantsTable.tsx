@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Specialty } from '@constants';
+import { EmailData, Specialty } from '@constants';
 import { RegistrantFilterDTO, RegistrantRO } from '@ehpr/common';
 import { getRegistrants } from '@services';
 import { Spinner } from '../Spinner';
@@ -7,13 +7,13 @@ import { AdminSearch } from './AdminSearch';
 import { Pagination } from '../Pagination';
 import { GeneralCheckbox } from '../general';
 import { Button } from '../Button';
+import { EmailCampaign } from '../email';
 
 interface SelectedPages {
   page: number;
   selected: boolean;
-  emails: string[];
+  ids: string[];
 }
-
 interface FilterOptions {
   firstName?: string;
   lastName?: string;
@@ -31,10 +31,11 @@ interface PageOptions {
 export const DEFAULT_PAGE_SIZE = 10;
 
 export const AdminRegistrantsTable = () => {
+  const [emails, setEmails] = useState<EmailData[]>([]);
   const [registrants, setRegistrants] = useState<RegistrantRO[]>([]);
-  const [emails, setEmails] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [filters, setFilters] = useState<RegistrantFilterDTO | undefined>();
+  const [showTemplateModal, setShowTemplateModal] = useState<boolean>(false);
 
   // pagination
   const [limit, setLimit] = useState<number>(DEFAULT_PAGE_SIZE);
@@ -65,7 +66,8 @@ export const AdminRegistrantsTable = () => {
         const updatedData = data.map(item => {
           // to save state between pagination changes and add checked field to object
           // if in email state, the item will already be 'checked'
-          const isChecked = emails.some(email => email === item.email);
+          // can have duplicate emails, need to check by user id
+          const isChecked = emails.some(({ id }) => id === item.id);
           return { ...item, checked: isChecked };
         });
 
@@ -118,10 +120,10 @@ export const AdminRegistrantsTable = () => {
   };
 
   // function for selecting individual rows
-  const handleSingleCheckBoxSelect = (checked: boolean, email?: string) => {
-    let updatedEmailsList: string[] = [];
-    if (email) {
-      const registrantIndex = registrants?.findIndex(e => e.email === email);
+  const handleSingleCheckBoxSelect = (checked: boolean, id?: string) => {
+    let updatedEmailsList: EmailData[] = [];
+    if (id) {
+      const registrantIndex = registrants?.findIndex(e => e.id === id);
       const registrantsCopy = [...registrants];
 
       // update registrants checked value
@@ -130,14 +132,21 @@ export const AdminRegistrantsTable = () => {
         setRegistrants(registrantsCopy);
       }
 
-      const emailExists = emails.some(e => e === email);
+      const emailExists = emails.some(e => e.id === id);
 
       // update email list if email is checked
       if (checked && !emailExists) {
-        updatedEmailsList = [...emails, email];
+        updatedEmailsList = [
+          ...emails,
+          {
+            id: registrantsCopy[registrantIndex].id,
+            email: registrantsCopy[registrantIndex].email,
+            name: `${registrantsCopy[registrantIndex].firstName} ${registrantsCopy[registrantIndex].lastName}`,
+          },
+        ];
         // filter out email if unchecked
       } else if (!checked && emailExists) {
-        updatedEmailsList = emails.filter(e => e !== email);
+        updatedEmailsList = emails.filter(e => e.id !== id);
       } else {
         updatedEmailsList = emails;
       }
@@ -147,12 +156,16 @@ export const AdminRegistrantsTable = () => {
   };
 
   // function for Select All rows
-  // includes items not shown through pagination
   const handleSelectAllCheckbox = (checked: boolean) => {
     let updatedRegistrants: RegistrantRO[] | undefined = [];
+    let updatedEmailsList: EmailData[] = [];
 
     if (checked) {
-      const emails = registrants.map(({ email }) => email);
+      const mappedRegistrantData = registrants.map(({ id, email, firstName, lastName }) => {
+        return { id, email, name: `${firstName} ${lastName}` };
+      });
+
+      const selectedRegistrantIds = mappedRegistrantData.map(({ id }) => id);
 
       // save state of 'Select Page' checkbox between pagination changes, create an entry for each page
       setSelectedPages(prev => {
@@ -162,24 +175,28 @@ export const AdminRegistrantsTable = () => {
         if (pageIndexExists) {
           return prev.map(p => {
             if (p.page === pageIndex) {
-              return { ...p, emails };
+              return { ...p, ids: selectedRegistrantIds };
             }
             return p;
           });
         } else {
-          return [...prev, { page: pageIndex, selected: true, emails }];
+          return [...prev, { page: pageIndex, selected: true, ids: selectedRegistrantIds }];
         }
       });
+
       // avoid duplicate emails
-      setEmails(prev => [...prev, ...emails.filter(email => !prev.includes(email))]);
+      const filteredEmails = mappedRegistrantData.filter(({ id }) => {
+        return selectedRegistrantIds.includes(id);
+      });
+
+      updatedEmailsList = [...emails, ...filteredEmails];
     } else {
       // handles select page checkbox
       // remove selected page entry and emails from selected page
       setSelectedPages(prev => prev.filter(p => p.page !== pageIndex));
-      setEmails(prev =>
-        prev.filter(
-          email => !selectedPages.find(p => p.page === pageIndex)?.emails.includes(email),
-        ),
+      // keep already selected emails on separate pages
+      updatedEmailsList = emails.filter(
+        e => !selectedPages.find(p => p.page === pageIndex)?.ids.includes(e.id),
       );
     }
 
@@ -189,6 +206,11 @@ export const AdminRegistrantsTable = () => {
     }));
 
     setRegistrants(updatedRegistrants ?? []);
+    setEmails(updatedEmailsList);
+  };
+
+  const createMassEmailTemplate = () => {
+    setShowTemplateModal(true);
   };
 
   return (
@@ -199,7 +221,7 @@ export const AdminRegistrantsTable = () => {
       </div>
       <div className='flex justify-end w-full my-5'>
         {/* TODO: implement create mass email template/ button handler */}
-        <Button variant='primary' disabled={!emails.length}>
+        <Button variant='primary' onClick={createMassEmailTemplate} disabled={!emails.length}>
           Create Mass Email
         </Button>
       </div>
@@ -248,7 +270,7 @@ export const AdminRegistrantsTable = () => {
                   <th className='py-4 pl-6' scope='col'>
                     <GeneralCheckbox
                       name={reg.email}
-                      value={reg.email}
+                      value={reg.id}
                       onChange={handleCheckboxChange}
                       checked={reg.checked}
                     />
@@ -289,6 +311,10 @@ export const AdminRegistrantsTable = () => {
         <div className='h-64'>
           <Spinner size='2x' />
         </div>
+      )}
+
+      {showTemplateModal && (
+        <EmailCampaign emails={emails} open={showTemplateModal} close={setShowTemplateModal} />
       )}
     </>
   );

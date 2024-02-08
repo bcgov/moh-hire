@@ -8,3 +8,4 @@ export * from './submission-payload.dto';
 export * from './submission.dto';
 export * from './update-submission.dto';
 export * from './registrant-filter.dto';
+export * from './email-template.dto';

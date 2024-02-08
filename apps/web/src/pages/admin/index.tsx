@@ -43,7 +43,11 @@ const AdminPage = () => {
           </AdminSection>
         )}
 
-        {selectedTab === AdminTab.REGISTRANTS && <AdminRegistrantsTable />}
+        {selectedTab === AdminTab.REGISTRANTS && (
+          <AdminSection title='Registrants'>
+            <AdminRegistrantsTable />
+          </AdminSection>
+        )}
 
         {selectedTab === AdminTab.USERS && user?.role === Role.Admin && (
           <AdminSection title='Users'>

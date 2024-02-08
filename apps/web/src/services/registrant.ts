@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { RegistrantFilterDTO, RegistrantRO } from '@ehpr/common';
+import { EmailTemplateDTO, RegistrantFilterDTO, RegistrantRO } from '@ehpr/common';
 import { convertToParams } from '../util';
 
 export const getRegistrants = async (filter: RegistrantFilterDTO) => {
@@ -12,4 +12,8 @@ export const getRegistrants = async (filter: RegistrantFilterDTO) => {
     return { data, count };
   }
   return { data: [], count: 0 };
+};
+
+export const sendMassEmail = async (payload: EmailTemplateDTO): Promise<void> => {
+  await axios.post('/registrants/send-mass-email', payload);
 };
