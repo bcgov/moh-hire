@@ -859,6 +859,7 @@ __metadata:
     "@nestjs/swagger": 5.1.5
     "@nestjs/testing": 8.0.0
     "@nestjs/typeorm": 8.0.2
+    "@supercharge/promise-pool": 3.1.1
     "@types/aws-lambda": 8.10.84
     "@types/express": 4.17.13
     "@types/js-yaml": 4.0.5
@@ -2289,6 +2290,13 @@ __metadata:
   version: 1.2.3
   resolution: "@sqltools/formatter@npm:1.2.3"
   checksum: 5d80554b84ed15747fcfa6e488ef794c610c08152a53ebac0f270574ad938cdf39a02de7dfba4e9d9c33a790368f819945d315ee6dae360b220c29e092cba930
+  languageName: node
+  linkType: hard
+
+"@supercharge/promise-pool@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@supercharge/promise-pool@npm:3.1.1"
+  checksum: 1495124de36f53d255fb9368d363e6499924958c58586be49bfd6354000c49be37829c4968af781195061a059c00a21557756517d559b8f7bcfe78f8adb2d633
   languageName: node
   linkType: hard
 
