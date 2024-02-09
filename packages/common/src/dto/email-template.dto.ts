@@ -26,7 +26,7 @@ export class EmailTemplateDTO {
 
   @IsOptional()
   @IsString()
-  userId?: string | undefined;
+  userId?: string;
 
   @IsString()
   subject!: string;

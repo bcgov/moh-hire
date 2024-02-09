@@ -30,8 +30,8 @@ export class RegistrantService {
   }
 
   async sendMassEmail(payload: EmailTemplateDTO) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     // TODO: need to figure out a typing for this
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const errorsArray: any[] = [];
 
     try {
