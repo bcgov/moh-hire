@@ -41,6 +41,7 @@ export class RegistrantService {
         .handleError(async (error, recipient) => {
           // have to handle errors manually with this handler
           // to be able to access recipient id
+          // does not actually throw errors
           errorsArray.push({ error, recipientId: recipient.id });
         })
         .process(async item => {
@@ -53,11 +54,16 @@ export class RegistrantService {
 
           await this.mailService.sendMailWithSES(mailOptions);
         });
+      // check for errors from test email
+      if (!payload.userId && errorsArray.length > 0) {
+        throw new InternalServerErrorException('There was an issue trying to send the test email');
+      }
     } catch (e) {
       this.logger.error(e);
-      throw new InternalServerErrorException('There was an issue trying to send emails');
+      throw new InternalServerErrorException(e || 'There was an issue trying to send emails');
     }
 
+    // don't make record for test emails
     // no user id for test email
     // create a record entry regardless if errored out
     if (payload.userId) {

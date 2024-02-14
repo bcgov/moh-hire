@@ -2,10 +2,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { FullScreenModal, FullScreenModalFooter } from '../FullScreenModal';
-import { CreateTemplate } from './CreateTemplate';
 import { Button } from '../Button';
 import { TemplatePreview } from './TemplatePreview';
 import { EmailData, EmailTemplate } from '@constants';
+import { CreateTemplate } from './CreateTemplate';
 
 interface EmailCampaignProps {
   emails: EmailData[];
@@ -38,7 +38,7 @@ export const EmailCampaign = (props: EmailCampaignProps) => {
     <FullScreenModal open={open} handleClose={handleClose}>
       <FullScreenModal.Title className='flex flex-row text-lg font-bold leading-6 text-bcBlueLink border-b p-4'>
         <div>Create Email Template</div>
-        <button className='ml-auto' onClick={handleClose}>
+        <button tabIndex={-1} className='ml-auto' onClick={handleClose}>
           <FontAwesomeIcon icon={faWindowClose} size='2x' />
         </button>
       </FullScreenModal.Title>
@@ -54,7 +54,11 @@ export const EmailCampaign = (props: EmailCampaignProps) => {
         <Button variant='primary' onClick={handleClose}>
           Cancel
         </Button>
-        <Button variant='secondary' onClick={showPreview} disabled={!template.body}>
+        <Button
+          variant='secondary'
+          onClick={showPreview}
+          disabled={!template.body || !template.subject}
+        >
           Show Preview
         </Button>
       </FullScreenModalFooter>

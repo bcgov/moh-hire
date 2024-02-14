@@ -24,6 +24,7 @@ export const Button: React.FC<ButtonProps> = props => {
   const { variant, type, children, disabled, loading, onClick } = props;
   return (
     <button
+      tabIndex={-1}
       onClick={onClick}
       type={type}
       className={`
