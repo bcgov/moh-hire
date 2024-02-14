@@ -20,12 +20,14 @@ body,
   /* override prose list styles */
   .prose ul,
   .prose ol {
-    list-style: revert; 
+    list-style: revert;
   }
   .prose a {
-    color: blue !important
+    color: blue !important;
   }
-  .prose h1, .prose h2, .prose h3 {
+  .prose h1,
+  .prose h2,
+  .prose h3 {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
   }
@@ -34,16 +36,14 @@ body,
     shows a single bullet by default which in turn causes 2 bullets to show in lists
     bullet will be defined in ::marker pseudo element
   */
-  .prose ul > li::before, 
+  .prose ul > li::before,
   .prose ol > li::before {
-    content: none !important; 
+    content: none !important;
   }
-  .prose ul > li, 
+  .prose ul > li,
   .prose ol > li {
     padding-left: 0 !important;
   }
-
-
 }
 
 @layer base {

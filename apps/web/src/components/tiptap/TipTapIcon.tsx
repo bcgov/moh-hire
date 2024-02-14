@@ -7,7 +7,7 @@ import { MouseEventHandler } from 'react';
 interface IconProps {
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
   editor: Editor | null;
-  type: { name: string; attributes?: { level: number } | undefined } | string;
+  type: { name: string; attributes: { level: number } | undefined } | string;
   icon?: IconDefinition;
   text?: string;
 }
