@@ -1,6 +1,7 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { Role, User } from '@ehpr/common';
 import { BaseEntity } from '../../database/base.entity';
+import { MassEmailRecordEntity } from 'src/mass-email-record/entity/mass-email-record.entity';
 
 @Entity('user')
 export class UserEntity extends BaseEntity implements User {
@@ -18,4 +19,7 @@ export class UserEntity extends BaseEntity implements User {
 
   @Column({ type: 'timestamp', default: null })
   revokedDate!: Date | null;
+
+  @OneToMany(() => MassEmailRecordEntity, record => record.userId)
+  massEmailRecord!: MassEmailRecordEntity[];
 }
