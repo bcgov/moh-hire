@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { EmailData, Specialty } from '@constants';
+import { EmailData, Location, Specialty } from '@constants';
 import { RegistrantFilterDTO, RegistrantRO } from '@ehpr/common';
 import { getRegistrants } from '@services';
 import { Spinner } from '../Spinner';
@@ -101,12 +101,13 @@ export const AdminRegistrantsTable = () => {
     }
   };
 
-  // handle multiple specialties
-  const displaySpecialties = (specialties: string | string[]) => {
-    if (Array.isArray(specialties)) {
-      return specialties.map(s => Specialty[s as keyof typeof Specialty]).join(', ');
+  // map ids to enum data
+  // ie Location and Specialty data
+  const mapEnumData = <T extends Record<string, string>>(array: string | string[], enumType: T) => {
+    if (Array.isArray(array)) {
+      return array.map(s => enumType[s as keyof typeof enumType]).join(', ');
     } else {
-      return Specialty[specialties as keyof typeof Specialty];
+      return enumType[array as keyof typeof enumType];
     }
   };
 
@@ -286,10 +287,10 @@ export const AdminRegistrantsTable = () => {
                     {reg.email}
                   </th>
                   <th className='px-6' scope='col'>
-                    {displaySpecialties(reg.specialty)}
+                    {mapEnumData(reg.specialty, Specialty)}
                   </th>
                   <th className='px-6' scope='col'>
-                    {reg.deploymentLocations?.join(', ') || 'N/A'}
+                    {mapEnumData(reg.deploymentLocations, Location)}
                   </th>
                 </tr>
               ))
