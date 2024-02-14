@@ -20,3 +20,4 @@ export * from './form';
 export * from './admin';
 export * from './submission';
 export * from './email';
+export * from './tiptap';

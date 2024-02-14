@@ -1,28 +1,19 @@
-import { Dispatch, SetStateAction, useCallback, useMemo } from 'react';
-import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css';
+import { Dispatch, SetStateAction } from 'react';
 import { EmailTemplate } from '@constants';
+import { TipTapEditor } from '../tiptap';
 
 interface CreateTemplateProps {
   template: EmailTemplate;
   setTemplate: Dispatch<SetStateAction<EmailTemplate>>;
 }
 
-export const CreateTemplate = (props: CreateTemplateProps) => {
-  // disable ssr, needed for use in nextjs to load properly in browser, relies on 'document' object
-  const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
-
-  const { template, setTemplate } = props;
-
-  const onChange = useCallback((value: string) => {
-    setTemplate((prev: EmailTemplate) => ({ ...prev, body: value }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+export const CreateTemplate = ({ template, setTemplate }: CreateTemplateProps) => {
   return (
     <>
       <div className='flex flex-row p-2 mb-2 border rounded'>
         <input
+          autoFocus
+          tabIndex={-1}
           name='subject-line'
           type='text'
           value={template.subject}
@@ -33,11 +24,13 @@ export const CreateTemplate = (props: CreateTemplateProps) => {
           placeholder='Enter Subject line...'
         />
       </div>
-      <ReactQuill
-        theme='snow'
-        value={template.body}
-        placeholder='Enter Email body...'
-        onChange={onChange}
+
+      <TipTapEditor
+        template={template}
+        setTemplate={setTemplate}
+        showToolbar
+        editorFullRoundBorder={false}
+        isEditable
       />
     </>
   );
