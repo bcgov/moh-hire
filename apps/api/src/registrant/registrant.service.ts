@@ -36,7 +36,7 @@ export class RegistrantService {
 
     try {
       // setup promise pool
-      await PromisePool.withConcurrency(5)
+      await PromisePool.withConcurrency(15)
         .for(payload.data)
         .handleError(async (error, recipient) => {
           // have to handle errors manually with this handler
