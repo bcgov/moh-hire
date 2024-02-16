@@ -17,7 +17,7 @@ export class AdminService {
   async invite(payload: InviteUserDTO) {
     const domain = process.env.DOMAIN;
     const url = domain ? `https://${domain}/login` : 'http://localhost:3000/login';
-    const loginLink = `<a href='${url}' />${url}</a>`;
+    const loginLink = `<a href='${url}'>${url}</a>`;
 
     const mailOptions: MailOptions = {
       body: `<br><div style="text-align: center;">You have been invited to access the <b>Emergency Health Provider Registry (EHPR).</b><br><br>
