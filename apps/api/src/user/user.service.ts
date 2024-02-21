@@ -1,15 +1,18 @@
 import { Inject, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Role, User } from '@ehpr/common';
+import { Authorities, Role, User, isMoh } from '@ehpr/common';
 import { UserEntity } from './entity/user.entity';
 import { AppLogger } from '../common/logger.service';
+import { HealthAuthoritiesEntity } from './entity/ha.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+    @InjectRepository(HealthAuthoritiesEntity)
+    private readonly healthAuthorityRepository: Repository<HealthAuthoritiesEntity>,
     @Inject(Logger)
     private readonly logger: AppLogger,
   ) {}
@@ -26,6 +29,9 @@ export class UserService {
   }
 
   async createUser(user: Partial<User>): Promise<UserEntity> {
+    if (user.email && !user.ha_id) {
+      user.ha_id = await this.assignHa(user.email);
+    }
     const userEntity = this.userRepository.create(user);
     const result = await this.userRepository.save(userEntity);
     this.logger.log(`user registered: ${result.id}`);
@@ -42,6 +48,10 @@ export class UserService {
   }
 
   async updateUser(user: User, update: Partial<User>) {
+    if (user.email && !user.ha_id) {
+      user.ha_id = await this.assignHa(user.email);
+    }
+
     return this.userRepository.save({ ...user, ...update });
   }
 
@@ -65,5 +75,28 @@ export class UserService {
       return this.userRepository.save(user);
     }
     throw new InternalServerErrorException('user not found');
+  }
+
+  // get health authority by id
+  async getHealthAuthorityId(domain: string): Promise<number | undefined> {
+    const ha = Object.values(Authorities).find(a => a.domains.includes(domain));
+
+    if (ha) {
+      const haEntity: HealthAuthoritiesEntity | undefined =
+        await this.healthAuthorityRepository.findOne({ where: { name: ha.name } });
+      return haEntity?.id;
+    }
+
+    return undefined;
+  }
+
+  // assign users HA based on email domain
+  async assignHa(email: string) {
+    if (isMoh(email)) {
+      return undefined;
+    } else {
+      const domain = email.split('@')[1];
+      return this.getHealthAuthorityId(domain);
+    }
   }
 }
