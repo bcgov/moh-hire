@@ -5,10 +5,10 @@ import { LoggerOptions } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 import config from '../ormconfig';
-import { SubmissionEntity } from 'src/submission/entity/submission.entity';
+import { SubmissionEntity } from '../submission/entity/submission.entity';
 import { UserEntity } from '../user/entity/user.entity';
 import { MassEmailRecordEntity } from '../mass-email-record/entity/mass-email-record.entity';
-import { HealthAuthoritiesEntity } from 'src/user/entity/ha.entity';
+import { HealthAuthoritiesEntity } from '../user/entity/ha.entity';
 
 const getEnvironmentSpecificConfig = (env?: string) => {
   switch (env) {
