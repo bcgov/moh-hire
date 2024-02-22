@@ -23,8 +23,14 @@ export class RegistrantService {
 
   async getRegistrants(
     filter: RegistrantFilterDTO,
+    haId?: number,
+    userEmail?: string,
   ): Promise<[data: RegistrantRO[], count: number]> {
-    const [data, count] = await this.submissionService.getSubmissionsFilterQuery(filter);
+    const [data, count] = await this.submissionService.getSubmissionsFilterQuery(
+      filter,
+      haId,
+      userEmail,
+    );
 
     const registrants = formatRegistrants(data);
     return [registrants, count];

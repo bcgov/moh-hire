@@ -20,4 +20,7 @@ export class RegistrantFilterDTO {
   @IsNumberString()
   @IsOptional()
   limit?: number;
+
+  @IsOptional()
+  anyRegion?: boolean;
 }

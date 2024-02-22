@@ -221,17 +221,15 @@ export const AdminRegistrantsTable = () => {
         <AdminSearch search={search} />
       </div>
       <div className='flex justify-end w-full my-5'>
-        {/* TODO: implement create mass email template/ button handler */}
         <Button variant='primary' onClick={createMassEmailTemplate} disabled={!emails.length}>
           Create Mass Email
         </Button>
       </div>
-      <div className='overflow-x-auto border border-bcLightGray rounded mb-5'>
-        <Pagination
-          pageOptions={{ pageIndex, pageSize: limit, total }}
-          onChange={handlePageOptions}
-        />
-
+      <Pagination
+        pageOptions={{ pageIndex, pageSize: limit, total }}
+        onChange={handlePageOptions}
+      />
+      <div className='overflow-x-auto border border-bcLightGray'>
         <table className='text-left w-full'>
           <thead className='whitespace-nowrap  text-bcBlack'>
             <tr className='border-b-2 bg-bcLightGray border-yellow-300 text-sm'>
@@ -242,6 +240,7 @@ export const AdminRegistrantsTable = () => {
                   value='all'
                   onChange={handleCheckboxChange}
                   checked={selectedPages.some(p => p.page === pageIndex && p.selected)}
+                  disabled={registrants.length === 0}
                 />
               </th>
               <th className='px-6' scope='col'>
@@ -290,24 +289,29 @@ export const AdminRegistrantsTable = () => {
                     {mapEnumData(reg.specialty, Specialty)}
                   </th>
                   <th className='px-6' scope='col'>
-                    {mapEnumData(reg.deploymentLocations, Location)}
+                    {!reg.deploymentLocations.length
+                      ? 'Any'
+                      : mapEnumData(reg.deploymentLocations, Location)}
                   </th>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={5} className='text-lg text-center shadow-xs whitespace-nowrap text-sm'>
+                <td
+                  colSpan={6}
+                  className='text-lg text-center shadow-xs whitespace-nowrap font-bold py-5'
+                >
                   No Registrants were founds
                 </td>
               </tr>
             )}
           </tbody>
         </table>
-        <Pagination
-          pageOptions={{ pageIndex, pageSize: limit, total }}
-          onChange={handlePageOptions}
-        />
       </div>
+      <Pagination
+        pageOptions={{ pageIndex, pageSize: limit, total }}
+        onChange={handlePageOptions}
+      />
       {loading && (
         <div className='h-64'>
           <Spinner size='2x' />
