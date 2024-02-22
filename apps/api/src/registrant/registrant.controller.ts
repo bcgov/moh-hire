@@ -11,6 +11,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { RegistrantService } from './registrant.service';
 import { Roles } from 'src/common/decorators';
 import { RoleGuard } from 'src/auth/role.guard';
+import { UserRequest } from '@ehpr/common';
 
 @Controller('registrants')
 @UseGuards(AuthGuard)
