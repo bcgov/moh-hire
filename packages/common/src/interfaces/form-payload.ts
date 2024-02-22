@@ -55,8 +55,10 @@ export enum PlacementOptions {
 }
 
 export enum DeploymentDurations {
-  TWO_TO_FOUR_WEEKS = 'twoToFour',
-  FOUR_TO_EIGHT = 'fourToEight',
+  ONE_WEEK = 'oneWeek',
+  TWO_WEEKS = 'twoWeeks',
+  FOUR_WEEKS = 'fourWeeks',
+  EIGHT_WEEKS = 'eightWeeks',
   EIGHT_PLUS = 'eightPlus',
 }
 

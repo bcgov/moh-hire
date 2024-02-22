@@ -93,7 +93,7 @@ export const Credential: React.FC = () => {
     registrationStatus,
   );
 
-  const specialtySelectorEnabled = specialtyOptions && specialtyOptions?.length > 1;
+  const specialtySelectorEnabled = specialtyOptions && specialtyOptions?.length >= 1;
 
   const isNonClinical = stream === streamsById.Nonclinical.id;
   const isClinical = stream && !isNonClinical; // stream is selected and is not non-clinical

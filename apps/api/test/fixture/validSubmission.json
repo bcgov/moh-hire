@@ -42,7 +42,9 @@
       ],
       "placementOptions": ["other", "anywhere"],
       "hasImmunizationTraining": true,
-      "deploymentDuration": "twoToFour",
+      "deploymentDuration": "twoWeeks",
+      "lastDeploymentDate": "2023-01-31",
+      "lastDeployedHa": "firstNationsHa",
       "deploymentType": ["fullTime"],
       "hasPreviousDeployment": "yes"
     },

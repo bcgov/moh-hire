@@ -1,3 +1,4 @@
+import ReactSelect from 'react-select';
 import {
   FormStepHeader,
   Radio,
@@ -6,12 +7,14 @@ import {
   OptionType,
   Error,
   CheckboxArray,
+  Field,
+  selectStyleOverride,
 } from '@components';
 import { getLhasbyHaId, HaId } from '@ehpr/common';
-import { useFormikContext } from 'formik';
+import { FieldProps, useFormikContext } from 'formik';
 import { useEffect, useRef } from 'react';
 import { FormStepProps } from '.';
-import { SubmissionType } from '../validation';
+import { SubmissionType, healthAuthorityOptions } from '../validation';
 import {
   deploymentDurationOptions,
   getHsdaOptions,
@@ -22,12 +25,14 @@ import {
   deploymentTypeOptions,
   previousDeploymentOptions,
 } from '../validation/preferences';
+import { DatePickerField } from 'src/components/form/DatePickerField';
 
 export const Preferences: React.FC<FormStepProps> = () => {
   const { values, setFieldValue } = useFormikContext<SubmissionType>();
-  const { deployAnywhere } = values.preferencesInformation;
+  const { deployAnywhere, hasPreviousDeployment } = values.preferencesInformation;
 
   const previousDeployAnywhere = useRef(deployAnywhere);
+  const previoushasPreviousDeployment = useRef(hasPreviousDeployment);
 
   useEffect(() => {
     // only reset locations when deploy anywhere is changed (i.e. changed from true to false)
@@ -37,6 +42,15 @@ export const Preferences: React.FC<FormStepProps> = () => {
     }
     previousDeployAnywhere.current = deployAnywhere;
   }, [deployAnywhere, setFieldValue]);
+
+  useEffect(() => {
+    // reset previous deployment fields on change (i.e from yes to no/unsure)
+    if (hasPreviousDeployment !== previoushasPreviousDeployment.current) {
+      setFieldValue('preferencesInformation.lastDeploymentDate', '');
+      setFieldValue('preferencesInformation.lastDeployedHa', '');
+    }
+    previoushasPreviousDeployment.current = hasPreviousDeployment;
+  }, [hasPreviousDeployment, setFieldValue]);
 
   return (
     <div className='flex flex-col gap-4'>
@@ -80,6 +94,37 @@ export const Preferences: React.FC<FormStepProps> = () => {
         legend='Have you previously been deployed from the EHPR?'
         options={previousDeploymentOptions}
       />
+      {values.preferencesInformation.hasPreviousDeployment === 'yes' && (
+        <>
+          <div className='flex flex-row'>
+            <DatePickerField
+              name='preferencesInformation.lastDeploymentDate'
+              label='Date of Last Deployment'
+              format='yyyy-MM-dd'
+              max={new Date()}
+            />
+          </div>
+          <div className='flex flex-row'>
+            <Field
+              name={'preferencesInformation.lastDeployedHa'}
+              label={'Last Deployed Health Authority'}
+              component={({ field, form }: FieldProps) => (
+                <ReactSelect<OptionType>
+                  inputId={field.name}
+                  value={(healthAuthorityOptions || []).find(o => o.value === field.value)}
+                  onBlur={field.onBlur}
+                  onChange={value => form.setFieldValue(field.name, value?.value)}
+                  options={(healthAuthorityOptions || []).map(o => ({
+                    ...o,
+                  }))}
+                  styles={selectStyleOverride}
+                  menuPlacement='auto'
+                />
+              )}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

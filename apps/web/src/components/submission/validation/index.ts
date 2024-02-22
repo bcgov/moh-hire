@@ -80,6 +80,8 @@ export const prefilledSubmissionValues: SubmissionType = {
     hasImmunizationTraining: true,
     deploymentLocations: [],
     hasPreviousDeployment: PreviousDeploymentOptions.NO_OR_UNSURE,
+    lastDeployedHa: '',
+    lastDeploymentDate: '',
     deploymentDuration: DeploymentDurations.EIGHT_PLUS,
     deploymentType: [DeploymentTypes.FULL_TIME],
   },
