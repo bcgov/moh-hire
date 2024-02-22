@@ -1,11 +1,16 @@
 import { Body, Controller, Get, Inject, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { EmailTemplateDTO, RegistrantFilterDTO, RegistrantRO, Role } from '@ehpr/common';
+import {
+  EmailTemplateDTO,
+  RegistrantFilterDTO,
+  RegistrantRO,
+  Role,
+  UserRequest,
+} from '@ehpr/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { RegistrantService } from './registrant.service';
 import { Roles } from 'src/common/decorators';
 import { RoleGuard } from 'src/auth/role.guard';
-import { UserRequest } from '@ehpr/common';
 
 @Controller('registrants')
 @UseGuards(AuthGuard)
