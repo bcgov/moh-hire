@@ -9,7 +9,6 @@ import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
 import { RegistrantModule } from './registrant/registrant.module';
 import { MassEmailRecordModule } from './mass-email-record/mass-email-record.module';
-import { HealthAuthoritiesEntity } from './user/entity/ha.entity';
 
 @Module({
   imports: [
@@ -20,7 +19,6 @@ import { HealthAuthoritiesEntity } from './user/entity/ha.entity';
     AdminModule,
     RegistrantModule,
     MassEmailRecordModule,
-    HealthAuthoritiesEntity,
   ],
   controllers: [AppController],
   providers: [AppService, AppLogger],
