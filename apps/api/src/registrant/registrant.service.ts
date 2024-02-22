@@ -1,4 +1,5 @@
 import { Inject, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { RateLimiter } from 'limiter';
 import { EmailTemplateDTO, RegistrantFilterDTO, RegistrantRO } from '@ehpr/common';
 import PromisePool from '@supercharge/promise-pool';
 import { SubmissionService } from 'src/submission/submission.service';
@@ -30,6 +31,9 @@ export class RegistrantService {
   }
 
   async sendMassEmail(payload: EmailTemplateDTO) {
+    // rate limit requests to handle AWS SES req/ second limits (currently 40/s)
+    // 35 available tokens for each window of 1 second
+    const limiter = new RateLimiter({ tokensPerInterval: 35, interval: 1000 });
     // TODO: need to figure out a typing for this
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const errorsArray: any[] = [];
@@ -51,6 +55,8 @@ export class RegistrantService {
             subject: payload.subject,
             to: [item.email],
           };
+          // remove a token for each processed request
+          await limiter.removeTokens(1);
 
           await this.mailService.sendMailWithSES(mailOptions);
         });
