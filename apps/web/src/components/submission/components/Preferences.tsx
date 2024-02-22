@@ -25,7 +25,7 @@ import {
   deploymentTypeOptions,
   previousDeploymentOptions,
 } from '../validation/preferences';
-import { DatePickerField } from 'src/components/form/DatePickerField';
+import { DatePickerField } from '../../form/DatePickerField';
 
 export const Preferences: React.FC<FormStepProps> = () => {
   const { values, setFieldValue } = useFormikContext<SubmissionType>();
