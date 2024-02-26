@@ -9,7 +9,7 @@ export PROJECT := $(or $(PROJECT),ehpr)
 
 
 # Runtime and application Environments specific variable
-export ENV_NAME ?= dev
+export ENV_NAME = prod
 export POSTGRES_USERNAME = freshworks
 export CHES_CLIENT_ID ?= CDACC9DF-CDF62AA2355
 
