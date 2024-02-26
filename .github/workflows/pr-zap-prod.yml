@@ -1,12 +1,5 @@
 name: PROD - ZAP Scan
-on:
-  workflow_run:
-    workflows: ['PROD - Deploy Apps']
-    types:
-      - completed
-  push:
-    tags:
-      - security
+on: workflow_dispatch
 
 jobs:
   scan:
