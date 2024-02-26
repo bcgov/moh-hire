@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Inject, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import * as csvWriter from 'csv-writer';
-import { InviteUserDTO, Role } from '@ehpr/common';
+import { InviteUserDTO, Role, UserRequest } from '@ehpr/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { UserService } from '../user/user.service';
 import { Roles } from '../common/decorators';
@@ -35,8 +35,8 @@ export class AdminController {
   }
 
   @Get('/extract-submissions')
-  async extractSubmissions() {
-    const submissions = await this.submissionService.getSubmissions();
+  async extractSubmissions(@Req() { user }: UserRequest) {
+    const submissions = await this.submissionService.getSubmissions(user?.ha_id, user?.email);
 
     const flatSubmissions = flattenAndTransformFormData(submissions);
     const stringifier = csvWriter.createObjectCsvStringifier({
