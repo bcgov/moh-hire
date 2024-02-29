@@ -42,6 +42,10 @@ export class SubmissionService {
     return this.sendSubmissionConfirmation(savedSubmission);
   }
 
+  async findSubmissionById(id: string) {
+    return this.submissionRepository.findOne({ id });
+  }
+
   private async sendSubmissionConfirmation(submission: SubmissionEntity) {
     const { payload } = submission;
     const { email } = payload.contactInformation;
@@ -187,6 +191,8 @@ export class SubmissionService {
           }
         }),
       );
+      // retrieve only registrants whom are not withdrawn
+      queryBuilder.andWhere("submission.withdrawn = 'false'");
     }
 
     return queryBuilder;
