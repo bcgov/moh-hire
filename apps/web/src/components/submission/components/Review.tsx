@@ -15,7 +15,7 @@ import {
   getSpecialtyLabelById,
   getStreamLabelById,
   getSubspecialtyLabelById,
-  healthAuthorityOptions,
+  currentHealthAuthorityOptions,
   registrationStatusOptions,
   SubmissionType,
 } from '../validation';
@@ -105,7 +105,7 @@ export const Review: React.FC = () => {
             <ReviewItemList
               label='Indicate where you are employed (select all that apply)'
               values={healthAuthorities?.map(healthAuthority =>
-                getOptionLabelByValue(healthAuthorityOptions, healthAuthority),
+                getOptionLabelByValue(currentHealthAuthorityOptions, healthAuthority),
               )}
             />
           ) : null}
@@ -113,7 +113,7 @@ export const Review: React.FC = () => {
             <ReviewItemList
               label='Indicate where you are doing your practicum/residency (select all that apply)'
               values={healthAuthorities?.map(healthAuthority =>
-                getOptionLabelByValue(healthAuthorityOptions, healthAuthority),
+                getOptionLabelByValue(currentHealthAuthorityOptions, healthAuthority),
               )}
             />
           ) : null}

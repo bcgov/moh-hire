@@ -138,6 +138,10 @@ export const healthAuthorityOptions = [
     value: HealthAuthorities.VANCOUVER_COASTAL,
     label: 'Vancouver Coastal Health',
   },
+];
+
+export const currentHealthAuthorityOptions = [
+  ...healthAuthorityOptions,
   {
     value: HealthAuthorities.PRIVATE_EMPLOYER,
     label: 'Private employer',

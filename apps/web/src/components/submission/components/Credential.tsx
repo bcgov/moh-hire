@@ -24,7 +24,7 @@ import {
 import {
   SubmissionType,
   registrationStatusOptions,
-  healthAuthorityOptions,
+  currentHealthAuthorityOptions,
   defaultSpecialtyValue,
   employmentCircumstanceOptions,
   employmentOptions,
@@ -257,7 +257,7 @@ const SecondaryEmploymentQuestion: React.FC<{ employmentStatus: EmploymentTypes 
         <CheckboxArray
           name='credentialInformation.healthAuthorities'
           legend='Indicate where you are employed (select all that apply):'
-          options={healthAuthorityOptions}
+          options={currentHealthAuthorityOptions}
         />
       );
     case EmploymentTypes.HEALTH_SECTORY_RESIDENCY:
@@ -265,7 +265,7 @@ const SecondaryEmploymentQuestion: React.FC<{ employmentStatus: EmploymentTypes 
         <CheckboxArray
           name='credentialInformation.healthAuthorities'
           legend='Indicate where you are doing your practicum/residency (select all that apply):'
-          options={healthAuthorityOptions}
+          options={currentHealthAuthorityOptions}
         />
       );
     case EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED:
