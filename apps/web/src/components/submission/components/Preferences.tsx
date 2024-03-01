@@ -52,20 +52,6 @@ export const Preferences: React.FC<FormStepProps> = () => {
     previoushasPreviousDeployment.current = hasPreviousDeployment;
   }, [hasPreviousDeployment, setFieldValue]);
 
-  const LastDeployedHealthAuthority = ({ field, form }: FieldProps) => (
-    <ReactSelect<OptionType>
-      inputId={field.name}
-      value={(healthAuthorityOptions || []).find(o => o.value === field.value)}
-      onBlur={field.onBlur}
-      onChange={value => form.setFieldValue(field.name, value?.value)}
-      options={(healthAuthorityOptions || []).map(o => ({
-        ...o,
-      }))}
-      styles={selectStyleOverride}
-      menuPlacement='auto'
-    />
-  );
-
   return (
     <div className='flex flex-col gap-4'>
       <FormStepHeader>4. Employment Preferences</FormStepHeader>
@@ -122,8 +108,21 @@ export const Preferences: React.FC<FormStepProps> = () => {
             <Field
               name={'preferencesInformation.lastDeployedHa'}
               label={'Last Deployed Health Authority'}
-              component={LastDeployedHealthAuthority}
-            />
+            >
+              {({ field, form }: FieldProps) => (
+                <ReactSelect<OptionType>
+                  inputId={field.name}
+                  value={(healthAuthorityOptions || []).find(o => o.value === field.value)}
+                  onBlur={field.onBlur}
+                  onChange={value => form.setFieldValue(field.name, value?.value)}
+                  options={(healthAuthorityOptions || []).map(o => ({
+                    ...o,
+                  }))}
+                  styles={selectStyleOverride}
+                  menuPlacement='auto'
+                />
+              )}
+            </Field>
           </div>
         </>
       )}
