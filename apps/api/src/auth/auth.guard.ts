@@ -2,6 +2,7 @@ import { CanActivate, ExecutionContext, Inject, Injectable } from '@nestjs/commo
 import { Request } from 'express';
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
+import { isMoh } from '@ehpr/common';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -24,7 +25,10 @@ export class AuthGuard implements CanActivate {
     let user = await this.userService.findUser(kcUser.id, kcUser.email);
     if (!user) {
       user = await this.userService.createUser(kcUser);
-    } else if (!user.revokedDate && (!user.email || !user.name)) {
+    } else if (
+      (!user.revokedDate && (!user.email || !user.name)) ||
+      (!isMoh(user.email) && !user.ha_id)
+    ) {
       const { email, name } = kcUser;
       user = await this.userService.updateUser(user, { email, name, active: true });
     }

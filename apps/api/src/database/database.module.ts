@@ -5,9 +5,10 @@ import { LoggerOptions } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 import config from '../ormconfig';
-import { SubmissionEntity } from 'src/submission/entity/submission.entity';
+import { SubmissionEntity } from '../submission/entity/submission.entity';
 import { UserEntity } from '../user/entity/user.entity';
 import { MassEmailRecordEntity } from '../mass-email-record/entity/mass-email-record.entity';
+import { HealthAuthoritiesEntity } from '../user/entity/ha.entity';
 
 const getEnvironmentSpecificConfig = (env?: string) => {
   switch (env) {
@@ -24,7 +25,7 @@ const getEnvironmentSpecificConfig = (env?: string) => {
         username: process.env.TEST_POSTGRES_USERNAME,
         password: process.env.TEST_POSTGRES_PASSWORD,
         database: process.env.TEST_POSTGRES_DATABASE,
-        entities: [SubmissionEntity, UserEntity, MassEmailRecordEntity],
+        entities: [SubmissionEntity, UserEntity, MassEmailRecordEntity, HealthAuthoritiesEntity],
         migrations: ['dist/migration/*.js'],
         logging: ['error', 'warn', 'migration'] as LoggerOptions,
       };
