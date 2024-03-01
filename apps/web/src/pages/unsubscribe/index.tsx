@@ -43,8 +43,10 @@ const UnsubscribePage = () => {
                     If this was an accident, you may close the window and stay subscribed.
                   </p>
                   <div className='w-full mt-5'>
-                    <Field name='reason' label='Reason'>
-                      {({ field, form }: FieldProps) => (
+                    <Field
+                      name='reason'
+                      label='Reason'
+                      component={({ field, form }: FieldProps) => (
                         <ReactSelect<OptionType>
                           inputId={field.name}
                           value={unsubscribeReasons.find(r => r.value === field.value)}
@@ -64,7 +66,7 @@ const UnsubscribePage = () => {
                           styles={selectStyleOverride}
                         />
                       )}
-                    </Field>
+                    />
                   </div>
                   {values.reason === 'Other (please specify)' && (
                     <div className='w-full mt-2'>
