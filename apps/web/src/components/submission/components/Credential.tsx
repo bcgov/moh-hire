@@ -100,10 +100,8 @@ export const Credential: React.FC = () => {
   return (
     <div className='flex flex-col gap-5'>
       <FormStepHeader>3. Credentials Information</FormStepHeader>
-      <Field
-        name='credentialInformation.stream'
-        label='Stream Type'
-        component={({ field, form }: FieldProps) => (
+      <Field name='credentialInformation.stream' label='Stream Type'>
+        {({ field, form }: FieldProps) => (
           <ReactSelect<OptionType>
             inputId={field.name}
             value={streamOptions.find(s => s.value === field.value)}
@@ -113,7 +111,7 @@ export const Credential: React.FC = () => {
             styles={selectStyleOverride}
           />
         )}
-      />
+      </Field>
 
       {isNonClinical ? (
         <Field name='credentialInformation.nonClinicalJobTitle' label={`Provide your job title`} />
@@ -129,7 +127,7 @@ export const Credential: React.FC = () => {
                   <legend className='font-semibold mb-4'>Select your specialties</legend>
                   {specialties?.map((_, index) => (
                     <SpecialtySelector
-                      key={index}
+                      key={_.id}
                       disabled={!specialtySelectorEnabled}
                       index={index}
                       specialties={specialtyOptions}
@@ -211,7 +209,8 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
         <Field
           name={`credentialInformation.specialties[${index}].id`}
           label={`Main Speciality #${index + 1}`}
-          component={({ field, form }: FieldProps) => (
+        >
+          {({ field, form }: FieldProps) => (
             <ReactSelect<OptionType>
               inputId={field.name}
               value={(specialties || []).find(s => s.value === field.value)}
@@ -225,7 +224,7 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
               styles={selectStyleOverride}
             />
           )}
-        />
+        </Field>
         {enableDelete ? (
           <button
             type='button'
