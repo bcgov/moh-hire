@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { Repository, getRepository } from 'typeorm';
+import { Brackets, Repository, getRepository } from 'typeorm';
 import { SubmissionEntity } from './entity/submission.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -8,6 +8,9 @@ import {
   UpdateSubmissionDTO,
   SubmissionRO,
   RegistrantFilterDTO,
+  CondensedRegionLocations,
+  Authorities,
+  isMoh,
 } from '@ehpr/common';
 import { MailService } from 'src/mail/mail.service';
 import { ConfirmationMailable } from 'src/mail/mailables/confirmation.mailable';
@@ -15,6 +18,7 @@ import { Recipient } from 'src/mail/types/recipient';
 import { generateConfirmationId } from './id-generator';
 import { AppLogger } from 'src/common/logger.service';
 import { UpdateConfirmationMailable } from 'src/mail/mailables/update-confirmation.mailable';
+import { HealthAuthoritiesEntity } from 'src/user/entity/ha.entity';
 
 @Injectable()
 export class SubmissionService {
@@ -22,6 +26,8 @@ export class SubmissionService {
     @Inject(Logger) private readonly logger: AppLogger,
     @InjectRepository(SubmissionEntity)
     private readonly submissionRepository: Repository<SubmissionEntity>,
+    @InjectRepository(HealthAuthoritiesEntity)
+    private readonly healthAuthoritiesRepository: Repository<HealthAuthoritiesEntity>,
     @Inject(MailService)
     private readonly mailService: MailService,
   ) {}
@@ -77,9 +83,44 @@ export class SubmissionService {
     return this.submissionRepository.find();
   }
 
-  async getSubmissionsFilterQuery(filter: RegistrantFilterDTO) {
+  async getSubmissionsFilterQuery(filter: RegistrantFilterDTO, haId?: number, userEmail?: string) {
     const queryBuilder = getRepository(SubmissionEntity).createQueryBuilder('submission');
-    const { firstName, lastName, email, skip, limit } = filter;
+    const { firstName, lastName, email, skip, limit, anyRegion } = filter;
+
+    // find HA
+    const ha = await this.healthAuthoritiesRepository.findOne({ where: { id: haId } });
+
+    //TODO: confirm Providence has no region filter access,
+    // exclude any filtering for MoH users
+    if (ha?.name !== Authorities.PHC.name && !isMoh(userEmail)) {
+      console.log('otuside');
+      // submission values are saved using the condensed HA name
+      const haLocations = CondensedRegionLocations[
+        ha?.name as keyof typeof CondensedRegionLocations
+      ]
+        .map(name => `'${name}'`)
+        .join(', ');
+
+      // created nested where clauses for filtering by HA locations and registrants who will deploy anywhere
+      queryBuilder.andWhere(
+        // check if a row exists that matches filter
+        // extract jsonb fields into usable data
+        // check if extracted text matches any location values within users HA
+        new Brackets(qb => {
+          qb.where(
+            `EXISTS (
+                SELECT 1
+                FROM jsonb_array_elements_text("submission"."payload"->'preferencesInformation'->'deploymentLocations') AS dep
+                WHERE dep::text = ANY(ARRAY[${haLocations}])
+            )`,
+          );
+          // any region filter selected
+          if (anyRegion) {
+            qb.orWhere("submission.payload->'preferencesInformation'->>'deployAnywhere' = 'true'");
+          }
+        }),
+      );
+    }
 
     if (firstName) {
       queryBuilder.andWhere(

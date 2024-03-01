@@ -4,11 +4,12 @@ interface GeneralCheckboxProps {
   value: string;
   onChange: (checked: boolean, email: string) => void;
   checked?: boolean;
+  disabled?: boolean;
 }
 // generalized checkbox
 // not tied to Formik
 export const GeneralCheckbox = (props: GeneralCheckboxProps) => {
-  const { name, label, value, onChange, checked } = props;
+  const { name, label, value, onChange, checked, disabled } = props;
 
   const handleChange = (checked: boolean, email: string) => {
     onChange(checked, email);
@@ -28,6 +29,7 @@ export const GeneralCheckbox = (props: GeneralCheckboxProps) => {
         checked={checked}
         onChange={e => handleChange(e?.target?.checked, value)}
         className='h-4 w-4 min-w-4'
+        disabled={disabled}
       />
     </div>
   );
