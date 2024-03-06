@@ -53,6 +53,15 @@ const Submission = () => {
               Registration in the EHPR does not guarantee that you will be contacted for deployment.
             </p>
             <p className='mb-4'>
+              <b>
+                You will be required to undergo a criminal record check or criminal record check
+                verification under the <i>Criminal Records Review Act</i> prior to any deployment.
+                Individuals who forgo the criminal record check or criminal record check
+                verification process will not be eligible for deployment and may be removed from
+                this registry.
+              </b>
+            </p>
+            <p className='mb-4'>
               Your personal information is being collected in compliance with BC privacy legislation
               under sections 26(c) and (e) of the{' '}
               <i>Freedom of Information and Protection of Privacy Act.</i> Your information will be
