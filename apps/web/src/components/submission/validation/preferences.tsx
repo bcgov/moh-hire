@@ -18,6 +18,8 @@ export const preferencesDefaultValues: Partial<PreferencesInformationDTO> = {
   deploymentDuration: undefined,
   deploymentType: [],
   hasPreviousDeployment: undefined,
+  lastDeployedHa: undefined,
+  lastDeploymentDate: undefined,
 };
 
 export const haOptions = getHas().map(({ id, name }) => ({
@@ -78,10 +80,12 @@ export const placementOptions = [
   { label: 'Anywhere needed', value: PlacementOptions.ANYWHERE },
   { label: 'Other', value: PlacementOptions.OTHER },
 ];
-
+// 1,2,4,8,8+
 export const deploymentDurationOptions = [
-  { label: '2 - 4 weeks', value: DeploymentDurations.TWO_TO_FOUR_WEEKS },
-  { label: '4 - 8 weeks', value: DeploymentDurations.FOUR_TO_EIGHT },
+  { label: '1 week', value: DeploymentDurations.ONE_WEEK },
+  { label: '2 weeks', value: DeploymentDurations.TWO_WEEKS },
+  { label: '4 weeks', value: DeploymentDurations.FOUR_WEEKS },
+  { label: '8 weeks', value: DeploymentDurations.EIGHT_WEEKS },
   { label: '8+ weeks', value: DeploymentDurations.EIGHT_PLUS },
 ];
 

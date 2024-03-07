@@ -4,6 +4,7 @@ import {
   IsArray,
   IsBoolean,
   IsIn,
+  IsNotEmpty,
   IsString,
   Validate,
   ValidateIf,
@@ -29,6 +30,8 @@ export class PreferencesInformationDTO {
       this.deploymentDuration = base.deploymentDuration;
       this.deploymentType = base.deploymentType;
       this.hasPreviousDeployment = base.hasPreviousDeployment;
+      this.lastDeployedHa = base.lastDeployedHa;
+      this.lastDeploymentDate = base.lastDeploymentDate;
     }
   }
 
@@ -72,4 +75,14 @@ export class PreferencesInformationDTO {
   })
   @IsString({ message: 'Previous deployment question is required' })
   hasPreviousDeployment!: PreviousDeploymentOptions;
+
+  @ValidateIf(p => p.hasPreviousDeployment === PreviousDeploymentOptions.YES)
+  @IsString({ message: 'Last deployed Health Authority is required' })
+  @IsNotEmpty({ message: 'Last deployed Health Authority is required' })
+  lastDeployedHa!: string;
+
+  @ValidateIf(p => p.hasPreviousDeployment === PreviousDeploymentOptions.YES)
+  @IsString({ message: 'Date of last deployment is required' })
+  @IsNotEmpty({ message: 'Date of last deployment is required' })
+  lastDeploymentDate!: string;
 }

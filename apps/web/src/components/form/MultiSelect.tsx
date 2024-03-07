@@ -15,10 +15,8 @@ export const MultiSelect: React.FC<MultiSelectProps> = props => {
   const { label, name, options, disabled } = props;
 
   return (
-    <Field
-      name={name}
-      label={label}
-      component={({ field, form }: FormikFieldProps) => (
+    <Field name={name} label={label}>
+      {({ field, form }: FormikFieldProps) => (
         <ReactSelect
           inputId={name}
           options={options}
@@ -35,7 +33,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = props => {
           isMulti
         />
       )}
-    />
+    </Field>
   );
 };
 

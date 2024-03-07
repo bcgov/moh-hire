@@ -29,16 +29,20 @@
         "name": "Dental Professional",
         "specialties": ["DentalHygienist", "DentalTherapist", "Dentist"]
       },
-      "EmergencyResponder": {
-        "id": "EmergencyResponder",
-        "name": "Emergency Responder",
+      "Paramedic": {
+        "id": "Paramedic",
+        "name": "Paramedic",
         "specialties": [
+          "EmergencyMedicalResponder",
+          "PrimaryCareParamedic",
           "AdvancedCareParamedic",
-          "CommunityParamedic",
-          "CriticalCareParamedic",
-          "Firefighter",
-          "PrimaryCareParamedic"
+          "CriticalCareParamedic"
         ]
+      },
+      "Firefighter": {
+        "id": "Firefighter",
+        "name": "Firefighter",
+        "specialties": ["FireFirstResponder"]
       },
       "HealthCareAssistant": {
         "id": "HealthCareAssistant",
@@ -86,7 +90,8 @@
     "allIds": [
       "AlliedHealthProfessional",
       "DentalProfessional",
-      "EmergencyResponder",
+      "Paramedic",
+      "Firefighter",
       "HealthCareAssistant",
       "Midwife",
       "Naturopath",
@@ -198,10 +203,19 @@
         "name": "Critical Care Paramedic",
         "subspecialties": []
       },
-      "Firefighter": { "id": "Firefighter", "name": "Firefighter", "subspecialties": [] },
+      "FireFirstResponder": {
+        "id": "FireFirstResponder",
+        "name": "Fire First Responder",
+        "subspecialties": []
+      },
       "PrimaryCareParamedic": {
         "id": "PrimaryCareParamedic",
         "name": "Primary Care Paramedic",
+        "subspecialties": []
+      },
+      "EmergencyMedicalResponder": {
+        "id": "EmergencyMedicalResponder",
+        "name": "Emergency Medical Responder",
         "subspecialties": []
       },
       "Acute": { "id": "Acute", "name": "Acute", "subspecialties": [] },
@@ -559,8 +573,8 @@
       "AdvancedCareParamedic",
       "CommunityParamedic",
       "CriticalCareParamedic",
-      "Firefighter",
       "PrimaryCareParamedic",
+      "EmergencyMedicalResponder",
       "Acute",
       "AssistedLiving",
       "HomeSupport",

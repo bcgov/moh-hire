@@ -24,7 +24,7 @@ import {
 import {
   SubmissionType,
   registrationStatusOptions,
-  healthAuthorityOptions,
+  currentHealthAuthorityOptions,
   defaultSpecialtyValue,
   employmentCircumstanceOptions,
   employmentOptions,
@@ -93,17 +93,15 @@ export const Credential: React.FC = () => {
     registrationStatus,
   );
 
-  const specialtySelectorEnabled = specialtyOptions && specialtyOptions?.length > 1;
+  const specialtySelectorEnabled = specialtyOptions && specialtyOptions?.length >= 1;
 
   const isNonClinical = stream === streamsById.Nonclinical.id;
   const isClinical = stream && !isNonClinical; // stream is selected and is not non-clinical
   return (
     <div className='flex flex-col gap-5'>
       <FormStepHeader>3. Credentials Information</FormStepHeader>
-      <Field
-        name='credentialInformation.stream'
-        label='Stream Type'
-        component={({ field, form }: FieldProps) => (
+      <Field name='credentialInformation.stream' label='Stream Type'>
+        {({ field, form }: FieldProps) => (
           <ReactSelect<OptionType>
             inputId={field.name}
             value={streamOptions.find(s => s.value === field.value)}
@@ -113,7 +111,7 @@ export const Credential: React.FC = () => {
             styles={selectStyleOverride}
           />
         )}
-      />
+      </Field>
 
       {isNonClinical ? (
         <Field name='credentialInformation.nonClinicalJobTitle' label={`Provide your job title`} />
@@ -129,7 +127,7 @@ export const Credential: React.FC = () => {
                   <legend className='font-semibold mb-4'>Select your specialties</legend>
                   {specialties?.map((_, index) => (
                     <SpecialtySelector
-                      key={index}
+                      key={`specialtySelector${_.id}`}
                       disabled={!specialtySelectorEnabled}
                       index={index}
                       specialties={specialtyOptions}
@@ -211,7 +209,8 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
         <Field
           name={`credentialInformation.specialties[${index}].id`}
           label={`Main Speciality #${index + 1}`}
-          component={({ field, form }: FieldProps) => (
+        >
+          {({ field, form }: FieldProps) => (
             <ReactSelect<OptionType>
               inputId={field.name}
               value={(specialties || []).find(s => s.value === field.value)}
@@ -225,7 +224,7 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
               styles={selectStyleOverride}
             />
           )}
-        />
+        </Field>
         {enableDelete ? (
           <button
             type='button'
@@ -258,7 +257,7 @@ const SecondaryEmploymentQuestion: React.FC<{ employmentStatus: EmploymentTypes 
         <CheckboxArray
           name='credentialInformation.healthAuthorities'
           legend='Indicate where you are employed (select all that apply):'
-          options={healthAuthorityOptions}
+          options={currentHealthAuthorityOptions}
         />
       );
     case EmploymentTypes.HEALTH_SECTORY_RESIDENCY:
@@ -266,7 +265,7 @@ const SecondaryEmploymentQuestion: React.FC<{ employmentStatus: EmploymentTypes 
         <CheckboxArray
           name='credentialInformation.healthAuthorities'
           legend='Indicate where you are doing your practicum/residency (select all that apply):'
-          options={healthAuthorityOptions}
+          options={currentHealthAuthorityOptions}
         />
       );
     case EmploymentTypes.NOT_HEALTH_SECTOR_EMPLOYED:

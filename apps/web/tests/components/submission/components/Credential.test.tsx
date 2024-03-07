@@ -4,7 +4,7 @@ import { Credential } from '../../../../src/components/submission/components';
 import {
   defaultSpecialtyValue,
   registrationStatusOptions,
-  healthAuthorityOptions,
+  currentHealthAuthorityOptions,
   employmentOptions,
 } from '../../../../src/components/submission/validation';
 import * as formik from 'formik';
@@ -93,7 +93,7 @@ describe('Credential', () => {
       </formik.Formik>,
     );
 
-    healthAuthorityOptions.forEach(label =>
+    currentHealthAuthorityOptions.forEach(label =>
       expect(screen.getByRole('checkbox', { name: label.label })).toBeInTheDocument(),
     );
   });

@@ -23,6 +23,7 @@ export enum Specialty {
   'CommunityParamedic' = 'Community Paramedic',
   'CriticalCareParamedic' = 'Critical Care Paramedic',
   'Firefighter' = 'Firefighter',
+  'FireFirstResponder' = 'Fire First Responder',
   'PrimaryCareParamedic' = 'Primary Care Paramedic',
   'Acute' = 'Acute',
   'AssistedLiving' = 'Assisted Living',
