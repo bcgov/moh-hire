@@ -152,10 +152,9 @@ export class SubmissionService {
   async getHaFilterQuery(haId?: number, userEmail?: string, isTable?: boolean, anyRegion = false) {
     const queryBuilder = getRepository(SubmissionEntity).createQueryBuilder('submission');
     const ha = await this.healthAuthoritiesRepository.findOne({ where: { id: haId } });
-
-    //TODO: confirm Providence has no region filter access,
+    console.log(ha);
     // exclude any filtering for MoH users
-    if (ha?.name !== Authorities.PHC.name && !isMoh(userEmail)) {
+    if (!isMoh(userEmail)) {
       // submission values are saved using the condensed HA name
       const haLocations = CondensedRegionLocations[
         ha?.name as keyof typeof CondensedRegionLocations

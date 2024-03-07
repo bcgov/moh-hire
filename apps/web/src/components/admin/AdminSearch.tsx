@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { RegistrantFilterDTO, isMoh } from '@ehpr/common';
+import { RegistrantFilterDTO, isMoh, isPHC } from '@ehpr/common';
 import { SearchInput } from '../SearchInput';
 import { DEFAULT_PAGE_SIZE } from './AdminRegistrantsTable';
 import { GeneralCheckbox } from '../general';
@@ -33,6 +33,12 @@ export const AdminSearch = (props: SearchInputProps) => {
   const handleAnyRegionChange = () => {
     setAnyRegion(prev => !prev);
   };
+
+  useEffect(() => {
+    if (isPHC(user?.email)) {
+      setAnyRegion(true);
+    }
+  }, [user]);
 
   return (
     <>
