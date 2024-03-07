@@ -10,6 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import PromisePool from '@supercharge/promise-pool';
+import { RateLimiter } from 'limiter';
 import {
   EmailTemplateDTO,
   RegistrantFilterDTO,
