@@ -29,16 +29,6 @@
         "name": "Dental Professional",
         "specialties": ["DentalHygienist", "DentalTherapist", "Dentist"]
       },
-      "Paramedic": {
-        "id": "Paramedic",
-        "name": "Paramedic",
-        "specialties": [
-          "EmergencyMedicalResponder",
-          "PrimaryCareParamedic",
-          "AdvancedCareParamedic",
-          "CriticalCareParamedic"
-        ]
-      },
       "Firefighter": {
         "id": "Firefighter",
         "name": "Firefighter",
@@ -71,6 +61,16 @@
           "RegisteredPsychiatricNurse"
         ]
       },
+      "Paramedic": {
+        "id": "Paramedic",
+        "name": "Paramedic",
+        "specialties": [
+          "AdvancedCareParamedic",
+          "CriticalCareParamedic",
+          "EmergencyMedicalResponder",
+          "PrimaryCareParamedic"
+        ]
+      },
       "Pharmacy": {
         "id": "Pharmacy",
         "name": "Pharmacy",
@@ -90,13 +90,13 @@
     "allIds": [
       "AlliedHealthProfessional",
       "DentalProfessional",
-      "Paramedic",
       "Firefighter",
       "HealthCareAssistant",
       "Midwife",
       "Naturopath",
       "Nonclinical",
       "Nurse",
+      "Paramedic",
       "Pharmacy",
       "Physician",
       "Podiatrist"
