@@ -9,7 +9,6 @@ import {
   SubmissionRO,
   RegistrantFilterDTO,
   CondensedRegionLocations,
-  Authorities,
   isMoh,
 } from '@ehpr/common';
 import { MailService } from 'src/mail/mail.service';
