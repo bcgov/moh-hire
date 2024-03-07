@@ -56,14 +56,16 @@ export class AddHaTableAndHaIdFKToUserTable1708532257590 implements MigrationInt
 
     // loop through existing users and set HA
     users.forEach(async ({ id, email }: UserEntity) => {
-      const domain = email.split('@')[1];
-      const ha = Object.values(Authorities).find(a => a.domains.includes(domain));
-      if (ha) {
-        await queryRunner.query(
-          `UPDATE "user" 
+      if (email) {
+        const domain = email.split('@')[1];
+        const ha = Object.values(Authorities).find(a => a.domains.includes(domain));
+        if (ha) {
+          await queryRunner.query(
+            `UPDATE "user" 
            SET ha_id = (SELECT id FROM "health_authorities" WHERE name = '${ha.name}') 
            WHERE id = '${id}'`,
-        );
+          );
+        }
       }
     });
   }
