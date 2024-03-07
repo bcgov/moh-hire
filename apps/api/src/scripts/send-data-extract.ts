@@ -94,7 +94,7 @@ export const flattenAndTransformFormData = (submissions: SubmissionEntity[]) => 
       nonClinicalJobTitle: credentialInformation?.nonClinicalJobTitle,
 
       deployAnywhere: booleanToYesNo(preferencesInformation?.deployAnywhere),
-      VancouverRegion: healthAuthorities.VancouverRegion?.lhas.join(', '),
+      VancouverCoastal: healthAuthorities.VancouverCoastal?.lhas.join(', '),
       FraserRegion: healthAuthorities.FraserRegion?.lhas.join(', '),
       VancouverIslandRegion: healthAuthorities.VancouverIslandRegion.lhas.join(', '),
       InteriorRegion: healthAuthorities.InteriorRegion?.lhas.join(', '),

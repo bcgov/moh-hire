@@ -9,7 +9,6 @@ import {
   SubmissionRO,
   RegistrantFilterDTO,
   CondensedRegionLocations,
-  Authorities,
   isMoh,
 } from '@ehpr/common';
 import { MailService } from 'src/mail/mail.service';
@@ -79,48 +78,17 @@ export class SubmissionService {
     );
   }
 
-  async getSubmissions() {
-    return this.submissionRepository.find();
+  // query for submissions extract
+  async getSubmissions(haId?: number, userEmail?: string) {
+    const queryBuilder = await this.getHaFilterQuery(haId, userEmail);
+    return queryBuilder.getMany();
   }
 
+  // query for registrants table
   async getSubmissionsFilterQuery(filter: RegistrantFilterDTO, haId?: number, userEmail?: string) {
-    const queryBuilder = getRepository(SubmissionEntity).createQueryBuilder('submission');
     const { firstName, lastName, email, skip, limit, anyRegion } = filter;
 
-    // find HA
-    const ha = await this.healthAuthoritiesRepository.findOne({ where: { id: haId } });
-
-    //TODO: confirm Providence has no region filter access,
-    // exclude any filtering for MoH users
-    if (ha?.name !== Authorities.PHC.name && !isMoh(userEmail)) {
-      console.log('otuside');
-      // submission values are saved using the condensed HA name
-      const haLocations = CondensedRegionLocations[
-        ha?.name as keyof typeof CondensedRegionLocations
-      ]
-        .map(name => `'${name}'`)
-        .join(', ');
-
-      // created nested where clauses for filtering by HA locations and registrants who will deploy anywhere
-      queryBuilder.andWhere(
-        // check if a row exists that matches filter
-        // extract jsonb fields into usable data
-        // check if extracted text matches any location values within users HA
-        new Brackets(qb => {
-          qb.where(
-            `EXISTS (
-                SELECT 1
-                FROM jsonb_array_elements_text("submission"."payload"->'preferencesInformation'->'deploymentLocations') AS dep
-                WHERE dep::text = ANY(ARRAY[${haLocations}])
-            )`,
-          );
-          // any region filter selected
-          if (anyRegion) {
-            qb.orWhere("submission.payload->'preferencesInformation'->>'deployAnywhere' = 'true'");
-          }
-        }),
-      );
-    }
+    const queryBuilder = await this.getHaFilterQuery(haId, userEmail, true, anyRegion);
 
     if (firstName) {
       queryBuilder.andWhere(
@@ -177,5 +145,50 @@ export class SubmissionService {
     }
 
     return { id: record.id, confirmationId };
+  }
+
+  // creates HA filter query for registrants table and submission extract
+  async getHaFilterQuery(haId?: number, userEmail?: string, isTable?: boolean, anyRegion = false) {
+    const queryBuilder = getRepository(SubmissionEntity).createQueryBuilder('submission');
+    const ha = await this.healthAuthoritiesRepository.findOne({ where: { id: haId } });
+    // exclude any filtering for MoH users
+    if (!isMoh(userEmail)) {
+      // submission values are saved using the condensed HA name
+      const haLocations = CondensedRegionLocations[
+        ha?.name as keyof typeof CondensedRegionLocations
+      ]
+        .map(name => `'${name}'`)
+        .join(', ');
+
+      // created nested where clauses for filtering by HA locations and registrants who will deploy anywhere
+      queryBuilder.andWhere(
+        // check if a row exists that matches filter
+        // extract jsonb fields into usable data
+        // check if extracted text matches any location values within users HA
+        new Brackets(qb => {
+          qb.where(
+            `EXISTS (
+                SELECT 1
+                FROM jsonb_array_elements_text("submission"."payload"->'preferencesInformation'->'deploymentLocations') AS dep
+                WHERE dep::text = ANY(ARRAY[${haLocations}])
+            )`,
+          );
+
+          // check if querying for registrants table then check if any region filter was selected
+          if (isTable) {
+            if (anyRegion) {
+              qb.orWhere(
+                "submission.payload->'preferencesInformation'->>'deployAnywhere' = 'true'",
+              );
+            }
+          } else {
+            // for submission extract we send ANY regions back by default
+            qb.orWhere("submission.payload->'preferencesInformation'->>'deployAnywhere' = 'true'");
+          }
+        }),
+      );
+    }
+
+    return queryBuilder;
   }
 }
