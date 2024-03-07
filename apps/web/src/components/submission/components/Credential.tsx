@@ -127,7 +127,7 @@ export const Credential: React.FC = () => {
                   <legend className='font-semibold mb-4'>Select your specialties</legend>
                   {specialties?.map((_, index) => (
                     <SpecialtySelector
-                      key={_.id}
+                      key={`specialtySelector${_.id}`}
                       disabled={!specialtySelectorEnabled}
                       index={index}
                       specialties={specialtyOptions}
