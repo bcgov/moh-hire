@@ -18,11 +18,13 @@ import {
   currentHealthAuthorityOptions,
   registrationStatusOptions,
   SubmissionType,
+  healthAuthorityOptions,
 } from '../validation';
 import {
   deploymentDurationOptions,
   placementOptions as allPlacementOptions,
   deploymentTypeOptions,
+  previousDeploymentOptions,
 } from '../validation/preferences';
 
 export const Review: React.FC = () => {
@@ -49,6 +51,9 @@ export const Review: React.FC = () => {
     hasImmunizationTraining,
     deploymentDuration,
     deploymentType,
+    hasPreviousDeployment,
+    lastDeployedHa,
+    lastDeploymentDate,
   } = preferencesInformation;
 
   if (!stream) {
@@ -155,6 +160,19 @@ export const Review: React.FC = () => {
               getOptionLabelByValue(deploymentTypeOptions, deployment),
             )}
           />
+          <ReviewItem
+            label='Have you previously been deployed from the EHPR?'
+            value={getOptionLabelByValue(previousDeploymentOptions, hasPreviousDeployment)}
+          />
+          {hasPreviousDeployment === 'yes' && (
+            <>
+              <ReviewItem label='Date of Last Deployment' value={lastDeploymentDate} />
+              <ReviewItem
+                label='Last Deployed Health Authority'
+                value={getOptionLabelByValue(healthAuthorityOptions, lastDeployedHa)}
+              />
+            </>
+          )}
         </ReviewSection>
 
         <div className='py-7'>
