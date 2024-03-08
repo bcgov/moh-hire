@@ -48,6 +48,9 @@ export const formExportColumnHeaders = [
   { id: 'placementOptions', title: 'Placement Options' },
   { id: 'hasImmunizationTraining', title: 'Has Immunization Training' },
   { id: 'deploymentDuration', title: 'Deployment Duration' },
+  { id: 'hasPreviousDeployment', title: 'Previous Deployment' },
+  { id: 'lastDeploymentDate', title: 'Previous Deployment Date' },
+  { id: 'lastDeployedHa', title: 'Previous Deployment Health Authority' },
 
   // Update
   { id: 'withdrawn', title: 'Withdrawn' },
@@ -103,6 +106,9 @@ export const flattenAndTransformFormData = (submissions: SubmissionEntity[]) => 
       placementOptions: preferencesInformation?.placementOptions,
       hasImmunizationTraining: booleanToYesNo(preferencesInformation?.hasImmunizationTraining),
       deploymentDuration: preferencesInformation?.deploymentDuration,
+      hasPreviousDeployment: preferencesInformation?.hasPreviousDeployment,
+      lastDeploymentDate: preferencesInformation?.lastDeploymentDate,
+      lastDeployedHa: preferencesInformation?.lastDeployedHa,
       withdrawn: booleanToYesNo(withdrawn),
       deployed: booleanToYesNo(status?.deployed ?? false),
       deploymentStart: status?.startDate,
