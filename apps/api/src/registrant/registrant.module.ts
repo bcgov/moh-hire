@@ -18,7 +18,7 @@ import { SubmissionEntity } from 'src/submission/entity/submission.entity';
     MailModule,
     MassEmailRecordModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
+      secret: process.env.JWT_SECRET || 'ehprapp',
     }),
     TypeOrmModule.forFeature([SubmissionEntity]),
   ],
