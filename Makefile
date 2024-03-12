@@ -79,7 +79,6 @@ ches_client_id = "$(CHES_CLIENT_ID)"
 mail_from = "$(MAIL_FROM)"
 build_id = "$(COMMIT_SHA)"
 build_info = "$(LAST_COMMIT_MESSAGE)"
-target_aws_account_id = "$(AWS_ACCOUNT_ID)"
 endef
 export TFVARS_DATA
 
@@ -89,9 +88,9 @@ LZ2_PROJECT = bcbwlp
 
 # Terraform Cloud backend config variables
 define TF_BACKEND_CFG
-bucket = "terraform-remote-state-$(LZ2_PROJECT)-$(ENV_NAME)"
+bucket = "terraform-remote-state-${LZ2_PROJECT}-${ENV_NAME}"
 key = ".terraform/terraform.tfstate"
-dynamodb_table ="terraform-remote-state-lock-$(LZ2_PROJECT)"
+dynamodb_table ="terraform-remote-state-lock-${LZ2_PROJECT}"
 endef
 export TF_BACKEND_CFG
 
