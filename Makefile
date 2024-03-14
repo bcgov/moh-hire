@@ -81,7 +81,7 @@ mail_from = "$(MAIL_FROM)"
 build_id = "$(COMMIT_SHA)"
 build_info = "$(LAST_COMMIT_MESSAGE)"
 target_aws_account_id = "$(AWS_ACCOUNT_ID)"
-feature_mass_email = "$(FEATURE_MASS_EMAIL)"
+feature_mass_email = "$(NEXT_PUBLIC_FEATURE_MASS_EMAIL)"
 endef
 export TFVARS_DATA
 
