@@ -29,3 +29,5 @@ variable "region" {
 variable "build_id" {}
 
 variable "build_info" {}
+
+variable "feature_mass_email" {}
