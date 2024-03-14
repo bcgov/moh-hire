@@ -48,6 +48,7 @@ resource "aws_lambda_function" "api" {
       KC_REALM                 = data.aws_ssm_parameter.keycloak_realm.value
       KC_CLIENT_ID             = data.aws_ssm_parameter.keycloak_client_id.value
       JWT_SECRET               = data.aws_ssm_parameter.jwt_secret.value
+      FEATURE_MASS_EMAIL       = var.feature_mass_email
     }
   }
 }
