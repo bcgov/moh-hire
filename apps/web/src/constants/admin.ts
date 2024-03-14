@@ -5,7 +5,7 @@ export enum AdminTab {
 }
 
 export const adminTabs =
-  process.env.FEATURE_MASS_EMAIL === 'true'
+  process.env.NEXT_PUBLIC_FEATURE_MASS_EMAIL === 'true'
     ? [
         { title: 'Download Extract', value: AdminTab.DOWNLOADS },
         { title: 'Registrants', value: AdminTab.REGISTRANTS },
