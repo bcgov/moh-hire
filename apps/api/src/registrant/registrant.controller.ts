@@ -15,6 +15,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
 import {
   EmailTemplateDTO,
+  FEATURE_MASS_EMAIL,
   RegistrantFilterDTO,
   RegistrantRO,
   Role,
@@ -55,7 +56,9 @@ export class RegistrantController {
   @UseGuards(AuthGuard, RoleGuard)
   @Post('/send-mass-email')
   async sendMassEmail(@Body() payload: EmailTemplateDTO) {
-    await this.registrantService.sendMassEmail(payload);
+    if (FEATURE_MASS_EMAIL) {
+      await this.registrantService.sendMassEmail(payload);
+    }
   }
 
   @Post('/unsubscribe')
