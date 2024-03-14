@@ -43,6 +43,7 @@ export NEXT_PUBLIC_KC_URL ?= http://localhost:8080
 export NEXT_PUBLIC_KC_REALM ?= ehpr
 export NEXT_PUBLIC_KC_CLIENT_ID ?= ehpr-app
 export NEXT_PUBLIC_KC_REDIRECT_URI ?= http://localhost:3000/login
+export FEATURE_MASS_EMAIL ?= true
 
 ifeq ($(ENV_NAME), prod)
 DOMAIN=ehpr.gov.bc.ca
