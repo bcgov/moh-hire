@@ -1,13 +1,29 @@
-import { Inject, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
-import { RateLimiter } from 'limiter';
-import { EmailTemplateDTO, RegistrantFilterDTO, RegistrantRO } from '@ehpr/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import PromisePool from '@supercharge/promise-pool';
+import { RateLimiter } from 'limiter';
+import {
+  EmailTemplateDTO,
+  RegistrantFilterDTO,
+  RegistrantRO,
+  UnsubscribeReasonDTO,
+} from '@ehpr/common';
 import { SubmissionService } from 'src/submission/submission.service';
 import { formatRegistrants } from 'src/submission/submission.util';
 import { MailService } from 'src/mail/mail.service';
 import { MailOptions } from '../mail/types/mail-options';
 import { MassEmailRecordService } from 'src/mass-email-record/mass-email-record.service';
 import { AppLogger } from 'src/common/logger.service';
+import { SubmissionEntity } from 'src/submission/entity/submission.entity';
 
 @Injectable()
 export class RegistrantService {
@@ -19,7 +35,28 @@ export class RegistrantService {
     @Inject(MassEmailRecordService)
     private readonly massEmailRecordService: MassEmailRecordService,
     @Inject(Logger) private readonly logger: AppLogger,
+    @InjectRepository(SubmissionEntity)
+    private readonly submissionRepository: Repository<SubmissionEntity>,
+    private readonly jwtService: JwtService,
   ) {}
+
+  async unsubscribeRegistrant(id: string, payload: UnsubscribeReasonDTO) {
+    const submission = await this.submissionService.findSubmissionById(id);
+
+    if (!submission) {
+      throw new NotFoundException(`No submission record for ${id}`);
+    }
+
+    // check if user is already withdrawn
+    if (submission.withdrawn) {
+      throw new ConflictException('You are already unsubscribed from further contact');
+    }
+
+    submission.withdrawn = true;
+    submission.withdrawnReason = payload.otherReason || payload.reason;
+
+    await this.submissionRepository.update(submission.id, submission);
+  }
 
   async getRegistrants(
     filter: RegistrantFilterDTO,
@@ -55,8 +92,18 @@ export class RegistrantService {
           errorsArray.push({ error, recipientId: recipient.id });
         })
         .process(async item => {
+          const domain = process.env.DOMAIN;
+          const token = this.jwtService.sign({ email: item.email, id: item.id });
+
+          const url = domain
+            ? `https://${domain}/unsubscribe?token=${token}`
+            : `http://localhost:3000/unsubscribe?token=${token}`;
+
+          const fullHtmlBody = `<div>${payload.body}<br/><footer style="text-align: center;"><a href='${url}'>Unsubscribe</a></footer></div>`;
+
+          // don't show unsubscribe link for test emails
           const mailOptions: MailOptions = {
-            body: payload.body,
+            body: !payload.userId ? payload.body : fullHtmlBody,
             from: process.env.MAIL_FROM ?? 'EHPRDoNotReply@dev.ehpr.freshworks.club',
             subject: payload.subject,
             to: [item.email],
