@@ -15,7 +15,7 @@
     "@fortawesome/fontawesome-svg-core": "1.2.36",
     "@fortawesome/free-solid-svg-icons": "5.15.4",
     "@fortawesome/react-fontawesome": "0.1.16",
-    "@headlessui/react": "1.4.2",
+    "@headlessui/react": "1.7.8",
     "@tiptap/extension-bold": "2.2.2",
     "@tiptap/extension-bullet-list": "2.2.2",
     "@tiptap/extension-document": "2.2.2",

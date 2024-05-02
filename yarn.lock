@@ -936,7 +936,7 @@ __metadata:
     "@fortawesome/fontawesome-svg-core": 1.2.36
     "@fortawesome/free-solid-svg-icons": 5.15.4
     "@fortawesome/react-fontawesome": 0.1.16
-    "@headlessui/react": 1.4.2
+    "@headlessui/react": 1.7.8
     "@next/eslint-plugin-next": 12.0.4
     "@tailwindcss/typography": 0.4.1
     "@testing-library/jest-dom": 5.15.1
@@ -1187,13 +1187,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@headlessui/react@npm:1.4.2":
-  version: 1.4.2
-  resolution: "@headlessui/react@npm:1.4.2"
+"@headlessui/react@npm:1.7.8":
+  version: 1.7.8
+  resolution: "@headlessui/react@npm:1.7.8"
+  dependencies:
+    client-only: ^0.0.1
   peerDependencies:
     react: ^16 || ^17 || ^18
     react-dom: ^16 || ^17 || ^18
-  checksum: 28c36204430365190c05cbd48235f8239897360c8d55189583c03868fe640b171051238a8672a501b441de79281bb08285966105bfeb4534ca0e612382dcd41f
+  checksum: 2baf0686b846a9adf38828c95dab370353149234b81a24a2f4f399c8a635027fe3cd04624e52597a7d9b4a1ceebef0508450d625f62ae05433647d403cecd608
   languageName: node
   linkType: hard
 
@@ -5442,6 +5444,13 @@ __metadata:
   version: 3.0.0
   resolution: "cli-width@npm:3.0.0"
   checksum: 4c94af3769367a70e11ed69aa6095f1c600c0ff510f3921ab4045af961820d57c0233acfa8b6396037391f31b4c397e1f614d234294f979ff61430a6c166c3f6
+  languageName: node
+  linkType: hard
+
+"client-only@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "client-only@npm:0.0.1"
+  checksum: 0c16bf660dadb90610553c1d8946a7fdfb81d624adea073b8440b7d795d5b5b08beb3c950c6a2cf16279365a3265158a236876d92bce16423c485c322d7dfaf8
   languageName: node
   linkType: hard
 
