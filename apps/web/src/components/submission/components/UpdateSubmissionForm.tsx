@@ -6,19 +6,22 @@ import {
   ContactInformationDTO,
   PersonalInformationDTO,
   StatusUpdateDTO,
+  UnsubscribeReasonDTO,
   UpdateSubmissionDTO,
 } from '@ehpr/common';
-import { updateSubmission } from '@services';
-import { Button, Field, Radio } from '@components';
+import { updateSubmission, unsubscribe } from '@services';
+import { Button, Field, Radio, Textarea } from '@components';
 import { DatePickerField } from '../../form/DatePickerField';
 import UpdateSubmissionHeader from '../../update/UpdateSubmissionHeader';
+import { toast } from 'react-toastify';
 
 interface UpdateSubmissionFormProps {
   email: string;
   code: string;
+  token: string;
 }
 
-export const UpdateSubmissionForm = ({ email, code }: UpdateSubmissionFormProps) => {
+export const UpdateSubmissionForm = ({ email, code, token }: UpdateSubmissionFormProps) => {
   const { push } = useRouter();
 
   const formikRef = useRef<FormikProps<UpdateSubmissionDTO>>(null);
@@ -27,6 +30,7 @@ export const UpdateSubmissionForm = ({ email, code }: UpdateSubmissionFormProps)
     personalInformation: new PersonalInformationDTO(),
     contactInformation: new ContactInformationDTO(),
     status: new StatusUpdateDTO(),
+    unsubscribeReason: new UnsubscribeReasonDTO(),
   };
   initialValues.contactInformation.email = email;
 
@@ -37,12 +41,23 @@ export const UpdateSubmissionForm = ({ email, code }: UpdateSubmissionFormProps)
       values.status.startDate = undefined;
       values.status.endDate = undefined;
     }
+
+    if (!values.status.interested) {
+      const res = await unsubscribe(token, {
+        reason: values.unsubscribeReason?.reason ? values.unsubscribeReason.reason : 'No reason',
+      })
+      if(res) {
+        toast.success(res.data)
+      }
+    }
+
     updateSubmission(code, values).then(result => {
       push({
         pathname: 'update-submission/confirmation',
         query: { id: result.confirmationId },
       });
     });
+      
   };
 
   return (
@@ -128,6 +143,11 @@ export const UpdateSubmissionForm = ({ email, code }: UpdateSubmissionFormProps)
             <div className='mt-2 pt-3'>
               <Radio.Boolean name='status.interested' legend='Are you still interested in EHPR?' />
             </div>
+            {values.status.interested === false && (
+              <div className='mt-2 pt-3'>
+                <Textarea label='Reason for unsubscribing?' name='unsubscribeReason.reason' />
+              </div>
+            )}
             <div className='py-3'>
               <Radio.Boolean name='status.deployed' legend='Are you currently deployed?' />
             </div>

@@ -28,6 +28,6 @@ export const unsubscribe = async (
   token: string,
   payload: DeepPartial<UnsubscribeReasonDTO>,
 ): Promise<{ status: number; data: string }> => {
-  const { status, data } = await axios.post(`/registrants/unsubscribe?token=${token}`, payload);
-  return { status, data };
+    const res = await axios.post(`/registrants/unsubscribe?token=${token}`, payload);
+    return res
 };

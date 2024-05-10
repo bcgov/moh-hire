@@ -4,7 +4,7 @@ import { UpdateSubmissionForm } from '../components/submission/components';
 
 const UpdateSubmission = () => {
   const { push, query, isReady } = useRouter();
-  const { code, email } = query;
+  const { code, email, token } = query;
 
   useEffect(() => {
     if (isReady && !code) {
@@ -18,7 +18,11 @@ const UpdateSubmission = () => {
         <div className='h-min w-full xl:w-layout mx-2 mb-12'>
           <div className='bg-white rounded p-4 border-b mb-5'>
             {email && code && (
-              <UpdateSubmissionForm email={email as string} code={code as string} />
+              <UpdateSubmissionForm
+                email={email as string}
+                code={code as string}
+                token={token as string}
+              />
             )}
           </div>
         </div>
