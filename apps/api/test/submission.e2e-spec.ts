@@ -72,7 +72,7 @@ describe('AppController (e2e)', () => {
       contactInformation,
       personalInformation,
       status: { interested: true, deployed: true },
-      unsubscribeReason: {reason: "Test"}
+      unsubscribeReason: { reason: 'Test' },
     };
 
     request(app.getHttpServer())
