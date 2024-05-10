@@ -4,6 +4,7 @@ import { IsNotEmpty, ValidateNested } from 'class-validator';
 import { ContactInformationDTO } from './contact-information.dto';
 import { PersonalInformationDTO } from './personal-information.dto';
 import { StatusUpdateDTO } from './status-update.dto';
+import { UnsubscribeReasonDTO } from './unsubscribe-reason.dto';
 
 export class UpdateSubmissionDTO {
   constructor(base?: UpdateSubmissionDTO) {
@@ -27,4 +28,9 @@ export class UpdateSubmissionDTO {
   @IsNotEmpty()
   @Type(() => StatusUpdateDTO)
   status!: StatusUpdateDTO;
+
+  @ValidateNested()
+  @IsNotEmpty()
+  @Type(() => UnsubscribeReasonDTO)
+  unsubscribeReason!: UnsubscribeReasonDTO;
 }
