@@ -45,9 +45,9 @@ export const UpdateSubmissionForm = ({ email, code, token }: UpdateSubmissionFor
     if (!values.status.interested) {
       const res = await unsubscribe(token, {
         reason: values.unsubscribeReason?.reason ? values.unsubscribeReason.reason : 'No reason',
-      })
-      if(res) {
-        toast.success(res.data)
+      });
+      if (res) {
+        toast.success(res.data);
       }
     }
 
@@ -57,7 +57,6 @@ export const UpdateSubmissionForm = ({ email, code, token }: UpdateSubmissionFor
         query: { id: result.confirmationId },
       });
     });
-      
   };
 
   return (
