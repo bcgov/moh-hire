@@ -82,6 +82,22 @@ export class RegistrantService {
     const errorsArray: any[] = [];
 
     try {
+      const ids = payload.data.map(submission => submission.id);
+      const { submissions, missingIds } = await this.submissionService.findSubmissionsbyIds(ids, {
+        select: ['id', 'confirmationId'],
+      });
+
+      if (missingIds?.length) {
+        this.logger.warn(`Unable to find the following submissions ${missingIds.join(', ')}`);
+      }
+
+      const submissionsMap = new Map();
+      // Used to make lookup faster in PromisePool loop
+      submissions.reduce((map: Map<string, string>, submission) => {
+        map.set(submission.id, submission.confirmationId);
+        return map;
+      }, submissionsMap);
+
       // setup promise pool
       await PromisePool.withConcurrency(10)
         .for(payload.data)
@@ -94,12 +110,15 @@ export class RegistrantService {
         .process(async item => {
           const domain = process.env.DOMAIN;
           const token = this.jwtService.sign({ email: item.email, id: item.id });
+          const code = submissionsMap.get(item.id);
 
-          const url = domain
-            ? `https://${domain}/unsubscribe?token=${token}`
-            : `http://localhost:3000/unsubscribe?token=${token}`;
+          // Link sent to registrants email
+          const editEntryUrl =
+            domain && !domain.includes('localhost:3000')
+              ? `https://${domain}/update-submission?email=${item.email}&code=${code}&token=${token}`
+              : `http://localhost:3000/update-submission?email=${item.email}&code=${code}&token=${token}`;
 
-          const fullHtmlBody = `<div>${payload.body}<br/><footer style="text-align: center;"><a href='${url}'>Unsubscribe</a></footer></div>`;
+          const fullHtmlBody = `<div>${payload.body}<br/><footer style="text-align: center;"><a href='${editEntryUrl}'>Update your entry</a></footer></div>`;
 
           // don't show unsubscribe link for test emails
           const mailOptions: MailOptions = {
@@ -110,7 +129,6 @@ export class RegistrantService {
           };
           // remove a token for each processed request
           await limiter.removeTokens(1);
-
           await this.mailService.sendMailWithSES(mailOptions);
         });
       // check for errors from test email
@@ -119,6 +137,11 @@ export class RegistrantService {
       }
     } catch (e) {
       this.logger.error(e);
+
+      if (e instanceof NotFoundException) {
+        throw e;
+      }
+
       throw new InternalServerErrorException(e || 'There was an issue trying to send emails');
     }
 
