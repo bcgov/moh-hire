@@ -82,22 +82,7 @@ export class RegistrantService {
     const errorsArray: any[] = [];
 
     try {
-      const ids = payload.data.map(submission => submission.id);
-      const { submissions, missingIds } = await this.submissionService.findSubmissionsbyIds(ids, {
-        select: ['id', 'confirmationId'],
-      });
-
-      if (missingIds?.length) {
-        this.logger.warn(`Unable to find the following submissions ${missingIds.join(', ')}`);
-      }
-
-      const submissionsMap = new Map();
-      // Used to make lookup faster in PromisePool loop
-      submissions.reduce((map: Map<string, string>, submission) => {
-        map.set(submission.id, submission.confirmationId);
-        return map;
-      }, submissionsMap);
-
+      const submissionsMap = await this.mapSubmissionIdToConfirmId(payload);
       // setup promise pool
       await PromisePool.withConcurrency(10)
         .for(payload.data)
@@ -118,7 +103,12 @@ export class RegistrantService {
               ? `https://${domain}/update-submission?email=${item.email}&code=${code}&token=${token}`
               : `http://localhost:3000/update-submission?email=${item.email}&code=${code}&token=${token}`;
 
-          const fullHtmlBody = `<div>${payload.body}<br/><footer style="text-align: center;"><a href='${editEntryUrl}'>Update your entry</a></footer></div>`;
+          const fullHtmlBody = `<div>${payload.body}
+                                  <br/>
+                                  <footer style="text-align: center;">
+                                    <a href='${editEntryUrl}'>Update your entry</a>
+                                  </footer>
+                                </div>`;
 
           // don't show unsubscribe link for test emails
           const mailOptions: MailOptions = {
@@ -159,5 +149,25 @@ export class RegistrantService {
 
       await this.massEmailRecordService.createMassEmailRecord(record);
     }
+  }
+
+  private async mapSubmissionIdToConfirmId(payload: EmailTemplateDTO) {
+    const ids = payload.data.map(submission => submission.id);
+    const { submissions, missingIds } = await this.submissionService.findSubmissionsbyIds(ids, {
+      select: ['id', 'confirmationId'],
+    });
+
+    if (missingIds?.length) {
+      this.logger.warn(`Unable to find the following submissions ${missingIds.join(', ')}`);
+    }
+
+    const submissionsMap = new Map<string, string>();
+    // Used to make lookup faster in PromisePool loop
+    submissions.reduce((map: Map<string, string>, submission) => {
+      map.set(submission.id, submission.confirmationId);
+      return map;
+    }, submissionsMap);
+
+    return submissionsMap;
   }
 }

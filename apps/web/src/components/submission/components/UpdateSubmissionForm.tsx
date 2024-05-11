@@ -1,5 +1,6 @@
 import { createValidator } from 'class-validator-formik';
-import { Formik, FormikProps, Form as FormikForm } from 'formik';
+import { validate, ValidationError } from 'class-validator';
+import { Formik, ErrorMessage, FormikProps, Form as FormikForm, FormikErrors } from 'formik';
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
 import {
@@ -32,6 +33,7 @@ export const UpdateSubmissionForm = ({ email, code, token }: UpdateSubmissionFor
     status: new StatusUpdateDTO(),
     unsubscribeReason: new UnsubscribeReasonDTO(),
   };
+
   initialValues.contactInformation.email = email;
 
   const validator = createValidator(UpdateSubmissionDTO);

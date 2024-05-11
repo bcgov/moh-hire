@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Type } from 'class-transformer';
-import { IsNotEmpty, ValidateNested } from 'class-validator';
+import { IsNotEmpty, ValidateNested, ValidateIf } from 'class-validator';
 import { ContactInformationDTO } from './contact-information.dto';
 import { PersonalInformationDTO } from './personal-information.dto';
 import { StatusUpdateDTO } from './status-update.dto';
@@ -30,7 +30,8 @@ export class UpdateSubmissionDTO {
   status!: StatusUpdateDTO;
 
   @ValidateNested()
-  @IsNotEmpty()
+  @ValidateIf((o:UpdateSubmissionDTO) => o.status && !o.status.interested)
   @Type(() => UnsubscribeReasonDTO)
-  unsubscribeReason!: UnsubscribeReasonDTO;
+  unsubscribeReason?: UnsubscribeReasonDTO;
 }
+
