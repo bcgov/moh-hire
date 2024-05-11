@@ -30,8 +30,7 @@ export class UpdateSubmissionDTO {
   status!: StatusUpdateDTO;
 
   @ValidateNested()
-  @ValidateIf((o:UpdateSubmissionDTO) => o.status && !o.status.interested)
+  @ValidateIf((o: UpdateSubmissionDTO) => o.status && !o.status.interested)
   @Type(() => UnsubscribeReasonDTO)
   unsubscribeReason?: UnsubscribeReasonDTO;
 }
-
