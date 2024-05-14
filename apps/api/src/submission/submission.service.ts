@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { Brackets, Repository, getRepository } from 'typeorm';
+import { Brackets, Repository, getRepository, FindManyOptions } from 'typeorm';
 import { SubmissionEntity } from './entity/submission.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -44,6 +44,20 @@ export class SubmissionService {
 
   async findSubmissionById(id: string) {
     return this.submissionRepository.findOne({ id });
+  }
+
+  async findSubmissionsbyIds(ids: string[], options?: FindManyOptions<SubmissionEntity>) {
+    const submissions = await this.submissionRepository.findByIds(ids, options);
+
+    const foundIds = submissions.map(entity => entity.id);
+    // For troubleshooting purposes, this should always be empty
+    const missingIds = ids.filter(id => !foundIds.includes(id));
+
+    if (!submissions?.length) {
+      throw new NotFoundException('No submission records were found for ids');
+    }
+
+    return { submissions, missingIds };
   }
 
   private async sendSubmissionConfirmation(submission: SubmissionEntity) {

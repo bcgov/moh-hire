@@ -82,6 +82,7 @@ export class RegistrantService {
     const errorsArray: any[] = [];
 
     try {
+      const submissionsMap = await this.mapSubmissionIdToConfirmationId(payload);
       // setup promise pool
       await PromisePool.withConcurrency(10)
         .for(payload.data)
@@ -94,12 +95,25 @@ export class RegistrantService {
         .process(async item => {
           const domain = process.env.DOMAIN;
           const token = this.jwtService.sign({ email: item.email, id: item.id });
+          const code = submissionsMap.get(item.id);
+          let body = '';
 
-          const url = domain
-            ? `https://${domain}/unsubscribe?token=${token}`
-            : `http://localhost:3000/unsubscribe?token=${token}`;
+          if (code && domain) {
+            body = this.processTemplateBody(payload.body, { email: item.email, code, domain });
+          }
 
-          const fullHtmlBody = `<div>${payload.body}<br/><footer style="text-align: center;"><a href='${url}'>Unsubscribe</a></footer></div>`;
+          const unsubUrl =
+            domain && !domain.includes('localhost:3000')
+              ? `https://${domain}/unsubscribe?token=${token}`
+              : `http://localhost:3000/unsubscribe?token=${token}`;
+
+          const fullHtmlBody = `
+          <div>${body}
+            <br/>
+            <footer style="text-align: center;">
+              <a href='${unsubUrl}'>Unsubscribe</a>
+            </footer>
+          </div>`;
 
           // don't show unsubscribe link for test emails
           const mailOptions: MailOptions = {
@@ -136,5 +150,56 @@ export class RegistrantService {
 
       await this.massEmailRecordService.createMassEmailRecord(record);
     }
+  }
+  // Replaces coded words based on the word name
+  private processTemplateBody(
+    body: EmailTemplateDTO['body'],
+    { email, code, domain }: { email: string; code: string; domain: string },
+  ) {
+    enum RegexResult {
+      MATCH, // in format of ${word}
+      GROUP, // in format of word
+    }
+
+    const words = body.matchAll(/\$\{([^}]+)\}/g);
+    let processedBody = body;
+
+    const subUpdateUrl =
+      domain && !domain.includes('localhost:3000')
+        ? `https://${domain}/update-submission?email=${email}&code=${code}`
+        : `http://localhost:3000/update-submission?email=${email}&code=${code}`;
+
+    // Replacing each coded word with selected string
+    for (const word of words) {
+      switch (word[RegexResult.GROUP].toLowerCase()) {
+        case 'update_link':
+          processedBody = processedBody.replace(
+            word[RegexResult.MATCH],
+            `<a href='${subUpdateUrl}'>Update your submission</a>`,
+          );
+      }
+    }
+    return processedBody;
+  }
+
+  // Used to make lookup faster in PromisePool loop
+  private async mapSubmissionIdToConfirmationId(payload: EmailTemplateDTO) {
+    const ids = payload.data.map(submission => submission.id);
+    const { submissions, missingIds } = await this.submissionService.findSubmissionsbyIds(ids, {
+      select: ['id', 'confirmationId'],
+    });
+
+    if (missingIds?.length) {
+      this.logger.warn(`Unable to find the following submissions ${missingIds.join(', ')}`);
+    }
+
+    const submissionsMap = new Map<string, string>();
+    // Maps each submission id to its confirmation id
+    submissions.reduce((map: Map<string, string>, submission) => {
+      map.set(submission.id, submission.confirmationId);
+      return map;
+    }, submissionsMap);
+
+    return submissionsMap;
   }
 }
