@@ -31,6 +31,7 @@ interface PageOptions {
 export const DEFAULT_PAGE_SIZE = 10;
 
 export const AdminRegistrantsTable = () => {
+  const [selectAllChecked, setSelectAllChecked] = useState<boolean>(false);
   const [emails, setEmails] = useState<EmailData[]>([]);
   const [registrants, setRegistrants] = useState<RegistrantRO[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -113,8 +114,10 @@ export const AdminRegistrantsTable = () => {
 
   // check for checkbox changes
   const handleCheckboxChange = (checked: boolean, value: string) => {
-    if (value === 'all') {
-      handleSelectAllCheckbox(checked);
+    if (value === 'currentPageAll') {
+      handleSelectAllCurrentPageCheckbox(checked);
+    } else if (value === 'all') {
+      handleCheckSelectAll(checked);
     } else {
       handleSingleCheckBoxSelect(checked, value);
     }
@@ -157,7 +160,7 @@ export const AdminRegistrantsTable = () => {
   };
 
   // function for Select All rows
-  const handleSelectAllCheckbox = (checked: boolean) => {
+  const handleSelectAllCurrentPageCheckbox = (checked: boolean) => {
     let updatedRegistrants: RegistrantRO[] | undefined = [];
     let updatedEmailsList: EmailData[] = [];
 
@@ -210,6 +213,30 @@ export const AdminRegistrantsTable = () => {
     setEmails(updatedEmailsList);
   };
 
+  const handleCheckSelectAll = async (checked: boolean) => {
+    setSelectAllChecked(checked);
+
+    if (checked) {
+      // Update emails to select all
+      const { data } = await getRegistrants({ limit: total });
+      const updatedEmailsList = data.map(({ id, email, firstName, lastName }) => ({
+        id,
+        email,
+        name: `${firstName} ${lastName}`,
+      }));
+      setEmails(updatedEmailsList);
+    } else {
+      // Clear the emails list
+      setEmails([]);
+    }
+
+    // Update the selection state of the current page of registrants
+    const updatedRegistrants = registrants.map(registrant => ({
+      ...registrant,
+      checked,
+    }));
+    setRegistrants(updatedRegistrants);
+  };
   const createMassEmailTemplate = () => {
     setShowTemplateModal(true);
   };
@@ -233,13 +260,21 @@ export const AdminRegistrantsTable = () => {
         <table className='text-left w-full'>
           <thead className='whitespace-nowrap  text-bcBlack'>
             <tr className='border-b-2 bg-bcLightGray border-yellow-300 text-sm'>
-              <th className='py-4 pl-6' scope='col'>
+              <th className='flex gap-5 py-4 pl-6' scope='col'>
                 <GeneralCheckbox
                   label='Select Page'
+                  name='currentPageAll'
+                  value='currentPageAll'
+                  onChange={handleCheckboxChange}
+                  checked={selectedPages.some(p => p.page === pageIndex && p.selected)}
+                  disabled={registrants.length === 0}
+                />
+                <GeneralCheckbox
+                  label='Select All'
                   name='all'
                   value='all'
                   onChange={handleCheckboxChange}
-                  checked={selectedPages.some(p => p.page === pageIndex && p.selected)}
+                  checked={selectAllChecked}
                   disabled={registrants.length === 0}
                 />
               </th>
