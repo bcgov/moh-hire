@@ -21,6 +21,8 @@ interface FilterOptions {
   skip?: number;
   take?: number;
   limit?: number;
+  // This need to be true so withdrawn submissions are not included
+  excludeWithdrawn: boolean;
 }
 
 interface PageOptions {
@@ -52,8 +54,10 @@ export const AdminRegistrantsTable = () => {
     const options: FilterOptions = {
       limit,
       skip,
+      excludeWithdrawn: true,
       ...filters,
     };
+
     // remove any selected page entries that no longer exist due to page size/ limit changes, to prevent duplicate entries
     setSelectedPages(prev => prev.filter(p => p.page <= totalPages));
     searchRegistrants(options).then(data => data);
@@ -62,6 +66,7 @@ export const AdminRegistrantsTable = () => {
 
   const searchRegistrants = async (filters: RegistrantFilterDTO) => {
     setLoading(true);
+
     getRegistrants(filters).then(({ data, count }) => {
       if (data) {
         const updatedData = data.map(item => {
@@ -85,7 +90,7 @@ export const AdminRegistrantsTable = () => {
 
   // used for search inputs
   const search = async (filters: RegistrantFilterDTO, searchLimit: number) => {
-    const options: FilterOptions = { ...filters, limit: searchLimit };
+    const options: FilterOptions = { ...filters, limit: searchLimit, excludeWithdrawn: true };
     setLimit(searchLimit);
     setPageIndex(1);
     setFilters(filters);
@@ -218,7 +223,7 @@ export const AdminRegistrantsTable = () => {
 
     if (checked) {
       // Update emails to select all
-      const { data } = await getRegistrants({ limit: total });
+      const { data } = await getRegistrants({ ...filters, limit: total });
       const updatedEmailsList = data.map(({ id, email, firstName, lastName }) => ({
         id,
         email,
