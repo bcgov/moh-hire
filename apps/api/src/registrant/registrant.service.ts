@@ -101,11 +101,10 @@ export class RegistrantService {
           if (code && domain) {
             body = this.processTemplateBody(payload.body, { email: item.email, code, domain });
           }
-
-          const unsubUrl =
-            domain && !domain.includes('localhost:3000')
-              ? `https://${domain}/unsubscribe?token=${token}`
-              : `http://localhost:3000/unsubscribe?token=${token}`;
+          // @TODO: Move html to util file CHANGE HTTP to HTTPS
+          const unsubUrl = domain
+            ? `https://${domain}/unsubscribe?token=${token}`
+            : `https://ehpr.gov.bc.ca/unsubscribe?token=${token}`;
 
           const fullHtmlBody = `
           <div>${body}
@@ -167,7 +166,7 @@ export class RegistrantService {
     const subUpdateUrl =
       domain && !domain.includes('localhost:3000')
         ? `https://${domain}/update-submission?email=${email}&code=${code}`
-        : `http://localhost:3000/update-submission?email=${email}&code=${code}`;
+        : `https://ehpr.gov.bc.ca/update-submission?email=${email}&code=${code}`;
 
     // Replacing each coded word with selected string
     for (const word of words) {
