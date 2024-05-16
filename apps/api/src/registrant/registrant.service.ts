@@ -24,7 +24,7 @@ import { MailOptions } from '../mail/types/mail-options';
 import { MassEmailRecordService } from 'src/mass-email-record/mass-email-record.service';
 import { AppLogger } from 'src/common/logger.service';
 import { SubmissionEntity } from 'src/submission/entity/submission.entity';
-
+import { emailBodyWithUnsubscribeLink, updateSubmissionLink } from 'src/mail/mail.util';
 @Injectable()
 export class RegistrantService {
   constructor(
@@ -101,18 +101,12 @@ export class RegistrantService {
           if (code && domain) {
             body = this.processTemplateBody(payload.body, { email: item.email, code, domain });
           }
-          // @TODO: Move html to util file CHANGE HTTP to HTTPS
+
           const unsubUrl = domain
             ? `https://${domain}/unsubscribe?token=${token}`
             : `https://ehpr.gov.bc.ca/unsubscribe?token=${token}`;
 
-          const fullHtmlBody = `
-          <div>${body}
-            <br/>
-            <footer style="text-align: center;">
-              <a href='${unsubUrl}'>Unsubscribe</a>
-            </footer>
-          </div>`;
+          const fullHtmlBody = emailBodyWithUnsubscribeLink(body, unsubUrl);
 
           // don't show unsubscribe link for test emails
           const mailOptions: MailOptions = {
@@ -150,6 +144,7 @@ export class RegistrantService {
       await this.massEmailRecordService.createMassEmailRecord(record);
     }
   }
+
   // Replaces coded words based on the word name
   private processTemplateBody(
     body: EmailTemplateDTO['body'],
@@ -163,10 +158,9 @@ export class RegistrantService {
     const words = body.matchAll(/\$\{([^}]+)\}/g);
     let processedBody = body;
 
-    const subUpdateUrl =
-      domain && !domain.includes('localhost:3000')
-        ? `https://${domain}/update-submission?email=${email}&code=${code}`
-        : `https://ehpr.gov.bc.ca/update-submission?email=${email}&code=${code}`;
+    const subUpdateUrl = domain
+      ? `https://${domain}/update-submission?email=${email}&code=${code}`
+      : `https://ehpr.gov.bc.ca/update-submission?email=${email}&code=${code}`;
 
     // Replacing each coded word with selected string
     for (const word of words) {
@@ -174,7 +168,7 @@ export class RegistrantService {
         case 'update_link':
           processedBody = processedBody.replace(
             word[RegexResult.MATCH],
-            `<a href='${subUpdateUrl}'>Update your submission</a>`,
+            updateSubmissionLink(subUpdateUrl, 'Update your submission'),
           );
       }
     }
