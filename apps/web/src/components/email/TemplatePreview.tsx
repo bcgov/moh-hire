@@ -91,7 +91,7 @@ export const TemplatePreview = ({ emails, template, open, onClose }: TemplatePre
         <FullScreenModal open={open} handleClose={onClose}>
           <FullScreenModal.Title className='flex flex-row text-lg font-bold leading-6 text-bcBlueLink border-b p-4'>
             <div>Template Preview</div>
-            <button className='ml-auto' onClick={onClose}>
+            <button aria-label='Close modal' className='ml-auto' onClick={onClose}>
               <FontAwesomeIcon icon={faWindowClose} size='2x' />
             </button>
           </FullScreenModal.Title>
@@ -114,9 +114,13 @@ export const TemplatePreview = ({ emails, template, open, onClose }: TemplatePre
           </div>
 
           {/* read only editor for preview */}
-          <div className='mx-5 font-bold'>Subject Line</div>
+          <label htmlFor='subject-line' className='mx-5 font-bold'>
+            Subject Line
+          </label>
           <div className='flex flex-row p-2 my-1 mx-5 border '>
             <input
+              id='subject-line'
+              tabIndex={-1}
               name='subject-line'
               type='text'
               value={template.subject}

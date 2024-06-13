@@ -13,7 +13,6 @@ export const CreateTemplate = ({ template, setTemplate }: CreateTemplateProps) =
       <div className='flex flex-row p-2 mb-2 border rounded'>
         <input
           autoFocus
-          tabIndex={-1}
           name='subject-line'
           type='text'
           value={template.subject}

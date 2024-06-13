@@ -38,7 +38,12 @@ export const EmailCampaign = (props: EmailCampaignProps) => {
     <FullScreenModal open={open} handleClose={handleClose}>
       <FullScreenModal.Title className='flex flex-row text-lg font-bold leading-6 text-bcBlueLink border-b p-4'>
         <div>Create Email Template</div>
-        <button tabIndex={-1} className='ml-auto' onClick={handleClose}>
+        <button
+          autoFocus={false}
+          aria-label='Close modal'
+          className='ml-auto'
+          onClick={handleClose}
+        >
           <FontAwesomeIcon icon={faWindowClose} size='2x' />
         </button>
       </FullScreenModal.Title>
