@@ -19,7 +19,7 @@ export const config: PostgresConnectionOptions = {
   synchronize: false,
   migrationsRun: true,
   namingStrategy: new DatabaseNamingStrategy(),
-  logging:true
+  logging: true,
 };
 
 export default new DataSource(config);
