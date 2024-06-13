@@ -23,7 +23,9 @@ export default async function postToSlack(data: SlackPayload): Promise<void> {
         },
       );
     } catch (e) {
-      Logger.warn(`Failed to send message to slack: ${e.message}`, 'postToSlack');
+      if (e instanceof Error) {
+        Logger.warn(`Failed to send message to slack: ${e.message}`, 'postToSlack');
+      }
     }
   } else {
     Logger.warn('SLACK_ALERTS_WEBHOOK_URL not available, Slack alert not sent', 'postToSlack');

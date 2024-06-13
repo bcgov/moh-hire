@@ -177,6 +177,8 @@ export const sendDataExtract = async (app: INestApplicationContext, context: str
       context,
     );
   } catch (e) {
-    logger.log(e.stack, context);
+    if (e instanceof Error) {
+      logger.log(e.stack, context);
+    }
   }
 };
