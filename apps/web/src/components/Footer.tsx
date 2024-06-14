@@ -1,11 +1,7 @@
 import Link from 'next/link';
 
 const FooterLink: React.FC<{ href: string }> = ({ href, children }) => {
-  return (
-    <Link href={href}>
-        {children}
-    </Link>
-  );
+  return <Link href={href}>{children}</Link>;
 };
 
 export const Footer: React.FC = () => {

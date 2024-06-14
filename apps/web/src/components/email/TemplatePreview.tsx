@@ -9,6 +9,7 @@ import {
   TipTapEditor,
   useAuthContext,
 } from '@components';
+import { DialogTitle, Description } from '@headlessui/react';
 import { sendMassEmail } from '@services';
 import { EmailData, EmailTemplate } from '@constants';
 
@@ -70,9 +71,9 @@ export const TemplatePreview = ({ emails, template, open, onClose }: TemplatePre
     <>
       {showConfirmationModal ? (
         <Modal open={showConfirmationModal} handleClose={closeConfirmationModal}>
-          <Modal.Title className='text-lg font-bold leading-6 text-bcBlueLink border-b p-4'>
+          <DialogTitle className='text-lg font-bold leading-6 text-bcBlueLink border-b p-4'>
             Please Confirm
-          </Modal.Title>
+          </DialogTitle>
           {/* TODO: add legal disclaimer */}
           <div className='p-4'>
             Please confirm that you wish to send this email to {emails.length}&nbsp;
@@ -89,15 +90,15 @@ export const TemplatePreview = ({ emails, template, open, onClose }: TemplatePre
         </Modal>
       ) : (
         <FullScreenModal open={open} handleClose={onClose}>
-          <FullScreenModal.Title className='flex flex-row text-lg font-bold leading-6 text-bcBlueLink border-b p-4'>
+          <DialogTitle className='flex flex-row text-lg font-bold leading-6 text-bcBlueLink border-b p-4'>
             <div>Template Preview</div>
             <button aria-label='Close modal' className='ml-auto' onClick={onClose}>
               <FontAwesomeIcon icon={faWindowClose} size='2x' />
             </button>
-          </FullScreenModal.Title>
-          <FullScreenModal.Description className='p-4'>
+          </DialogTitle>
+          <Description className='p-4'>
             Please review the template and send a test email below:
-          </FullScreenModal.Description>
+          </Description>
 
           <div className='mx-5 mb-5 border-b'>
             <Button

@@ -5,6 +5,7 @@ import ReactSelect from 'react-select';
 import _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { DialogTitle } from '@headlessui/react';
 import { InviteUserDTO, Role } from '@ehpr/common';
 import {
   Button,
@@ -70,9 +71,9 @@ export const InviteUser = () => {
         </Button>
       </div>
       <Modal open={open} handleClose={handleClose}>
-        <Modal.Title className='text-lg font-bold leading-6 text-bcBlueLink border-b p-4'>
+        <DialogTitle className='text-lg font-bold leading-6 text-bcBlueLink border-b p-4'>
           Invite a new user
-        </Modal.Title>
+        </DialogTitle>
         <div className='p-4 mt-4'>
           <Formik
             initialValues={initialValues}

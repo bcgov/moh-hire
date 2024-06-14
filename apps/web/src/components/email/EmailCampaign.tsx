@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { FullScreenModal, FullScreenModalFooter } from '../FullScreenModal';
+import { DialogTitle } from '@headlessui/react';
 import { Button } from '../Button';
 import { TemplatePreview } from './TemplatePreview';
 import { EmailData, EmailTemplate } from '@constants';
@@ -36,7 +37,7 @@ export const EmailCampaign = (props: EmailCampaignProps) => {
 
   return (
     <FullScreenModal open={open} handleClose={handleClose}>
-      <FullScreenModal.Title className='flex flex-row text-lg font-bold leading-6 text-bcBlueLink border-b p-4'>
+      <DialogTitle className='flex flex-row text-lg font-bold leading-6 text-bcBlueLink border-b p-4'>
         <div>Create Email Template</div>
         <button
           autoFocus={false}
@@ -46,7 +47,7 @@ export const EmailCampaign = (props: EmailCampaignProps) => {
         >
           <FontAwesomeIcon icon={faWindowClose} size='2x' />
         </button>
-      </FullScreenModal.Title>
+      </DialogTitle>
       <div className='p-4 mt-4'>
         {/* create template modal */}
         <CreateTemplate template={template} setTemplate={setTemplate} />
