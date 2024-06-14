@@ -19,10 +19,13 @@ export const Link: React.FC<LinkProps> = props => {
   }
 
   return (
-    <NextLink href={href} shallow={shallow} replace={replace}>
-      <a className={`${buttonColor[variant]} ${!variant.includes('link') ? buttonBase : ''}`}>
-        {children}
-      </a>
+    <NextLink
+      className={`${buttonColor[variant]} ${!variant.includes('link') ? buttonBase : ''}`}
+      href={href}
+      shallow={shallow}
+      replace={replace}
+    >
+      {children}
     </NextLink>
   );
 };
