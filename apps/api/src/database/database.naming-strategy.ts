@@ -38,7 +38,9 @@ export class DatabaseNamingStrategy
   }
 
   classTableInheritanceParentColumnName(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     parentTableName: any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     parentTableIdPropertyName: any,
   ): string {
     return snakeCase(parentTableName + '_' + parentTableIdPropertyName);
