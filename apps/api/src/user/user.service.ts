@@ -17,11 +17,11 @@ export class UserService {
     private readonly logger: AppLogger,
   ) {}
 
-  async findUser(id: string, email?: string): Promise<UserEntity | undefined> {
+  async findUser(id: string, email?: string): Promise<UserEntity | null> {
     if (email) {
       return this.userRepository.findOne({ where: [{ id }, { email }] });
     }
-    return this.userRepository.findOne(id);
+    return this.userRepository.findOneBy({ id });
   }
 
   async findUsers(): Promise<UserEntity[]> {
@@ -39,7 +39,7 @@ export class UserService {
   }
 
   async changeRole(id: string, role: Role) {
-    const user = await this.userRepository.findOne(id);
+    const user = await this.userRepository.findOneBy({ id });
     if (user && user.role !== role) {
       user.role = role;
       this.logger.log(`user role changed to ${role}: ${id}`);
@@ -56,7 +56,8 @@ export class UserService {
   }
 
   async revoke(id: string) {
-    const user = await this.userRepository.findOne(id);
+    const user = await this.userRepository.findOneBy({ id });
+
     if (user) {
       user.revokedDate = new Date();
       return this.userRepository.save(user);
@@ -65,7 +66,7 @@ export class UserService {
   }
 
   async approve(id: string) {
-    const user = await this.userRepository.findOne(id);
+    const user = await this.userRepository.findOneBy({ id });
     if (user) {
       user.active = true;
       user.revokedDate = null;
@@ -82,8 +83,7 @@ export class UserService {
     const ha = Object.values(Authorities).find(a => a.domains.includes(domain));
 
     if (ha) {
-      const haEntity: HealthAuthoritiesEntity | undefined =
-        await this.healthAuthorityRepository.findOne({ where: { name: ha.name } });
+      const haEntity = await this.healthAuthorityRepository.findOne({ where: { name: ha.name } });
       return haEntity?.id;
     }
 

@@ -2,7 +2,7 @@ resource "aws_lambda_function" "api" {
   description      = "API for ${local.namespace}"
   function_name    = local.api_name
   role             = aws_iam_role.lambda.arn
-  runtime          = "nodejs14.x"
+  runtime          = "nodejs18.x"
   filename         = var.api_artifact
   source_code_hash = filebase64sha256(var.api_artifact)
   handler          = "api/lambda.handler"

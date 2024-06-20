@@ -1,5 +1,6 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ReactNode } from 'react';
 
 export interface ButtonProps {
   onClick?: () => void;
@@ -7,6 +8,8 @@ export interface ButtonProps {
   loading?: boolean;
   type?: 'submit' | 'reset' | 'button';
   disabled?: boolean;
+  tabIndex?: -1 | 0;
+  children: ReactNode;
 }
 
 export const buttonColor: Record<string, string> = {
@@ -21,10 +24,11 @@ export const buttonBase = `w-auto inline-flex justify-center items-center rounde
   focus:ring-2 focus:ring-offset-2 sm:mt-0 sm:text-sm`;
 
 export const Button: React.FC<ButtonProps> = props => {
-  const { variant, type, children, disabled, loading, onClick } = props;
+  const { variant, type, children, disabled, loading, onClick, tabIndex } = props;
+
   return (
     <button
-      tabIndex={-1}
+      tabIndex={tabIndex ? tabIndex : 0}
       onClick={onClick}
       type={type}
       className={`
