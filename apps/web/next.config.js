@@ -3,6 +3,7 @@
 const { createSecureHeaders } = require('next-secure-headers');
 
 module.exports = {
+  output: 'export',
   experimental: {
     scrollRestoration: true,
   },
