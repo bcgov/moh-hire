@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { Brackets, Repository, DataSource, FindManyOptions } from 'typeorm';
+import { Brackets, Repository, DataSource, FindManyOptions, In } from 'typeorm';
 import { SubmissionEntity } from './entity/submission.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -48,7 +48,10 @@ export class SubmissionService {
   }
 
   async findSubmissionsbyIds(ids: string[], options?: FindManyOptions<SubmissionEntity>) {
-    const submissions = await this.submissionRepository.findByIds(ids, options);
+    const submissions = await this.submissionRepository.find({
+      where: { id: In(ids) },
+      ...options,
+    });
 
     const foundIds = submissions.map(entity => entity.id);
     // For troubleshooting purposes, this should always be empty
@@ -139,6 +142,10 @@ export class SubmissionService {
       });
     }
 
+    if (excludeWithdrawn) {
+      queryBuilder.andWhere('submission.withdrawn = :withdrawn', { withdrawn: false });
+    }
+
     return queryBuilder.skip(skip).take(limit).getManyAndCount();
   }
 
@@ -181,14 +188,18 @@ export class SubmissionService {
     excludeWithdrawn?: boolean,
   ) {
     let queryBuilder;
+    
     if (excludeWithdrawn) {
-      queryBuilder = this.dataSource.getRepository(SubmissionEntity)
+      queryBuilder = this.dataSource
+        .getRepository(SubmissionEntity)
         .createQueryBuilder('submission')
         .where('submission.withdrawn = :withdrawn', { withdrawn: false });
     } else {
-      queryBuilder = this.dataSource.getRepository(SubmissionEntity).createQueryBuilder('submission');
+      queryBuilder = this.dataSource
+        .getRepository(SubmissionEntity)
+        .createQueryBuilder('submission');
     }
-
+   
     const ha = await this.healthAuthoritiesRepository.findOne({ where: { id: haId } });
     // exclude any filtering for MoH users
     if (!isMoh(userEmail)) {
