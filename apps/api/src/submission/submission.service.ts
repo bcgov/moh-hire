@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { Brackets, Repository, getRepository, FindManyOptions } from 'typeorm';
+import { Brackets, Repository, DataSource, FindManyOptions } from 'typeorm';
 import { SubmissionEntity } from './entity/submission.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -22,6 +22,7 @@ import { HealthAuthoritiesEntity } from 'src/user/entity/ha.entity';
 @Injectable()
 export class SubmissionService {
   constructor(
+    private dataSource: DataSource,
     @Inject(Logger) private readonly logger: AppLogger,
     @InjectRepository(SubmissionEntity)
     private readonly submissionRepository: Repository<SubmissionEntity>,
@@ -43,7 +44,7 @@ export class SubmissionService {
   }
 
   async findSubmissionById(id: string) {
-    return this.submissionRepository.findOne({ id });
+    return this.submissionRepository.findOneBy({ id });
   }
 
   async findSubmissionsbyIds(ids: string[], options?: FindManyOptions<SubmissionEntity>) {
@@ -146,7 +147,7 @@ export class SubmissionService {
     payload: UpdateSubmissionDTO,
   ): Promise<SubmissionRO> {
     confirmationId = confirmationId.replace(/-/gm, '').toUpperCase();
-    const record = await this.submissionRepository.findOne({ confirmationId });
+    const record = await this.submissionRepository.findOneBy({ confirmationId });
     if (!record) {
       throw new NotFoundException(`No submission record for ${confirmationId}`);
     }
@@ -181,11 +182,11 @@ export class SubmissionService {
   ) {
     let queryBuilder;
     if (excludeWithdrawn) {
-      queryBuilder = getRepository(SubmissionEntity)
+      queryBuilder = this.dataSource.getRepository(SubmissionEntity)
         .createQueryBuilder('submission')
         .where('submission.withdrawn = :withdrawn', { withdrawn: false });
     } else {
-      queryBuilder = getRepository(SubmissionEntity).createQueryBuilder('submission');
+      queryBuilder = this.dataSource.getRepository(SubmissionEntity).createQueryBuilder('submission');
     }
 
     const ha = await this.healthAuthoritiesRepository.findOne({ where: { id: haId } });

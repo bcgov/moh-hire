@@ -42,10 +42,12 @@ export const AdminProvider = ({ children }: PropsWithChildren<ReactNode>) => {
 
   const approve = useCallback(async (id: string) => {
     replaceUser(await approveUser(id));
+    getUsers().then(setUsers).catch();
   }, []);
 
   const revoke = useCallback(async (id: string) => {
     replaceUser(await revokeUser(id));
+    getUsers().then(setUsers).catch();
   }, []);
 
   const invite = useCallback(async (payload: InviteUserDTO) => {

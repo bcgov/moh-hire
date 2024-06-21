@@ -23,14 +23,14 @@ export class AdminController {
   @Roles(Role.Admin)
   @UseGuards(RoleGuard)
   @Patch(':id/approve')
-  async approve(@Param() id: string) {
+  async approve(@Param('id') id: string) {
     return this.userService.approve(id);
   }
 
   @Roles(Role.Admin)
   @UseGuards(RoleGuard)
   @Patch(':id/revoke')
-  async revoke(@Param() id: string) {
+  async revoke(@Param('id') id: string) {
     return this.userService.revoke(id);
   }
 
