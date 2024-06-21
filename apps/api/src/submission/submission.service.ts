@@ -188,7 +188,7 @@ export class SubmissionService {
     excludeWithdrawn?: boolean,
   ) {
     let queryBuilder;
-    
+
     if (excludeWithdrawn) {
       queryBuilder = this.dataSource
         .getRepository(SubmissionEntity)
@@ -199,7 +199,7 @@ export class SubmissionService {
         .getRepository(SubmissionEntity)
         .createQueryBuilder('submission');
     }
-   
+
     const ha = await this.healthAuthoritiesRepository.findOne({ where: { id: haId } });
     // exclude any filtering for MoH users
     if (!isMoh(userEmail)) {
