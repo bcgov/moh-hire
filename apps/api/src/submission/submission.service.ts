@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { Brackets, Repository, DataSource, FindManyOptions, In } from 'typeorm';
+import { Brackets, Repository, DataSource, In } from 'typeorm';
 import { SubmissionEntity } from './entity/submission.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -18,6 +18,10 @@ import { generateConfirmationId } from './id-generator';
 import { AppLogger } from 'src/common/logger.service';
 import { UpdateConfirmationMailable } from 'src/mail/mailables/update-confirmation.mailable';
 import { HealthAuthoritiesEntity } from 'src/user/entity/ha.entity';
+import {
+  GetSubmissionsPersonalInfoResponse,
+  SubmissionPersonalInfo,
+} from './types/submissions-personal';
 
 @Injectable()
 export class SubmissionService {
@@ -47,11 +51,19 @@ export class SubmissionService {
     return this.submissionRepository.findOneBy({ id });
   }
 
-  async findSubmissionsbyIds(ids: string[], options?: FindManyOptions<SubmissionEntity>) {
-    const submissions = await this.submissionRepository.find({
-      where: { id: In(ids) },
-      ...options,
-    });
+  async getSubmissionsPersonalInfo(ids: string[]): Promise<GetSubmissionsPersonalInfoResponse> {
+    const submissionRepo = this.dataSource.getRepository(SubmissionEntity);
+
+    const submissions: SubmissionPersonalInfo[] = await submissionRepo
+      .createQueryBuilder('submission')
+      .select([
+        'submission.id AS "id"',
+        'submission.confirmationId AS "confirmationId"',
+        "submission.payload -> 'personalInformation' ->> 'firstName' AS \"firstName\"",
+        "submission.payload -> 'personalInformation' ->> 'lastName' AS \"lastName\"",
+      ])
+      .where({ id: In(ids) })
+      .getRawMany();
 
     const foundIds = submissions.map(entity => entity.id);
     // For troubleshooting purposes, this should always be empty

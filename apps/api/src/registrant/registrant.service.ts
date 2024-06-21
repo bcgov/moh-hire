@@ -17,6 +17,7 @@ import {
   RegistrantRO,
   UnsubscribeReasonDTO,
 } from '@ehpr/common';
+import { ProcessTemplate, SubmissionMap } from './types/template';
 import { SubmissionService } from 'src/submission/submission.service';
 import { formatRegistrants } from 'src/submission/submission.util';
 import { MailService } from 'src/mail/mail.service';
@@ -25,6 +26,7 @@ import { MassEmailRecordService } from 'src/mass-email-record/mass-email-record.
 import { AppLogger } from 'src/common/logger.service';
 import { SubmissionEntity } from 'src/submission/entity/submission.entity';
 import { emailBodyWithUnsubscribeLink, updateSubmissionLink } from 'src/mail/mail.util';
+
 @Injectable()
 export class RegistrantService {
   constructor(
@@ -95,11 +97,17 @@ export class RegistrantService {
         .process(async item => {
           const domain = process.env.DOMAIN;
           const token = this.jwtService.sign({ email: item.email, id: item.id });
-          const code = submissionsMap.get(item.id);
+          const data = submissionsMap.get(item.id);
           let body = '';
 
-          if (code && domain) {
-            body = this.processTemplateBody(payload.body, { email: item.email, code, domain });
+          if (data?.confirmationId && domain) {
+            //body = this.processTemplateBody(payload.body, { email: item.email, domain });
+            body = this.processTemplateBody({
+              templateBody: payload.body,
+              email: item.email,
+              domain,
+              submissionData: { ...data },
+            });
           }
 
           const unsubUrl = domain
@@ -146,21 +154,23 @@ export class RegistrantService {
   }
 
   // Replaces coded words based on the word name
-  private processTemplateBody(
-    body: EmailTemplateDTO['body'],
-    { email, code, domain }: { email: string; code: string; domain: string },
-  ) {
+  private processTemplateBody({
+    templateBody,
+    email,
+    domain,
+    submissionData: { confirmationId, firstName, lastName, fullName },
+  }: ProcessTemplate) {
     enum RegexResult {
       MATCH, // in format of ${word}
       GROUP, // in format of word
     }
 
-    const words = body.matchAll(/\$\{([^}]+)\}/g);
-    let processedBody = body;
+    const words = templateBody.matchAll(/\$\{([^}]+)\}/g);
+    let processedBody = templateBody;
 
     const subUpdateUrl = domain
-      ? `https://${domain}/update-submission?email=${email}&code=${code}`
-      : `https://ehpr.gov.bc.ca/update-submission?email=${email}&code=${code}`;
+      ? `https://${domain}/update-submission?email=${email}&code=${confirmationId}`
+      : `https://ehpr.gov.bc.ca/update-submission?email=${email}&code=${confirmationId}`;
 
     // Replacing each coded word with selected string
     for (const word of words) {
@@ -170,6 +180,12 @@ export class RegistrantService {
             word[RegexResult.MATCH],
             updateSubmissionLink(subUpdateUrl, 'Update your submission'),
           );
+        case 'first_name':
+          processedBody = processedBody.replace(word[RegexResult.MATCH], firstName);
+        case 'last_name':
+          processedBody = processedBody.replace(word[RegexResult.MATCH], lastName);
+        case 'full_name':
+          processedBody = processedBody.replace(word[RegexResult.MATCH], fullName);
       }
     }
     return processedBody;
@@ -178,18 +194,23 @@ export class RegistrantService {
   // Used to make lookup faster in PromisePool loop
   private async mapSubmissionIdToConfirmationId(payload: EmailTemplateDTO) {
     const ids = payload.data.map(submission => submission.id);
-    const { submissions, missingIds } = await this.submissionService.findSubmissionsbyIds(ids, {
-      select: ['id', 'confirmationId'],
-    });
+    const { submissions, missingIds } = await this.submissionService.getSubmissionsPersonalInfo(
+      ids,
+    );
 
     if (missingIds?.length) {
       this.logger.warn(`Unable to find the following submissions ${missingIds.join(', ')}`);
     }
 
-    const submissionsMap = new Map<string, string>();
+    const submissionsMap = new Map<string, SubmissionMap>();
     // Maps each submission id to its confirmation id
-    submissions.reduce((map: Map<string, string>, submission) => {
-      map.set(submission.id, submission.confirmationId);
+    submissions.reduce((map: Map<string, SubmissionMap>, submission) => {
+      map.set(submission.id, {
+        confirmationId: submission.confirmationId,
+        firstName: submission.firstName,
+        lastName: submission.lastName,
+        fullName: `${submission.firstName} ${submission.lastName}`,
+      });
       return map;
     }, submissionsMap);
 
