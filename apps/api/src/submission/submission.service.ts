@@ -120,15 +120,9 @@ export class SubmissionService {
 
   // query for registrants table
   async getSubmissionsFilterQuery(filter: RegistrantFilterDTO, haId?: number, userEmail?: string) {
-    const { firstName, lastName, email, skip, limit, anyRegion, excludeWithdrawn } = filter;
+    const { firstName, lastName, email, skip, limit, anyRegion } = filter;
 
-    const queryBuilder = await this.getHaFilterQuery(
-      haId,
-      userEmail,
-      true,
-      anyRegion,
-      excludeWithdrawn,
-    );
+    const queryBuilder = await this.getHaFilterQuery(haId, userEmail, true, anyRegion);
 
     // Registrants table should default to exclude withdrawn
     queryBuilder.andWhere('submission.withdrawn = :withdrawn', { withdrawn: false });
@@ -191,20 +185,10 @@ export class SubmissionService {
   }
 
   // creates HA filter query for registrants table and submission extract
-  async getHaFilterQuery(
-    haId?: number,
-    userEmail?: string,
-    isTable?: boolean,
-    anyRegion = false,
-    excludeWithdrawn?: boolean,
-  ) {
+  async getHaFilterQuery(haId?: number, userEmail?: string, isTable?: boolean, anyRegion = false) {
     const queryBuilder = this.dataSource
       .getRepository(SubmissionEntity)
       .createQueryBuilder('submission');
-
-    if (excludeWithdrawn) {
-      queryBuilder.where('submission.withdrawn = :withdrawn', { withdrawn: false });
-    }
 
     const ha = await this.healthAuthoritiesRepository.findOne({ where: { id: haId } });
     // exclude any filtering for MoH users

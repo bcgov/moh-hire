@@ -23,7 +23,4 @@ export class RegistrantFilterDTO {
 
   @IsOptional()
   anyRegion?: boolean;
-
-  @IsOptional()
-  excludeWithdrawn?: boolean;
 }
