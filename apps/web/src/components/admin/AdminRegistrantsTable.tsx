@@ -21,8 +21,6 @@ interface FilterOptions {
   skip?: number;
   take?: number;
   limit?: number;
-  // This need to be true so withdrawn submissions are not included
-  excludeWithdrawn: boolean;
 }
 
 interface PageOptions {
@@ -54,7 +52,6 @@ export const AdminRegistrantsTable = () => {
     const options: FilterOptions = {
       limit,
       skip,
-      excludeWithdrawn: true,
       ...filters,
     };
 
@@ -90,7 +87,7 @@ export const AdminRegistrantsTable = () => {
 
   // used for search inputs
   const search = async (filters: RegistrantFilterDTO, searchLimit: number) => {
-    const options: FilterOptions = { ...filters, limit: searchLimit, excludeWithdrawn: true };
+    const options: FilterOptions = { ...filters, limit: searchLimit };
     setLimit(searchLimit);
     setPageIndex(1);
     setFilters(filters);

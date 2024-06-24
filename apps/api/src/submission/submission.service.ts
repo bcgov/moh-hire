@@ -130,6 +130,9 @@ export class SubmissionService {
       excludeWithdrawn,
     );
 
+    // Registrants table should default to exclude withdrawn
+    queryBuilder.andWhere('submission.withdrawn = :withdrawn', { withdrawn: false });
+
     if (firstName) {
       queryBuilder.andWhere(
         "submission.payload->'personalInformation'->>'firstName' ILIKE :firstName",
@@ -152,10 +155,6 @@ export class SubmissionService {
       queryBuilder.andWhere("submission.payload->'contactInformation'->>'email' ILIKE :email", {
         email: `%${email}%`,
       });
-    }
-
-    if (excludeWithdrawn) {
-      queryBuilder.andWhere('submission.withdrawn = :withdrawn', { withdrawn: false });
     }
 
     return queryBuilder.skip(skip).take(limit).getManyAndCount();
@@ -199,17 +198,12 @@ export class SubmissionService {
     anyRegion = false,
     excludeWithdrawn?: boolean,
   ) {
-    let queryBuilder;
+    const queryBuilder = this.dataSource
+      .getRepository(SubmissionEntity)
+      .createQueryBuilder('submission');
 
     if (excludeWithdrawn) {
-      queryBuilder = this.dataSource
-        .getRepository(SubmissionEntity)
-        .createQueryBuilder('submission')
-        .where('submission.withdrawn = :withdrawn', { withdrawn: false });
-    } else {
-      queryBuilder = this.dataSource
-        .getRepository(SubmissionEntity)
-        .createQueryBuilder('submission');
+      queryBuilder.where('submission.withdrawn = :withdrawn', { withdrawn: false });
     }
 
     const ha = await this.healthAuthoritiesRepository.findOne({ where: { id: haId } });
