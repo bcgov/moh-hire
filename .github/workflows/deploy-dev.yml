@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v4
-      - name: setup node v16
+      - name: setup node v20
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -62,7 +62,7 @@ jobs:
           NEXT_PUBLIC_KC_CLIENT_ID: ${{ vars.KC_CLIENT_ID }}
           NEXT_PUBLIC_KC_REDIRECT_URI: ${{ vars.KC_REDIRECT_URI }}
           NEXT_PUBLIC_KC_SECRET: ${{ secrets.KC_SECRET }}
-          NEXT_PUBLIC_FEATURE_MASS_EMAIL: ${{ vars.FEATURE_MASS_EMAIL }}
+          NEXT_PUBLIC_FEATURE_MASS_EMAIL: true
 
       - name: Build api
         run: make build-api
