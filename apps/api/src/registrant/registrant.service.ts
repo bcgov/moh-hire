@@ -182,10 +182,13 @@ export class RegistrantService {
           );
         case 'first_name':
           processedBody = processedBody.replace(word[RegexResult.MATCH], firstName);
+          break;
         case 'last_name':
           processedBody = processedBody.replace(word[RegexResult.MATCH], lastName);
+          break;
         case 'full_name':
           processedBody = processedBody.replace(word[RegexResult.MATCH], fullName);
+          break;
       }
     }
     return processedBody;
