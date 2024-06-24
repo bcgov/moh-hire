@@ -180,6 +180,7 @@ export class RegistrantService {
             word[RegexResult.MATCH],
             updateSubmissionLink(subUpdateUrl, 'Update your submission'),
           );
+          break;
         case 'first_name':
           processedBody = processedBody.replace(word[RegexResult.MATCH], firstName);
           break;
