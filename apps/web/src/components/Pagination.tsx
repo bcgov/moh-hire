@@ -55,6 +55,7 @@ export const Pagination = (props: PaginationProps) => {
       </div>
       <div className='px-3 text-sm my-auto'>
         <select
+          aria-label='items per page'
           name='page-size'
           onChange={e => changePageSize(+e.target.value)}
           value={currentPageSize}
@@ -71,7 +72,12 @@ export const Pagination = (props: PaginationProps) => {
       </div>
       <div className='flex flex-row flex-grow justify-end'>
         <div className='px-3 pt-4 border-l border-r h-100 text-sm'>
-          <select name='page-list' onChange={e => goToPage(+e.target.value)} value={currentPage}>
+          <select
+            aria-label='page select'
+            name='page-list'
+            onChange={e => goToPage(+e.target.value)}
+            value={currentPage}
+          >
             {pageListOptions.map((o: { value: number }) => (
               <Option key={o.value} label={String(o.value)} value={String(o.value)} />
             ))}
@@ -79,6 +85,7 @@ export const Pagination = (props: PaginationProps) => {
         </div>
         <div className='text-sm p-4'>of {numOfPages} pages</div>
         <button
+          aria-label='previous page'
           className='p-3 border-l'
           onClick={() => goToPage(pageIndex - 1)}
           disabled={pageIndex === 1}
@@ -89,6 +96,7 @@ export const Pagination = (props: PaginationProps) => {
           />
         </button>
         <button
+          aria-label='next page'
           className='p-3 border-l border-r'
           onClick={() => goToPage(pageIndex + 1)}
           disabled={pageIndex === numOfPages || numOfPages === 0}

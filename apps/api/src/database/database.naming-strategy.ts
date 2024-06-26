@@ -37,8 +37,11 @@ export class DatabaseNamingStrategy
     return snakeCase(tableName + '_' + (columnName ? columnName : propertyName));
   }
 
+  //@TODO: Add proper types for parentTableName & parentTableIdPropertyName
   classTableInheritanceParentColumnName(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     parentTableName: any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     parentTableIdPropertyName: any,
   ): string {
     return snakeCase(parentTableName + '_' + parentTableIdPropertyName);

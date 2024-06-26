@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { Brackets, Repository, getRepository } from 'typeorm';
+import { Brackets, Repository, DataSource, In } from 'typeorm';
 import { SubmissionEntity } from './entity/submission.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -18,10 +18,15 @@ import { generateConfirmationId } from './id-generator';
 import { AppLogger } from 'src/common/logger.service';
 import { UpdateConfirmationMailable } from 'src/mail/mailables/update-confirmation.mailable';
 import { HealthAuthoritiesEntity } from 'src/user/entity/ha.entity';
+import {
+  GetSubmissionsPersonalInfoResponse,
+  SubmissionPersonalInfo,
+} from './types/submissions-personal';
 
 @Injectable()
 export class SubmissionService {
   constructor(
+    private dataSource: DataSource,
     @Inject(Logger) private readonly logger: AppLogger,
     @InjectRepository(SubmissionEntity)
     private readonly submissionRepository: Repository<SubmissionEntity>,
@@ -43,7 +48,32 @@ export class SubmissionService {
   }
 
   async findSubmissionById(id: string) {
-    return this.submissionRepository.findOne({ id });
+    return this.submissionRepository.findOneBy({ id });
+  }
+
+  async getSubmissionsPersonalInfo(ids: string[]): Promise<GetSubmissionsPersonalInfoResponse> {
+    const submissionRepo = this.dataSource.getRepository(SubmissionEntity);
+
+    const submissions: SubmissionPersonalInfo[] = await submissionRepo
+      .createQueryBuilder('submission')
+      .select([
+        'submission.id AS "id"',
+        'submission.confirmationId AS "confirmationId"',
+        "submission.payload -> 'personalInformation' ->> 'firstName' AS \"firstName\"",
+        "submission.payload -> 'personalInformation' ->> 'lastName' AS \"lastName\"",
+      ])
+      .where({ id: In(ids) })
+      .getRawMany();
+
+    const foundIds = submissions.map(entity => entity.id);
+    // For troubleshooting purposes, this should always be empty
+    const missingIds = ids.filter(id => !foundIds.includes(id));
+
+    if (!submissions?.length) {
+      throw new NotFoundException('No submission records were found for ids');
+    }
+
+    return { submissions, missingIds };
   }
 
   private async sendSubmissionConfirmation(submission: SubmissionEntity) {
@@ -94,6 +124,9 @@ export class SubmissionService {
 
     const queryBuilder = await this.getHaFilterQuery(haId, userEmail, true, anyRegion);
 
+    // Registrants table should default to exclude withdrawn
+    queryBuilder.andWhere('submission.withdrawn = :withdrawn', { withdrawn: false });
+
     if (firstName) {
       queryBuilder.andWhere(
         "submission.payload->'personalInformation'->>'firstName' ILIKE :firstName",
@@ -126,7 +159,7 @@ export class SubmissionService {
     payload: UpdateSubmissionDTO,
   ): Promise<SubmissionRO> {
     confirmationId = confirmationId.replace(/-/gm, '').toUpperCase();
-    const record = await this.submissionRepository.findOne({ confirmationId });
+    const record = await this.submissionRepository.findOneBy({ confirmationId });
     if (!record) {
       throw new NotFoundException(`No submission record for ${confirmationId}`);
     }
@@ -153,7 +186,10 @@ export class SubmissionService {
 
   // creates HA filter query for registrants table and submission extract
   async getHaFilterQuery(haId?: number, userEmail?: string, isTable?: boolean, anyRegion = false) {
-    const queryBuilder = getRepository(SubmissionEntity).createQueryBuilder('submission');
+    const queryBuilder = this.dataSource
+      .getRepository(SubmissionEntity)
+      .createQueryBuilder('submission');
+
     const ha = await this.healthAuthoritiesRepository.findOne({ where: { id: haId } });
     // exclude any filtering for MoH users
     if (!isMoh(userEmail)) {

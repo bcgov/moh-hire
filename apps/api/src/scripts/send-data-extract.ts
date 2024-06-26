@@ -60,6 +60,7 @@ export const formExportColumnHeaders = [
 ];
 
 export const flattenAndTransformFormData = (submissions: SubmissionEntity[]) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const flatNormalizedSubmissions: any[] = [];
   submissions.forEach(({ id, payload, withdrawn }) => {
     const {
@@ -177,6 +178,8 @@ export const sendDataExtract = async (app: INestApplicationContext, context: str
       context,
     );
   } catch (e) {
-    logger.log(e.stack, context);
+    if (e instanceof Error) {
+      logger.log(e.stack, context);
+    }
   }
 };

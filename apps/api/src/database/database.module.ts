@@ -4,7 +4,7 @@ import { join } from 'path';
 import { LoggerOptions } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
-import config from '../ormconfig';
+import { config } from '../ormconfig';
 import { SubmissionEntity } from '../submission/entity/submission.entity';
 import { UserEntity } from '../user/entity/user.entity';
 import { MassEmailRecordEntity } from '../mass-email-record/entity/mass-email-record.entity';
@@ -51,8 +51,8 @@ const environmentSpecificConfig = getEnvironmentSpecificConfig(nodeEnv);
 const appOrmConfig: PostgresConnectionOptions = {
   ...config,
   ...environmentSpecificConfig,
-  synchronize: false,
   migrationsRun: true,
+  synchronize: false,
 };
 @Module({
   imports: [TypeOrmModule.forRoot(appOrmConfig)],
