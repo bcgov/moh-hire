@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ListboxButton, ListboxOptions, ListboxOption, Transition } from '@headlessui/react';
 
 import { OptionType } from '@components';
@@ -20,7 +20,9 @@ const listboxStyles = (
   selectedLength?: number,
 ) => {
   const disabledStyles =
-    isDisabled || optionsLength === 0 ? 'bg-gray-300 ' : 'border-b-2 border-black bg-gray-100 hover:border-gray-400';
+    isDisabled || optionsLength === 0
+      ? 'bg-gray-300 '
+      : 'border-b-2 border-black bg-gray-100 hover:border-gray-400';
   const heightStyle = selectedLength !== 0 ? '' : 'h-10';
   return `${disabledStyles} ${heightStyle}`;
 };
@@ -34,13 +36,16 @@ export const MultiItemListbox = ({
   handlePreviousSelect,
 }: MultiItemListboxProps) => {
   const commonStyles = listboxStyles(isDisabled, options.length, selected.length);
-  
-  const handleOptionRemove = useCallback((option: OptionType, event:React.MouseEvent<SVGSVGElement>) => {
-    event.stopPropagation();
 
-    handlePreviousSelect(option);
-  },[handlePreviousSelect])
-  
+  const handleOptionRemove = useCallback(
+    (option: OptionType, event: React.MouseEvent<SVGSVGElement>) => {
+      event.stopPropagation();
+
+      handlePreviousSelect(option);
+    },
+    [handlePreviousSelect],
+  );
+
   return (
     <>
       <ListboxButton
@@ -53,18 +58,17 @@ export const MultiItemListbox = ({
         {Boolean(selected.length) ? (
           <div className='block'>
             {selected.map((option, index) => (
-               <div key={index}>
-                  <div  className='flex justify-between align-middle text-sm bg-gray-300 rounded p-1 my-0.5 mr-1 px-2'>
-                <p className='truncate'>{option.label}</p>
-                <FontAwesomeIcon
-                  aria-label={`Remove ${option.label}`}
-                  onClick={e => handleOptionRemove(option, e)}
-                  icon={faTimes}
-                  className='self-center hover:text-[#D8292F]'
-                />
+              <div key={index}>
+                <div className='flex justify-between align-middle text-sm bg-gray-300 rounded p-1 my-0.5 mr-1 px-2'>
+                  <p className='truncate'>{option.label}</p>
+                  <FontAwesomeIcon
+                    aria-label={`Remove ${option.label}`}
+                    onClick={e => handleOptionRemove(option, e)}
+                    icon={faTimes}
+                    className='self-center hover:text-[#D8292F]'
+                  />
+                </div>
               </div>
-               </div>
-              
             ))}
           </div>
         ) : isDisabled ? (
@@ -73,11 +77,7 @@ export const MultiItemListbox = ({
           'Select...'
         )}
         <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
-          <FontAwesomeIcon
-            icon={faCaretDown}
-            className='h-5 w-5 text-black '
-            aria-hidden='true'
-          />
+          <FontAwesomeIcon icon={faCaretDown} className='h-5 w-5 text-black ' aria-hidden='true' />
         </span>
       </ListboxButton>
       <Transition
@@ -157,11 +157,7 @@ export const SingleItemListbox = ({
       >
         {selected ? <span className='block truncate'>{displayText(selected)}</span> : 'Select...'}
         <span className='hover:text-gray-400 pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 '>
-          <FontAwesomeIcon
-            icon={faCaretDown}
-            className='h-5 w-5 text-black '
-            aria-hidden='true'
-          />
+          <FontAwesomeIcon icon={faCaretDown} className='h-5 w-5 text-black ' aria-hidden='true' />
         </span>
       </ListboxButton>
       <Transition
