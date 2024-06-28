@@ -16,14 +16,19 @@ export interface SelectProps {
   isDisabled?: boolean;
 }
 
+export interface ValueProps {
+  id: string;
+  name: string;
+}
+
 export interface BasicSelectProps extends SelectProps {
-  value: any;
-  onChange: (value: any) => void;
+  value: string;
+  onChange: (value: string) => void;
 }
 
 export interface MultiSelectProps extends SelectProps {
-  value: any;
-  onChange: (value: any) => void;
+  value: Array<ValueProps>;
+  onChange: (value: Array<OptionType>) => void;
 }
 
 export const BasicSelect = (props: BasicSelectProps) => {
@@ -36,7 +41,7 @@ export const BasicSelect = (props: BasicSelectProps) => {
         id={id}
         options={options}
         value={value}
-        onChange={value => onChange(value as string)}
+        onChange={onChange}
         menuPlacement={menuPlacement}
         isDisabled={isDisabled}
       />
@@ -47,6 +52,10 @@ export const BasicSelect = (props: BasicSelectProps) => {
 export const MultiSelect2 = (props: MultiSelectProps) => {
   const { id, value, label, options, onChange, menuPlacement } = props;
 
+  const transformSelectedToFormik = (value: ValueProps[]): OptionType[] => {
+    return value.map(item => ({ value: item.id, label: item.name }));
+  };
+
   return (
     <div>
       <SelectLabel id={id} label={label} />
@@ -54,9 +63,10 @@ export const MultiSelect2 = (props: MultiSelectProps) => {
         isMulti
         id={id}
         options={options}
-        value={value}
-        onChange={value => onChange(value as any)}
+        value={transformSelectedToFormik(value)}
+        onChange={onChange}
         menuPlacement={menuPlacement}
+        isDisabled={false}
       />
     </div>
   );

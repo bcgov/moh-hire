@@ -195,11 +195,6 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
   deleteFunction,
   enableDelete,
 }) => {
-  const { values } = useFormikContext<SubmissionType>();
-  const { specialties: formSpecialties }: CredentialInformationDTO = values.credentialInformation;
-
-  const specialtyOptionIsDisabled = (specialtyId: string): boolean =>
-    !!formSpecialties.find(specialty => specialty.id === specialtyId);
   return (
     <div className='grid md:grid-cols-2 gap-2 w-full ring-gray-200 ring-1 ring-offset-10 rounded-sm'>
       <div className='col-span-1'>
@@ -247,9 +242,9 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
               onChange={value => {
                 form.setFieldValue(
                   field.name,
-                  value.map((value: string) => ({
-                    id: value,
-                    name: subspecialties?.find(s => s.value === value)?.label,
+                  value.map((option: OptionType) => ({
+                    id: option.value,
+                    name: option.label,
                   })),
                 );
               }}
