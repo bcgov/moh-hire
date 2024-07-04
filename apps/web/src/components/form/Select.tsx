@@ -35,18 +35,16 @@ export const BasicSelect = (props: BasicSelectProps) => {
   const { id, value, label, options, onChange, menuPlacement, isDisabled, description } = props;
 
   return (
-    <>
-      <HeadlessList
-        id={id}
-        options={options}
-        value={value}
-        onChange={onChange}
-        menuPlacement={menuPlacement}
-        isDisabled={isDisabled}
-        description={description}
-        label={label}
-      />
-    </>
+    <HeadlessList
+      id={id}
+      options={options}
+      value={value}
+      onChange={onChange}
+      menuPlacement={menuPlacement}
+      isDisabled={isDisabled}
+      description={description}
+      label={label}
+    />
   );
 };
 
@@ -61,19 +59,17 @@ export const MultiSelect2 = (props: MultiSelectProps) => {
   };
 
   return (
-    <>
-      <HeadlessList
-        isMulti
-        id={id}
-        options={options}
-        value={transformSelectedToFormik(value)}
-        onChange={onChange}
-        menuPlacement={menuPlacement}
-        isDisabled={isDisabled}
-        description={description}
-        label={label}
-      />
-    </>
+    <HeadlessList
+      isMulti
+      id={id}
+      options={options}
+      value={transformSelectedToFormik(value)}
+      onChange={onChange}
+      menuPlacement={menuPlacement}
+      isDisabled={isDisabled}
+      description={description}
+      label={label}
+    />
   );
 };
 
