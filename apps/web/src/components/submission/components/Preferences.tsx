@@ -7,8 +7,8 @@ import {
   Error,
   CheckboxArray,
   Field,
+  BasicSelect,
 } from '@components';
-import { BasicSelect } from '@components';
 import { getLhasbyHaId, HaId } from '@ehpr/common';
 import { FieldProps, useFormikContext } from 'formik';
 import { useEffect, useRef } from 'react';

@@ -7,9 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { DialogTitle } from '@headlessui/react';
 import { InviteUserDTO, Role } from '@ehpr/common';
-import { BasicSelect } from '@components';
-
-import { Button, Field, Modal, OptionType, useAdminContext } from '@components';
+import { Button, Field, Modal, OptionType, useAdminContext, BasicSelect } from '@components';
 
 const roleOptions: OptionType[] = Object.values(Role)
   .filter(role => role !== Role.Pending)

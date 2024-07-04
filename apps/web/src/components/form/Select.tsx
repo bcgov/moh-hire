@@ -51,7 +51,7 @@ export const BasicSelect = (props: BasicSelectProps) => {
 };
 
 export const MultiSelect2 = (props: MultiSelectProps) => {
-  const { id, value, options, onChange, menuPlacement, label, description } = props;
+  const { id, value, options, onChange, menuPlacement, label, description, isDisabled } = props;
 
   const transformSelectedToFormik = (value: ValueProps[]): OptionType[] => {
     if (!Array.isArray(value)) {
@@ -69,7 +69,7 @@ export const MultiSelect2 = (props: MultiSelectProps) => {
         value={transformSelectedToFormik(value)}
         onChange={onChange}
         menuPlacement={menuPlacement}
-        isDisabled={false}
+        isDisabled={isDisabled}
         description={description}
         label={label}
       />

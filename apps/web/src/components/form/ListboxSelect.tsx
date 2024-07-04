@@ -27,6 +27,37 @@ const listboxStyles = (
   return `${disabledStyles} ${heightStyle}`;
 };
 
+const renderSelection = (
+  selected: OptionType[],
+  isDisabled: boolean | undefined,
+  handleOptionRemove: (option: OptionType, event: React.MouseEvent<SVGSVGElement>) => void,
+) => {
+  if (selected && selected.length > 0) {
+    return (
+      <div className='block'>
+        {selected.map(option => (
+          <div key={option.value}>
+            <div className='flex justify-between align-middle text-sm bg-gray-300 rounded p-1 my-0.5 mr-1 px-2'>
+              <p className='truncate'>{option.label}</p>
+              <FontAwesomeIcon
+                aria-label={`Remove ${option.label}`}
+                onClick={e => handleOptionRemove(option, e)}
+                icon={faTimes}
+                className='self-center hover:text-[#D8292F]'
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  } else if (isDisabled) {
+    // Don't want placeholder text if disabled
+    return '';
+  } else {
+    return 'Select...';
+  }
+};
+
 export const MultiItemListbox = ({
   id,
   options,
@@ -37,14 +68,11 @@ export const MultiItemListbox = ({
 }: MultiItemListboxProps) => {
   const commonStyles = listboxStyles(isDisabled, options.length, selected.length);
 
-  const handleOptionRemove = useCallback(
-    (option: OptionType, event: React.MouseEvent<SVGSVGElement>) => {
-      event.stopPropagation();
+  const handleOptionRemove = (option: OptionType, event: React.MouseEvent<SVGSVGElement>) => {
+    event.stopPropagation();
 
-      handlePreviousSelect(option);
-    },
-    [handlePreviousSelect],
-  );
+    handlePreviousSelect(option);
+  };
 
   return (
     <>
@@ -55,27 +83,7 @@ export const MultiItemListbox = ({
         `}
         id={id}
       >
-        {Boolean(selected.length) ? (
-          <div className='block'>
-            {selected.map((option, index) => (
-              <div key={index}>
-                <div className='flex justify-between align-middle text-sm bg-gray-300 rounded p-1 my-0.5 mr-1 px-2'>
-                  <p className='truncate'>{option.label}</p>
-                  <FontAwesomeIcon
-                    aria-label={`Remove ${option.label}`}
-                    onClick={e => handleOptionRemove(option, e)}
-                    icon={faTimes}
-                    className='self-center hover:text-[#D8292F]'
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : isDisabled ? (
-          ''
-        ) : (
-          'Select...'
-        )}
+        {renderSelection(selected, isDisabled, handleOptionRemove)}
         <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
           <FontAwesomeIcon icon={faCaretDown} className='h-5 w-5 text-black ' aria-hidden='true' />
         </span>
@@ -177,9 +185,7 @@ export const SingleItemListbox = ({
               value={option.value}
               className='relative cursor-default select-none py-2 pr-4 pl-3 data-[active]:bg-gray-100 text-gray-900'
             >
-              <>
-                <span className='block truncate'>{option.label || option.value}</span>
-              </>
+              <span className='block truncate'>{option.label || option.value}</span>
             </ListboxOption>
           ))}
         </ListboxOptions>
