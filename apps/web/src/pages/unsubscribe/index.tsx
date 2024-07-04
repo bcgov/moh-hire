@@ -43,9 +43,10 @@ const UnsubscribePage = () => {
                     If this was an accident, you may close the window and stay subscribed.
                   </p>
                   <div className='w-full mt-5'>
-                    <Field name='reason' label='Reason'>
+                    <Field name='reason'>
                       {({ field, form }: FieldProps) => (
                         <BasicSelect
+                          label='Reason'
                           id={field.name}
                           value={
                             field.value || unsubscribeReasons.find(r => r.value === field.value)

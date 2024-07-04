@@ -104,12 +104,10 @@ export const Preferences: React.FC<FormStepProps> = () => {
             />
           </div>
           <div className='flex flex-row'>
-            <Field
-              name={'preferencesInformation.lastDeployedHa'}
-              label={'Last Deployed Health Authority'}
-            >
+            <Field name={'preferencesInformation.lastDeployedHa'}>
               {({ field, form }: FieldProps) => (
                 <BasicSelect
+                  label={'Last Deployed Health Authority'}
                   id={field.name}
                   value={
                     field.value || (healthAuthorityOptions || []).find(o => o.value === field.value)

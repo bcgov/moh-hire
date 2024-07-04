@@ -20,6 +20,7 @@ const roleOptions: OptionType[] = Object.values(Role)
 
 const SelectRole = ({ field, form }: FieldProps) => (
   <BasicSelect
+    label='User Role'
     id={field.name}
     options={roleOptions}
     value={field.value || roleOptions.find(o => o.value === field.value)?.value}
@@ -78,7 +79,7 @@ export const InviteUser = () => {
                   <Field name='email' label='Email Address' type='email' />
                 </div>
                 <div className='flex flex-row align-middle mb-5'>
-                  <Field name='role' label='User Role' component={SelectRole} />
+                  <Field name='role' component={SelectRole} />
                   <div className='ml-4 mt-auto text-bcGray'>{getRoleDescription(values.role)}</div>
                 </div>
                 <div className='text-right py-3 pr-8'>

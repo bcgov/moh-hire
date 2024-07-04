@@ -1,8 +1,5 @@
-import { ReactNode } from "react";
-
 interface DescriptionProps {
   id: string;
-  children:ReactNode
 }
 
 export const Description: React.FC<DescriptionProps> = ({ id, children }) => {
