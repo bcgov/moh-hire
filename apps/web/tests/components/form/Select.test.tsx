@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { render, screen } from '@testing-library/react';
-import { Select, Option } from '@components';
+import { BasicSelect, Option } from '@components';
 
 describe('Select', () => {
   it('renders a select', () => {
@@ -11,11 +11,17 @@ describe('Select', () => {
 
     render(
       <Formik initialValues={{ [testSelectName]: '' }} onSubmit={mock}>
-        <Select name={testSelectName} label={testSelectText} />
+        <BasicSelect
+          id={testSelectName}
+          label={testSelectText}
+          value=''
+          options={[]}
+          onChange={() => {}}
+        />
       </Formik>,
     );
 
-    const selectElement = screen.getByRole('combobox');
+    const selectElement = screen.getByRole('button');
 
     expect(selectElement).toBeInTheDocument();
   });
@@ -23,17 +29,22 @@ describe('Select', () => {
   it('renders a label element with the correct accessible association', () => {
     const mock = jest.fn();
     const selectName = 'selectName';
-    const selectType = 'text';
     const selectLabel = 'select label';
 
     render(
       <Formik initialValues={{ [selectName]: '' }} onSubmit={mock}>
-        <Select name={selectName} type={selectType} label={selectLabel} />
+        <BasicSelect
+          id={selectName}
+          value={selectName}
+          options={[]}
+          onChange={() => {}}
+          label={selectLabel}
+        />
       </Formik>,
     );
 
     const labelElement = screen.getByText('select label');
-    const selectElement = screen.getByRole('combobox');
+    const selectElement = screen.getByRole('button');
 
     expect(labelElement).toBeInTheDocument();
     expect(selectElement).toHaveAccessibleName(selectLabel);
@@ -42,21 +53,23 @@ describe('Select', () => {
   it('renders a description element with the proper accessible association', () => {
     const mock = jest.fn();
     const selectName = 'selectName';
-    const selectType = 'text';
     const selectLabel = 'select label';
     const selectDescription = 'field format description';
 
     render(
       <Formik initialValues={{ [selectName]: '' }} onSubmit={mock}>
-        <Select
-          name={selectName}
-          type={selectType}
+        <BasicSelect
           label={selectLabel}
           description={selectDescription}
+          id={selectName}
+          value={selectName}
+          options={[]}
+          onChange={() => {}}
         />
       </Formik>,
     );
-    const selectElement = screen.getByRole('combobox');
+
+    const selectElement = screen.getByRole('button');
     const descriptionElement = screen.getByText('field format description');
 
     expect(descriptionElement).toBeInTheDocument();

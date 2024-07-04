@@ -98,7 +98,7 @@ export const Credential: React.FC = () => {
   return (
     <div className='flex flex-col gap-5'>
       <FormStepHeader>3. Credentials Information</FormStepHeader>
-      <Field name='credentialInformation.stream' label='Stream Type'>
+      <Field name='credentialInformation.stream'>
         {({ field, form }: FieldProps) => (
           <BasicSelect
             id={field.name}
@@ -106,6 +106,7 @@ export const Credential: React.FC = () => {
             value={field.value || streamOptions.find(s => s.value === field.value)}
             menuPlacement='bottom'
             onChange={value => form.setFieldValue(field.name, value)}
+            label='Stream Type'
           />
         )}
       </Field>
@@ -198,12 +199,10 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
   return (
     <div className='grid md:grid-cols-2 gap-2 w-full ring-gray-200 ring-1 ring-offset-10 rounded-sm'>
       <div className='col-span-1'>
-        <Field
-          name={`credentialInformation.specialties[${index}].id`}
-          label={`Main Speciality #${index + 1}`}
-        >
+        <Field name={`credentialInformation.specialties[${index}].id`}>
           {({ field, form }: FieldProps) => (
             <BasicSelect
+              label={`Main Speciality #${index + 1}`}
               id={field.name}
               options={(specialties || []).map(s => ({
                 ...s,
@@ -228,12 +227,10 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
         ) : null}
       </div>
       <div className='col-span-1'>
-        <Field
-          name={`credentialInformation.specialties[${index}].subspecialties`}
-          label={`Subspecialty #${index + 1}`}
-        >
+        <Field name={`credentialInformation.specialties[${index}].subspecialties`}>
           {({ field, form }: FieldProps) => (
             <MultiSelect2
+              label={`Subspecialty #${index + 1}`}
               id={field.name}
               options={subspecialties || []}
               isDisabled={!subspecialties || subspecialties.length === 0}
