@@ -44,7 +44,10 @@ export const HeadlessList = <T,>({
         return prevSelected;
       }
 
-      return prevSelected.filter(option => option.value !== selectedOption.value);
+      const remainingOptions = prevSelected.filter(option => option.value !== selectedOption.value);
+
+      onChange(remainingOptions as T);
+      return remainingOptions;
     });
   };
 
