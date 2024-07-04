@@ -54,14 +54,18 @@ export const DatePickerField = (props: DatePickerFieldProps) => {
           scrollableYearDropdown
           yearDropdownItemNumber={numOfYears}
           selected={field.value ? dayjs(field.value).toDate() : null}
-          onFocus={e => (valRef.current = e.target.value)}
+          onFocus={e => {
+            const target = e.target as HTMLInputElement;
+            valRef.current = target.value;
+          }}
           onBlur={() => {
             form.setFieldTouched(name, true);
             valRef.current && form.setFieldValue(name, valRef.current);
           }}
           onChangeRaw={e => {
-            if (dayjs(e.target.value, 'YYYY/MM/DD').isValid()) {
-              valRef.current = e.target.value;
+            const target = e?.target as HTMLInputElement;
+            if (dayjs(target.value, 'YYYY/MM/DD').isValid()) {
+              valRef.current = target.value;
             }
           }}
           onChange={value => value || form.setFieldValue(name, '')}

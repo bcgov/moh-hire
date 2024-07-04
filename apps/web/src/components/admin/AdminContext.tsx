@@ -1,6 +1,5 @@
 import {
   createContext,
-  PropsWithChildren,
   ReactNode,
   useCallback,
   useContext,
@@ -27,7 +26,11 @@ const AdminContext = createContext<AdminContextProps>({
   invite: () => Promise.resolve(void 0),
 });
 
-export const AdminProvider = ({ children }: PropsWithChildren<ReactNode>) => {
+type AdminProviderProps = {
+  children: ReactNode;
+};
+
+export const AdminProvider = ({ children }: AdminProviderProps) => {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {

@@ -1,10 +1,12 @@
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import { buttonBase, buttonColor } from './Button';
+import { ReactNode } from 'react';
 
 export interface LinkProps extends NextLinkProps {
   href: string;
   variant: keyof typeof buttonColor;
   disabled?: boolean;
+  children: ReactNode;
 }
 
 export const Link: React.FC<LinkProps> = props => {

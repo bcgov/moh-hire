@@ -26,6 +26,7 @@ import {
   deploymentTypeOptions,
   previousDeploymentOptions,
 } from '../validation/preferences';
+import { ReactNode } from 'react';
 
 export const Review: React.FC = () => {
   const { values } = useFormikContext<SubmissionType>();
@@ -201,6 +202,7 @@ interface ReviewSectionProps {
   sectionHeader: string;
   step: number;
   columns: number;
+  children: ReactNode;
 }
 
 const ReviewSection: React.FC<ReviewSectionProps> = ({

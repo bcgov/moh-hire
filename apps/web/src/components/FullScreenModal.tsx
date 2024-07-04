@@ -1,9 +1,10 @@
 import { Dialog, Transition, TransitionChild, DialogPanel, Description } from '@headlessui/react';
-import React, { Fragment, PropsWithChildren, ReactNode } from 'react';
+import React, { Fragment, ReactNode } from 'react';
 
 export interface FullScreenModalProps {
   open: boolean;
   handleClose: () => void;
+  children: ReactNode;
 }
 
 // modal without a small fixed width to take up more of the screen
@@ -60,6 +61,9 @@ export interface FullScreenModalInterface extends React.FC<FullScreenModalProps>
 
 export const FullScreenModal = ModalContainer as FullScreenModalInterface;
 
-export const FullScreenModalFooter = ({ children }: PropsWithChildren<ReactNode>) => {
+type FullScreenModalFooterProps = {
+  children: ReactNode;
+};
+export const FullScreenModalFooter = ({ children }: FullScreenModalFooterProps) => {
   return <div className='bg-gray-50 px-10 py-3 flex flex-row justify-between'>{children}</div>;
 };

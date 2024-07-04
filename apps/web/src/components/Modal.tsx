@@ -11,6 +11,7 @@ import React, { Fragment, PropsWithChildren, ReactNode } from 'react';
 export interface ModalProps {
   open: boolean;
   handleClose: () => void;
+  children: ReactNode;
 }
 
 //const { Root, Child } = Transition;
