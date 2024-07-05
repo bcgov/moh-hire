@@ -54,6 +54,8 @@ export async function createNestApp(): Promise<{
     app.useLogger(new AppLogger());
   }
 
+  // Required for mass email request size
+  app.useBodyParser('json', { limit: '10mb' });
   // Api prefix api/v1/
   app.setGlobalPrefix(API_PREFIX);
 
