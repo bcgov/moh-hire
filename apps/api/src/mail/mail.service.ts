@@ -26,8 +26,9 @@ export class MailService {
    * @param mailable - Email to be sent
    * @returns A promise for the result of sending the email
    */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   public async sendMailable(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mailable: Mailable<any>,
   ): Promise<PromiseResult<aws.SES.SendEmailResponse, aws.AWSError> | undefined> {
     const mailOptions: Partial<MailOptions> = {
