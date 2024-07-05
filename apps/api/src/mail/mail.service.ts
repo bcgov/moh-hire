@@ -1,4 +1,4 @@
-import { Inject, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { SendEmailRequest } from 'aws-sdk/clients/ses';
 import * as path from 'path';
 import * as fs from 'fs';
