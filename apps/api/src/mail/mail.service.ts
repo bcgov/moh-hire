@@ -45,13 +45,6 @@ export class MailService {
 
     const result = await this.sendMailWithSES({ ...mailOptions, body } as MailOptions);
 
-    if (!result) {
-      throw new InternalServerErrorException(
-        result,
-        'AWS SES sendEmail function returned undefined',
-      );
-    }
-
     return result;
   }
 
