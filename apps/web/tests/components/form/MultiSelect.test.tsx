@@ -11,7 +11,7 @@ describe('MultiSelect', () => {
 
     render(
       <Formik initialValues={{ [testSelectName]: '' }} onSubmit={mock}>
-        <MultiSelect2
+        <MultiSelect
           label='TEST'
           value={[]}
           id={testSelectName}
@@ -34,7 +34,7 @@ describe('MultiSelect', () => {
 
     render(
       <Formik initialValues={{ [selectName]: '' }} onSubmit={mock}>
-        <MultiSelect2
+        <MultiSelect
           id={selectName}
           label={selectLabel}
           options={testOptions}
@@ -59,7 +59,7 @@ describe('MultiSelect', () => {
 
     render(
       <Formik initialValues={{ [selectName]: '' }} onSubmit={mock}>
-        <MultiSelect2
+        <MultiSelect
           label={selectLabel}
           description={selectDescription}
           id={selectName}
