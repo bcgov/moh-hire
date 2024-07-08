@@ -19,10 +19,10 @@ const listboxStyles = (
   optionsLength: number,
   selectedLength?: number,
 ) => {
-  const disabledStyles =
-    isDisabled || optionsLength === 0
-      ? 'bg-gray-300 '
-      : 'border-b-2 border-black bg-gray-100 hover:border-gray-400';
+  const disabledStyle = 'bg-gray-300 ';
+  const enabledStyle = 'border-b-2 border-black bg-gray-100 hover:border-gray-400';
+  const disabledStyles = isDisabled || optionsLength === 0 ? disabledStyle : enabledStyle;
+
   const heightStyle = selectedLength !== 0 ? '' : 'h-10';
   return `${disabledStyles} ${heightStyle}`;
 };

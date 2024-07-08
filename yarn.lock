@@ -961,7 +961,7 @@ __metadata:
     oidc-client-ts: 2.2.5
     postcss: 8.4.38
     react: 18.2.0
-    react-datepicker: ^7.2.0
+    react-datepicker: 7.2.0
     react-dom: 18.2.0
     react-oidc-context: 2.2.2
     react-test-renderer: 17.0.2
@@ -12619,7 +12619,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-datepicker@npm:^7.2.0":
+"react-datepicker@npm:7.2.0":
   version: 7.2.0
   resolution: "react-datepicker@npm:7.2.0"
   dependencies:

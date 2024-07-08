@@ -1,6 +1,6 @@
+import { ReactNode } from 'react';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import { buttonBase, buttonColor } from './Button';
-import { ReactNode } from 'react';
 
 export interface LinkProps extends NextLinkProps {
   href: string;

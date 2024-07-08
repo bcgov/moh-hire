@@ -48,7 +48,7 @@ export const BasicSelect = (props: BasicSelectProps) => {
   );
 };
 
-export const MultiSelect2 = (props: MultiSelectProps) => {
+export const MultiSelect = (props: MultiSelectProps) => {
   const { id, value, options, onChange, menuPlacement, label, description, isDisabled } = props;
 
   const transformSelectedToFormik = (value: ValueProps[]): OptionType[] => {

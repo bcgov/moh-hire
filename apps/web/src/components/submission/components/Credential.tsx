@@ -16,7 +16,7 @@ import {
   Field,
   OptionType,
   Error,
-  MultiSelect2,
+  MultiSelect,
   BasicSelect,
 } from '@components';
 
@@ -229,7 +229,7 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
       <div className='col-span-1'>
         <Field name={`credentialInformation.specialties[${index}].subspecialties`}>
           {({ field, form }: FieldProps) => (
-            <MultiSelect2
+            <MultiSelect
               label={`Subspecialty #${index + 1}`}
               id={field.name}
               options={subspecialties || []}

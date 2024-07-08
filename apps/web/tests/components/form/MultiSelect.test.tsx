@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { render, screen } from '@testing-library/react';
-import { MultiSelect2 } from '@components';
+import { MultiSelect } from '@components';
 
 describe('MultiSelect', () => {
   it('renders a select', () => {
@@ -11,7 +11,7 @@ describe('MultiSelect', () => {
 
     render(
       <Formik initialValues={{ [testSelectName]: '' }} onSubmit={mock}>
-        <MultiSelect2
+        <MultiSelect
           label='TEST'
           value={[]}
           id={testSelectName}
@@ -34,7 +34,7 @@ describe('MultiSelect', () => {
 
     render(
       <Formik initialValues={{ [selectName]: '' }} onSubmit={mock}>
-        <MultiSelect2
+        <MultiSelect
           id={selectName}
           label={selectLabel}
           options={testOptions}
@@ -59,7 +59,7 @@ describe('MultiSelect', () => {
 
     render(
       <Formik initialValues={{ [selectName]: '' }} onSubmit={mock}>
-        <MultiSelect2
+        <MultiSelect
           label={selectLabel}
           description={selectDescription}
           id={selectName}
