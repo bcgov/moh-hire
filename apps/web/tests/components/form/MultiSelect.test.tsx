@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import { render, screen } from '@testing-library/react';
-import { MultiSelect2 } from '@components';
+import { MultiSelect } from '@components';
 
 describe('MultiSelect', () => {
   it('renders a select', () => {
