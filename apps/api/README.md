@@ -28,10 +28,6 @@ NestJS serves the app on your local environment but Lambda does in dev, test, an
 
 To send a confirmation email on each submission, [CHES](https://digital.gov.bc.ca/common-components/common-hosted-email-service) related variables are expected.
 
-- `CHES_SERVICE_HOST`
-- `CHES_AUTH_URL`
-- `CHES_CLIENT_ID`
-- `CHES_CLIENT_SECRET`
 
 ## Slack alerts
 

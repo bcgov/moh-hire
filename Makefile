@@ -11,7 +11,6 @@ export PROJECT := $(or $(PROJECT),ehpr)
 # Runtime and application Environments specific variable
 export ENV_NAME ?= dev
 export POSTGRES_USERNAME = freshworks
-export CHES_CLIENT_ID ?= CDACC9DF-CDF62AA2355
 
 # Integration testing variables
 export TEST_POSTGRES_HOST := localhost
@@ -49,21 +48,18 @@ ifeq ($(ENV_NAME), prod)
 DOMAIN=ehpr.gov.bc.ca
 BASTION_INSTANCE_ID = $(BASTION_INSTANCE_ID_PROD)
 DB_HOST = $(DB_HOST_PROD)
-CHES_CLIENT_ID = 0943A91E-CDF62AA2355
 endif
 
 ifeq ($(ENV_NAME), dev) 
 DOMAIN=dev.ehpr.freshworks.club
 BASTION_INSTANCE_ID = $(BASTION_INSTANCE_ID_DEV)
 DB_HOST = $(DB_HOST_DEV)
-CHES_CLIENT_ID = CDACC9DF-CDF62AA2355
 endif
 
 ifeq ($(ENV_NAME), test) 
 DOMAIN=test.ehpr.freshworks.club
 BASTION_INSTANCE_ID = $(BASTION_INSTANCE_ID_TEST)
 DB_HOST = $(DB_HOST_TEST)
-CHES_CLIENT_ID = 09C5071A-CDF62AA2355
 endif
 
 export MAIL_FROM = EHPRDoNotReply@$(DOMAIN)
@@ -76,7 +72,6 @@ app_sources = "build/app"
 app_sources_bucket = "$(APP_SRC_BUCKET)"
 domain = "$(DOMAIN)"
 db_username = "$(POSTGRES_USERNAME)"
-ches_client_id = "$(CHES_CLIENT_ID)"
 mail_from = "$(MAIL_FROM)"
 build_id = "$(COMMIT_SHA)"
 build_info = "$(LAST_COMMIT_MESSAGE)"
