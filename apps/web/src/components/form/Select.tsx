@@ -1,4 +1,4 @@
-import { Field, FieldProps } from '@components';
+import { HeadlessList } from './HeadlessList';
 
 export interface OptionType {
   label: string;
@@ -7,14 +7,69 @@ export interface OptionType {
   hidden?: boolean;
 }
 
-export const Select: React.FC<FieldProps> = props => {
-  const { name, label, disabled, description, children } = props;
+export interface SelectProps {
+  id: string;
+  options: OptionType[];
+  label: string;
+  description?: string;
+  menuPlacement?: 'bottom' | 'top';
+  isDisabled?: boolean;
+}
+
+export interface ValueProps {
+  id: string;
+  name: string;
+}
+
+export interface BasicSelectProps extends SelectProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export interface MultiSelectProps extends SelectProps {
+  value: Array<ValueProps>;
+  onChange: (value: Array<OptionType>) => void;
+}
+
+export const BasicSelect = (props: BasicSelectProps) => {
+  const { id, value, label, options, onChange, menuPlacement, isDisabled, description } = props;
 
   return (
-    <Field name={name} label={label} description={description} disabled={disabled} as='select'>
-      <option value={''} key={''} className='hidden'></option>
-      {children}
-    </Field>
+    <HeadlessList
+      id={id}
+      options={options}
+      value={value}
+      onChange={onChange}
+      menuPlacement={menuPlacement}
+      isDisabled={isDisabled}
+      description={description}
+      label={label}
+    />
+  );
+};
+
+export const MultiSelect = (props: MultiSelectProps) => {
+  const { id, value, options, onChange, menuPlacement, label, description, isDisabled } = props;
+
+  const transformSelectedToFormik = (value: ValueProps[]): OptionType[] => {
+    if (!Array.isArray(value)) {
+      return value;
+    }
+    return value.map(item => ({ value: item.id, label: item.name }));
+  };
+
+  return (
+    <HeadlessList
+      isMulti
+      id={id}
+      options={options}
+      value={transformSelectedToFormik(value)}
+      onChange={onChange}
+      menuPlacement={menuPlacement}
+      isDisabled={isDisabled}
+      description={description}
+      label={label}
+    />
   );
 };
 

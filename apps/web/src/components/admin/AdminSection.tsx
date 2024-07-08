@@ -1,7 +1,8 @@
-import { PropsWithChildren, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
-type AdminSectionProps = PropsWithChildren<ReactNode> & {
+type AdminSectionProps = {
   title: string;
+  children: ReactNode;
 };
 
 export const AdminSection = ({ title, children }: AdminSectionProps) => {

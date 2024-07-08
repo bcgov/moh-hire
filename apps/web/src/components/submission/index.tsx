@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { Button } from '@components';
 import { submitForm } from '@services';
-import { Contact, Credential, Preferences, Personal, Review } from './components';
+import { Contact, Preferences, Personal, Review, Credential } from './components';
 import {
   personalSchema,
   contactSchema,
@@ -18,7 +18,7 @@ import {
 import { Ret } from 'class-validator-formik/dist/convertError';
 
 interface StepType {
-  component: React.ReactElement;
+  component: () => React.ReactElement;
   validationSchema: (data: unknown) => Ret;
   key?: keyof SubmissionType;
 }
@@ -30,29 +30,30 @@ enum FormKeys {
   PREFERENCES_INFORMATION = 'preferencesInformation',
 }
 
+// Components need to be returned by functions to avoid jest test warning (causes import issues for jest)
 const steps: StepType[] = [
   {
-    component: <Personal formKey={FormKeys.PERSONAL_INFORMATION} />,
+    component: () => <Personal formKey={FormKeys.PERSONAL_INFORMATION} />,
     validationSchema: personalSchema,
     key: FormKeys.PERSONAL_INFORMATION,
   },
   {
-    component: <Contact formKey={FormKeys.CONTACT_INFORMATION} />,
+    component: () => <Contact formKey={FormKeys.CONTACT_INFORMATION} />,
     validationSchema: contactSchema,
     key: FormKeys.CONTACT_INFORMATION,
   },
   {
-    component: <Credential />,
+    component: () => <Credential />,
     validationSchema: credentialSchema,
     key: FormKeys.CREDENTIAL_INFORMATION,
   },
   {
-    component: <Preferences formKey={FormKeys.PREFERENCES_INFORMATION} />,
+    component: () => <Preferences formKey={FormKeys.PREFERENCES_INFORMATION} />,
     validationSchema: preferencesSchema,
     key: FormKeys.PREFERENCES_INFORMATION,
   },
   {
-    component: <Review />,
+    component: () => <Review />,
     validationSchema: reviewSchema,
   },
 ];
@@ -88,7 +89,7 @@ export const Form: React.FC = () => {
 
   const previousStepValidation = steps[stepIndex - 1]?.validationSchema;
   const currentStepValidation = steps[stepIndex]?.validationSchema;
-  const currentStepComponent = steps[stepIndex]?.component;
+  const currentStepComponent = steps[stepIndex]?.component();
   const previousStepKey = steps[stepIndex - 1]?.key;
   const currentStepKey = steps[stepIndex]?.key;
 

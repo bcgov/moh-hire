@@ -1,14 +1,6 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import {
-  createContext,
-  PropsWithChildren,
-  ReactNode,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
 import { useAuth } from 'react-oidc-context';
 import { toast } from 'react-toastify';
 import { User } from '@ehpr/common';
@@ -24,7 +16,11 @@ const AuthContext = createContext<AuthContextType>({ user: null });
 
 const PROTECTED_ROUTES = ['/admin'];
 
-export const AuthProvider = ({ children }: PropsWithChildren<ReactNode>) => {
+type AuthProviderProps = {
+  children: ReactNode;
+};
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
   const router = useRouter();
   const { isAuthenticated, isLoading, user: kcUser, signinSilent, signoutSilent } = useAuth();
   const [user, setUser] = useState<User | null>(null);

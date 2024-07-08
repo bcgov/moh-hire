@@ -1,6 +1,5 @@
 import {
   createContext,
-  PropsWithChildren,
   ReactNode,
   useCallback,
   useContext,
@@ -27,7 +26,11 @@ const AdminContext = createContext<AdminContextProps>({
   invite: () => Promise.resolve(void 0),
 });
 
-export const AdminProvider = ({ children }: PropsWithChildren<ReactNode>) => {
+type AdminProviderProps = {
+  children: ReactNode;
+};
+
+export const AdminProvider = ({ children }: AdminProviderProps) => {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
@@ -50,17 +53,20 @@ export const AdminProvider = ({ children }: PropsWithChildren<ReactNode>) => {
     getUsers().then(setUsers).catch();
   }, []);
 
-  const invite = useCallback(async (payload: InviteUserDTO) => {
-    if (users.some(u => u.email === payload.email)) {
-      const message = `There is a user with the email address.`;
-      toast.error(message);
-      throw Error(message);
-    } else {
-      const user = await inviteUser(payload);
-      setUsers(u => [...u, user]);
-      toast.info(`Invited user ${user.email}`);
-    }
-  }, []);
+  const invite = useCallback(
+    async (payload: InviteUserDTO) => {
+      if (users.some(u => u.email === payload.email)) {
+        const message = `There is a user with the email address.`;
+        toast.error(message);
+        throw Error(message);
+      } else {
+        const user = await inviteUser(payload);
+        setUsers(u => [...u, user]);
+        toast.info(`Invited user ${user.email}`);
+      }
+    },
+    [users],
+  );
 
   const contextValue = useMemo(
     () => ({

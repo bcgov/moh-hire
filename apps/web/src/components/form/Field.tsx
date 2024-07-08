@@ -1,10 +1,11 @@
 import classnames from 'classnames';
 import { Error, Label, Description } from '@components';
 import { Field as FormikField, useField, FieldAttributes } from 'formik';
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface FieldProps extends FieldAttributes<any> {
   name: string;
-  label: string | React.ReactNode;
+  label?: string | React.ReactNode;
   description?: string | React.ReactNode;
   disabled?: boolean;
   className?: string;
@@ -14,25 +15,27 @@ export interface FieldProps extends FieldAttributes<any> {
 export const Field: React.FC<FieldProps> = props => {
   const {
     name,
-    label,
     disabled,
-    description,
     type,
     as,
     component,
     className,
     maxLength,
     children,
+    label,
+    description,
   } = props;
   const [field, meta] = useField(name);
 
   return (
     <div>
-      <div className='mb-2'>
-        <Label htmlFor={name}>{label}</Label>
-
-        <Description id={`${name}-description`}>{description}</Description>
-      </div>
+      {/**This allows for components to control their own label and description */}
+      {(label || description) && (
+        <div className='mb-2'>
+          {label && <Label htmlFor={name}>{label}</Label>}
+          {description && <Description id={`${name}-description`}>{description}</Description>}
+        </div>
+      )}
 
       <FormikField
         id={name}

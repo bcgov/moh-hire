@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Field, Formik } from 'formik';
 import { Error } from '@components';
 
@@ -56,9 +56,10 @@ describe('FormError', () => {
 
     fireEvent.blur(input);
 
-    const alertContainer = await screen.findByRole('alert');
-
-    expect(alertContainer).toBeInTheDocument();
-    expect(alertContainer.firstChild).toHaveTextContent(errorText);
+    await waitFor(() => {
+      const alertContainer = screen.getByRole('alert');
+      expect(alertContainer).toBeInTheDocument();
+      expect(alertContainer.firstChild).toHaveTextContent(errorText);
+    });
   });
 });

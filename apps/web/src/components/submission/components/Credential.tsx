@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { FieldArray, FieldProps, useFormikContext } from 'formik';
-import ReactSelect from 'react-select';
 
 import {
   EmploymentTypes,
@@ -12,13 +11,13 @@ import {
 
 import {
   FormStepHeader,
-  MultiSelect,
   CheckboxArray,
   Radio,
   Field,
   OptionType,
   Error,
-  selectStyleOverride,
+  MultiSelect,
+  BasicSelect,
 } from '@components';
 
 import {
@@ -94,21 +93,20 @@ export const Credential: React.FC = () => {
   );
 
   const specialtySelectorEnabled = specialtyOptions && specialtyOptions?.length >= 1;
-
   const isNonClinical = stream === streamsById.Nonclinical.id;
   const isClinical = stream && !isNonClinical; // stream is selected and is not non-clinical
   return (
     <div className='flex flex-col gap-5'>
       <FormStepHeader>3. Credentials Information</FormStepHeader>
-      <Field name='credentialInformation.stream' label='Stream Type'>
+      <Field name='credentialInformation.stream'>
         {({ field, form }: FieldProps) => (
-          <ReactSelect<OptionType>
-            inputId={field.name}
-            value={streamOptions.find(s => s.value === field.value)}
-            onBlur={field.onBlur}
-            onChange={value => form.setFieldValue(field.name, value?.value)}
+          <BasicSelect
+            id={field.name}
             options={streamOptions.map(s => ({ ...s, isDisabled: s.value === field.value }))}
-            styles={selectStyleOverride}
+            value={field.value || streamOptions.find(s => s.value === field.value)}
+            menuPlacement='bottom'
+            onChange={value => form.setFieldValue(field.name, value)}
+            label='Stream Type'
           />
         )}
       </Field>
@@ -198,30 +196,22 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
   deleteFunction,
   enableDelete,
 }) => {
-  const { values } = useFormikContext<SubmissionType>();
-  const { specialties: formSpecialties }: CredentialInformationDTO = values.credentialInformation;
-
-  const specialtyOptionIsDisabled = (specialtyId: string): boolean =>
-    !!formSpecialties.find(specialty => specialty.id === specialtyId);
   return (
     <div className='grid md:grid-cols-2 gap-2 w-full ring-gray-200 ring-1 ring-offset-10 rounded-sm'>
       <div className='col-span-1'>
-        <Field
-          name={`credentialInformation.specialties[${index}].id`}
-          label={`Main Speciality #${index + 1}`}
-        >
+        <Field name={`credentialInformation.specialties[${index}].id`}>
           {({ field, form }: FieldProps) => (
-            <ReactSelect<OptionType>
-              inputId={field.name}
-              value={(specialties || []).find(s => s.value === field.value)}
-              isDisabled={disabled}
-              onBlur={field.onBlur}
-              onChange={value => form.setFieldValue(field.name, value?.value)}
+            <BasicSelect
+              label={`Main Speciality #${index + 1}`}
+              id={field.name}
               options={(specialties || []).map(s => ({
                 ...s,
-                isDisabled: specialtyOptionIsDisabled(s.value),
+                isDisabled: s.value === field.value,
               }))}
-              styles={selectStyleOverride}
+              isDisabled={disabled}
+              value={field.value || (specialties || []).find(s => s.value === field.value)}
+              menuPlacement='bottom'
+              onChange={value => form.setFieldValue(field.name, value)}
             />
           )}
         </Field>
@@ -237,12 +227,27 @@ const SpecialtySelector: React.FC<SpecialtySelectorProps> = ({
         ) : null}
       </div>
       <div className='col-span-1'>
-        <MultiSelect
-          label={`Subspecialty #${index + 1}`}
-          name={`credentialInformation.specialties[${index}].subspecialties`}
-          disabled={!subspecialties || subspecialties.length === 0}
-          options={subspecialties || []}
-        />
+        <Field name={`credentialInformation.specialties[${index}].subspecialties`}>
+          {({ field, form }: FieldProps) => (
+            <MultiSelect
+              label={`Subspecialty #${index + 1}`}
+              id={field.name}
+              options={subspecialties || []}
+              isDisabled={!subspecialties || subspecialties.length === 0}
+              value={field.value || subspecialties?.find(s => s.value === field.value)}
+              menuPlacement='bottom'
+              onChange={value => {
+                form.setFieldValue(
+                  field.name,
+                  value.map((option: OptionType) => ({
+                    id: option.value,
+                    name: option.label,
+                  })),
+                );
+              }}
+            />
+          )}
+        </Field>
       </div>
     </div>
   );

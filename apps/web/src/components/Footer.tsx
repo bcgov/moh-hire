@@ -1,6 +1,12 @@
 import Link from 'next/link';
+import { ReactNode } from 'react';
 
-const FooterLink: React.FC<{ href: string }> = ({ href, children }) => {
+type FooterLinkProps = {
+  href: string;
+  children: ReactNode;
+};
+
+const FooterLink = ({ href, children }: FooterLinkProps) => {
   return <Link href={href}>{children}</Link>;
 };
 

@@ -1,9 +1,10 @@
 import { Dialog, Transition, TransitionChild, DialogPanel, Description } from '@headlessui/react';
-import React, { Fragment, PropsWithChildren, ReactNode } from 'react';
+import React, { Fragment, ReactNode } from 'react';
 
 export interface FullScreenModalProps {
   open: boolean;
   handleClose: () => void;
+  children: ReactNode;
 }
 
 // modal without a small fixed width to take up more of the screen
@@ -27,7 +28,7 @@ const ModalContainer: React.FC<FullScreenModalProps> = ({ children, open, handle
             leaveFrom='opacity-100'
             leaveTo='opacity-0'
           >
-            <div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity pointer-events-none' />
+            <div className='fixed inset-0 bg-gray-500/75 transition-opacity pointer-events-none' />
           </TransitionChild>
 
           {/* This element is to trick the browser into centering the modal contents. */}
@@ -60,6 +61,9 @@ export interface FullScreenModalInterface extends React.FC<FullScreenModalProps>
 
 export const FullScreenModal = ModalContainer as FullScreenModalInterface;
 
-export const FullScreenModalFooter = ({ children }: PropsWithChildren<ReactNode>) => {
+type FullScreenModalFooterProps = {
+  children: ReactNode;
+};
+export const FullScreenModalFooter = ({ children }: FullScreenModalFooterProps) => {
   return <div className='bg-gray-50 px-10 py-3 flex flex-row justify-between'>{children}</div>;
 };
