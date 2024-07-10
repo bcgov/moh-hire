@@ -90,7 +90,10 @@ export class SubmissionService {
       SubmissionService.name,
     );
 
-    await this.mailService.sendMailable(mailable);
+    // This prevents submission e2e test from failing due to aws credentials
+    if (process.env.NODE_ENV !== 'test') {
+      await this.mailService.sendMailable(mailable);
+    }
 
     submission = await this.submissionRepository.save(submission);
     this.logger.log(
