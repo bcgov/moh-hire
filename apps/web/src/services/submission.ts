@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { DeepPartial, SubmissionType } from 'src/components/submission/validation';
 import { UpdateSubmissionDTO } from '@ehpr/common';
-import { isValidConfirmationId } from 'src/util';
+import { isValidConfirmationId } from '../util';
 
 export const submitForm = async (submission: DeepPartial<SubmissionType>) => {
   // @todo when the form is fully implemented this object should be of type FormDTO
