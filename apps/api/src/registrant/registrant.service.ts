@@ -173,7 +173,7 @@ export class RegistrantService {
     };
 
     // Replacing each coded word with selected string
-    const processedBody = templateBody.replace(/\$\{([^}]+)\}/g, (match, group) => {
+    const processedBody = templateBody.replace(/\$\{([^}{]+)\}/g, (match, group) => {
       const key = group.toLowerCase() as ReplacementKey;
       if (key in replacements) {
         return replacements[key];
