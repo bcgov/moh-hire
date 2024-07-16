@@ -101,7 +101,6 @@ export class RegistrantService {
           let body = '';
 
           if (data?.confirmationId && domain) {
-            //body = this.processTemplateBody(payload.body, { email: item.email, domain });
             body = this.processTemplateBody({
               templateBody: payload.body,
               email: item.email,
@@ -160,38 +159,29 @@ export class RegistrantService {
     domain,
     submissionData: { confirmationId, firstName, lastName, fullName },
   }: ProcessTemplate) {
-    enum RegexResult {
-      MATCH, // in format of ${word}
-      GROUP, // in format of word
-    }
-
-    const words = templateBody.matchAll(/\$\{([^}]+)\}/g);
-    let processedBody = templateBody;
+    type ReplacementKey = 'update_link' | 'first_name' | 'last_name' | 'full_name';
 
     const subUpdateUrl = domain
       ? `https://${domain}/update-submission?email=${email}&code=${confirmationId}`
       : `https://ehpr.gov.bc.ca/update-submission?email=${email}&code=${confirmationId}`;
 
+    const replacements: Record<ReplacementKey, string> = {
+      update_link: updateSubmissionLink(subUpdateUrl, 'Update your submission'),
+      first_name: firstName,
+      last_name: lastName,
+      full_name: fullName,
+    };
+
     // Replacing each coded word with selected string
-    for (const word of words) {
-      switch (word[RegexResult.GROUP].toLowerCase()) {
-        case 'update_link':
-          processedBody = processedBody.replace(
-            word[RegexResult.MATCH],
-            updateSubmissionLink(subUpdateUrl, 'Update your submission'),
-          );
-          break;
-        case 'first_name':
-          processedBody = processedBody.replace(word[RegexResult.MATCH], firstName);
-          break;
-        case 'last_name':
-          processedBody = processedBody.replace(word[RegexResult.MATCH], lastName);
-          break;
-        case 'full_name':
-          processedBody = processedBody.replace(word[RegexResult.MATCH], fullName);
-          break;
+    const processedBody = templateBody.replace(/\$\{([^}{]+)\}/g, (match, group) => {
+      const key = group.toLowerCase() as ReplacementKey;
+      if (key in replacements) {
+        return replacements[key];
       }
-    }
+
+      return match; // Return the replacement or the original match if not located
+    });
+
     return processedBody;
   }
 
