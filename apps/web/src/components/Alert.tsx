@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactNode } from 'react';
 
 type AlertProps = {
-  color: 'blue' | 'yellow' | 'red';
+  color?: 'blue' | 'yellow' | 'red';
   children: ReactNode;
 };
 
