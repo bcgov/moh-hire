@@ -5,6 +5,7 @@ import {
   AdminRegistrantsTable,
   AdminSection,
   AdminTabs,
+  Alert,
   ExtractSubmissions,
   InviteUser,
   useAuthContext,
@@ -39,6 +40,15 @@ const AdminPage = () => {
         <AdminTabs tabs={tabs} categoryIndex={selectedTab} onTabChange={setSelectedTab} />
         {selectedTab === AdminTab.DOWNLOADS && (
           <AdminSection title='Downloads'>
+            <Alert color='yellow'>
+              Health Authority Users must submit a request for activation to the Ministry of Health
+              before using the EHPR to address emergency events.
+              <br /> All requests must go to{' '}
+              <a href='mailto:EHPRQuestions@gov.bc.ca'>
+                <b>ehprquestions@gov.bc.ca</b>
+              </a>
+              .
+            </Alert>
             <ExtractSubmissions />
           </AdminSection>
         )}
