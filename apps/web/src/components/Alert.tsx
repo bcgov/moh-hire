@@ -1,5 +1,6 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import { ReactNode } from 'react';
 
 type AlertProps = {
@@ -9,15 +10,17 @@ type AlertProps = {
 
 export const Alert = ({ color, children }: AlertProps) => {
   let containerClasses = '';
+  const baseClasses = 'py-4 text-left flex items-center rounded';
+
   switch (color) {
     case 'red':
-      containerClasses = 'bg-bcRedError py-4  text-left flex items-center rounded';
+      containerClasses = classNames(baseClasses, 'bg-bcRedError');
       break;
     case 'yellow':
-      containerClasses = 'bg-bcYellowCream py-4  text-left flex items-center rounded';
+      containerClasses = classNames(baseClasses, 'bg-bcYellowCream');
       break;
     default:
-      containerClasses = 'bg-bcLightBlueBackground py-4  text-left flex items-center rounded';
+      containerClasses = classNames(baseClasses, 'bg-bcLightBlueBackground');
   }
 
   return (
