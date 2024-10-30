@@ -79,6 +79,11 @@ services:
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1
       - RUNTIME_ENV=local
+      - NEXT_PUBLIC_KC_URL=${NEXT_PUBLIC_KC_URL}
+      - NEXT_PUBLIC_KC_REALM=${NEXT_PUBLIC_KC_REALM}
+      - NEXT_PUBLIC_KC_CLIENT_ID=${NEXT_PUBLIC_KC_CLIENT_ID}
+      - NEXT_PUBLIC_KC_REDIRECT_URI=${NEXT_PUBLIC_KC_REDIRECT_URI}
+      - NEXT_PUBLIC_FEATURE_MASS_EMAIL=${NEXT_PUBLIC_FEATURE_MASS_EMAIL}
     depends_on:
       - api
 networks:

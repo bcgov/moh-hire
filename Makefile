@@ -130,28 +130,28 @@ debug: print-env start-local-db
 
 start-local-db:
 	@echo "++\n***** Starting local database\n++"
-	@docker-compose up -d db 
+	@docker compose up -d db 
 	@echo "++\n*****"
 
 stop-local-db:
 	@echo "++\n***** Stopping local database\n++"
-	@docker-compose stop db
+	@docker compose stop db
 	@echo "++\n*****"
 
 docker-down:
 	@echo "++\n***** Stopping Docker containers\n++"
-	@docker-compose down
+	@docker compose down
 	@echo "++\n*****"
 
 docker-build:
-	@echo "++\n***** Running docker-compose\n++"
-	@docker-compose build
+	@echo "++\n***** Running docker compose\n++"
+	@docker compose build
 	@echo "++\n*****"
 
 docker-run:
-	@echo "++\n***** Running docker-compose\n++"
+	@echo "++\n***** Running docker compose\n++"
 	@yarn
-	@docker-compose up --build
+	@docker compose up --build
 	@echo "++\n*****"
 
 api-unit-test:
@@ -161,16 +161,16 @@ api-unit-test:
 	@echo "++\n*****"
 
 start-test-db:
-	NODE_ENV=test docker-compose -f docker-compose.test.yaml up --build -d
+	NODE_ENV=test docker compose -f docker compose.test.yaml up --build -d
 
 stop-test-db:
-	NODE_ENV=test docker-compose -f docker-compose.test.yaml down
+	NODE_ENV=test docker compose -f docker compose.test.yaml down
 
 start-keycloak:
-	docker-compose up -d keycloak
+	docker compose up -d keycloak
 
 stop-keycloak:
-	docker-compose down keycloak
+	docker compose down keycloak
 
 api-integration-test: 
 	@make start-test-db 
