@@ -1,21 +1,19 @@
 import React from 'react';
 import { Field, FieldProps } from 'formik';
-import ClickCaptcha from '../captcha/ClickCaptcha';
 
 interface CaptchaFieldProps {
   name: string;
+  children: (onVerify: (isValid: boolean) => void) => React.ReactNode;
 }
 
-const CaptchaField: React.FC<CaptchaFieldProps> = ({ name }) => {
+const CaptchaField: React.FC<CaptchaFieldProps> = ({ name, children }) => {
   return (
     <Field name={name}>
-      {({ field, form }: FieldProps) => (
-        <ClickCaptcha
-          onVerify={(isValid: boolean) => {
-            form.setFieldValue(field.name, isValid);
-          }}
-        />
-      )}
+      {({ field, form }: FieldProps) =>
+        children((isValid: boolean) => {
+          form.setFieldValue(field.name, isValid);
+        })
+      }
     </Field>
   );
 };

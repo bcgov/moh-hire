@@ -28,6 +28,7 @@ import {
 } from '../validation/preferences';
 import { ReactNode } from 'react';
 import CaptchaField from 'src/components/form/CaptchaField';
+import ClickCaptcha from 'src/components/captcha/ClickCaptcha';
 
 export const Review: React.FC = () => {
   const { values } = useFormikContext<SubmissionType>();
@@ -186,7 +187,9 @@ export const Review: React.FC = () => {
           </Notice>
           <Error name='confirm' />
 
-          <CaptchaField name='captcha' />
+          <CaptchaField name='captcha'>
+            {onVerify => <ClickCaptcha onVerify={onVerify} />}
+          </CaptchaField>
           <Error name='captcha' />
 
           <Alert>Please print and save this page for your own records.</Alert>
