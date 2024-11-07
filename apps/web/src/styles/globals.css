@@ -65,3 +65,14 @@ body,
     color: #fff;
   }
 }
+
+/** captcha */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  animation: spin 0.5s linear infinite;
+}

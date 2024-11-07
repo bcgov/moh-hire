@@ -27,6 +27,7 @@ import {
   previousDeploymentOptions,
 } from '../validation/preferences';
 import { ReactNode } from 'react';
+import CaptchaField from 'src/components/form/CaptchaField';
 
 export const Review: React.FC = () => {
   const { values } = useFormikContext<SubmissionType>();
@@ -184,6 +185,10 @@ export const Review: React.FC = () => {
             />
           </Notice>
           <Error name='confirm' />
+
+          <CaptchaField name='captcha' />
+          <Error name='captcha' />
+
           <Alert>Please print and save this page for your own records.</Alert>
         </div>
       </div>
