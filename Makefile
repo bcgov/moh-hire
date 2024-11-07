@@ -10,7 +10,7 @@ export PROJECT := $(or $(PROJECT),ehpr)
 
 # Runtime and application Environments specific variable
 export ENV_NAME ?= dev
-export POSTGRES_USERNAME = freshworks
+export POSTGRES_USERNAME ?= freshworks
 
 # Integration testing variables
 export TEST_POSTGRES_HOST := localhost
