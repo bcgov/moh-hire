@@ -18,7 +18,7 @@ export const reviewSchema = (values: unknown): Ret => {
   }
   if (!(values as ReviewType).captcha) {
     return {
-      captcha: 'This field must be checked captcha',
+      captcha: 'This field must be checked',
     };
   }
   return {};

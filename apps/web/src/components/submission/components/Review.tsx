@@ -187,10 +187,12 @@ export const Review: React.FC = () => {
           </Notice>
           <Error name='confirm' />
 
-          <CaptchaField name='captcha'>
-            {onVerify => <ClickCaptcha onVerify={onVerify} />}
-          </CaptchaField>
-          <Error name='captcha' />
+          <div className='my-6'>
+            <CaptchaField name='captcha'>
+              {onVerify => <ClickCaptcha onVerify={onVerify} />}
+            </CaptchaField>
+            <Error name='captcha' />
+          </div>
 
           <Alert>Please print and save this page for your own records.</Alert>
         </div>
