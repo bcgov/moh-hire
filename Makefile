@@ -161,10 +161,10 @@ api-unit-test:
 	@echo "++\n*****"
 
 start-test-db:
-	NODE_ENV=test docker compose -f docker compose.test.yaml up --build -d
+	NODE_ENV=test docker compose -f docker-compose.test.yaml up --build -d
 
 stop-test-db:
-	NODE_ENV=test docker compose -f docker compose.test.yaml down
+	NODE_ENV=test docker compose -f docker-compose.test.yaml down
 
 start-keycloak:
 	docker compose up -d keycloak
