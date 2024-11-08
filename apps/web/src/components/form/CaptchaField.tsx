@@ -6,7 +6,7 @@ interface CaptchaFieldProps {
   children: (onVerify: (isValid: boolean) => void) => React.ReactNode;
 }
 
-const CaptchaField: React.FC<CaptchaFieldProps> = ({ name, children }) => {
+export const CaptchaField: React.FC<CaptchaFieldProps> = ({ name, children }) => {
   return (
     <Field name={name}>
       {({ field, form }: FieldProps) =>
@@ -17,5 +17,3 @@ const CaptchaField: React.FC<CaptchaFieldProps> = ({ name, children }) => {
     </Field>
   );
 };
-
-export default CaptchaField;

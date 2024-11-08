@@ -4,7 +4,7 @@ interface ClickCaptchaProps {
   onVerify: (isValid: boolean) => void;
 }
 
-const ClickCaptcha: React.FC<ClickCaptchaProps> = ({ onVerify }) => {
+export const ClickCaptcha: React.FC<ClickCaptchaProps> = ({ onVerify }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const [hasMovedMouse, setHasMovedMouse] = useState(false);
@@ -62,5 +62,3 @@ const ClickCaptcha: React.FC<ClickCaptchaProps> = ({ onVerify }) => {
     </div>
   );
 };
-
-export default ClickCaptcha;
