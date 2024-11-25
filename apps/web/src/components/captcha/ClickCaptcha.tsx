@@ -42,8 +42,8 @@ export const ClickCaptcha: React.FC<ClickCaptchaProps> = ({ onVerify }) => {
   ) : null;
 
   return (
-    <div
-      role='region'
+    <section
+      aria-label='Interactive content - captcha'
       className='flex items-center gap-2 p-4 bg-gray-100 rounded-md shadow-md'
       onMouseMove={handleMouseMove}
     >
@@ -64,6 +64,6 @@ export const ClickCaptcha: React.FC<ClickCaptchaProps> = ({ onVerify }) => {
           return "Click to verify I'm not a robot";
         })()}
       </span>
-    </div>
+    </section>
   );
 };
