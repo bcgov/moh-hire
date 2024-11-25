@@ -1,4 +1,13 @@
-import { Checkbox, Error, FormStepHeader, Link, Notice, Alert } from '@components';
+import {
+  Checkbox,
+  Error,
+  FormStepHeader,
+  Link,
+  Notice,
+  Alert,
+  CaptchaField,
+  ClickCaptcha,
+} from '@components';
 import {
   booleanToYesNo,
   EmploymentTypes,
@@ -27,7 +36,6 @@ import {
   previousDeploymentOptions,
 } from '../validation/preferences';
 import { ReactNode } from 'react';
-import { CaptchaField, ClickCaptcha } from '@components';
 
 export const Review: React.FC = () => {
   const { values } = useFormikContext<SubmissionType>();

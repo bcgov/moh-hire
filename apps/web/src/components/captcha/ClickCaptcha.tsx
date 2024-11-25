@@ -37,8 +37,13 @@ export const ClickCaptcha: React.FC<ClickCaptchaProps> = ({ onVerify }) => {
     }, 1000);
   };
 
+  const Loader = isLoading ? (
+    <div className='loader ease-linear rounded-full border-2 border-t-2 border-gray-200 h-4 w-4 animate-spin'></div>
+  ) : null;
+
   return (
     <div
+      role='region'
       className='flex items-center gap-2 p-4 bg-gray-100 rounded-md shadow-md'
       onMouseMove={handleMouseMove}
     >
@@ -50,14 +55,14 @@ export const ClickCaptcha: React.FC<ClickCaptchaProps> = ({ onVerify }) => {
         }`}
         disabled={isVerified || isLoading}
       >
-        {isVerified ? (
-          <span className='text-white font-bold'>✔</span>
-        ) : isLoading ? (
-          <div className='loader ease-linear rounded-full border-2 border-t-2 border-gray-200 h-4 w-4 animate-spin'></div>
-        ) : null}
+        {isVerified ? <span className='text-white font-bold'>✔</span> : Loader}
       </button>
       <span className='text-gray-700'>
-        {isVerified ? 'Verified' : isLoading ? 'Verifying...' : "Click to verify I'm not a robot"}
+        {(() => {
+          if (isVerified) return 'Verified';
+          if (isLoading) return 'Verifying...';
+          return "Click to verify I'm not a robot";
+        })()}
       </span>
     </div>
   );
