@@ -1,4 +1,13 @@
-import { Checkbox, Error, FormStepHeader, Link, Notice, Alert } from '@components';
+import {
+  Checkbox,
+  Error,
+  FormStepHeader,
+  Link,
+  Notice,
+  Alert,
+  CaptchaField,
+  ClickCaptcha,
+} from '@components';
 import {
   booleanToYesNo,
   EmploymentTypes,
@@ -184,6 +193,14 @@ export const Review: React.FC = () => {
             />
           </Notice>
           <Error name='confirm' />
+
+          <div className='my-6'>
+            <CaptchaField name='captcha'>
+              {onVerify => <ClickCaptcha onVerify={onVerify} />}
+            </CaptchaField>
+            <Error name='captcha' />
+          </div>
+
           <Alert>Please print and save this page for your own records.</Alert>
         </div>
       </div>
