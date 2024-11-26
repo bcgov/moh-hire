@@ -205,18 +205,22 @@ export class SubmissionService {
         .join(', ');
 
       // created nested where clauses for filtering by HA locations and registrants who will deploy anywhere
+
       queryBuilder.andWhere(
         // check if a row exists that matches filter
         // extract jsonb fields into usable data
         // check if extracted text matches any location values within users HA
         new Brackets(qb => {
-          qb.where(
-            `EXISTS (
-                SELECT 1
-                FROM jsonb_array_elements_text("submission"."payload"->'preferencesInformation'->'deploymentLocations') AS dep
-                WHERE dep::text = ANY(ARRAY[${haLocations}])
-            )`,
-          );
+          // FNHA users should not get applicants specific to any particular region.
+          if (ha?.name !== 'First Nations Health Authority') {
+            qb.where(
+              `EXISTS (
+                  SELECT 1
+                  FROM jsonb_array_elements_text("submission"."payload"->'preferencesInformation'->'deploymentLocations') AS dep
+                  WHERE dep::text = ANY(ARRAY[${haLocations}])
+              )`,
+            );
+          }
 
           // check if querying for registrants table then check if any region filter was selected
           if (isTable) {
@@ -225,6 +229,9 @@ export class SubmissionService {
                 "submission.payload->'preferencesInformation'->>'deployAnywhere' = 'true'",
               );
             }
+          } else if (ha?.name === 'First Nations Health Authority') {
+            // FNHA are the only HA to want only applicants who are willing to deploy anywhere
+            qb.andWhere("submission.payload->'preferencesInformation'->>'deployAnywhere' = 'true'");
           } else {
             // for submission extract we send ANY regions back by default
             qb.orWhere("submission.payload->'preferencesInformation'->>'deployAnywhere' = 'true'");
