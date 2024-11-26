@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: 16
       - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.9.0
+        uses: zaproxy/action-full-scan@v0.12.0
         with:
           target: https://ehpr.gov.bc.ca/
           issue_title: PROD - ZAP Full Scan Report
