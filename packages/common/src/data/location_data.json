@@ -25,6 +25,11 @@
         "id": "NorthernRegion",
         "name": "Northern Region",
         "hsdas": ["Northwest", "NorthernInterior", "Northeast"]
+      },
+      "FirstNationsHealthAuthority": {
+        "id": "FirstNationsHealthAuthority",
+        "name": "First Nations Health Authority",
+        "hsdas": ["FNHA"]
       }
     },
     "allIds": [
@@ -32,7 +37,8 @@
       "FraserRegion",
       "VancouverIslandRegion",
       "InteriorRegion",
-      "NorthernRegion"
+      "NorthernRegion",
+      "FirstNationsHealthAuthority"
     ]
   },
   "hsdas": {
@@ -167,6 +173,20 @@
         "id": "Northeast",
         "name": "Northeast",
         "lhas": ["PeaceRiverSouth", "PeaceRiverNorth", "FortNelson"]
+      },
+      "FNHA": {
+        "id": "FNHA",
+        "name": "",
+        "lhas": [
+          "Gitgaat",
+          "Gitxaala",
+          "Kitasoo",
+          "Kwadacha",
+          "LaxKwAlaams",
+          "Tahltan",
+          "TseyKehDene",
+          "Ulkatcho"
+        ]
       }
     },
     "allIds": [
@@ -185,7 +205,8 @@
       "ThompsonCaribooShuswap",
       "Northwest",
       "NorthernInterior",
-      "Northeast"
+      "Northeast",
+      "FNHA"
     ]
   },
   "lhas": {
@@ -279,7 +300,15 @@
       "PrinceGeorge": { "id": "PrinceGeorge", "name": "Prince George" },
       "PeaceRiverSouth": { "id": "PeaceRiverSouth", "name": "Peace River South" },
       "PeaceRiverNorth": { "id": "PeaceRiverNorth", "name": "Peace River North" },
-      "FortNelson": { "id": "FortNelson", "name": "Fort Nelson" }
+      "FortNelson": { "id": "FortNelson", "name": "Fort Nelson" },
+      "Gitgaat": { "id": "Gitgaat", "name": "Gitga’at (Hartley Bay)" },
+      "Gitxaala": { "id": "Gitxaala", "name": "Gitxaala (Kitkatla)" },
+      "Kitasoo": { "id": "Kitasoo", "name": "Kitasoo (Klemtu)" },
+      "Kwadacha": { "id": "Kwadacha", "name": "Kwadacha (Fort Ware)" },
+      "LaxKwAlaams": { "id": "LaxKwAlaams", "name": "Lax Kw’Alaams (Port Simpson)" },
+      "Tahltan": { "id": "Tahltan", "name": "Tahltan (Telegraph Creek)" },
+      "TseyKehDene": { "id": "TseyKehDene", "name": "Tsey Keh Dene" },
+      "Ulkatcho": { "id": "Ulkatcho", "name": "Ulkatcho (Anahim Lake)" }
     },
     "allIds": [
       "Richmond",
@@ -365,7 +394,15 @@
       "PrinceGeorge",
       "PeaceRiverSouth",
       "PeaceRiverNorth",
-      "FortNelson"
+      "FortNelson",
+      "Gitgaat",
+      "Gitxaala",
+      "Kitasoo",
+      "Kwadacha",
+      "LaxKwAlaams",
+      "Tahltan",
+      "TseyKehDene",
+      "Ulkatcho"
     ]
   }
 }

@@ -66,6 +66,10 @@ export const HaPdfSizeMap: Record<HaId, { size: number; url: string }> = {
     size: 1.3,
     url: 'https://www2.gov.bc.ca/assets/gov/data/geographic/land-use/administrative-boundaries/health-boundaries/5_northern_health_authority.pdf',
   },
+  FirstNationsHealthAuthority: {
+    size: 0,
+    url: '',
+  },
 };
 
 export const placementOptions = [
