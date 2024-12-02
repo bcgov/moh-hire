@@ -11,6 +11,7 @@ export enum AuthoritiesFull {
   INTERIOR_HEALTH_AUTHORITY = 'Interior Health Authority',
   NORTHERN_HEALTH_AUTHORITY = 'Northern Health Authority',
   PROVIDENCE_HEALTH_CARE_SOCIETY = 'Providence Health Care Society',
+  FIRST_NATIONS_HEALTH_AUTHORITY = 'First Nations Health Authority',
 }
 
 export const Authorities: Record<string, Authority> = {
@@ -169,4 +170,5 @@ export const CondensedRegionLocations = {
   [AuthoritiesFull.INTERIOR_HEALTH_AUTHORITY]: InteriorRegionLocations,
   [AuthoritiesFull.NORTHERN_HEALTH_AUTHORITY]: NorthernRegionLocations,
   [AuthoritiesFull.PROVIDENCE_HEALTH_CARE_SOCIETY]: [''],
+  [AuthoritiesFull.FIRST_NATIONS_HEALTH_AUTHORITY]: [''],
 };

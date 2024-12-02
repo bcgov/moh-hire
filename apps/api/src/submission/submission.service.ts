@@ -65,6 +65,9 @@ export class SubmissionService {
       .where({ id: In(ids) })
       .getRawMany();
 
+    if (!submissions) {
+      return { submissions: [], missingIds: [] };
+    }
     const foundIds = submissions.map(entity => entity.id);
     // For troubleshooting purposes, this should always be empty
     const missingIds = ids.filter(id => !foundIds.includes(id));
