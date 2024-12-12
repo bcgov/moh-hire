@@ -4,7 +4,7 @@ import secureRandomString from 'secure-random-string';
 import { randomBytes } from 'crypto';
 
 /**
- * Generate a cryptographically secure random number between 0 and maxnumber.
+ * Generate a cryptographically secure random number between 0 and maxnumber (exclusive).
  * @param maxnumber - The maximum number (exclusive).
  * @returns A random number between 0 and maxnumber.
  */
@@ -13,8 +13,15 @@ function secureRandomNumber(maxnumber: number): number {
     throw new Error('Maxnumber must be greater than 0.');
   }
 
-  const randomValue = randomBytes(4).readUInt32BE(0); // Generate a secure random 32-bit integer
-  return randomValue % maxnumber; // Modulo operation to fit the range
+  const range = 0xffffffff; // Maximum value of a 32-bit unsigned integer
+  const maxValidValue = Math.floor(range / maxnumber) * maxnumber - 1; // Avoid bias by setting a rejection threshold
+
+  let randomValue;
+  do {
+    randomValue = randomBytes(4).readUInt32BE(0); // Generate a random 32-bit integer
+  } while (randomValue > maxValidValue); // Reject values outside the unbiased range
+
+  return randomValue % maxnumber;
 }
 
 @Injectable()
