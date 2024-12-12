@@ -44,4 +44,4 @@ const Altcha = ({ onVerify }: AltchaProps) => {
 
 Altcha.displayName = 'Altcha';
 
-export default Altcha;
+export { Altcha };
