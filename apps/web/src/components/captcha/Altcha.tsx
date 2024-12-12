@@ -31,9 +31,11 @@ const Altcha = ({ onVerify }: AltchaProps) => {
   return (
     <altcha-widget
       ref={widgetRef}
-      style={{
-        '--altcha-max-width': '100%',
-      }}
+      style={
+        {
+          '--altcha-max-width': '100%',
+        } as React.CSSProperties
+      }
       challengeurl={`${process.env.NEXT_PUBLIC_API_URL}/captcha`}
     ></altcha-widget>
   );
