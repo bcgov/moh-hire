@@ -43,7 +43,7 @@ export async function createNestApp(): Promise<{
   let app: NestExpressApplication;
   if (process.env.RUNTIME_ENV === 'local') {
     app = await NestFactory.create(AppModule, {
-      logger: new AppLogger(),
+      logger: ['log', 'error', 'warn', 'debug', 'verbose'],
     });
   } else {
     app = await NestFactory.create<NestExpressApplication>(

@@ -1,13 +1,4 @@
-import {
-  Checkbox,
-  Error,
-  FormStepHeader,
-  Link,
-  Notice,
-  Alert,
-  CaptchaField,
-  ClickCaptcha,
-} from '@components';
+import { Checkbox, Error, FormStepHeader, Link, Notice, Alert, CaptchaField } from '@components';
 import {
   booleanToYesNo,
   EmploymentTypes,
@@ -36,6 +27,7 @@ import {
   previousDeploymentOptions,
 } from '../validation/preferences';
 import { ReactNode } from 'react';
+import Altcha from 'src/components/captcha/Altcha';
 
 export const Review: React.FC = () => {
   const { values } = useFormikContext<SubmissionType>();
@@ -195,9 +187,7 @@ export const Review: React.FC = () => {
           <Error name='confirm' />
 
           <div className='my-6'>
-            <CaptchaField name='captcha'>
-              {onVerify => <ClickCaptcha onVerify={onVerify} />}
-            </CaptchaField>
+            <CaptchaField name='captcha'>{onVerify => <Altcha onVerify={onVerify} />}</CaptchaField>
             <Error name='captcha' />
           </div>
 

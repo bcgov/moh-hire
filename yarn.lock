@@ -12,6 +12,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@altcha/crypto@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@altcha/crypto@npm:0.0.1"
+  checksum: 8e2e65f32d3ede6354e423d710ad61f3058b430b41f38380aae02f99e0f1d243361f1783d99bd7a840fc904778e1e0efaf474ad5f4a79ea19e7c8ef4cb95b4b7
+  languageName: node
+  linkType: hard
+
 "@ampproject/remapping@npm:^2.2.0":
   version: 2.3.0
   resolution: "@ampproject/remapping@npm:2.3.0"
@@ -844,6 +851,7 @@ __metadata:
     "@types/jsonwebtoken": 9.0.2
     "@types/node": 16.0.0
     "@types/nodemailer": 6.4.8
+    "@types/secure-random-string": 1.1.3
     "@types/supertest": 2.0.11
     "@vendia/serverless-express": 4.3.11
     aws-sdk: 2.1017.0
@@ -868,6 +876,7 @@ __metadata:
     reflect-metadata: 0.1.13
     rimraf: 3.0.2
     rxjs: 7.2.0
+    secure-random-string: 1.1.4
     source-map-support: 0.5.20
     supertest: 7.0.0
     swagger-ui-express: 4.2.0
@@ -942,6 +951,7 @@ __metadata:
     "@types/react": 18.3.3
     "@types/react-datepicker": 4.11.2
     "@types/react-dom": 18.3.0
+    altcha: 1.0.7
     autoprefixer: 10.4.19
     axios: 0.24.0
     babel-jest: 27.4.2
@@ -2075,6 +2085,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/rollup-linux-x64-gnu@npm:4.18.0":
+  version: 4.18.0
+  resolution: "@rollup/rollup-linux-x64-gnu@npm:4.18.0"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@rushstack/eslint-patch@npm:^1.3.3":
   version: 1.10.3
   resolution: "@rushstack/eslint-patch@npm:1.10.3"
@@ -3043,6 +3060,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/secure-random-string@npm:1.1.3":
+  version: 1.1.3
+  resolution: "@types/secure-random-string@npm:1.1.3"
+  checksum: 583c8937f8573f47ed8826d4a0d06c52c9106c8711eb00c7d85829a53a8e6b72c2dd3e7b97e0cfe081f2297a77361b281c744c81a85a5c37b2527e2fcaf0fdc8
+  languageName: node
+  linkType: hard
+
 "@types/semver@npm:^7.3.12, @types/semver@npm:^7.5.0":
   version: 7.5.8
   resolution: "@types/semver@npm:7.5.8"
@@ -3798,6 +3822,19 @@ __metadata:
     require-from-string: ^2.0.2
     uri-js: ^4.2.2
   checksum: 90849ef03c4f4f7051d15f655120137b89e3205537d683beebd39d95f40c0ca00ea8476cd999602d2f433863e7e4bf1b81d1869d1e07f4dcf56d71b6430a605c
+  languageName: node
+  linkType: hard
+
+"altcha@npm:1.0.7":
+  version: 1.0.7
+  resolution: "altcha@npm:1.0.7"
+  dependencies:
+    "@altcha/crypto": ^0.0.1
+    "@rollup/rollup-linux-x64-gnu": 4.18.0
+  dependenciesMeta:
+    "@rollup/rollup-linux-x64-gnu":
+      optional: true
+  checksum: a0fc990e3d54b15beaa5a30de0a091922f56d49e3afd1fa0489ee30e085a8611f8ec8c0ab98e77aab3dc3d646b24c9bcc42483e06e2d0811fef1ab9debbb23e5
   languageName: node
   linkType: hard
 
@@ -13300,6 +13337,13 @@ __metadata:
     ajv: ^6.12.5
     ajv-keywords: ^3.5.2
   checksum: ea56971926fac2487f0757da939a871388891bc87c6a82220d125d587b388f1704788f3706e7f63a7b70e49fc2db974c41343528caea60444afd5ce0fe4b85c0
+  languageName: node
+  linkType: hard
+
+"secure-random-string@npm:1.1.4":
+  version: 1.1.4
+  resolution: "secure-random-string@npm:1.1.4"
+  checksum: 02c2419df8b94b3f73dc189992f04f2ee247e4207491a6cfca5310343fa8fae7fae801261bafc0112c417f8a1921a08e33a8e42f748e487afcd3965c877f4b9b
   languageName: node
   linkType: hard
 
