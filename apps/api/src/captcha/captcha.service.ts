@@ -4,9 +4,9 @@ import secureRandomString from 'secure-random-string'; // ES module import
 
 @Injectable()
 export class CaptchaService {
-  private readonly hmacKey = 'your_secret_hmac_key'; // Replace with your secret HMAC key
+  private readonly hmacKey = process.env.JWT_SECRET || 'your_secret_hmac_key'; // Replace with your secret HMAC key
 
-  async generateChallenge() {
+  generateChallenge() {
     // Choose the maximum random number (complexity)
     const maxnumber = 100_000;
 
