@@ -843,6 +843,7 @@ __metadata:
     "@nestjs/schematics": 10.1.1
     "@nestjs/swagger": 7.3.1
     "@nestjs/testing": 10.3.9
+    "@nestjs/throttler": 6.3.0
     "@nestjs/typeorm": 10.0.2
     "@supercharge/promise-pool": 3.1.1
     "@types/aws-lambda": 8.10.84
@@ -1793,6 +1794,17 @@ __metadata:
     "@nestjs/platform-express":
       optional: true
   checksum: b8408c9fe6ccb82a75b6459155388ee4471432d20134789788a5f9a8a2c0df2680882b0d4350629aef0fa4cac653fa5875ad053e0d4503647c7276665e094c89
+  languageName: node
+  linkType: hard
+
+"@nestjs/throttler@npm:6.3.0":
+  version: 6.3.0
+  resolution: "@nestjs/throttler@npm:6.3.0"
+  peerDependencies:
+    "@nestjs/common": ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
+    "@nestjs/core": ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
+    reflect-metadata: ^0.1.13 || ^0.2.0
+  checksum: 9420eddb808d19e2ac2fa8446aabda8e3608c9565e6ccbe5f34b96d4b0b19094089de868c44738e2234fea8e178415b6528fc07acdadd4d76e5d80b47ac7d4c6
   languageName: node
   linkType: hard
 
