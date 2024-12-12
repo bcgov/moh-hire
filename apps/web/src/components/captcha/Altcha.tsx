@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import 'altcha/altcha.css';
 
 interface AltchaProps {
   onVerify: (isValid: boolean) => void;
