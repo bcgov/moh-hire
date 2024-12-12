@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as crypto from 'crypto';
 import secureRandomString from 'secure-random-string';
-import { randomBytes } from 'crypto';
 
 /**
  * Generate a cryptographically secure random number between 0 and maxnumber (exclusive).
@@ -18,7 +17,7 @@ function secureRandomNumber(maxnumber: number): number {
 
   let randomValue;
   do {
-    randomValue = randomBytes(4).readUInt32BE(0); // Generate a random 32-bit integer
+    randomValue = crypto.randomBytes(4).readUInt32BE(0); // Generate a random 32-bit integer
   } while (randomValue > maxValidValue); // Reject values outside the unbiased range
 
   return randomValue % maxnumber;
