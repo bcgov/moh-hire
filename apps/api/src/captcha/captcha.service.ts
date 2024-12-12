@@ -1,6 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import * as crypto from 'crypto';
-import secureRandomString from 'secure-random-string'; // ES module import
+import secureRandomString from 'secure-random-string';
+import { randomBytes } from 'crypto';
+
+/**
+ * Generate a cryptographically secure random number between 0 and maxnumber.
+ * @param maxnumber - The maximum number (exclusive).
+ * @returns A random number between 0 and maxnumber.
+ */
+function secureRandomNumber(maxnumber: number): number {
+  if (maxnumber <= 0) {
+    throw new Error('Maxnumber must be greater than 0.');
+  }
+
+  const randomValue = randomBytes(4).readUInt32BE(0); // Generate a secure random 32-bit integer
+  return randomValue % maxnumber; // Modulo operation to fit the range
+}
 
 @Injectable()
 export class CaptchaService {
@@ -14,7 +29,7 @@ export class CaptchaService {
     const salt = secureRandomString({ length: 10 }); // Generates a 10-character random string
 
     // Generate a random secret number between 0 and maxnumber
-    const secretNumber = Math.floor(Math.random() * maxnumber);
+    const secretNumber = secureRandomNumber(maxnumber);
 
     // Compute the SHA-256 hash of the concatenated salt and secretNumber
     const challenge = crypto
