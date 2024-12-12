@@ -13,7 +13,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
     MailModule,
     ThrottlerModule.forRoot([
       {
-        ttl: 300, // Time-to-live in seconds (5 minutes)
+        ttl: 300000, // Time-to-live in seconds (5 minutes)
         limit: 1, // Max number of requests allowed per TTL
       },
     ]),
