@@ -115,41 +115,66 @@ resource "aws_lambda_permission" "api_allow_gateway" {
 
 ## rate-limit
 
-# Step 2: Create the API Gateway Stage
+# Create a WAF WebACL for rate limiting
+resource "aws_wafv2_web_acl" "submission_acl" {
+  name        = "submission-acl"
+  scope       = "REGIONAL"
+  description = "WAF WebACL for rate limiting API requests"
+
+  default_action {
+    allow {}
+  }
+
+  rule {
+    name     = "rate-limit-rule"
+    priority = 1
+
+    statement {
+      rate_based_statement {
+        limit              = 1 # Burst limit: 1 request
+        aggregate_key_type = "IP"
+      }
+    }
+
+    action {
+      block {}
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "rateLimit"
+      sampled_requests_enabled   = true
+    }
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "submissionACL"
+    sampled_requests_enabled   = true
+  }
+}
+
+# Associate the WAF WebACL with the API Gateway v2 (HTTP API)
+resource "aws_wafv2_web_acl_association" "submission_acl_association" {
+  resource_arn = aws_apigatewayv2_api.api.execution_arn
+  web_acl_arn  = aws_wafv2_web_acl.submission_acl.arn
+}
+
+# Define the API Gateway v2 route for /api/v1/submission
+resource "aws_apigatewayv2_route" "submission_route" {
+  api_id    = aws_apigatewayv2_api.api.id
+  route_key = "POST /api/v1/submission"
+  target    = "integrations/${aws_apigatewayv2_integration.api.id}"
+}
+
+# Define the specific stage for the submission API
 resource "aws_apigatewayv2_stage" "submission_stage" {
   api_id      = aws_apigatewayv2_api.api.id
   name        = "submission"
   auto_deploy = true
-}
 
-# Step 3: Create the POST Route
-resource "aws_apigatewayv2_route" "submission_route" {
-  api_id    = aws_apigatewayv2_api.api.id
-  route_key = "POST /api/v1/submission"
-}
-
-# Step 5: Attach the Integration to the Route
-resource "aws_apigatewayv2_route_response" "submission_route_response" {
-  api_id   = aws_apigatewayv2_api.api.id
-  route_id = aws_apigatewayv2_route.submission_route.id
-
-  # Set route_response_key to "200" for success
-  route_response_key = "200"
-}
-
-# Step 6: Create a Usage Plan for Rate Limiting
-resource "aws_apigateway_usage_plan" "submission_usage_plan" {
-  api_id = aws_apigatewayv2_api.api.id
-  name   = "submission-plan"
-
-  throttle {
-    burst_limit = 1   # Allow only 1 burst request
-    rate_limit  = 0.2 # 1 request every 5 minutes (300 seconds)
+  access_log_settings {
+    destination_arn = aws_cloudwatch_log_group.api_gateway.arn
+    format          = local.api_gateway_log_format
   }
-}
-
-# Step 7: Attach the Usage Plan to an API Key
-resource "aws_apigateway_usage_plan_key" "submission_usage_plan_key" {
-  key_id        = aws_apigatewayv2_api_key.submission_api_key.id
-  usage_plan_id = aws_apigatewayv2_usage_plan.submission_usage_plan.id
 }
