@@ -104,6 +104,12 @@ resource "aws_apigatewayv2_stage" "api" {
     destination_arn = aws_cloudwatch_log_group.api_gateway.arn
     format          = local.api_gateway_log_format
   }
+
+  route_settings {
+    route_key              = "POST /api/v1/submission"
+    throttling_burst_limit = 1
+    throttling_rate_limit  = 0.00333 # 1 request per 5 minutes (1 request per 300 seconds)
+  }
 }
 
 resource "aws_lambda_permission" "api_allow_gateway" {
@@ -111,70 +117,4 @@ resource "aws_lambda_permission" "api_allow_gateway" {
   function_name = aws_lambda_function.api.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_stage.api.execution_arn}/*"
-}
-
-## rate-limit
-
-# Create a WAF WebACL for rate limiting
-resource "aws_wafv2_web_acl" "submission_acl" {
-  name        = "submission-acl"
-  scope       = "REGIONAL"
-  description = "WAF WebACL for rate limiting API requests"
-
-  default_action {
-    allow {}
-  }
-
-  rule {
-    name     = "rate-limit-rule"
-    priority = 1
-
-    statement {
-      rate_based_statement {
-        limit              = 1 # Burst limit: 1 request
-        aggregate_key_type = "IP"
-      }
-    }
-
-    action {
-      block {}
-    }
-
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "rateLimit"
-      sampled_requests_enabled   = true
-    }
-  }
-
-  visibility_config {
-    cloudwatch_metrics_enabled = true
-    metric_name                = "submissionACL"
-    sampled_requests_enabled   = true
-  }
-}
-
-# Associate the WAF WebACL with the API Gateway v2 (HTTP API)
-resource "aws_wafv2_web_acl_association" "submission_acl_association" {
-  resource_arn = aws_apigatewayv2_api.api.execution_arn
-  web_acl_arn  = aws_wafv2_web_acl.submission_acl.arn
-}
-
-# Define the API Gateway v2 route for /api/v1/submission
-resource "aws_apigatewayv2_route" "submission_route" {
-  api_id    = aws_apigatewayv2_api.api.id
-  route_key = "POST /api/v1/submission"
-  target    = "integrations/${aws_apigatewayv2_integration.api.id}"
-}
-
-# Define the specific stage for the submission API
-resource "aws_apigatewayv2_stage" "submission_stage" {
-  api_id      = aws_apigatewayv2_api.api.id
-  name        = "submission"
-  auto_deploy = true
-
-  access_log_settings {
-    destination_arn = aws_cloudwatch_log_group.api_gateway.arn
-    format          = local.api_gateway_log_format
-  }
 }
