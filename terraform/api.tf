@@ -138,7 +138,7 @@ resource "aws_apigatewayv2_route_response" "submission_route_response" {
 }
 
 # Step 6: Create a Usage Plan for Rate Limiting
-resource "aws_apigatewayv2_usage_plan" "submission_usage_plan" {
+resource "aws_apigateway_usage_plan" "submission_usage_plan" {
   api_id = aws_apigatewayv2_api.api.id
   name   = "submission-plan"
 
@@ -149,7 +149,7 @@ resource "aws_apigatewayv2_usage_plan" "submission_usage_plan" {
 }
 
 # Step 7: Attach the Usage Plan to an API Key
-resource "aws_apigatewayv2_usage_plan_key" "submission_usage_plan_key" {
+resource "aws_apigateway_usage_plan_key" "submission_usage_plan_key" {
   key_id        = aws_apigatewayv2_api_key.submission_api_key.id
   usage_plan_id = aws_apigatewayv2_usage_plan.submission_usage_plan.id
 }
