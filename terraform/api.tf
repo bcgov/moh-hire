@@ -137,14 +137,19 @@ resource "aws_apigatewayv2_route_response" "submission_route_response" {
   route_response_key = "200"
 }
 
-# Step 6: Configure Throttling and Rate Limits
-resource "aws_apigatewayv2_stage_settings" "rate_limits" {
-  api_id     = aws_apigatewayv2_api.api.id
-  stage_name = aws_apigatewayv2_stage.submission_stage.name
+# Step 6: Create a Usage Plan for Rate Limiting
+resource "aws_apigatewayv2_usage_plan" "submission_usage_plan" {
+  api_id = aws_apigatewayv2_api.api.id
+  name   = "submission-plan"
 
-  # Throttle limits
-  throttle_settings {
+  throttle {
     burst_limit = 1   # Allow only 1 burst request
     rate_limit  = 0.2 # 1 request every 5 minutes (300 seconds)
   }
+}
+
+# Step 7: Attach the Usage Plan to an API Key
+resource "aws_apigatewayv2_usage_plan_key" "submission_usage_plan_key" {
+  key_id        = aws_apigatewayv2_api_key.submission_api_key.id
+  usage_plan_id = aws_apigatewayv2_usage_plan.submission_usage_plan.id
 }
