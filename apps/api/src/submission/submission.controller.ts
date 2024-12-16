@@ -18,7 +18,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SubmissionDTO, SubmissionRO, UpdateSubmissionDTO } from '@ehpr/common';
 import { SubmissionService } from './submission.service';
 import { AppLogger } from 'src/common/logger.service';
-import { ThrottlerBehindProxyGuard } from './throttler-behind-proxy.guard';
+import { ThrottlerIPGuard } from './throttler-ip.guard';
 
 @Controller('submission')
 @ApiTags('Submission')
@@ -34,7 +34,7 @@ export class SubmissionController {
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiResponse({ status: HttpStatus.CREATED, type: SubmissionRO })
   @HttpCode(HttpStatus.CREATED)
-  @UseGuards(ThrottlerBehindProxyGuard)
+  @UseGuards(ThrottlerIPGuard)
   @Post()
   async name(@Body() body: SubmissionDTO): Promise<SubmissionRO> {
     try {
