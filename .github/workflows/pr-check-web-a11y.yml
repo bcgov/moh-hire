@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
         name: checkout
-      - uses: actions/cache@v3
+      - uses: actions/cache@v2
         name: Cache yarn
         with:
           path: ./.yarn/cache
@@ -34,11 +34,6 @@ jobs:
               ((c++)) && ((c==10)) && c=0 && break # don't run more than 10 times
               sleep 5
           done
-
-      - name: Install Puppeteer Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser libnss3 libxss1 libasound2t64 fonts-liberation libappindicator3-1 xdg-utils
 
       - name: Accessibility Test web package
         run: make accessibility-test
