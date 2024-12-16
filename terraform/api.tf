@@ -110,12 +110,6 @@ resource "aws_apigatewayv2_stage" "api" {
     throttling_burst_limit = 1
     throttling_rate_limit  = 0.00333 # 1 request per 5 minutes (1 request per 300 seconds)
   }
-
-  route_settings {
-    route_key              = "POST /submission"
-    throttling_burst_limit = 1
-    throttling_rate_limit  = 0.00333 # 1 request per 5 minutes (1 request per 300 seconds)
-  }
 }
 
 resource "aws_lambda_permission" "api_allow_gateway" {
