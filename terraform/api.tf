@@ -104,12 +104,6 @@ resource "aws_apigatewayv2_stage" "api" {
     destination_arn = aws_cloudwatch_log_group.api_gateway.arn
     format          = local.api_gateway_log_format
   }
-
-  route_settings {
-    route_key              = "POST /api/v1/submission"
-    throttling_burst_limit = 1
-    throttling_rate_limit  = 0.00333 # 1 request per 5 minutes (1 request per 300 seconds)
-  }
 }
 
 resource "aws_lambda_permission" "api_allow_gateway" {
