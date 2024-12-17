@@ -88,8 +88,7 @@ body,
   --altcha-color-border-focus: #333333; /* Darker focus border color for better contrast */
   --altcha-color-error-text: #d32f2f; /* Slightly darker error text color for better contrast */
   --altcha-color-footer-bg: #e5e5e5; /* Slightly darker footer background for better contrast */
-  --altcha-max-width: 260px;
 }
-.altcha-footer > div {
-  color: #1e1e1e;
+.altcha-footer {
+  opacity: 1 !important;
 }
