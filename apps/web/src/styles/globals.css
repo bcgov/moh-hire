@@ -77,3 +77,16 @@ body,
 .loader {
   animation: spin 0.5s linear infinite;
 }
+
+/* Custom ALTCHA styles */
+:root {
+  --altcha-border-width: 1px;
+  --altcha-border-radius: 3px;
+  --altcha-color-base: #ffffff; /* Background color */
+  --altcha-color-border: #707070; /* Darker border color for better contrast */
+  --altcha-color-text: #333333; /* Darker text color for better contrast */
+  --altcha-color-border-focus: #333333; /* Darker focus border color for better contrast */
+  --altcha-color-error-text: #d32f2f; /* Slightly darker error text color for better contrast */
+  --altcha-color-footer-bg: #e0e0e0; /* Slightly darker footer background for better contrast */
+  --altcha-max-width: 260px;
+}
