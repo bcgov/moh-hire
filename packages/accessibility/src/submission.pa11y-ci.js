@@ -6,6 +6,9 @@ const defaults = {
     width: 1300,
     height: 2400,
   },
+  chromeLaunchConfig: {
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  },
 };
 
 const screenCap = fileName => `screen capture screenCaptures/${fileName}.png`;
