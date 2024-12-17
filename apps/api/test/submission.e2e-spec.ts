@@ -11,6 +11,7 @@ import invalidSubmissionDataFirstname from './fixture/invalidSubmission_firstnam
 import { validationPipeConfig } from 'src/app.config';
 import appDataSource from 'src/ormconfig'; // Adjust path to your DataSource instance
 
+// Function to clean the DB before each test
 export const cleanDB = async () => {
   if (!appDataSource.isInitialized) {
     await appDataSource.initialize();
@@ -73,8 +74,8 @@ describe('AppController (e2e)', () => {
     expect(body.id).toBeDefined();
   });
 
-  it('returns a validation error for blank firstName', done => {
-    request(app.getHttpServer())
+  it('returns a validation error for blank firstName', async () => {
+    await request(app.getHttpServer())
       .post(`/submission`)
       .send(invalidSubmissionDataFirstname)
       .expect(400)
@@ -90,12 +91,11 @@ describe('AppController (e2e)', () => {
         expect(errorObject.firstName.isLength).toBe(
           'First Name must be between 1 and 255 characters',
         );
-      })
-      .end(done);
+      });
   });
 
-  it('validates the submission update', done => {
-    request(app.getHttpServer())
+  it('validates the submission update', async () => {
+    await request(app.getHttpServer())
       .patch(`/submission/${confirmationId}`)
       .send(updateSubmissionData)
       .expect(400)
@@ -104,19 +104,16 @@ describe('AppController (e2e)', () => {
         const message = error.startDate.isDateString;
         expect(body.error).toBe('Bad Request');
         expect(message).toBe('startDate must be a valid ISO 8601 date string');
-      })
-      .end(done);
+      });
   });
 
-  it('updates the submission', done => {
+  it('updates the submission', async () => {
     updateSubmissionData.status.startDate = '2022-12-31';
-    request(app.getHttpServer())
+    const res = await request(app.getHttpServer())
       .patch(`/submission/${confirmationId}`)
       .send(updateSubmissionData)
-      .expect(200)
-      .expect(({ body }) => {
-        expect(body.confirmationId).toBe(confirmationId);
-      })
-      .end(done);
+      .expect(200);
+
+    expect(res.body.confirmationId).toBe(confirmationId);
   });
 });
