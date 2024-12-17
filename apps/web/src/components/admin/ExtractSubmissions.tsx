@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileDownload } from '@fortawesome/free-solid-svg-icons';
 import { Button } from '@components';
 import { extractSubmissions } from '@services';
+import { Checkbox } from '@components';
 
 export const ExtractSubmissions = () => {
   const downSubmissions = async () => {
@@ -22,6 +23,10 @@ export const ExtractSubmissions = () => {
       <p className='mb-2'>
         Extract and download all submission data in <b>CSV</b> format.
       </p>
+      <Checkbox
+        label={`Include only applicants who are willing to work anywhere`}
+        name='anywhere-only'
+      />
       <Button variant='outline' onClick={downSubmissions}>
         <FontAwesomeIcon icon={faFileDownload} size='1x' className='mr-2' />
         <span>Extract Submissions</span>
