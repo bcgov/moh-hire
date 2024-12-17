@@ -31,15 +31,31 @@ describe('AppController (e2e)', () => {
   let updateSubmissionData: UpdateSubmissionDTO;
 
   beforeEach(async () => {
+    // Setup application
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
-
     app.useGlobalPipes(new ValidationPipe(validationPipeConfig));
-
     await app.init();
+
+    // Clean DB and create a valid submission for tests
+    await cleanDB();
+
+    const res = await request(app.getHttpServer())
+      .post(`/submission`)
+      .send(validSubmissionData)
+      .expect(201);
+
+    confirmationId = res.body.confirmationId;
+
+    const { contactInformation, personalInformation } = validSubmissionData.payload;
+    updateSubmissionData = {
+      contactInformation,
+      personalInformation,
+      status: { interested: true, deployed: true },
+    };
   });
 
   afterEach(async () => {
@@ -47,8 +63,6 @@ describe('AppController (e2e)', () => {
   });
 
   it('successfully saves a valid submission', async () => {
-    await cleanDB();
-
     const res = await request(app.getHttpServer())
       .post(`/submission`)
       .send(validSubmissionData)
@@ -57,8 +71,6 @@ describe('AppController (e2e)', () => {
     const { body } = res;
     expect(body.confirmationId).toBeDefined();
     expect(body.id).toBeDefined();
-
-    confirmationId = body.confirmationId;
   });
 
   it('returns a validation error for blank firstName', done => {
@@ -83,13 +95,6 @@ describe('AppController (e2e)', () => {
   });
 
   it('validates the submission update', done => {
-    const { contactInformation, personalInformation } = validSubmissionData.payload;
-    updateSubmissionData = {
-      contactInformation,
-      personalInformation,
-      status: { interested: true, deployed: true },
-    };
-
     request(app.getHttpServer())
       .patch(`/submission/${confirmationId}`)
       .send(updateSubmissionData)
