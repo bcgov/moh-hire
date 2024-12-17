@@ -46,19 +46,19 @@ describe('AppController (e2e)', () => {
     await app.close();
   });
 
-  it('successfully saves a valid submission', async done => {
+  it('successfully saves a valid submission', async () => {
     await cleanDB();
-    request(app.getHttpServer())
+
+    const res = await request(app.getHttpServer())
       .post(`/submission`)
       .send(validSubmissionData)
-      .expect(201)
-      .expect(res => {
-        const { body } = res;
-        expect(body.confirmationId).toBeDefined();
-        expect(body.id).toBeDefined();
-        confirmationId = body.confirmationId;
-      })
-      .end(done);
+      .expect(201);
+
+    const { body } = res;
+    expect(body.confirmationId).toBeDefined();
+    expect(body.id).toBeDefined();
+
+    confirmationId = body.confirmationId;
   });
 
   it('returns a validation error for blank firstName', done => {
