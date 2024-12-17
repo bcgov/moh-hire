@@ -42,15 +42,12 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  beforeEach(async () => {
-    await cleanDB();
-  });
-
   afterEach(async () => {
     await app.close();
   });
 
-  it('successfully saves a valid submission', done => {
+  it('successfully saves a valid submission', async done => {
+    await cleanDB();
     request(app.getHttpServer())
       .post(`/submission`)
       .send(validSubmissionData)
