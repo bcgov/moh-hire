@@ -9,6 +9,21 @@ import { AppModule } from '../src/app.module';
 import validSubmissionData from './fixture/validSubmission.json';
 import invalidSubmissionDataFirstname from './fixture/invalidSubmission_firstname.json';
 import { validationPipeConfig } from 'src/app.config';
+import appDataSource from 'src/ormconfig'; // Adjust path to your DataSource instance
+
+export const cleanDB = async () => {
+  if (!appDataSource.isInitialized) {
+    await appDataSource.initialize();
+  }
+
+  const entities = appDataSource.entityMetadatas;
+
+  for (const entity of entities) {
+    const repository = appDataSource.getRepository(entity.name);
+    // Truncate all tables and reset identities
+    await repository.query(`TRUNCATE TABLE "${entity.tableName}" RESTART IDENTITY CASCADE;`);
+  }
+};
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -25,6 +40,10 @@ describe('AppController (e2e)', () => {
     app.useGlobalPipes(new ValidationPipe(validationPipeConfig));
 
     await app.init();
+  });
+
+  beforeEach(async () => {
+    await cleanDB();
   });
 
   afterEach(async () => {
