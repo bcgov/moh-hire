@@ -11,8 +11,8 @@ import invalidSubmissionDataFirstname from './fixture/invalidSubmission_firstnam
 import { validationPipeConfig } from 'src/app.config';
 import appDataSource from 'src/ormconfig'; // Adjust path to your DataSource instance
 
-// Function to clean the DB before each test
-export const cleanDB = async () => {
+// Function to clean the submission table before each test
+export const cleanSubmissionTable = async () => {
   if (!appDataSource.isInitialized) {
     await appDataSource.initialize();
   }
@@ -20,9 +20,13 @@ export const cleanDB = async () => {
   const entities = appDataSource.entityMetadatas;
 
   for (const entity of entities) {
-    const repository = appDataSource.getRepository(entity.name);
-    // Truncate all tables and reset identities
-    await repository.query(`TRUNCATE TABLE "${entity.tableName}" RESTART IDENTITY CASCADE;`);
+    if (entity.name === 'submission') {
+      const repository = appDataSource.getRepository(entity.name);
+      // Truncate all tables and reset identities
+      await repository.query(`TRUNCATE TABLE "${entity.tableName}" RESTART IDENTITY CASCADE;`);
+    } else {
+      continue;
+    }
   }
 };
 
@@ -41,8 +45,8 @@ describe('AppController (e2e)', () => {
     app.useGlobalPipes(new ValidationPipe(validationPipeConfig));
     await app.init();
 
-    // Clean DB and create a valid submission for tests
-    await cleanDB();
+    // Clean submission table and create a valid submission for tests
+    await cleanSubmissionTable();
 
     const res = await request(app.getHttpServer())
       .post(`/submission`)
