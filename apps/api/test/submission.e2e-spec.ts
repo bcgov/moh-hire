@@ -10,24 +10,14 @@ import validSubmissionData from './fixture/validSubmission.json';
 import invalidSubmissionDataFirstname from './fixture/invalidSubmission_firstname.json';
 import { validationPipeConfig } from 'src/app.config';
 import appDataSource from 'src/ormconfig'; // Adjust path to your DataSource instance
+import { SubmissionService } from 'src/submission/submission.service';
+import { ThrottlerIPGuard } from 'src/submission/throttler-ip.guard';
 
 // Function to clean the submission table before each test
-export const cleanSubmissionTable = async () => {
-  if (!appDataSource.isInitialized) {
-    await appDataSource.initialize();
-  }
-
-  const entities = appDataSource.entityMetadatas;
-
-  for (const entity of entities) {
-    if (entity.name === 'submission') {
-      const repository = appDataSource.getRepository(entity.name);
-      // Truncate all tables and reset identities
-      await repository.query(`TRUNCATE TABLE "${entity.tableName}" RESTART IDENTITY CASCADE;`);
-    } else {
-      continue;
-    }
-  }
+export const cleanSubmissionTable = async (app: INestApplication<any>) => {
+  // Use the service to clean the submission table
+  const submissionService = app.get(SubmissionService);
+  await submissionService.truncateTable();
 };
 
 describe('AppController (e2e)', () => {
@@ -39,20 +29,22 @@ describe('AppController (e2e)', () => {
     // Setup application
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideGuard(ThrottlerIPGuard) // we bypass the rate limiting for testing
+      .useValue({ canactive: () => jest.fn().mockReturnValue(true) })
+      .compile();
 
     app = moduleFixture.createNestApplication();
     app.useGlobalPipes(new ValidationPipe(validationPipeConfig));
     await app.init();
 
     // Clean submission table and create a valid submission for tests
-    await cleanSubmissionTable();
+    await cleanSubmissionTable(app);
 
     const res = await request(app.getHttpServer())
       .post(`/submission`)
       .send(validSubmissionData)
       .expect(201);
-
     confirmationId = res.body.confirmationId;
 
     const { contactInformation, personalInformation } = validSubmissionData.payload;
@@ -72,7 +64,6 @@ describe('AppController (e2e)', () => {
       .post(`/submission`)
       .send(validSubmissionData)
       .expect(201);
-
     const { body } = res;
     expect(body.confirmationId).toBeDefined();
     expect(body.id).toBeDefined();
@@ -119,5 +110,45 @@ describe('AppController (e2e)', () => {
       .expect(200);
 
     expect(res.body.confirmationId).toBe(confirmationId);
+  });
+
+  describe('Rate-Limiting Tests', () => {
+    beforeEach(async () => {
+      await cleanSubmissionTable(app);
+
+      // Create a new app instance with rate-limiting enabled
+      const moduleFixture: TestingModule = await Test.createTestingModule({
+        imports: [AppModule],
+      }).compile();
+
+      app = moduleFixture.createNestApplication();
+      app.useGlobalPipes(new ValidationPipe(validationPipeConfig));
+      await app.init();
+    });
+
+    afterEach(async () => {
+      await app.close();
+    });
+
+    it('enforces rate limit after multiple requests', async () => {
+      const requestCount = 2; // Number of requests to make
+      const limitRequestCount = 1; // Number of requests that should succeed
+
+      // First limitRequestCount succeed
+      for (let i = 0; i < limitRequestCount; i++) {
+        await request(app.getHttpServer())
+          .post('/submission')
+          .send(validSubmissionData)
+          .expect(201);
+      }
+
+      // Subsequent requests should fail
+      for (let i = 0; i < requestCount - limitRequestCount; i++) {
+        await request(app.getHttpServer())
+          .post('/submission')
+          .send(validSubmissionData)
+          .expect(429); // Too Many Requests
+      }
+    });
   });
 });
