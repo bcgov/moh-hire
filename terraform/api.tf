@@ -26,25 +26,25 @@ resource "aws_lambda_function" "api" {
   }
   environment {
     variables = {
-      TARGET_ENV               = var.target_env
-      NODE_ENV                 = "production"
-      AWS_S3_REGION            = var.region
-      RUNTIME_ENV              = "hosted"
-      POSTGRES_HOST            = aws_rds_cluster.pgsql.endpoint
-      POSTGRES_DATABASE        = aws_rds_cluster.pgsql.database_name
-      POSTGRES_PASSWORD        = data.aws_ssm_parameter.postgres_password.value
-      POSTGRES_USERNAME        = var.db_username
-      MAIL_FROM                = var.mail_from
-      DOMAIN                   = var.domain
-      BUILD_ID                 = var.build_id
-      BUILD_INFO               = var.build_info
-      SLACK_ALERTS_WEBHOOK_URL = data.aws_ssm_parameter.slack_alerts_webhook_url.value
+      TARGET_ENV                 = var.target_env
+      NODE_ENV                   = "production"
+      AWS_S3_REGION              = var.region
+      RUNTIME_ENV                = "hosted"
+      POSTGRES_HOST              = aws_rds_cluster.pgsql.endpoint
+      POSTGRES_DATABASE          = aws_rds_cluster.pgsql.database_name
+      POSTGRES_PASSWORD          = data.aws_ssm_parameter.postgres_password.value
+      POSTGRES_USERNAME          = var.db_username
+      MAIL_FROM                  = var.mail_from
+      DOMAIN                     = var.domain
+      BUILD_ID                   = var.build_id
+      BUILD_INFO                 = var.build_info
+      SLACK_ALERTS_WEBHOOK_URL   = data.aws_ssm_parameter.slack_alerts_webhook_url.value
       ENABLE_UPDATE_CONFIRMATION = data.aws_ssm_parameter.enable_update_confirmation.value
-      KC_URL                   = data.aws_ssm_parameter.keycloak_auth_url.value
-      KC_REALM                 = data.aws_ssm_parameter.keycloak_realm.value
-      KC_CLIENT_ID             = data.aws_ssm_parameter.keycloak_client_id.value
-      JWT_SECRET               = data.aws_ssm_parameter.jwt_secret.value
-      FEATURE_MASS_EMAIL       = var.feature_mass_email
+      KC_URL                     = data.aws_ssm_parameter.keycloak_auth_url.value
+      KC_REALM                   = data.aws_ssm_parameter.keycloak_realm.value
+      KC_CLIENT_ID               = data.aws_ssm_parameter.keycloak_client_id.value
+      JWT_SECRET                 = data.aws_ssm_parameter.jwt_secret.value
+      FEATURE_MASS_EMAIL         = var.feature_mass_email
     }
   }
 }

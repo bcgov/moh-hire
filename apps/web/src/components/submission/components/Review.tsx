@@ -6,7 +6,7 @@ import {
   Notice,
   Alert,
   CaptchaField,
-  ClickCaptcha,
+  Altcha,
 } from '@components';
 import {
   booleanToYesNo,
@@ -195,9 +195,7 @@ export const Review: React.FC = () => {
           <Error name='confirm' />
 
           <div className='my-6'>
-            <CaptchaField name='captcha'>
-              {onVerify => <ClickCaptcha onVerify={onVerify} />}
-            </CaptchaField>
+            <CaptchaField name='captcha'>{onVerify => <Altcha onVerify={onVerify} />}</CaptchaField>
             <Error name='captcha' />
           </div>
 

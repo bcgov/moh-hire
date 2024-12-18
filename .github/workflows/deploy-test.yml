@@ -65,6 +65,9 @@ jobs:
       - name: Build api
         run: make build-api
 
+      - name: setup terraform
+        uses: hashicorp/setup-terraform@v3
+
       - name: Terraform config
         run: |
           make plan

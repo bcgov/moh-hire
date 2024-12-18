@@ -247,4 +247,8 @@ export class SubmissionService {
 
     return queryBuilder;
   }
+
+  async truncateTable() {
+    await this.submissionRepository.query(`TRUNCATE TABLE "submission" RESTART IDENTITY CASCADE;`);
+  }
 }

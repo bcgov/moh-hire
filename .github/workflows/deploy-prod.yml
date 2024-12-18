@@ -49,6 +49,9 @@ jobs:
       - name: Print Environment
         run: make print-env
 
+      - name: setup terraform
+        uses: hashicorp/setup-terraform@v3
+
       - name: Setup terraform dir
         run: make pre-build
 

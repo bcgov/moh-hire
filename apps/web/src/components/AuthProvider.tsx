@@ -57,6 +57,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         if ([401, 403].includes(status) || message?.includes('Authentication token')) {
           signoutSilent();
           location.replace(`${location.origin}/login`);
+        } else if (status === 429) {
+          // rate limit exceeded error message
+          toast.error(
+            'Too many requests. Please wait 5 minutes before submitting another request.',
+          );
         } else {
           toast.error(message);
         }
