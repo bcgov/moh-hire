@@ -11,7 +11,7 @@ import { flattenAndTransformFormData, formExportColumnHeaders } from '../scripts
 import { AdminService } from './admin.service';
 
 @Controller('admin')
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 @ApiTags('Admin')
 export class AdminController {
   constructor(

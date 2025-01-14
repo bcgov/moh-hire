@@ -45,6 +45,7 @@ export const formExportColumnHeaders = [
   { id: 'VancouverIslandRegion', title: 'Vancouver Island Region' },
   { id: 'InteriorRegion', title: 'Interior Region' },
   { id: 'NorthernRegion', title: 'Northern Region' },
+  { id: 'FirstNationsRegion', title: 'First Nations Health Authority' },
   { id: 'placementOptions', title: 'Placement Options' },
   { id: 'hasImmunizationTraining', title: 'Has Immunization Training' },
   { id: 'deploymentDuration', title: 'Deployment Duration' },
@@ -73,7 +74,8 @@ export const flattenAndTransformFormData = (submissions: SubmissionEntity[]) => 
 
     const deploymentLocations = preferencesInformation?.deploymentLocations;
     const healthAuthorities = splitLhasByHa(deploymentLocations);
-
+    if (id === '') {
+    }
     const payloadData = {
       id,
 
@@ -103,6 +105,7 @@ export const flattenAndTransformFormData = (submissions: SubmissionEntity[]) => 
       VancouverIslandRegion: healthAuthorities.VancouverIslandRegion.lhas.join(', '),
       InteriorRegion: healthAuthorities.InteriorRegion?.lhas.join(', '),
       NorthernRegion: healthAuthorities.NorthernRegion?.lhas.join(', '),
+      FirstNationsRegion: healthAuthorities.firstNationsHa?.lhas.join(', '),
       deploymentLocations: preferencesInformation?.deploymentLocations,
       placementOptions: preferencesInformation?.placementOptions,
       hasImmunizationTraining: booleanToYesNo(preferencesInformation?.hasImmunizationTraining),
