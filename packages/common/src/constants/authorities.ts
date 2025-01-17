@@ -163,6 +163,17 @@ export const NorthernRegionLocations = [
   'FortNelson',
 ];
 
+export const FirstNationsHealthAuthorityLocations = [
+  'Gitgaat',
+  'Gitxaala',
+  'Kitasoo',
+  'Kwadacha',
+  'LaxKwAlaams',
+  'Tahltan',
+  'TseyKehDene',
+  'Ulkatcho',
+];
+
 export const CondensedRegionLocations = {
   [AuthoritiesFull.FRASER_HEALTH_AUTHORITY]: FraserRegionLocations,
   [AuthoritiesFull.VANCOUVER_ISLAND_HEALTH_AUTHORITY]: VancouverIslandRegionLocations,
@@ -170,5 +181,5 @@ export const CondensedRegionLocations = {
   [AuthoritiesFull.INTERIOR_HEALTH_AUTHORITY]: InteriorRegionLocations,
   [AuthoritiesFull.NORTHERN_HEALTH_AUTHORITY]: NorthernRegionLocations,
   [AuthoritiesFull.PROVIDENCE_HEALTH_CARE_SOCIETY]: [''],
-  [AuthoritiesFull.FIRST_NATIONS_HEALTH_AUTHORITY]: [''],
+  [AuthoritiesFull.FIRST_NATIONS_HEALTH_AUTHORITY]: FirstNationsHealthAuthorityLocations,
 };

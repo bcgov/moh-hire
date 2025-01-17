@@ -14,28 +14,27 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
+
+    const token = this.extractTokenFromHeader(request);
+    if (!token) {
+      return false;
+    }
+
+    const kcUser = await this.authService.getUserFromToken(token);
+    let user = await this.userService.findUser(kcUser.id, kcUser.email);
+    if (!user) {
+      user = await this.userService.createUser(kcUser);
+    } else if (
+      (!user.revokedDate && (!user.email || !user.name)) ||
+      (!isMoh(user.email) && !user.ha_id)
+    ) {
+      const { email, name } = kcUser;
+      user = await this.userService.updateUser(user, { email, name, active: true });
+    }
+    request.user = user;
+
     return true;
-    // const request = context.switchToHttp().getRequest();
-
-    // const token = this.extractTokenFromHeader(request);
-    // if (!token) {
-    //   return false;
-    // }
-
-    // const kcUser = await this.authService.getUserFromToken(token);
-    // let user = await this.userService.findUser(kcUser.id, kcUser.email);
-    // if (!user) {
-    //   user = await this.userService.createUser(kcUser);
-    // } else if (
-    //   (!user.revokedDate && (!user.email || !user.name)) ||
-    //   (!isMoh(user.email) && !user.ha_id)
-    // ) {
-    //   const { email, name } = kcUser;
-    //   user = await this.userService.updateUser(user, { email, name, active: true });
-    // }
-    // request.user = user;
-
-    // return true;
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {

@@ -1,4 +1,15 @@
-import { Body, Controller, Get, Inject, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import * as csvWriter from 'csv-writer';
 import { InviteUserDTO, Role, UserRequest } from '@ehpr/common';
@@ -11,7 +22,7 @@ import { flattenAndTransformFormData, formExportColumnHeaders } from '../scripts
 import { AdminService } from './admin.service';
 
 @Controller('admin')
-// @UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 @ApiTags('Admin')
 export class AdminController {
   constructor(
@@ -35,8 +46,15 @@ export class AdminController {
   }
 
   @Get('/extract-submissions')
-  async extractSubmissions(@Req() { user }: UserRequest) {
-    const submissions = await this.submissionService.getSubmissions(user?.ha_id, user?.email);
+  async extractSubmissions(
+    @Req() { user }: UserRequest,
+    @Query('anywhereOnly') anywhereOnly: boolean,
+  ) {
+    const submissions = await this.submissionService.getSubmissions(
+      user?.ha_id,
+      user?.email,
+      anywhereOnly,
+    );
 
     const flatSubmissions = flattenAndTransformFormData(submissions);
     const stringifier = csvWriter.createObjectCsvStringifier({

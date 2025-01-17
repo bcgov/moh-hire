@@ -74,8 +74,6 @@ export const flattenAndTransformFormData = (submissions: SubmissionEntity[]) => 
 
     const deploymentLocations = preferencesInformation?.deploymentLocations;
     const healthAuthorities = splitLhasByHa(deploymentLocations);
-    if (id === '') {
-    }
     const payloadData = {
       id,
 
@@ -105,7 +103,7 @@ export const flattenAndTransformFormData = (submissions: SubmissionEntity[]) => 
       VancouverIslandRegion: healthAuthorities.VancouverIslandRegion.lhas.join(', '),
       InteriorRegion: healthAuthorities.InteriorRegion?.lhas.join(', '),
       NorthernRegion: healthAuthorities.NorthernRegion?.lhas.join(', '),
-      FirstNationsRegion: healthAuthorities.firstNationsHa?.lhas.join(', '),
+      FirstNationsRegion: healthAuthorities.FirstNationsHealthAuthority?.lhas.join(', '),
       deploymentLocations: preferencesInformation?.deploymentLocations,
       placementOptions: preferencesInformation?.placementOptions,
       hasImmunizationTraining: booleanToYesNo(preferencesInformation?.hasImmunizationTraining),

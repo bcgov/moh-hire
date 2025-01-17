@@ -36,8 +36,8 @@ export class RegistrantController {
     private readonly jwtService: JwtService,
   ) {}
 
-  // @Roles(Role.Admin, Role.User)
-  // @UseGuards(AuthGuard, RoleGuard)
+  @Roles(Role.Admin, Role.User)
+  @UseGuards(AuthGuard, RoleGuard)
   @Get('/')
   async getRegistrants(
     @Req() { user }: UserRequest,
