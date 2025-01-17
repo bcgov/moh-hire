@@ -28,7 +28,6 @@ export const ExtractSubmissions = () => {
         initialValues={{
           anywhereOnly: false,
         }}
-        validate={values => {}}
         onSubmit={async (values, { setSubmitting }) => {
           setSubmitting(false);
         }}
