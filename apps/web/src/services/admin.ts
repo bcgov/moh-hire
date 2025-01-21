@@ -16,7 +16,9 @@ export const revokeUser = async (id: string) => {
   return data?.data as User;
 };
 
-export const extractSubmissions = async () => {
-  const response = await axios.get<{ data: string }>('/admin/extract-submissions');
+export const extractSubmissions = async (anywhereOnly?: boolean) => {
+  const response = await axios.get<{ data: string }>(
+    `/admin/extract-submissions?anywhereOnly=${anywhereOnly}`,
+  );
   return response?.data?.data;
 };

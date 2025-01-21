@@ -1,12 +1,14 @@
 import dayjs from 'dayjs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileDownload } from '@fortawesome/free-solid-svg-icons';
-import { Button } from '@components';
+import { Button, Checkbox } from '@components';
+
 import { extractSubmissions } from '@services';
+import { Formik } from 'formik';
 
 export const ExtractSubmissions = () => {
-  const downSubmissions = async () => {
-    const data = await extractSubmissions();
+  const downloadSubmissions = async (values: { anywhereOnly: boolean }) => {
+    const data = await extractSubmissions(values?.anywhereOnly);
     if (data) {
       const blob = new Blob([data], { type: 'text/plain' });
       const url = URL.createObjectURL(blob);
@@ -22,10 +24,35 @@ export const ExtractSubmissions = () => {
       <p className='mb-2'>
         Extract and download all submission data in <b>CSV</b> format.
       </p>
-      <Button variant='outline' onClick={downSubmissions}>
-        <FontAwesomeIcon icon={faFileDownload} size='1x' className='mr-2' />
-        <span>Extract Submissions</span>
-      </Button>
+      <Formik
+        initialValues={{
+          anywhereOnly: false,
+        }}
+        onSubmit={async (values, { setSubmitting }) => {
+          setSubmitting(false);
+        }}
+      >
+        {({ values }) => {
+          return (
+            <div className='flex flex-col gap-4 max-w-sm'>
+              <Checkbox
+                label={`Only include applicants who are willing to work anywhere`}
+                name='anywhereOnly'
+              />
+              <Button
+                variant='primary'
+                type='submit'
+                onClick={() => {
+                  downloadSubmissions(values);
+                }}
+              >
+                <FontAwesomeIcon icon={faFileDownload} size='1x' className='mr-2' />
+                <span>Extract Submissions</span>
+              </Button>
+            </div>
+          );
+        }}
+      </Formik>
     </div>
   );
 };
